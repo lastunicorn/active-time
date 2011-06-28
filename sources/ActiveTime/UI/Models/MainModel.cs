@@ -77,6 +77,18 @@ namespace DustInTheWind.ActiveTime.UI.Models
             }
         }
 
+        private TimeSpan? firstTime;
+
+        public TimeSpan? FirstTime
+        {
+            get { return firstTime; }
+            set
+            {
+                firstTime = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("FirstTime"));
+            }
+        }
+
 
         #region PropertyChanged
 
@@ -117,26 +129,12 @@ namespace DustInTheWind.ActiveTime.UI.Models
 
         private void UpdateTotalTime()
         {
-            if (dayRecord != null)
-            {
-                TotalTime = dayRecord.GetTotalTime();
-            }
-            else
-            {
-                TotalTime = TimeSpan.Zero;
-            }
+            TotalTime = dayRecord != null ? dayRecord.GetTotalTime() : TimeSpan.Zero;
         }
 
         private void UpdateFullTime()
         {
-            if (dayRecord != null)
-            {
-                IntervalTime = dayRecord.GetIntervalTime();
-            }
-            else
-            {
-                IntervalTime = TimeSpan.Zero;
-            }
+            IntervalTime = dayRecord != null ? dayRecord.GetIntervalTime() : TimeSpan.Zero;
         }
     }
 }
