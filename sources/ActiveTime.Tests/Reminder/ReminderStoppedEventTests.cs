@@ -27,23 +27,32 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void StopEvent_Status()
         {
-            int ringMiliseconds = 100;
+            const int ringMiliseconds = 100;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
                 bool stoppedEventWasRaised = false;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
-                {
-                    ringEvent.Set();
-                });
+                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) => ringEvent.Set());
 
-                reminder.Stopped += new EventHandler(delegate(object sender, EventArgs e)
-                {
-                    status = (sender as Reminder).Status;
-                    stoppedEventWasRaised = true;
-                });
+                reminder.Stopped += new EventHandler((sender, e) =>
+                                                         {
+                                                             if (sender != null)
+                                                             {
+                                                                 status = ((Reminder) sender).Status;
+                                                             }
+                                                             stoppedEventWasRaised = true;
+                                                         });
+
+                //reminder.Stopped += new EventHandler(delegate(object sender, EventArgs e)
+                //{
+                //    if (sender != null)
+                //    {
+                //        status = ((Reminder) sender).Status;
+                //    }
+                //    stoppedEventWasRaised = true;
+                //});
 
                 reminder.Start(ringMiliseconds);
 
