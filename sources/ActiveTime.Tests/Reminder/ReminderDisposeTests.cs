@@ -45,7 +45,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Start_int()
         {
-            int miliseconds = 100;
+            const int miliseconds = 100;
             reminder.Start(miliseconds);
         }
 
@@ -53,7 +53,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Start_long()
         {
-            long miliseconds = 100;
+            const long miliseconds = 100;
             reminder.Start(miliseconds);
         }
 
@@ -61,7 +61,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Start_uint()
         {
-            uint miliseconds = 100;
+            const uint miliseconds = 100;
             reminder.Start(miliseconds);
         }
 
@@ -106,7 +106,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
                 reminder.Start(100);
 
                 Thread.Sleep(50);
-                
+
                 reminder.Dispose();
 
                 Assert.That(reminder.Status, Is.EqualTo(ReminderStatus.NotStarted));

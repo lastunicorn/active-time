@@ -29,7 +29,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void Start_int_RingTime()
         {
-            int ringMiliseconds = 100;
+            const int ringMiliseconds = 100;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
@@ -59,7 +59,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void Start_int_Ring_Status()
         {
-            int ringMiliseconds = 100;
+            const int ringMiliseconds = 100;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
@@ -67,7 +67,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
                 reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
                 {
-                    status = (sender as Reminder).Status;
+                    if (sender != null)
+                    {
+                        status = ((Reminder)sender).Status;
+                    }
                     ringEvent.Set();
                 });
 
@@ -89,14 +92,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void Start_long_RingTime()
         {
-            long ringMiliseconds = 100;
+            const long ringMiliseconds = 100;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
                 DateTime startTime;
                 DateTime ringTime;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
                 {
                     ringTime = DateTime.Now;
                     ringEvent.Set();
@@ -119,15 +122,18 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void Start_long_Ring_Status()
         {
-            long ringMiliseconds = 100;
+            const long ringMiliseconds = 100;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
                 {
-                    status = (sender as Reminder).Status;
+                    if (sender != null)
+                    {
+                        status = ((Reminder)sender).Status;
+                    }
                     ringEvent.Set();
                 });
 
@@ -149,14 +155,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void Start_uint_RingTime()
         {
-            uint ringMiliseconds = 100;
+            const uint ringMiliseconds = 100;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
                 DateTime startTime;
                 DateTime ringTime;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
                 {
                     ringTime = DateTime.Now;
                     ringEvent.Set();
@@ -179,15 +185,18 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void Start_uint_Ring_Status()
         {
-            uint ringMiliseconds = 100;
+            const uint ringMiliseconds = 100;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
                 {
-                    status = (sender as Reminder).Status;
+                    if (sender != null)
+                    {
+                        status = ((Reminder)sender).Status;
+                    }
                     ringEvent.Set();
                 });
 
@@ -213,16 +222,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
-                DateTime startTime;
                 DateTime ringTime;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
                 {
                     ringTime = DateTime.Now;
                     ringEvent.Set();
                 });
 
-                startTime = DateTime.Now;
+                DateTime startTime = DateTime.Now;
                 ringTime = DateTime.MinValue;
 
                 reminder.Start(ringMiliseconds);
@@ -245,9 +253,12 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
                 {
-                    status = (sender as Reminder).Status;
+                    if (sender != null)
+                    {
+                        status = ((Reminder) sender).Status;
+                    }
                     ringEvent.Set();
                 });
 

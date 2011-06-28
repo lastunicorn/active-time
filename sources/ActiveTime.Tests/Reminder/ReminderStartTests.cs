@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Description("Tests if the StartTime value is set correctly by the Start method.")]
         public void Start_int_StartTime()
         {
-            int miliseconds = 1000;
+            const int miliseconds = 1000;
             reminder.Start(miliseconds);
 
             Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(100)));
@@ -37,7 +37,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Description("Tests if the Status value is set correctly by the Start method.")]
         public void Start_int_Status()
         {
-            int miliseconds = 1000;
+            const int miliseconds = 1000;
             reminder.Start(miliseconds);
 
             Assert.That(reminder.Status, Is.EqualTo(ReminderStatus.Running));
@@ -51,7 +51,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Description("Tests if the StartTime value is set correctly by the Start method.")]
         public void Start_long_StartTime()
         {
-            long miliseconds = 1000;
+            const long miliseconds = 1000;
             reminder.Start(miliseconds);
 
             Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(100)));
@@ -61,7 +61,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Description("Tests if the Status value is set correctly by the Start method.")]
         public void Start_long_Status()
         {
-            long miliseconds = 1000;
+            const long miliseconds = 1000;
             reminder.Start(miliseconds);
 
             Assert.That(reminder.Status, Is.EqualTo(ReminderStatus.Running));
@@ -75,7 +75,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Description("Tests if the StartTime value is set correctly by the Start method.")]
         public void Start_uint_StartTime()
         {
-            uint miliseconds = 1000;
+            const uint miliseconds = 1000;
             reminder.Start(miliseconds);
 
             Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(100)));
@@ -85,7 +85,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Description("Tests if the Status value is set correctly by the Start method.")]
         public void Start_uint_Status()
         {
-            uint miliseconds = 1000;
+            const uint miliseconds = 1000;
             reminder.Start(miliseconds);
 
             Assert.That(reminder.Status, Is.EqualTo(ReminderStatus.Running));

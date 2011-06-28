@@ -26,7 +26,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void WaitUntilRing_ReturnValue_Ring()
         {
-            int ringMiliseconds = 100;
+            const int ringMiliseconds = 100;
 
             reminder.Start(ringMiliseconds);
             bool isRing = reminder.WaitUntilRing();
@@ -38,13 +38,13 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(300)]
         public void WaitUntilRing_ReturnValue_Stop()
         {
-            int ringMiliseconds = 200;
-            int stopMiliseconds = 100;
+            const int ringMiliseconds = 200;
+            const int stopMiliseconds = 100;
 
             reminder.Start(ringMiliseconds);
 
             // Set the timer to stop the reminder.
-            new Timer(new TimerCallback(delegate(object o) { reminder.Stop(); }), null, stopMiliseconds, -1);
+            new Timer(new TimerCallback(o => reminder.Stop()), null, stopMiliseconds, -1);
 
             bool isRing = reminder.WaitUntilRing();
 
@@ -55,7 +55,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(200)]
         public void WaitUntilRing_Time_Ring()
         {
-            int ringMiliseconds = 100;
+            const int ringMiliseconds = 100;
 
             DateTime startTime = DateTime.Now;
 
@@ -71,15 +71,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(300)]
         public void WaitUntilRing_Time_Stop()
         {
-            int ringMiliseconds = 200;
-            int stopMiliseconds = 100;
+            const int ringMiliseconds = 200;
+            const int stopMiliseconds = 100;
 
             DateTime startTime = DateTime.Now;
 
             reminder.Start(ringMiliseconds);
 
             // Set the timer to stop the reminder.
-            new Timer(new TimerCallback(delegate(object o) { reminder.Stop(); }), null, stopMiliseconds, -1);
+            new Timer(new TimerCallback(o => reminder.Stop()), null, stopMiliseconds, -1);
 
             reminder.WaitUntilRing();
 

@@ -29,7 +29,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(400)]
         public void SnoozeDefault_Status()
         {
-            int ringMiliseconds = 100;
+            const int ringMiliseconds = 100;
 
             reminder.SnoozeTime = TimeSpan.FromMilliseconds(200);
 
@@ -60,7 +60,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(400)]
         public void SnoozeDefault_Time()
         {
-            int ringMiliseconds = 100;
+            const int ringMiliseconds = 100;
 
             reminder.SnoozeTime = TimeSpan.FromMilliseconds(200);
 
@@ -108,8 +108,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
         [Timeout(400)]
         public void Snooze_Time()
         {
-            int ringMiliseconds = 100;
-            int snoozeMiliseconds = 150;
+            const int ringMiliseconds = 100;
+            const int snoozeMiliseconds = 150;
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {

@@ -45,15 +45,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
                                                              stoppedEventWasRaised = true;
                                                          });
 
-                //reminder.Stopped += new EventHandler(delegate(object sender, EventArgs e)
-                //{
-                //    if (sender != null)
-                //    {
-                //        status = ((Reminder) sender).Status;
-                //    }
-                //    stoppedEventWasRaised = true;
-                //});
-
                 reminder.Start(ringMiliseconds);
 
                 Thread.Sleep(50);
