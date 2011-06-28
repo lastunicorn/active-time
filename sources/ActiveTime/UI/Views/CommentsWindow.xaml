@@ -40,7 +40,7 @@
 
             <TextBox Name="textBoxComments" Grid.Row="1" Grid.Column="1" Margin="5"
                     Text="{Binding Path=Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    AcceptsReturn="True" />
+                    AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
 
         </Grid>
 
