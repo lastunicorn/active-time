@@ -1,0 +1,6 @@
+﻿CREATE TABLE [records] (
+[id] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,
+[date] DATE  NOT NULL,
+[start_time] TIME  NOT NULL,
+[end_time] TIME  NOT NULL
+)

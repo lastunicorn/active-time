@@ -1,0 +1,187 @@
+﻿using System;
+using System.Collections;
+using System.Threading;
+
+namespace DustInTheWind.ActiveTime.Watchman
+{
+    /// <summary>
+    /// This class ensures that an instance of itself with the same name
+    /// can not be created twice.
+    /// </summary>
+    public class Guard : IDisposable
+    {
+        #region private Mutex mutex
+
+        /// <summary>
+        /// The <see cref="Mutex"/> object used to ensure that only one instance
+        /// of the class is created on the current machine. (Machine level)
+        /// </summary>
+        private Mutex mutex;
+
+        #endregion
+
+        #region private static Hashtable localInstanceNames = new Hashtable();
+        
+        /// <summary>
+        /// Contains the names of the <see cref="Guard"/> instances running at the application level
+        /// in the current application.
+        /// </summary>
+        private static Hashtable localInstanceNames = new Hashtable(); 
+        
+        #endregion
+
+        #region public string Name
+
+        /// <summary>
+        /// The name of the current instance.
+        /// </summary>
+        private string name;
+
+        /// <summary>
+        /// Gets the name of the current instance.
+        /// </summary>
+        public string Name
+        {
+            get { return name; }
+        }
+
+        #endregion
+
+        #region public GuardLevel GuardLevel
+
+        /// <summary>
+        /// Specifies the level at which the current instance of the <see cref="Guard"/> class
+        /// will have efect.
+        /// </summary>
+        private GuardLevel guardLevel;
+
+        /// <summary>
+        /// Gets a Value that specifies the level at which the current instance of the
+        /// <see cref="Guard"/> class will have efect.
+        /// </summary>
+        public GuardLevel GuardLevel
+        {
+            get { return guardLevel; }
+        }
+
+        #endregion
+
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Guard"/> class with
+        /// the name that identifies it and 
+        /// the level at which will have efect.
+        /// </summary>
+        /// <param name="name">The name that identifies the instance that will be created.</param>
+        /// <param name="guardLevel">The level at which the new instance will have efect.</param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="AutomaticOrderSystemException"></exception>
+        public Guard(string name, GuardLevel guardLevel)
+        {
+            if (name == null)
+                throw new ArgumentNullException("name");
+
+            this.name = name;
+            this.guardLevel = guardLevel;
+
+            switch (guardLevel)
+            {
+                case GuardLevel.Application:
+                    {
+                        lock (Guard.localInstanceNames)
+                        {
+                            if (Guard.localInstanceNames.ContainsKey(name))
+                            {
+                                throw new ActiveTimeException(string.Format("Another instance with the name '{0}' already exists.", name));
+                            }
+                            else
+                            {
+                                Guard.localInstanceNames.Add(name, name);
+                            }
+                        }
+                    }
+                    break;
+
+                case GuardLevel.Machine:
+                    {
+                        // Create the mutex.
+                        this.mutex = new Mutex(false, name);
+
+                        // Gain exclusive access to the mutex.
+                        bool access = this.mutex.WaitOne(0, true);
+
+                        if (!access)
+                        {
+                            throw new ActiveTimeException(string.Format("Another instance with the name '{0}' already exists.", name));
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid guard level.", "guardLevel");
+            }
+        }
+
+        #endregion
+
+
+        #region IDisposable Members
+
+        private bool disposed = false;
+
+        /// <summary>
+        /// Releases all resources used by the current instance.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases all resources used by the current instance.
+        /// </summary>
+        /// <remarks>
+        /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
+        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be disposed.</para>
+        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be disposed.</para>
+        /// </remarks>
+        /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
+        private void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!this.disposed)
+            {
+                // If disposing equals true, dispose all managed resources.
+                if (disposing)
+                {
+                    // Dispose managed resources.
+                    // ...
+
+                    lock(Guard.localInstanceNames)
+                    {
+                        Guard.localInstanceNames.Remove(this.name);
+                    }
+
+                    if (this.mutex != null)
+                        this.mutex.Close();
+                }
+
+                // Call the appropriate methods to clean up unmanaged resources here.
+                // ...
+
+                disposed = true;
+            }
+        }
+
+        ~Guard()
+        {
+            Dispose(false);
+        }
+
+        #endregion
+    }
+}
