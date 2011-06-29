@@ -19,6 +19,18 @@ namespace DustInTheWind.ActiveTime.UI.Models
             }
         }
 
+        private TimeSpan activeTime;
+
+        public TimeSpan ActiveTime
+        {
+            get { return activeTime; }
+            private set
+            {
+                activeTime = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("ActiveTime"));
+            }
+        }
+
         private TimeSpan totalTime;
 
         public TimeSpan TotalTime
@@ -28,18 +40,6 @@ namespace DustInTheWind.ActiveTime.UI.Models
             {
                 totalTime = value;
                 OnPropertyChanged(new PropertyChangedEventArgs("TotalTime"));
-            }
-        }
-
-        private TimeSpan intervalTime;
-
-        public TimeSpan IntervalTime
-        {
-            get { return intervalTime; }
-            private set
-            {
-                intervalTime = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("IntervalTime"));
             }
         }
 
@@ -54,8 +54,9 @@ namespace DustInTheWind.ActiveTime.UI.Models
                 dayRecord = value;
                 OnPropertyChanged(new PropertyChangedEventArgs("DayRecord"));
                 OnPropertyChanged(new PropertyChangedEventArgs("Records"));
+                UpdateActiveTime();
                 UpdateTotalTime();
-                UpdateFullTime();
+                UpdateBeginTime();
             }
         }
 
@@ -77,15 +78,15 @@ namespace DustInTheWind.ActiveTime.UI.Models
             }
         }
 
-        private TimeSpan? firstTime;
+        private TimeSpan? beginTime;
 
-        public TimeSpan? FirstTime
+        public TimeSpan? BeginTime
         {
-            get { return firstTime; }
+            get { return beginTime; }
             set
             {
-                firstTime = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("FirstTime"));
+                beginTime = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("BeginTime"));
             }
         }
 
@@ -127,14 +128,19 @@ namespace DustInTheWind.ActiveTime.UI.Models
         #endregion
 
 
-        private void UpdateTotalTime()
+        private void UpdateActiveTime()
         {
-            TotalTime = dayRecord != null ? dayRecord.GetTotalTime() : TimeSpan.Zero;
+            ActiveTime = dayRecord != null ? dayRecord.GetTotalTime() : TimeSpan.Zero;
         }
 
-        private void UpdateFullTime()
+        private void UpdateTotalTime()
         {
-            IntervalTime = dayRecord != null ? dayRecord.GetIntervalTime() : TimeSpan.Zero;
+            TotalTime = dayRecord != null ? dayRecord.GetIntervalTime() : TimeSpan.Zero;
+        }
+
+        private void UpdateBeginTime()
+        {
+            BeginTime = dayRecord.GetBeginTime() ?? TimeSpan.Zero;
         }
     }
 }

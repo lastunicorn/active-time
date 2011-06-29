@@ -57,30 +57,38 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Date:" Height="25" Name="label2" Margin="5" />
+            <Label Grid.Row="0" Grid.Column="0" Content="Date:" Height="25" Name="label2" Margin="3" />
 
-            <DatePicker Grid.Row="0" Grid.Column="1" Height="25" Margin="5" Name="datePicker1" VerticalAlignment="Top"
+            <DatePicker Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"  Height="25" Margin="3" Name="datePicker1" VerticalAlignment="Top"
                     SelectedDateFormat="Long"
                     SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Source={StaticResource ResourceKey=model}}"
                     HorizontalAlignment="Left" MinWidth="150" SelectedDateChanged="datePicker1_SelectedDateChanged" />
 
-            <Label Grid.Row="1" Grid.Column="0" Content="Total Time:" Name="label1" Margin="5" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Active Time:" Name="label1" Margin="3" />
 
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Name="textBoxTotalTime"
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Name="textBoxActiveTime"
+                    Text="{Binding Path=ActiveTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
+                    IsReadOnly="True" />
+
+            <Label Grid.Row="1" Grid.Column="2" Content="Total Time:" Name="label4" Margin="3" />
+
+            <TextBox Grid.Row="1" Grid.Column="3" Margin="3" Name="textBoxTotalTime"
                     Text="{Binding Path=TotalTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
                     IsReadOnly="True" />
 
-            <Label Grid.Row="2" Grid.Column="0" Content="Interval Time:" Name="label4" Margin="5" />
+            <Label Grid.Row="2" Grid.Column="0" Content="Begin:" Name="label5" Margin="3" />
 
-            <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Name="textBoxIntervalTime"
-                    Text="{Binding Path=IntervalTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Name="textBoxBeginTime"
+                    Text="{Binding Path=BeginTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
                     IsReadOnly="True" />
 
-            <Label Grid.Row="3" Grid.Column="0" Content="Records:" Name="label3" Margin="5" />
+            <Label Grid.Row="3" Grid.Column="0" Content="Records:" Name="label3" Margin="3" />
 
-            <ListBox Grid.Row="3" Grid.Column="1" Margin="5" Name="listBox1"
+            <ListBox Grid.Row="3" Grid.Column="1" Margin="3" Grid.ColumnSpan="3" Name="listBox1"
                     ItemsSource="{Binding Path=Records,Source={StaticResource ResourceKey=model}}"
                     SelectionMode="Extended">
 
@@ -104,7 +112,7 @@
 
             </ListBox>
 
-            <StackPanel Grid.Row="4" Grid.Column="1" Margin="5" Name="stackPanel2" Orientation="Horizontal">
+            <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" Name="stackPanel2" Orientation="Horizontal">
 
                 <Button Content="Comments" MinWidth="75" Name="buttonComments" Margin="0,0,5,0"
                         Click="buttonComments_Click" />

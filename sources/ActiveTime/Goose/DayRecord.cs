@@ -82,5 +82,17 @@ namespace DustInTheWind.ActiveTime
 
             return totalTime;
         }
+
+        public TimeSpan? GetBeginTime()
+        {
+            if (records != null && records.Length > 0)
+            {
+                return records[0].StartTime;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
