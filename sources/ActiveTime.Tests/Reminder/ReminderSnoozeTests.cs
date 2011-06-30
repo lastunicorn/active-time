@@ -96,7 +96,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
                 if (ringEvent.WaitOne())
                 {
-                    Assert.That(snoozeEndTime - snoozeStartTime, Is.EqualTo(reminder.SnoozeTime).Within(TimeSpan.FromMilliseconds(10)));
+                    Assert.That(snoozeEndTime - snoozeStartTime, Is.EqualTo(reminder.SnoozeTime).Within(TimeSpan.FromMilliseconds(50)));
                 }
             }
         }
@@ -144,7 +144,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
                 if (ringEvent.WaitOne())
                 {
-                    Assert.That(snoozeEndTime - snoozeStartTime, Is.EqualTo(TimeSpan.FromMilliseconds(snoozeMiliseconds)).Within(TimeSpan.FromMilliseconds(10)));
+                    Assert.That(snoozeEndTime - snoozeStartTime, Is.EqualTo(TimeSpan.FromMilliseconds(snoozeMiliseconds)).Within(TimeSpan.FromMilliseconds(50)));
                 }
             }
         }
