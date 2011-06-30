@@ -42,14 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Reminder\ReminderDisposeTests.cs" />
-    <Compile Include="Reminder\ReminderWaitUntilRingTests.cs" />
-    <Compile Include="Reminder\ReminderSnoozeTests.cs" />
-    <Compile Include="Reminder\ReminderStoppedEventTests.cs" />
-    <Compile Include="Reminder\ReminderStopTests.cs" />
-    <Compile Include="Reminder\ReminderRingEventTests.cs" />
-    <Compile Include="Reminder\ReminderStartTests.cs" />
-    <Compile Include="Reminder\ReminderInitializationTests.cs" />
+    <Compile Include="ReminderTests\ReminderDisposeTests.cs" />
+    <Compile Include="ReminderTests\ReminderInitializationTests.cs" />
+    <Compile Include="ReminderTests\ReminderRingEventTests.cs" />
+    <Compile Include="ReminderTests\ReminderSnoozeTests.cs" />
+    <Compile Include="ReminderTests\ReminderStartTests.cs" />
+    <Compile Include="ReminderTests\ReminderStoppedEventTests.cs" />
+    <Compile Include="ReminderTests\ReminderStopTests.cs" />
+    <Compile Include="ReminderTests\ReminderWaitUntilRingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +59,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reminder\TestCases.txt" />
+    <Content Include="ReminderTests\TestCases.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
