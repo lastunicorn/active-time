@@ -57,6 +57,7 @@ namespace DustInTheWind.ActiveTime.UI.Models
                 UpdateActiveTime();
                 UpdateTotalTime();
                 UpdateBeginTime();
+                UpdateEstimatedEndTime();
             }
         }
 
@@ -87,6 +88,18 @@ namespace DustInTheWind.ActiveTime.UI.Models
             {
                 beginTime = value;
                 OnPropertyChanged(new PropertyChangedEventArgs("BeginTime"));
+            }
+        }
+
+        private TimeSpan? estimatedEndTime;
+
+        public TimeSpan? EstimatedEndTime
+        {
+            get { return estimatedEndTime; }
+            set
+            {
+                estimatedEndTime = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("EstimatedEndTime"));
             }
         }
 
@@ -141,6 +154,11 @@ namespace DustInTheWind.ActiveTime.UI.Models
         private void UpdateBeginTime()
         {
             BeginTime = dayRecord.GetBeginTime() ?? TimeSpan.Zero;
+        }
+
+        private void UpdateEstimatedEndTime()
+        {
+            EstimatedEndTime = BeginTime + TimeSpan.FromHours(9);
         }
     }
 }
