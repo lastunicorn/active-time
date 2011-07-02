@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DustInTheWind.ActiveTime.Goose;
+using DustInTheWind.ActiveTime.Recording;
 using System.ComponentModel.Composition;
 using System.IO;
 

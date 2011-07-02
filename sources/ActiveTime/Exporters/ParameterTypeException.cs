@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace DustInTheWind.ActiveTime.Exporters
 {
+    /// <summary>
+    /// Exception thrown when the list of parameters provided to initialize an exporter
+    /// contains a parameter whose value is of a wrong type.
+    /// </summary>
     [Serializable]
     public class ParameterTypeException : ApplicationException
     {

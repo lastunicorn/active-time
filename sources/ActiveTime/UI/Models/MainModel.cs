@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using DustInTheWind.ActiveTime.Goose;
+using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime.UI.Models
 {

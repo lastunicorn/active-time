@@ -87,7 +87,7 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CsvUtil.cs" />
-    <Compile Include="Goose\DayRecord.cs" />
+    <Compile Include="Recording\DayRecord.cs" />
     <Compile Include="UI\Views\CommentsWindow.xaml.cs">
       <DependentUpon>CommentsWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -143,10 +143,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dal.cs" />
-    <Compile Include="Goose\Record.cs" />
-    <Compile Include="Goose\Recorder.cs" />
-    <Compile Include="Goose\RecorderState.cs" />
+    <Compile Include="Persistence\Dal.cs" />
+    <Compile Include="Recording\Record.cs" />
+    <Compile Include="Recording\Recorder.cs" />
+    <Compile Include="Recording\RecorderState.cs" />
     <Compile Include="UI\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

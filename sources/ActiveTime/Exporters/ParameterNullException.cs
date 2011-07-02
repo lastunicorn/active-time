@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace DustInTheWind.ActiveTime.Exporters
 {
+    /// <summary>
+    /// Exception thrown when the list of parameters provided to initialize an exporter
+    /// contains a null value for a mandatory parameter.
+    /// </summary>
     [Serializable]
     public class ParameterNullException : ApplicationException
     {

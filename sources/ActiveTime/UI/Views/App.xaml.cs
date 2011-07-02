@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
-using DustInTheWind.ActiveTime.Goose;
+using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI;
 using DustInTheWind.ActiveTime.UI.Views;
 using DustInTheWind.ActiveTime.Watchman;

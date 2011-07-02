@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using DustInTheWind.ActiveTime.Exporters;
-using DustInTheWind.ActiveTime.Goose;
+using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 

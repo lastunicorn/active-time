@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace DustInTheWind.ActiveTime.Exporters
 {
     /// <summary>
-    /// Exception raised by AutomaticOrderSystemException.
+    /// Exception raised by an Exporter.
     /// </summary>
     [Serializable]
     public class ExporterException : ApplicationException

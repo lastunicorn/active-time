@@ -1,10 +1,10 @@
 ﻿using System.Data.SQLite;
-using DustInTheWind.ActiveTime.Goose;
+using DustInTheWind.ActiveTime.Recording;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.Persistence
 {
     public class Dal
     {

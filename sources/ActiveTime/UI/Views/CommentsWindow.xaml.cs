@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
+using DustInTheWind.ActiveTime.Persistence;
 
 namespace DustInTheWind.ActiveTime.UI.Views
 {

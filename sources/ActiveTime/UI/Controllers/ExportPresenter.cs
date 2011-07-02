@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using DustInTheWind.ActiveTime.Exporters;
+using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 
