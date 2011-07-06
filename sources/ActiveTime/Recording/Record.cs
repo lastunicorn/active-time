@@ -19,17 +19,17 @@ using System;
 namespace DustInTheWind.ActiveTime.Recording
 {
     /// <summary>
-    /// Represents an interval of Time within a day.
+    /// Represents an interval of time within a day.
     /// </summary>
     public class Record
     {
         /// <summary>
-        /// The Date for which this record is created.
+        /// The date for which this record is created.
         /// </summary>
         private DateTime date;
 
         /// <summary>
-        /// Gets the Date for which this record is created.
+        /// Gets the date for which this record is created.
         /// </summary>
         public DateTime Date
         {
@@ -37,12 +37,12 @@ namespace DustInTheWind.ActiveTime.Recording
         }
 
         /// <summary>
-        /// The Time of day representing the start Time.
+        /// The time of day representing the start time.
         /// </summary>
         private TimeSpan startTime;
 
         /// <summary>
-        /// Gets the Time of day representing the start Time.
+        /// Gets the time of day representing the start time.
         /// </summary>
         public TimeSpan StartTime
         {
@@ -50,12 +50,12 @@ namespace DustInTheWind.ActiveTime.Recording
         }
 
         /// <summary>
-        /// The Time of day representing the end Time.
+        /// The time of day representing the end time.
         /// </summary>
         private TimeSpan endTime;
 
         /// <summary>
-        /// Gets the Time of day representing the end Time.
+        /// Gets the time of day representing the end time.
         /// </summary>
         public TimeSpan EndTime
         {
@@ -68,8 +68,8 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// Initializes a new instance of the <see cref="Record"/> class.
         /// </summary>
-        /// <param name="Date">The Date for which this record is created.</param>
-        /// <param name="startTime">The Time of day representing the start Time.</param>
+        /// <param name="date">The date for which this record is created.</param>
+        /// <param name="startTime">The time of day representing the start time.</param>
         public Record(DateTime date, TimeSpan startTime)
             : this(date, startTime, startTime)
         {
@@ -78,9 +78,9 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// Initializes a new instance of the <see cref="Record"/> class.
         /// </summary>
-        /// <param name="Date">The Date for which this record is created.</param>
-        /// <param name="startTime">The Time of day representing the start Time.</param>
-        /// <param name="endTime">The Time of day representing the end Time.</param>
+        /// <param name="date">The date for which this record is created.</param>
+        /// <param name="startTime">The time of day representing the start time.</param>
+        /// <param name="endTime">The time of day representing the end time.</param>
         public Record(DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
             this.date = date;

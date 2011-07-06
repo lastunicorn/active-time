@@ -177,7 +177,5 @@ namespace DustInTheWind.ActiveTime.UI.Models
         {
             EstimatedEndTime = BeginTime + TimeSpan.FromHours(9);
         }
-
-        
     }
 }
