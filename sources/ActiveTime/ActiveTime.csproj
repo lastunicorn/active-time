@@ -71,6 +71,7 @@
     <Compile Include="Exporters\ParameterTypeException.cs" />
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
+    <Compile Include="Recording\DayTimeInterval.cs" />
     <Compile Include="ReminderStatus.cs" />
     <Compile Include="RingEventArgs.cs" />
     <Compile Include="UI\Controllers\CommentsPresenter.cs" />

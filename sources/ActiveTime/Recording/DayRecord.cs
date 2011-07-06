@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
@@ -109,5 +110,24 @@ namespace DustInTheWind.ActiveTime.Recording
                 return null;
             }
         }
+
+        //public DayTimeInterval CalculateLunchBreak(DayRecord dayRecord)
+        //{
+        //    if (dayRecord == null || dayRecord.Records == null || dayRecord.Records.Length < 2)
+        //        return null; // no lunch break.
+
+        //    TimeSpan breakStartHour = dayRecord.Records[0].EndTime;
+        //    TimeSpan breakEndHour = dayRecord.Records[0].EndTime;
+
+        //    List<DayTimeInterval> breaks = new List<DayTimeInterval>();
+
+        //    foreach (Record record in dayRecord.Records)
+        //    {
+        //        breakEndHour = record.StartTime;
+        //        breaks.Add(new DayTimeInterval(breakStartHour, breakEndHour));
+
+        //        breakStartHour = record.EndTime;
+        //    }
+        //}
     }
 }

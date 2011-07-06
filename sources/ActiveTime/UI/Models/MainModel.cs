@@ -17,6 +17,7 @@
 using System;
 using System.ComponentModel;
 using DustInTheWind.ActiveTime.Recording;
+using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.UI.Models
 {
@@ -176,5 +177,7 @@ namespace DustInTheWind.ActiveTime.UI.Models
         {
             EstimatedEndTime = BeginTime + TimeSpan.FromHours(9);
         }
+
+        
     }
 }

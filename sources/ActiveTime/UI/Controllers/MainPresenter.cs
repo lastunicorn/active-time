@@ -113,7 +113,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         /// Sets the status of the model to the specified Text and
         /// starts the timer that will reset it back to the default one.
         /// </summary>
-        /// <param name="Text">The Text to be set as status.</param>
+        /// <param name="text">The Text to be set as status.</param>
         /// <param name="timeout">The Time in miliseconds after which the status will be reset to the default Text. If this Value is 0, the status will never be reset.</param>
         private void SetStatus(string text, int timeout)
         {
