@@ -140,26 +140,6 @@ namespace DustInTheWind.ActiveTime.UI.Views
             presenter.MenuItemExportClicked();
         }
 
-        private void menuItemExportFull_Click(object sender, RoutedEventArgs e)
-        {
-            presenter.MenuItemExportFullClicked();
-        }
-
-        private void menuItemExportNormal_Click(object sender, RoutedEventArgs e)
-        {
-            presenter.MenuItemExportNormalClicked();
-        }
-
-        private void menuItemExportMinimal_Click(object sender, RoutedEventArgs e)
-        {
-            presenter.MenuItemExportMinimalClicked();
-        }
-
-        private void menuItemExportSafe_Click(object sender, RoutedEventArgs e)
-        {
-            presenter.MenuItemExportSafeClicked();
-        }
-
         public void ShowExportWindow(ActiveTimeApplication activeTimeApplication)
         {
             ExportWindow window = new ExportWindow(activeTimeApplication);

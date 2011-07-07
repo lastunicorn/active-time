@@ -19,10 +19,6 @@
         <Menu Height="23" Name="menu1" DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Name="menuItemExport" Header="_Export..." Click="menuItemExport_Click" />
-                <MenuItem Name="menuItemExportFull" Header="Export _Full" Click="menuItemExportFull_Click" />
-                <MenuItem Name="menuItemExportNormal" Header="Export _Normal" Click="menuItemExportNormal_Click" />
-                <MenuItem Name="menuItemExportMinimal" Header="Export _Minimal" Click="menuItemExportMinimal_Click" />
-                <MenuItem Name="menuItemExportSafe" Header="Export _Safe" Click="menuItemExportSafe_Click" />
                 <Separator Margin="0" />
                 <MenuItem Name="menuItemStatistics" Header="_Statistics" Click="menuItemStatistics_Click" />
                 <Separator Margin="0" />

@@ -17,9 +17,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
-using DustInTheWind.ActiveTime.Exporters;
 using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
@@ -244,39 +242,39 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
             }
         }
 
-        public void MenuItemExportSafeClicked()
-        {
-            try
-            {
-                DateTime? selectedDate = model.Date;
-                if (selectedDate != null)
-                {
-                    using (StreamWriter sw = new StreamWriter("export.csv"))
-                    {
-                        // Write the header.
-                        sw.WriteLine("Date;Person;Start Time HH:mm;End Time HH:mm;Working hours;Lunch Break Hours;Description;");
+        //public void MenuItemExportSafeClicked()
+        //{
+        //    try
+        //    {
+        //        DateTime? selectedDate = model.Date;
+        //        if (selectedDate != null)
+        //        {
+        //            using (StreamWriter sw = new StreamWriter("export.csv"))
+        //            {
+        //                // Write the header.
+        //                sw.WriteLine("Date;Person;Start Time HH:mm;End Time HH:mm;Working hours;Lunch Break Hours;Description;");
 
-                        int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
-                        for (int i = 1; i <= daysInMonth; i++)
-                        {
-                            DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
+        //                int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
+        //                for (int i = 1; i <= daysInMonth; i++)
+        //                {
+        //                    DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
 
-                            DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
+        //                    DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
 
-                            if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
-                                continue;
+        //                    if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
+        //                        continue;
 
-                            IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.SafeExporter"];
-                            exporter.ExportDayRecord(sw, dayRecords);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                view.DisplayError(ex);
-            }
-        }
+        //                    IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.SafeExporter"];
+        //                    exporter.ExportDayRecord(sw, dayRecords);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        view.DisplayError(ex);
+        //    }
+        //}
 
         public void MenuItemExportClicked()
         {
@@ -290,122 +288,122 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
             }
         }
 
-        public void MenuItemExportFullClicked()
-        {
-            try
-            {
-                DateTime? selectedDate = model.Date;
-                if (selectedDate != null)
-                {
-                    IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.FullExporter"];
+        //public void MenuItemExportFullClicked()
+        //{
+        //    try
+        //    {
+        //        DateTime? selectedDate = model.Date;
+        //        if (selectedDate != null)
+        //        {
+        //            IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.FullExporter"];
 
-                    if (exporter != null)
-                    {
-                        using (StreamWriter sw = new StreamWriter("export_full.csv"))
-                        {
-                            exporter.ExportHeader(sw);
+        //            if (exporter != null)
+        //            {
+        //                using (StreamWriter sw = new StreamWriter("export_full.csv"))
+        //                {
+        //                    exporter.ExportHeader(sw);
 
-                            int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
-                            for (int i = 1; i <= daysInMonth; i++)
-                            {
-                                DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
+        //                    int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
+        //                    for (int i = 1; i <= daysInMonth; i++)
+        //                    {
+        //                        DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
 
-                                DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
+        //                        DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
 
-                                if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
-                                    continue;
+        //                        if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
+        //                            continue;
 
-                                exporter.ExportDayRecord(sw, dayRecords);
-                            }
+        //                        exporter.ExportDayRecord(sw, dayRecords);
+        //                    }
 
-                            exporter.ExportFooter(sw);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                view.DisplayError(ex);
-            }
-        }
+        //                    exporter.ExportFooter(sw);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        view.DisplayError(ex);
+        //    }
+        //}
 
-        public void MenuItemExportNormalClicked()
-        {
-            try
-            {
-                DateTime? selectedDate = model.Date;
-                if (selectedDate != null)
-                {
-                    IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.NormalExporter"];
+        //public void MenuItemExportNormalClicked()
+        //{
+        //    try
+        //    {
+        //        DateTime? selectedDate = model.Date;
+        //        if (selectedDate != null)
+        //        {
+        //            IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.NormalExporter"];
 
-                    if (exporter != null)
-                    {
-                        using (StreamWriter sw = new StreamWriter("export_normal.csv"))
-                        {
-                            exporter.ExportHeader(sw);
+        //            if (exporter != null)
+        //            {
+        //                using (StreamWriter sw = new StreamWriter("export_normal.csv"))
+        //                {
+        //                    exporter.ExportHeader(sw);
 
-                            int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
-                            for (int i = 1; i <= daysInMonth; i++)
-                            {
-                                DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
+        //                    int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
+        //                    for (int i = 1; i <= daysInMonth; i++)
+        //                    {
+        //                        DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
 
-                                DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
+        //                        DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
 
-                                if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
-                                    continue;
+        //                        if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
+        //                            continue;
 
-                                exporter.ExportDayRecord(sw, dayRecords);
-                            }
+        //                        exporter.ExportDayRecord(sw, dayRecords);
+        //                    }
 
-                            exporter.ExportFooter(sw);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                view.DisplayError(ex);
-            }
-        }
+        //                    exporter.ExportFooter(sw);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        view.DisplayError(ex);
+        //    }
+        //}
 
-        public void MenuItemExportMinimalClicked()
-        {
-            try
-            {
-                DateTime? selectedDate = model.Date;
-                if (selectedDate != null)
-                {
-                    IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.MinimalExporter"];
+        //public void MenuItemExportMinimalClicked()
+        //{
+        //    try
+        //    {
+        //        DateTime? selectedDate = model.Date;
+        //        if (selectedDate != null)
+        //        {
+        //            IExporter exporter = activeTimeApplication.Exporters["DustInTheWind.ActiveTime.Exporters.MinimalExporter"];
 
-                    if (exporter != null)
-                    {
-                        using (StreamWriter sw = new StreamWriter("export_minimal.csv"))
-                        {
-                            exporter.ExportHeader(sw);
+        //            if (exporter != null)
+        //            {
+        //                using (StreamWriter sw = new StreamWriter("export_minimal.csv"))
+        //                {
+        //                    exporter.ExportHeader(sw);
 
-                            int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
-                            for (int i = 1; i <= daysInMonth; i++)
-                            {
-                                DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
+        //                    int daysInMonth = DateTime.DaysInMonth(selectedDate.Value.Year, selectedDate.Value.Month);
+        //                    for (int i = 1; i <= daysInMonth; i++)
+        //                    {
+        //                        DateTime date = new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, i);
 
-                                DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
+        //                        DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
 
-                                if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
-                                    continue;
+        //                        if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
+        //                            continue;
 
-                                exporter.ExportDayRecord(sw, dayRecords);
-                            }
+        //                        exporter.ExportDayRecord(sw, dayRecords);
+        //                    }
 
-                            exporter.ExportFooter(sw);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                view.DisplayError(ex);
-            }
-        }
+        //                    exporter.ExportFooter(sw);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        view.DisplayError(ex);
+        //    }
+        //}
 
         public void MenuItemStatisticsClicked()
         {
