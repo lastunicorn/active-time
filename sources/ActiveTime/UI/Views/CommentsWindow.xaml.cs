@@ -16,11 +16,10 @@
 
 using System;
 using System.Windows;
-using System.Windows.Controls;
+using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
-using DustInTheWind.ActiveTime.Persistence;
 
 namespace DustInTheWind.ActiveTime.UI.Views
 {
@@ -78,5 +77,15 @@ namespace DustInTheWind.ActiveTime.UI.Views
         {
             DialogResult = true;
         }
+
+        //private void checkBoxWrap_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    presenter.WrapChecked();
+        //}
+
+        //private void checkBoxWrap_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    presenter.WrapUnhecked();
+        //}
     }
 }

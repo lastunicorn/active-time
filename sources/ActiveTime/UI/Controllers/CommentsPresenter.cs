@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows;
 using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
@@ -118,6 +119,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                 try
                 {
                     UpdateModel();
+                    model.CommentTextWrap = true;
                 }
                 finally
                 {
@@ -130,5 +132,29 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                 view.DisplayError(ex);
             }
         }
+
+        //public void WrapChecked()
+        //{
+        //    try
+        //    {
+        //        model.CommentWrapping = TextWrapping.Wrap;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        view.DisplayError(ex);
+        //    }
+        //}
+
+        //public void WrapUnhecked()
+        //{
+        //    try
+        //    {
+        //        model.CommentWrapping = TextWrapping.NoWrap;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        view.DisplayError(ex);
+        //    }
+        //}
     }
 }

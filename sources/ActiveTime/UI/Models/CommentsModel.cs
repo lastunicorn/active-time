@@ -16,6 +16,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Windows;
 
 namespace DustInTheWind.ActiveTime.UI.Models
 {
@@ -55,6 +56,17 @@ namespace DustInTheWind.ActiveTime.UI.Models
                 {
                     DataIsChanged = true;
                 }
+            }
+        }
+
+        private bool commentTextWrap;
+        public bool CommentTextWrap
+        {
+            get { return commentTextWrap; }
+            set
+            {
+                commentTextWrap = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("CommentTextWrap"));
             }
         }
 

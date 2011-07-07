@@ -1,8 +1,13 @@
 ﻿<views:WindowBase x:Class="DustInTheWind.ActiveTime.UI.Views.CommentsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.UI"
         xmlns:views="clr-namespace:DustInTheWind.ActiveTime.UI.Views"
         Title="Comments" Height="300" Width="500" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" ShowInTaskbar="False">
+
+    <Window.Resources>
+        <ui:BooleanConverter x:Key="BooleanConverter" />
+    </Window.Resources>
 
     <DockPanel Margin="5,5,5,10">
 
@@ -27,6 +32,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Content="Date" Margin="5" />
@@ -40,8 +46,10 @@
 
             <TextBox Name="textBoxComments" Grid.Row="1" Grid.Column="1" Margin="5"
                     Text="{Binding Path=Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
+                    AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource ResourceKey=BooleanConverter}}" />
 
+            <CheckBox Grid.Row="2" Grid.Column="1" Name="checkBoxWrap" Content="Wrap" Margin="3" IsChecked="{Binding Path=CommentTextWrap}" />
+            
         </Grid>
 
     </DockPanel>

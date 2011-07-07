@@ -84,6 +84,7 @@
     <Compile Include="ActiveTimeApplication.cs" />
     <Compile Include="UI\Models\Month.cs" />
     <Compile Include="UI\Models\StatisticsModel.cs" />
+    <Compile Include="UI\BooleanConverter.cs" />
     <Compile Include="UI\Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>

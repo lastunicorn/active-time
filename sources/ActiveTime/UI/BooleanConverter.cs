@@ -15,24 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows;
 using System.Windows.Data;
-using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime.UI
 {
-    public class RecordConverter : IValueConverter
+    /// <summary>
+    /// Converts the <see cref="TextWrapping"/> value into <see cref="Boolean"/> value and viceversa.
+    /// </summary>
+    public class BooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value == null || value.GetType() != typeof(Record))
+            if (value == null || value.GetType() != typeof(bool))
                 return null;
 
-            if (targetType == typeof(string) || targetType == typeof(object))
-            {
-                Record record = (Record)value;
+            if (value.GetType() == targetType)
+                return value;
 
-                TimeSpan timeDiff = record.EndTime - record.StartTime;
-                return record.StartTime.ToString() + " - " + record.EndTime.ToString() + " = " + timeDiff.ToString();
+            if (targetType == typeof(TextWrapping))
+            {
+                return (bool)value ? TextWrapping.Wrap : TextWrapping.NoWrap;
             }
             else
             {
@@ -42,7 +45,19 @@ namespace DustInTheWind.ActiveTime.UI
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return null;
+            if (value == null || targetType != typeof(bool))
+                return null;
+
+            if (value.GetType() == typeof(TextWrapping))
+            {
+                TextWrapping textWrapping = (TextWrapping)value;
+
+                return textWrapping != TextWrapping.NoWrap;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
