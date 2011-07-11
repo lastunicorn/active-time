@@ -4,6 +4,7 @@
         xmlns:views="clr-namespace:DustInTheWind.ActiveTime.UI.Views"
         xmlns:models="clr-namespace:DustInTheWind.ActiveTime.UI.Models"
         xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.UI"
+        xmlns:recording="clr-namespace:DustInTheWind.ActiveTime.Recording"
         Title="Active Time" Loaded="Window_Loaded"
         ResizeMode="CanResizeWithGrip" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" MinWidth="350" MinHeight="350"
@@ -39,6 +40,15 @@
 
                 <ui:RecordListConverter x:Key="RecordListConverter" />
                 <ui:RecordConverter x:Key="RecordConverter" />
+                <DataTemplate DataType="{x:Type recording:Record}">
+                    <Label Padding="10,0,0,0"
+                                Content="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type recording:Break}">
+                    <TextBlock Padding="0,0,10,0" HorizontalAlignment="Right"
+                           Background="Azure"
+                                Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
+                </DataTemplate>
 
             </Grid.Resources>
 
@@ -98,12 +108,6 @@
                     ItemsSource="{Binding Path=Records,Source={StaticResource ResourceKey=model}}"
                     SelectionMode="Extended">
 
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Label Padding="10,0,0,0"
-                                Content="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
 
                 <ListBox.ContextMenu>
                     <ContextMenu Name="contextMenuRecords">

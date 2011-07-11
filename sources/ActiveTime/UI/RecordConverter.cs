@@ -24,7 +24,10 @@ namespace DustInTheWind.ActiveTime.UI
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value == null || value.GetType() != typeof(Record))
+            //if (value == null || value.GetType() != typeof(Record))
+            //    return null;
+
+            if (value == null || !(value is Record))
                 return null;
 
             if (targetType == typeof(string) || targetType == typeof(object))

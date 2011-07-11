@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
@@ -128,5 +129,27 @@ namespace DustInTheWind.ActiveTime.Recording
         //        breakStartHour = record.EndTime;
         //    }
         //}
+
+        public Record[] GetRecords(bool includeBreaks)
+        {
+            if (records == null || records.Length == 0 || !includeBreaks)
+                return records;
+
+
+            List<Record> allRecords = new List<Record>();
+
+            allRecords.Add(records[0]);
+            
+            Record previousRecord = records[0];
+            
+            foreach (Record record in records)
+            {
+                allRecords.Add(new Break(previousRecord.Date, previousRecord.EndTime, record.StartTime));
+                allRecords.Add(record);
+                previousRecord = record;
+            }
+
+            return allRecords.ToArray();
+        }
     }
 }
