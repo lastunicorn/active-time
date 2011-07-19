@@ -160,12 +160,12 @@ namespace DustInTheWind.ActiveTime.UI.Models
 
         private void UpdateActiveTime()
         {
-            ActiveTime = dayRecord != null ? dayRecord.GetTotalTime() : TimeSpan.Zero;
+            ActiveTime = dayRecord != null ? dayRecord.GetTotalActiveTime() : TimeSpan.Zero;
         }
 
         private void UpdateTotalTime()
         {
-            TotalTime = dayRecord != null ? dayRecord.GetIntervalTime() : TimeSpan.Zero;
+            TotalTime = dayRecord != null ? dayRecord.GetTotalTime() : TimeSpan.Zero;
         }
 
         private void UpdateBeginTime()

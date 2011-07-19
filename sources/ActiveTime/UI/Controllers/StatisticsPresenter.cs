@@ -100,7 +100,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                     {
                         TimeSpan lastHour = TimeSpan.Zero;
 
-                        foreach (Record record in dayRecord.Records)
+                        foreach (Record record in dayRecord.ActiveTimeRecords)
                         {
                             if (lastHour != TimeSpan.Zero)
                             {

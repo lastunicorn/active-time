@@ -176,6 +176,14 @@ namespace DustInTheWind.ActiveTime.Recording
             }
         }
 
+        public TimeSpan? TimeFromLastStop()
+        {
+            if (currentRecord == null) return null;
+
+            DateTime now = DateTime.Now;
+            return now - now.Date.Add(currentRecord.EndTime);
+        }
+
         public void Start()
         {
             switch (State)

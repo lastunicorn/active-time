@@ -19,22 +19,36 @@ using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
+    /// <summary>
+    /// Contains activity information for a single day.
+    /// </summary>
     public class DayRecord
     {
+        /// <summary>
+        /// The date for which the current instance contains information.
+        /// </summary>
         private DateTime date;
 
+        /// <summary>
+        /// Gets or sets the date for which the current instance contains information.
+        /// </summary>
         public DateTime Date
         {
             get { return date; }
-            set { date = value; }
         }
 
-        private Record[] records;
+        /// <summary>
+        /// The records representing the active time.
+        /// </summary>
+        private Record[] activeTimeRecords;
 
-        public Record[] Records
+        /// <summary>
+        /// Gets or sets the records representing the active time.
+        /// </summary>
+        public Record[] ActiveTimeRecords
         {
-            get { return records; }
-            set { records = value; }
+            get { return activeTimeRecords; }
+            set { activeTimeRecords = value; }
         }
 
         private string comment;
@@ -47,12 +61,12 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public bool IsEmpty
         {
-            get { return (records == null || records.Length == 0) && (comment == null || comment.Length == 0); }
+            get { return (activeTimeRecords == null || activeTimeRecords.Length == 0) && (comment == null || comment.Length == 0); }
         }
 
         public bool HasRecords
         {
-            get { return records != null && records.Length > 0; }
+            get { return activeTimeRecords != null && activeTimeRecords.Length > 0; }
         }
 
         public bool HasComment
@@ -60,13 +74,36 @@ namespace DustInTheWind.ActiveTime.Recording
             get { return comment != null && comment.Length > 0; }
         }
 
-        public TimeSpan GetTotalTime()
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DayRecord"/> class with
+        /// the current date.
+        /// </summary>
+        public DayRecord()
+            : this(DateTime.Today)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DayRecord"/> class with
+        /// the date for which it contains information.
+        /// </summary>
+        /// <param name="date">The date for which the new instance contains information.</param>
+        public DayRecord(DateTime date)
+        {
+            this.date = date;
+        }
+
+        #endregion
+
+        public TimeSpan GetTotalActiveTime()
         {
             TimeSpan totalTime = TimeSpan.Zero;
 
-            if (records != null)
+            if (activeTimeRecords != null)
             {
-                foreach (Record record in records)
+                foreach (Record record in activeTimeRecords)
                 {
                     totalTime += record.EndTime - record.StartTime;
                 }
@@ -75,16 +112,16 @@ namespace DustInTheWind.ActiveTime.Recording
             return totalTime;
         }
 
-        public TimeSpan GetIntervalTime()
+        public TimeSpan GetTotalTime()
         {
             TimeSpan totalTime = TimeSpan.Zero;
 
-            if (records != null)
+            if (activeTimeRecords != null)
             {
-                TimeSpan beginHour = records[0].StartTime;
-                TimeSpan endHour = records[0].EndTime;
+                TimeSpan beginHour = activeTimeRecords[0].StartTime;
+                TimeSpan endHour = activeTimeRecords[0].EndTime;
 
-                foreach (Record record in records)
+                foreach (Record record in activeTimeRecords)
                 {
                     if (record.StartTime < beginHour)
                         beginHour = record.StartTime;
@@ -101,9 +138,9 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public TimeSpan? GetBeginTime()
         {
-            if (records != null && records.Length > 0)
+            if (activeTimeRecords != null && activeTimeRecords.Length > 0)
             {
-                return records[0].StartTime;
+                return activeTimeRecords[0].StartTime;
             }
             else
             {
@@ -132,17 +169,17 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public Record[] GetRecords(bool includeBreaks)
         {
-            if (records == null || records.Length == 0 || !includeBreaks)
-                return records;
+            if (activeTimeRecords == null || activeTimeRecords.Length == 0 || !includeBreaks)
+                return activeTimeRecords;
 
 
             List<Record> allRecords = new List<Record>();
 
-            allRecords.Add(records[0]);
-            
-            Record previousRecord = records[0];
-            
-            foreach (Record record in records)
+            allRecords.Add(activeTimeRecords[0]);
+
+            Record previousRecord = activeTimeRecords[0];
+
+            foreach (Record record in activeTimeRecords)
             {
                 allRecords.Add(new Break(previousRecord.Date, previousRecord.EndTime, record.StartTime));
                 allRecords.Add(record);

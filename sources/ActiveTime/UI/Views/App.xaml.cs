@@ -297,7 +297,16 @@ namespace DustInTheWind.ActiveTime
                 case SessionSwitchReason.SessionLogon:
                 case SessionSwitchReason.SessionUnlock:
                     // The user returned to his desk.
+
+                    TimeSpan? timeFromLastStop = activeTimeApplication.Recorder.TimeFromLastStop();
+
                     activeTimeApplication.Recorder.Start();
+
+                    if (timeFromLastStop < TimeSpan.FromSeconds(20))
+                    {
+                        PauseWindow pauseWindow = new PauseWindow("Really?\nDo you think you can trick me?\n\nYou should really make a PAUSE.");
+                        pauseWindow.ShowDialog();
+                    }
                     break;
 
                 default:

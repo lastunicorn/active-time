@@ -167,12 +167,11 @@ namespace DustInTheWind.ActiveTime.Persistence
             Record[] records = GetRecords(date);
             string comment = GetComment(date);
 
-            DayRecord dayRecord = new DayRecord();
+            DayRecord dayRecord = new DayRecord(date);
 
             if ((records != null && records.Length > 0) || (comment != null && comment.Length > 0))
             {
-                dayRecord.Date = date;
-                dayRecord.Records = records;
+                dayRecord.ActiveTimeRecords = records;
                 dayRecord.Comment = comment;
             }
 
