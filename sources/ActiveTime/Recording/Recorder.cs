@@ -37,6 +37,7 @@ namespace DustInTheWind.ActiveTime.Recording
         private DateTime currentDate;
         private object stateSynchronizer = new object();
 
+        private Record lastRecord;
         private Record currentRecord;
 
         public Record CurrentRecord
@@ -178,10 +179,11 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public TimeSpan? TimeFromLastStop()
         {
-            if (currentRecord == null) return null;
+            if (currentRecord != null) return null;
+            if (lastRecord == null) return null;
 
             DateTime now = DateTime.Now;
-            return now - now.Date.Add(currentRecord.EndTime);
+            return now - now.Date.Add(lastRecord.EndTime);
         }
 
         public void Start()
@@ -221,6 +223,7 @@ namespace DustInTheWind.ActiveTime.Recording
                         NewRecordIfNeeded();
                         UpdateTime();
 
+                        lastRecord = currentRecord;
                         currentRecord = null;
 
                         State = RecorderState.Stopped;

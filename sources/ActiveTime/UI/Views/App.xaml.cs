@@ -304,7 +304,7 @@ namespace DustInTheWind.ActiveTime
 
                     if (timeFromLastStop < TimeSpan.FromSeconds(20))
                     {
-                        PauseWindow pauseWindow = new PauseWindow("Really?\nDo you think you can trick me?\n\nYou should really make a PAUSE.");
+                        PauseWindow pauseWindow = new PauseWindow("Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
                         pauseWindow.ShowDialog();
                     }
                     break;

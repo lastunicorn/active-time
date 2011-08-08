@@ -40,8 +40,12 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LumenWorks.Framework.IO">
-      <HintPath>RefBin\LumenWorks.Framework.IO.dll</HintPath>
+    <Reference Include="LumenWorks.Framework.IO, Version=3.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefBin\LumenWorks\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\RefBin\NHibernate\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -71,6 +75,15 @@
     <Compile Include="Exporters\ParameterTypeException.cs" />
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
+    <Compile Include="Persistence\Entities\DayComment.cs" />
+    <Compile Include="Persistence\Entities\DayCommentList.cs" />
+    <Compile Include="Persistence\Repositories\CommentRepository.cs" />
+    <Compile Include="Persistence\Repositories\ICommentRepository.cs" />
+    <Compile Include="Persistence\Repositories\IRecordRepository.cs" />
+    <Compile Include="Persistence\Entities\Record.cs" />
+    <Compile Include="Persistence\Entities\RecordList.cs" />
+    <Compile Include="Persistence\Repositories\RecordRepository.cs" />
+    <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
     <Compile Include="Recording\Break.cs" />
     <Compile Include="Recording\DayTimeInterval.cs" />
     <Compile Include="ReminderStatus.cs" />
@@ -204,6 +217,8 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
     <Resource Include="Resources\Leopard-Optical-Illusion.jpg" />
+    <EmbeddedResource Include="Persistence\Mappings\Record.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\Comment.hbm.xml" />
     <Content Include="sql scripts\comments.sql" />
     <Content Include="sql scripts\records.sql" />
   </ItemGroup>

@@ -4,7 +4,7 @@
         xmlns:views="clr-namespace:DustInTheWind.ActiveTime.UI.Views" Title="Reminder" Height="300" Width="300" Topmost="True"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <DockPanel>
-        <Button Name="buttonSnooze" DockPanel.Dock="Bottom" Content="Close" Margin="5" Click="buttonSnooze_Click" />
-        <TextBlock Name="textBlockMessage" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="20">Make a pause!</TextBlock>
+        <Button Name="buttonSnooze" DockPanel.Dock="Bottom" Content="Close" Margin="5" Click="buttonSnooze_Click" TabIndex="0" />
+        <TextBlock Name="textBlockMessage" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" Focusable="False">Make a pause!</TextBlock>
     </DockPanel>
 </views:WindowBase>

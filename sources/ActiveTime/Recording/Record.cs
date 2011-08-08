@@ -55,7 +55,7 @@ namespace DustInTheWind.ActiveTime.Recording
         private TimeSpan endTime;
 
         /// <summary>
-        /// Gets the time of day representing the end time.
+        /// Gets or sets the time of day representing the end time.
         /// </summary>
         public TimeSpan EndTime
         {
