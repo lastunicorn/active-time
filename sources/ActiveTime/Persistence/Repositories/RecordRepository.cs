@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 using NHibernate;
 
 namespace DustInTheWind.ActiveTime.Persistence

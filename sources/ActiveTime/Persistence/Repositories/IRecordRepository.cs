@@ -1,3 +1,5 @@
+using DustInTheWind.ActiveTime.Persistence.Entities;
+
 namespace DustInTheWind.ActiveTime.Persistence
 {
     internal interface IRecordRepository

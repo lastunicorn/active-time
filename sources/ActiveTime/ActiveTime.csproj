@@ -77,6 +77,7 @@
     <Compile Include="Exporters\ExporterException.cs" />
     <Compile Include="Persistence\Entities\DayComment.cs" />
     <Compile Include="Persistence\Entities\DayCommentList.cs" />
+    <Compile Include="Persistence\Entities\RecordType.cs" />
     <Compile Include="Persistence\Repositories\CommentRepository.cs" />
     <Compile Include="Persistence\Repositories\ICommentRepository.cs" />
     <Compile Include="Persistence\Repositories\IRecordRepository.cs" />
@@ -217,7 +218,9 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
     <Resource Include="Resources\Leopard-Optical-Illusion.jpg" />
-    <EmbeddedResource Include="Persistence\Mappings\Record.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\Record.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Mappings\Comment.hbm.xml" />
     <Content Include="sql scripts\comments.sql" />
     <Content Include="sql scripts\records.sql" />

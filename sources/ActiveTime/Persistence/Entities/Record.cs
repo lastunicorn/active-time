@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Persistence
+namespace DustInTheWind.ActiveTime.Persistence.Entities
 {
     /// <summary>
     /// Represents an interval of time within a day.
@@ -39,5 +39,7 @@ namespace DustInTheWind.ActiveTime.Persistence
         /// Gets or sets the time of day representing the end time.
         /// </summary>
         public TimeSpan EndTime { get; set; }
+
+        public RecordType RecordType { get; set; }
     }
 }

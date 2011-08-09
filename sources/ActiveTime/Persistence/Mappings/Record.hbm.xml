@@ -7,5 +7,6 @@
     <property name="Date" column="date" />
     <property name="StartTime" column="start_time" />
     <property name="EndTime" column="end_time" />
+    <property name="RecordType" column="type"/>
   </class>
 </hibernate-mapping>

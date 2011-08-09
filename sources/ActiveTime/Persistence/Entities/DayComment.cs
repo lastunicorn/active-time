@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Persistence
+namespace DustInTheWind.ActiveTime.Persistence.Entities
 {
     /// <summary>
     /// Represents an interval of time within a day.
