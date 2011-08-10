@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Persistence\EntitiesTests\RecordTypeTests.cs" />
     <Compile Include="Persistence\EntitiesTests\RecordEqualsTests.cs" />
     <Compile Include="Persistence\EntitiesTests\DayCommentEqualsTests.cs" />

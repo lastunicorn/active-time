@@ -9,17 +9,28 @@ using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.Persistence.RepositoriesTests
 {
-    public  class RepositoryTestsBase
+    public class RepositoryTestsBase
     {
-        protected ISessionFactory sessionFactory;
-        protected ISession currentSession;
+        private ISessionFactory sessionFactory;
+        protected ISessionFactory SessionFactory
+        {
+            get { return sessionFactory; }
+        }
+
+        private ISession session;
+        protected ISession Session
+        {
+            get { return session; }
+        }
 
         [SetUp]
         public void SetUp()
         {
-            sessionFactory = new Configuration().Configure().BuildSessionFactory();
-            currentSession = sessionFactory.OpenSession();
-            CurrentSessionContext.Bind(currentSession);
+            //sessionFactory = new Configuration().Configure().BuildSessionFactory();
+            sessionFactory = NHibernateHelper.SessionFactory;
+            session = sessionFactory.OpenSession();
+            ITransaction transaction = session.BeginTransaction();
+            CurrentSessionContext.Bind(session);
 
             OnSetUp();
         }
@@ -31,7 +42,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.RepositoriesTests
         [TearDown]
         public void TearDown()
         {
-            currentSession.Transaction.Rollback();
+            session.Transaction.Rollback();
             CurrentSessionContext.Unbind(sessionFactory);
 
             OnTearDown();
@@ -39,6 +50,18 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.RepositoriesTests
 
         protected virtual void OnTearDown()
         {
+        }
+
+        protected void AssertRecordExistsInDb(string tableName, string idName, string idValue)
+        {
+            string sql = string.Format("select count(*) as c from {0} as t where t.{1} = {2}", tableName, idName, idValue);
+            ISQLQuery query = Session.CreateSQLQuery(sql)
+                .AddScalar("c", NHibernateUtil.Int64);
+
+            IList<long> results = query.List<long>();
+            long recordCount = results.Count > 0 ? results[0] : 0;
+
+            Assert.That(recordCount, Is.EqualTo(1));
         }
     }
 }

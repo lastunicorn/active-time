@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="Roche.Aida.BusinessModel.Core" assembly="Roche.Aida.BusinessModel">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="DustInTheWind.ActiveTime.Persistence.Entities" assembly="ActiveTime">
   <class name="Record" table="Records">
     <id name="Id" column="id" unsaved-value="0">
       <generator class="native"/>

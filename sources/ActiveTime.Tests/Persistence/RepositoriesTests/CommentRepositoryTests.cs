@@ -12,21 +12,34 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.RepositoriesTests
     public class CommentRepositoryTests : RepositoryTestsBase
     {
         [Test]
-        public void Test()
+        public void TestAdd_FillId()
         {
             CommentRepository commentRepository = new CommentRepository();
-            
+
             DayComment dayComment = new DayComment
             {
-                Id = 5,
                 Date = new DateTime(2000, 06, 13),
                 Comment = "some comment"
             };
 
             commentRepository.Add(dayComment);
 
-            // Check if it is in the database.
-            // ...
+            Assert.That(dayComment.Id, Is.GreaterThan(0));
+        }
+        [Test]
+        public void TestAdd()
+        {
+            CommentRepository commentRepository = new CommentRepository();
+            
+            DayComment dayComment = new DayComment
+            {
+                Date = new DateTime(2000, 06, 13),
+                Comment = "some comment"
+            };
+
+            commentRepository.Add(dayComment);
+
+            AssertRecordExistsInDb("comments", "id", dayComment.Id.ToString());
         }
     }
 }
