@@ -41,5 +41,15 @@ namespace DustInTheWind.ActiveTime.Persistence.Entities
         public TimeSpan EndTime { get; set; }
 
         public RecordType RecordType { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Record);
+        }
+
+        public bool Equals(Record record)
+        {
+            return record != null && Id == record.Id;
+        }
     }
 }

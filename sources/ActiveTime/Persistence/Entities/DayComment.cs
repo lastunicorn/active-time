@@ -34,5 +34,15 @@ namespace DustInTheWind.ActiveTime.Persistence.Entities
         /// Gets or sets the time of day representing the start time.
         /// </summary>
         public string Comment { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as DayComment);
+        }
+
+        public bool Equals(DayComment dayComment)
+        {
+            return dayComment != null && Id == dayComment.Id;
+        }
     }
 }

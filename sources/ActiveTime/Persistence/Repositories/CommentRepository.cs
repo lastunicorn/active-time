@@ -10,6 +10,7 @@ namespace DustInTheWind.ActiveTime.Persistence
     {
         public void Add(DayComment comment)
         {
+            
         }
 
         public void Update(DayComment comment)

@@ -19,7 +19,7 @@ using DustInTheWind.ActiveTime.Recording;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Record = DustInTheWind.ActiveTime.Persistence.Entities.Record;
+using Record = DustInTheWind.ActiveTime.Recording.Record;
 
 namespace DustInTheWind.ActiveTime.Persistence
 {
