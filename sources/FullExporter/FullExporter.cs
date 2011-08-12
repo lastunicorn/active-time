@@ -84,7 +84,7 @@ namespace DustInTheWind.ActiveTime.Exporters
             {
                 TimeSpan lastHour = TimeSpan.Zero;
 
-                foreach (Record record in dayRecord.ActiveTimeRecords)
+                foreach (DayTimeInterval record in dayRecord.ActiveTimeRecords)
                 {
                     if (lastHour != TimeSpan.Zero)
                     {

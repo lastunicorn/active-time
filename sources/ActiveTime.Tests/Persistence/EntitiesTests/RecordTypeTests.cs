@@ -19,7 +19,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
         [Test]
         public void TestCreatedValue()
         {
-            Assert.That((int)RecordType.Created, Is.EqualTo(1));
+            Assert.That((int)RecordType.Fake, Is.EqualTo(1));
         }
     }
 }

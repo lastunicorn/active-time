@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DustInTheWind.ActiveTime.Persistence.Entities;
 using NHibernate;
+using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime.Persistence
 {
@@ -22,6 +23,11 @@ namespace DustInTheWind.ActiveTime.Persistence
         }
 
         public Record GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DayRecord GetDayRecord(DateTime date)
         {
             throw new NotImplementedException();
         }

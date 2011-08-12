@@ -149,7 +149,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         {
             if (model.Date != null)
             {
-                DayRecord dayRecord = activeTimeApplication.Dal.GetDayRecord(model.Date.Value);
+                DayRecord dayRecord = activeTimeApplication.RecordRepository.GetDayRecord(model.Date.Value);
                 model.DayRecord = dayRecord;
             }
             else
@@ -210,22 +210,22 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 
             if (selectedItems != null && selectedItems.Count > 0)
             {
-                List<Record> recordsToDelete = new List<Record>();
+                List<DayTimeInterval> recordsToDelete = new List<DayTimeInterval>();
 
                 foreach (object selectedItem in selectedItems)
                 {
-                    if (selectedItem != null && selectedItem is Record)
+                    if (selectedItem != null && selectedItem is DayTimeInterval)
                     {
-                        Record selectedRecord = (Record)selectedItem;
-                        recordsToDelete.Add((Record)selectedItem);
+                        DayTimeInterval selectedRecord = (DayTimeInterval)selectedItem;
+                        recordsToDelete.Add((DayTimeInterval)selectedItem);
                     }
                 }
 
                 if (view.Confirm(string.Format("Delete {0} records?", recordsToDelete.Count), "Confirm Delete"))
                 {
-                    foreach (Record record in recordsToDelete)
+                    foreach (DayTimeInterval record in recordsToDelete)
                     {
-                        activeTimeApplication.Dal.DeleteRecord(record);
+                        //activeTimeApplication.RecordRepository.Delete(record);
                     }
                 }
 

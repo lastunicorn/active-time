@@ -26,16 +26,16 @@ namespace DustInTheWind.ActiveTime.UI
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value == null || value.GetType() != typeof(List<Record>))
+            if (value == null || value.GetType() != typeof(List<DayTimeInterval>))
                 return null;
 
             if (targetType == typeof(string))
             {
-                List<Record> records = (List<Record>)value;
+                List<DayTimeInterval> records = (List<DayTimeInterval>)value;
 
                 StringBuilder sb = new StringBuilder();
 
-                foreach (Record record in records)
+                foreach (DayTimeInterval record in records)
                 {
                     if (record == null)
                     {

@@ -91,7 +91,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                 {
                     DateTime date = new DateTime(year, month.Value, i);
 
-                    DayRecord dayRecord = activeTimeApplication.Dal.GetDayRecord(date);
+                    DayRecord dayRecord = activeTimeApplication.RecordRepository.GetDayRecord(date);
 
                     if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecord == null || dayRecord.IsEmpty))
                         continue;
@@ -100,7 +100,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                     {
                         TimeSpan lastHour = TimeSpan.Zero;
 
-                        foreach (Record record in dayRecord.ActiveTimeRecords)
+                        foreach (DayTimeInterval record in dayRecord.ActiveTimeRecords)
                         {
                             if (lastHour != TimeSpan.Zero)
                             {

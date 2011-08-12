@@ -22,10 +22,10 @@ namespace DustInTheWind.ActiveTime
 {
     public class ActiveTimeApplication
     {
-        private Dal dal;
-        public Dal Dal
+        private IRecordRepository recordRepository;
+        public IRecordRepository RecordRepository
         {
-            get { return dal; }
+            get { return recordRepository; }
         }
         
         private Recorder recorder;
@@ -48,9 +48,9 @@ namespace DustInTheWind.ActiveTime
 
         public ActiveTimeApplication()
         {
-            dal = new Dal();
+            recordRepository = new RecordRepository();
             reminder = new Reminder();
-            recorder = new Recorder(dal);
+            recorder = new Recorder(recordRepository);
             exporters = new ExportersManager();
             exporters.LoadExporters();
         }

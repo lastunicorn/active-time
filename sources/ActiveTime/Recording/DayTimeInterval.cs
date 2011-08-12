@@ -21,7 +21,7 @@ namespace DustInTheWind.ActiveTime.Recording
     /// <summary>
     /// Represents an interval of time inside a day.
     /// </summary>
-    internal class DayTimeInterval
+    public class DayTimeInterval
     {
         /// <summary>
         /// The lower bound of the time interval.

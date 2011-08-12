@@ -24,25 +24,25 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 {
     internal class CommentsPresenter
     {
-        private Dal dal;
-        private DateTime date;
+        private ICommentRepository commentRepository;
+        //private DateTime date;
         private CommentsModel model;
         private ICommentsView view;
 
-        public CommentsPresenter(ICommentsView view, Dal dal, DateTime date)
+        public CommentsPresenter(ICommentsView view, ICommentRepository commentRepository, DateTime date)
         {
             if (view == null)
                 throw new ArgumentNullException("view");
 
-            if (dal == null)
-                throw new ArgumentNullException("dal");
+            if (commentRepository == null)
+                throw new ArgumentNullException("commentRepository");
 
             if (date == null)
                 throw new ArgumentNullException("date");
 
             this.view = view;
-            this.dal = dal;
-            this.date = date;
+            this.commentRepository = commentRepository;
+            //this.date = date;
 
             model = new CommentsModel();
 
@@ -57,7 +57,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 
         private void UpdateModel()
         {
-            model.Comment = dal.GetComment(model.Date);
+            model.Comment = commentRepository.GetByDate(model.Date).Comment;
         }
 
         public void SaveButtonClicked()
@@ -87,16 +87,9 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
             }
         }
 
-        public void SaveInternal()
+        private void SaveInternal()
         {
-            try
-            {
-                dal.UpdateOrInsertComment(model.Date, model.Comment);
-            }
-            catch (Exception ex)
-            {
-                view.DisplayError(ex);
-            }
+            commentRepository.AddOrUpdate(model.Date, model.Comment);
         }
 
         public void CancelButtonClicked()

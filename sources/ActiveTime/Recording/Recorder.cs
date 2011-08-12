@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Persistence;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
@@ -24,20 +25,16 @@ namespace DustInTheWind.ActiveTime.Recording
     /// </summary>
     public class Recorder : IDisposable
     {
-        /// <summary>
-        /// Used to access the persistent layer.
-        /// </summary>
-        private Dal dal;
+        private IRecordRepository recordRepository;
 
         /// <summary>
         /// Specifies the state of the current instance.
         /// </summary>
         public RecorderState State { get; set; }
 
-        private DateTime currentDate;
         private object stateSynchronizer = new object();
 
-        private Record lastRecord;
+        private Record previousRecord;
         private Record currentRecord;
 
         public Record CurrentRecord
@@ -136,12 +133,12 @@ namespace DustInTheWind.ActiveTime.Recording
         /// </summary>
         /// <param name="dal">Dal class used to access the persistent layer.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Recorder(Dal dal)
+        public Recorder(IRecordRepository recordRepository)
         {
-            if (dal == null)
-                throw new ArgumentNullException("dal");
+            if (recordRepository == null)
+                throw new ArgumentNullException("recordRepository");
 
-            this.dal = dal;
+            this.recordRepository = recordRepository;
             State = RecorderState.Stopped;
         }
 
@@ -151,39 +148,57 @@ namespace DustInTheWind.ActiveTime.Recording
         private void NewRecordIfNeeded()
         {
             DateTime now = DateTime.Now;
-            DateTime today = now.Date;
 
-            if (currentDate != today || currentRecord == null)
+            if (IsNewDay(now) || currentRecord == null)
             {
                 if (currentRecord != null)
                 {
-                    // day was changed. update db.
-                    //currentRecord.EndTime = TimeSpan.FromHours(24);
-                    currentRecord.EndTime = TimeSpan.FromDays(1).Subtract(TimeSpan.FromSeconds(1));
-                    dal.UpdateEndTime(currentRecord);
+                    // day was changed. update the last record.
+                    currentRecord.EndTime = TimeSpan.FromDays(1).Subtract(TimeSpan.FromTicks(1));
+                    recordRepository.Update(currentRecord);
 
-                    // create a new record.
-                    currentDate = today;
-                    currentRecord = new Record(today, TimeSpan.Zero);
+                    // create a new record starting from the beggining of the day.
+                    currentRecord = CreateNewRecord(now.Date);
+                    currentRecord.EndTime = now.TimeOfDay;
                 }
                 else
                 {
                     // create a new record.
-                    currentDate = today;
-                    currentRecord = new Record(today, now.TimeOfDay);
+                    currentRecord = CreateNewRecord(now);
                 }
 
-                dal.AddRecord(currentRecord);
+                recordRepository.Add(currentRecord);
             }
         }
+
+        private Record CreateNewRecord(DateTime now)
+        {
+            return new Record
+            {
+                Date = now.Date,
+                StartTime = now.TimeOfDay,
+                EndTime = now.TimeOfDay,
+                RecordType = RecordType.Normal
+            };
+        }
+
+        private bool IsNewDay(DateTime now)
+        {
+            return currentRecord != null && currentRecord.Date != now.Date;
+        }
+
+        //private void SetCurrentDate(DateTime now)
+        //{
+        //    currentDate = now.Date;
+        //}
 
         public TimeSpan? TimeFromLastStop()
         {
             if (currentRecord != null) return null;
-            if (lastRecord == null) return null;
+            if (previousRecord == null) return null;
 
             DateTime now = DateTime.Now;
-            return now - now.Date.Add(lastRecord.EndTime);
+            return now - now.Date.Add(previousRecord.EndTime);
         }
 
         public void Start()
@@ -193,9 +208,7 @@ namespace DustInTheWind.ActiveTime.Recording
                 case RecorderState.Stopped:
                     lock (stateSynchronizer)
                     {
-                        NewRecordIfNeeded();
-
-                        State = RecorderState.Running;
+                        DoStart();
                     }
 
                     OnStarted(EventArgs.Empty);
@@ -220,13 +233,7 @@ namespace DustInTheWind.ActiveTime.Recording
                 case RecorderState.Running:
                     lock (stateSynchronizer)
                     {
-                        NewRecordIfNeeded();
-                        UpdateTime();
-
-                        lastRecord = currentRecord;
-                        currentRecord = null;
-
-                        State = RecorderState.Stopped;
+                        DoStop();
                     }
 
                     OnStopped(EventArgs.Empty);
@@ -251,8 +258,7 @@ namespace DustInTheWind.ActiveTime.Recording
 
                     lock (stateSynchronizer)
                     {
-                        NewRecordIfNeeded();
-                        UpdateTime();
+                        DoStamp();
                     }
 
                     OnStamped(EventArgs.Empty);
@@ -264,10 +270,33 @@ namespace DustInTheWind.ActiveTime.Recording
             }
         }
 
+        private void DoStart()
+        {
+            NewRecordIfNeeded();
+            State = RecorderState.Running;
+        }
+
+        private void DoStop()
+        {
+            NewRecordIfNeeded();
+            UpdateTime();
+
+            previousRecord = currentRecord;
+            currentRecord = null;
+
+            State = RecorderState.Stopped;
+        }
+
+        private void DoStamp()
+        {
+            NewRecordIfNeeded();
+            UpdateTime();
+        }
+
         private void UpdateTime()
         {
             currentRecord.EndTime = DateTime.Now.TimeOfDay;
-            dal.UpdateEndTime(currentRecord);
+            recordRepository.Update(currentRecord);
         }
 
         public void StopAndDeleteLastRecord()
@@ -280,9 +309,9 @@ namespace DustInTheWind.ActiveTime.Recording
                 case RecorderState.Running:
                     lock (stateSynchronizer)
                     {
-                        UpdateTime();
+                        //UpdateTime();
 
-                        dal.DeleteRecord(currentRecord);
+                        recordRepository.Delete(currentRecord);
                         currentRecord = null;
 
                         State = RecorderState.Stopped;

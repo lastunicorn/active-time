@@ -141,7 +141,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                             {
                                 DateTime date = new DateTime(year, month.Value, i);
 
-                                DayRecord dayRecords = activeTimeApplication.Dal.GetDayRecord(date);
+                                DayRecord dayRecords = activeTimeApplication.RecordRepository.GetDayRecord(date);
 
                                 if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
                                     continue;

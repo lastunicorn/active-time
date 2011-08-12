@@ -73,7 +73,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
 
             if (datePicker1.SelectedDate != null)
             {
-                CommentsWindow window = new CommentsWindow(new Dal(), datePicker1.SelectedDate.Value);
+                CommentsWindow window = new CommentsWindow(new CommentRepository(), datePicker1.SelectedDate.Value);
 
                 window.ShowDialog();
             }

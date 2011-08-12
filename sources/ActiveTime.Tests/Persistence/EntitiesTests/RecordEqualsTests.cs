@@ -66,7 +66,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
         [Test]
         public void TestEquals_DifferentRecordType()
         {
-            record2.RecordType = RecordType.Created;
+            record2.RecordType = RecordType.Fake;
 
             bool actualValue = record1.Equals(record2);
 
@@ -98,7 +98,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
         {
             record2.Id = 10;
             record2.Date = new DateTime(2011, 03, 05);
-            record2.RecordType = RecordType.Created;
+            record2.RecordType = RecordType.Fake;
             record2.StartTime = TimeSpan.FromHours(20);
             record2.EndTime = TimeSpan.FromHours(21);
 
@@ -111,7 +111,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
         public void TestEquals_AllDifferentButId()
         {
             record2.Date = new DateTime(2011, 03, 05);
-            record2.RecordType = RecordType.Created;
+            record2.RecordType = RecordType.Fake;
             record2.StartTime = TimeSpan.FromHours(20);
             record2.EndTime = TimeSpan.FromHours(21);
 

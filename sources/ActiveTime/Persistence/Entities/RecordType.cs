@@ -8,6 +8,6 @@ namespace DustInTheWind.ActiveTime.Persistence.Entities
     public enum RecordType
     {
         Normal = 0,
-        Created = 1
+        Fake = 1
     }
 }

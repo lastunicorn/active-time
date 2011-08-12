@@ -2,7 +2,7 @@
 
 namespace DustInTheWind.ActiveTime.Persistence.Entities
 {
-    class RecordList : List<Record>
+    public class RecordList : List<Record>
     {
     }
 }

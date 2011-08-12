@@ -10,10 +10,20 @@ namespace DustInTheWind.ActiveTime.Persistence
     {
         public void Add(DayComment comment)
         {
-            
+
         }
 
         public void Update(DayComment comment)
+        {
+
+        }
+
+        public void AddOrUpdate(DayComment comment)
+        {
+
+        }
+
+        public void AddOrUpdate(DateTime date, string comment)
         {
         }
 
@@ -22,6 +32,11 @@ namespace DustInTheWind.ActiveTime.Persistence
         }
 
         public DayComment GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DayComment GetByDate(DateTime date)
         {
             throw new NotImplementedException();
         }

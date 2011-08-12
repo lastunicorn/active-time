@@ -77,7 +77,7 @@ namespace DustInTheWind.ActiveTime.UI.Models
             }
         }
 
-        public Record[] Records
+        public DayTimeInterval[] Records
         {
             get { return dayRecord == null ? null : dayRecord.GetRecords(false); }
         }

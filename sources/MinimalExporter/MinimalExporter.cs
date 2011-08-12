@@ -73,7 +73,7 @@ namespace DustInTheWind.ActiveTime.Exporters
                 beginHour = dayRecord.ActiveTimeRecords[0].StartTime;
                 endHour = dayRecord.ActiveTimeRecords[0].EndTime;
 
-                foreach (Record record in dayRecord.ActiveTimeRecords)
+                foreach (DayTimeInterval record in dayRecord.ActiveTimeRecords)
                 {
                     if (record.StartTime < beginHour)
                         beginHour = record.StartTime;

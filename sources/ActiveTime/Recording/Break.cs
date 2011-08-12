@@ -21,28 +21,26 @@ namespace DustInTheWind.ActiveTime.Recording
     /// <summary>
     /// Represents an interval of time within a day.
     /// </summary>
-    public class Break : Record
+    public class Break : DayTimeInterval
     {
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Break"/> class.
         /// </summary>
-        /// <param name="date">The date for which this record is created.</param>
         /// <param name="startTime">The time of day representing the start time.</param>
-        public Break(DateTime date, TimeSpan startTime)
-            : base(date, startTime, startTime)
+        public Break(TimeSpan startTime)
+            : base(startTime, startTime)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Record"/> class.
         /// </summary>
-        /// <param name="date">The date for which this record is created.</param>
         /// <param name="startTime">The time of day representing the start time.</param>
         /// <param name="endTime">The time of day representing the end time.</param>
-        public Break(DateTime date, TimeSpan startTime, TimeSpan endTime)
-            : base(date, startTime, startTime)
+        public Break(TimeSpan startTime, TimeSpan endTime)
+            : base(startTime, startTime)
         {
         }
 

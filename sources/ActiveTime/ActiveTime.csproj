@@ -162,8 +162,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Persistence\Dal.cs" />
-    <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\Recorder.cs" />
     <Compile Include="Recording\RecorderState.cs" />
     <Compile Include="UI\Views\MainWindow.xaml.cs">

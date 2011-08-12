@@ -40,12 +40,12 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// The records representing the active time.
         /// </summary>
-        private Record[] activeTimeRecords;
+        private DayTimeInterval[] activeTimeRecords;
 
         /// <summary>
         /// Gets or sets the records representing the active time.
         /// </summary>
-        public Record[] ActiveTimeRecords
+        public DayTimeInterval[] ActiveTimeRecords
         {
             get { return activeTimeRecords; }
             set { activeTimeRecords = value; }
@@ -103,7 +103,7 @@ namespace DustInTheWind.ActiveTime.Recording
 
             if (activeTimeRecords != null)
             {
-                foreach (Record record in activeTimeRecords)
+                foreach (DayTimeInterval record in activeTimeRecords)
                 {
                     totalTime += record.EndTime - record.StartTime;
                 }
@@ -121,7 +121,7 @@ namespace DustInTheWind.ActiveTime.Recording
                 TimeSpan beginHour = activeTimeRecords[0].StartTime;
                 TimeSpan endHour = activeTimeRecords[0].EndTime;
 
-                foreach (Record record in activeTimeRecords)
+                foreach (DayTimeInterval record in activeTimeRecords)
                 {
                     if (record.StartTime < beginHour)
                         beginHour = record.StartTime;
@@ -167,21 +167,21 @@ namespace DustInTheWind.ActiveTime.Recording
         //    }
         //}
 
-        public Record[] GetRecords(bool includeBreaks)
+        public DayTimeInterval[] GetRecords(bool includeBreaks)
         {
             if (activeTimeRecords == null || activeTimeRecords.Length == 0 || !includeBreaks)
                 return activeTimeRecords;
 
 
-            List<Record> allRecords = new List<Record>();
+            List<DayTimeInterval> allRecords = new List<DayTimeInterval>();
 
             allRecords.Add(activeTimeRecords[0]);
 
-            Record previousRecord = activeTimeRecords[0];
+            DayTimeInterval previousRecord = activeTimeRecords[0];
 
-            foreach (Record record in activeTimeRecords)
+            foreach (DayTimeInterval record in activeTimeRecords)
             {
-                allRecords.Add(new Break(previousRecord.Date, previousRecord.EndTime, record.StartTime));
+                allRecords.Add(new Break(previousRecord.EndTime, record.StartTime));
                 allRecords.Add(record);
                 previousRecord = record;
             }

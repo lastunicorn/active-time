@@ -27,12 +27,12 @@ namespace DustInTheWind.ActiveTime.UI
             //if (value == null || value.GetType() != typeof(Record))
             //    return null;
 
-            if (value == null || !(value is Record))
+            if (value == null || !(value is DayTimeInterval))
                 return null;
 
             if (targetType == typeof(string) || targetType == typeof(object))
             {
-                Record record = (Record)value;
+                DayTimeInterval record = (DayTimeInterval)value;
 
                 TimeSpan timeDiff = record.EndTime - record.StartTime;
                 return record.StartTime.ToString() + " - " + record.EndTime.ToString() + " = " + timeDiff.ToString();

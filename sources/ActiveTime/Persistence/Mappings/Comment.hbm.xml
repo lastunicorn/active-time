@@ -4,7 +4,9 @@
     <id name="Id" column="id" unsaved-value="0">
       <generator class="native"/>
     </id>
-    <property name="Date" column="date" />
+    <natural-id mutable="false">
+      <property name="Date" column="date" />
+    </natural-id>
     <property name="Comment" column="comment" />
   </class>
 </hibernate-mapping>

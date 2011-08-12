@@ -40,10 +40,10 @@ namespace DustInTheWind.ActiveTime.UI.Views
             InitializeComponent();
         }
 
-        internal CommentsWindow(Dal dal, DateTime date)
+        internal CommentsWindow(ICommentRepository commentRepository, DateTime date)
             : this()
         {
-            presenter = new CommentsPresenter(this, dal, date);
+            presenter = new CommentsPresenter(this, commentRepository, date);
 
             datePickerDate.IsEnabled = false;
         }

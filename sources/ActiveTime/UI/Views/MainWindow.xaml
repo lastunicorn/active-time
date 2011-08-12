@@ -40,7 +40,7 @@
 
                 <ui:RecordListConverter x:Key="RecordListConverter" />
                 <ui:RecordConverter x:Key="RecordConverter" />
-                <DataTemplate DataType="{x:Type recording:Record}">
+                <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
                     <Label Padding="10,0,0,0"
                                 Content="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
                 </DataTemplate>
