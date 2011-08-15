@@ -59,6 +59,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryGetByDateTests.cs" />
+    <Compile Include="Recording\RecorderStartTests.cs" />
     <Compile Include="Recording\RecordTests.cs" />
     <Compile Include="Persistence\EntitiesTests\TimeRecordTypeTests.cs" />
     <Compile Include="Persistence\EntitiesTests\TimeRecordEqualsTests.cs" />
@@ -91,6 +92,7 @@
       <Link>SQLite.Interop.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recording\TestCases.txt" />
     <Content Include="ReminderTests\TestCases.txt" />
   </ItemGroup>
   <ItemGroup />

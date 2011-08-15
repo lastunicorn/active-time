@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         }
 
         [Test]
-        public void TestConstructor()
+        public void TestConstructorOk()
         {
         }
 
@@ -32,14 +32,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestConstructorNull()
         {
-            Recorder2 recorder = new Recorder2(null);
+            new Recorder2(null);
         }
 
-        [Test]
-        public void TestInitial_CurrentRecord()
-        {
-            Assert.That(recorder.CurrentRecord, Is.Null);
-        }
+        //[Test]
+        //public void TestInitial_CurrentRecord()
+        //{
+        //    Assert.That(recorder.CurrentRecord, Is.Null);
+        //}
 
         [Test]
         public void TestInitial_State()

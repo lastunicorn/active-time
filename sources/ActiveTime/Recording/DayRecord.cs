@@ -168,7 +168,7 @@ namespace DustInTheWind.ActiveTime.Recording
         //    }
         //}
 
-        public DayTimeInterval[] GetRecords(bool includeBreaks)
+        public DayTimeInterval[] GetTimeRecords(bool includeBreaks)
         {
             if (activeTimeRecords == null || activeTimeRecords.Count == 0 || !includeBreaks)
                 return activeTimeRecords.ToArray();
@@ -190,6 +190,14 @@ namespace DustInTheWind.ActiveTime.Recording
             return allRecords.ToArray();
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="DayRecord"/> class and populates it with the
+        /// time record received as parameter.
+        /// </summary>
+        /// <param name="timeRecords"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static DayRecord FromTimeRecords(IList<TimeRecord> timeRecords)
         {
             if (timeRecords == null)

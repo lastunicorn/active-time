@@ -28,17 +28,18 @@ namespace DustInTheWind.ActiveTime.Recording
     {
         private ITimeRecordRepository timeRecordRepository;
 
-        /// <summary>
-        /// Specifies the state of the current instance.
-        /// </summary>
-        public RecorderState State { get; set; }
-
         private object stateSynchronizer = new object();
 
         private Record previousRecord;
         private Record currentRecord;
         private TimeRecord databaseRecord = null;
+
+        /// <summary>
+        /// Specifies the state of the current instance.
+        /// </summary>
+        public RecorderState State { get; set; }
         
+
         #region Event Started
 
         /// <summary>
@@ -281,6 +282,7 @@ namespace DustInTheWind.ActiveTime.Recording
             }
         }
 
+
         private void DoStart()
         {
             NewRecordIfNeeded();
@@ -303,6 +305,7 @@ namespace DustInTheWind.ActiveTime.Recording
             NewRecordIfNeeded();
             UpdateTime();
         }
+
 
         private void UpdateTime()
         {

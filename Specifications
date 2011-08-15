@@ -3,5 +3,19 @@ Recorder
 The main purpose of the recorder is to keep the last active time record and to updates it into the database when requested.
 
 - When started, it creates a new record and inserts it in the database. The record is kept for further updates.
-- When stampped, it updates the EndTime of the existing record and also updates it in the database.
-- When stopped, it updates the EndTime of the existing record, updates it in the database and "forgets" about it.
+- When stampped, it changes the EndTime of the existing record and updates it into the database.
+- When stopped, it changes the EndTime of the existing record, updates it into the database and "forgets" about it.
+
+Important methods:
+- Start()
+- Stamp()
+- Stop(bool deleteLastRecord)
+
+It has a public property that specifies the state of the recorder:
+public RecorderState State { get; set; }
+
+Four events:
+- Started
+- Stopped
+- Stamping
+- Stamped

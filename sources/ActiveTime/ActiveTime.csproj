@@ -92,8 +92,8 @@
     <Compile Include="Recording\DayTimeInterval.cs" />
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\Recorder2.cs" />
-    <Compile Include="ReminderStatus.cs" />
-    <Compile Include="RingEventArgs.cs" />
+    <Compile Include="Reminding\ReminderStatus.cs" />
+    <Compile Include="Reminding\RingEventArgs.cs" />
     <Compile Include="UI\Controllers\CommentsPresenter.cs" />
     <Compile Include="Exporters\ExportersManager.cs" />
     <Compile Include="UI\Controllers\StatisticsPresenter.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="UI\Models\CommentsModel.cs" />
     <Compile Include="UI\RecordConverter.cs" />
     <Compile Include="UI\RecordListConverter.cs" />
-    <Compile Include="Reminder.cs" />
+    <Compile Include="Reminding\Reminder.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\TrayIconManager.cs">
       <SubType>Component</SubType>
