@@ -17,13 +17,14 @@
 using DustInTheWind.ActiveTime.Exporters;
 using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime
 {
     public class ActiveTimeApplication
     {
-        private IRecordRepository recordRepository;
-        public IRecordRepository RecordRepository
+        private ITimeRecordRepository recordRepository;
+        public ITimeRecordRepository RecordRepository
         {
             get { return recordRepository; }
         }
@@ -48,7 +49,7 @@ namespace DustInTheWind.ActiveTime
 
         public ActiveTimeApplication()
         {
-            recordRepository = new RecordRepository();
+            recordRepository = new TimeRecordRepository();
             reminder = new Reminder();
             recorder = new Recorder(recordRepository);
             exporters = new ExportersManager();

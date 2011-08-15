@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\RefBin\Moq\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=3.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\RefBin\NHibernate\NHibernate.dll</HintPath>
@@ -39,6 +42,9 @@
     <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\RefBin\SQLite\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,12 +52,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NHibernateHelper.cs" />
-    <Compile Include="Persistence\EntitiesTests\RecordTypeTests.cs" />
-    <Compile Include="Persistence\EntitiesTests\RecordEqualsTests.cs" />
+    <Compile Include="Persistence\RepositoriesTests\DayCommentRepositoryTests\DayCommentAssertUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordAssertUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryGetByDateTests.cs" />
+    <Compile Include="Recording\RecordTests.cs" />
+    <Compile Include="Persistence\EntitiesTests\TimeRecordTypeTests.cs" />
+    <Compile Include="Persistence\EntitiesTests\TimeRecordEqualsTests.cs" />
     <Compile Include="Persistence\EntitiesTests\DayCommentEqualsTests.cs" />
-    <Compile Include="Persistence\RepositoriesTests\CommentRepositoryTests.cs" />
+    <Compile Include="Persistence\RepositoriesTests\RepositoryCrudTestsBase.cs" />
+    <Compile Include="Persistence\RepositoriesTests\DayCommentRepositoryTests\DayCommentRepositoryCrudTests.cs" />
+    <Compile Include="Persistence\RepositoriesTests\DayCommentRepositoryTests\DayCommentRepositoryGetByDateTests.cs" />
     <Compile Include="Persistence\RepositoriesTests\RepositoryTestsBase.cs" />
+    <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryCrudTests.cs" />
+    <Compile Include="Recording\RecorderDisposeTests.cs" />
+    <Compile Include="Recording\RecorderInitialTests.cs" />
     <Compile Include="ReminderTests\ReminderDisposeTests.cs" />
     <Compile Include="ReminderTests\ReminderInitializationTests.cs" />
     <Compile Include="ReminderTests\ReminderRingEventTests.cs" />
@@ -69,8 +87,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\RefBin\SQLite\SQLite.Interop.dll">
+      <Link>SQLite.Interop.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ReminderTests\TestCases.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

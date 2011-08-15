@@ -35,7 +35,7 @@ namespace DustInTheWind.ActiveTime.Recording
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Record"/> class.
+        /// Initializes a new instance of the <see cref="Break"/> class.
         /// </summary>
         /// <param name="startTime">The time of day representing the start time.</param>
         /// <param name="endTime">The time of day representing the end time.</param>

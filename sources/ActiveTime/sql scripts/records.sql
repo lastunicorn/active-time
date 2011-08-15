@@ -15,8 +15,9 @@
 -- along with this program.  If not, see <http:--www.gnu.org/licenses/>.
 
 CREATE TABLE [records] (
-[id] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,
-[date] DATE  NOT NULL,
-[start_time] TIME  NOT NULL,
-[end_time] TIME  NOT NULL
-)
+  [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+  [date] DATE NOT NULL, 
+  [start_time] TIME NOT NULL, 
+  [end_time] TIME NOT NULL, 
+  [type] INTEGER, 
+  UNIQUE([date], [start_time], [end_time]));

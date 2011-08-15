@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="DustInTheWind.ActiveTime.Persistence.Entities" assembly="ActiveTime">
-  <class name="Record" table="Records">
+  <class name="DayComment" table="comments">
     <id name="Id" column="id" unsaved-value="0">
       <generator class="native"/>
     </id>
-    <property name="Date" column="date" />
-    <property name="StartTime" column="start_time" />
-    <property name="EndTime" column="end_time" />
-    <property name="RecordType" column="type"/>
+    <natural-id mutable="false">
+      <property name="Date" column="date"/>
+    </natural-id>
+    <property name="Comment" column="comment"/>
   </class>
 </hibernate-mapping>

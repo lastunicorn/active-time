@@ -21,6 +21,7 @@ using System.Threading;
 using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.UI.Controllers
 {
@@ -149,7 +150,8 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         {
             if (model.Date != null)
             {
-                DayRecord dayRecord = activeTimeApplication.RecordRepository.GetDayRecord(model.Date.Value);
+                IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(model.Date.Value);
+                DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
                 model.DayRecord = dayRecord;
             }
             else

@@ -21,28 +21,31 @@ namespace DustInTheWind.ActiveTime.Persistence.Entities
     /// <summary>
     /// Represents an interval of time within a day.
     /// </summary>
-    public class DayComment
+    public class DayComment : EntityBase
     {
-        public int Id { get; set; }
-    
         /// <summary>
-        /// Gets or sets the date for which this record is created.
+        /// Gets or sets the date for which this comment is created.
         /// </summary>
-        public DateTime Date { get; set; }
+        public virtual DateTime Date { get; set; }
 
         /// <summary>
-        /// Gets or sets the time of day representing the start time.
+        /// Gets or sets the comment text.
         /// </summary>
-        public string Comment { get; set; }
+        public virtual string Comment { get; set; }
 
+
+        /// <summary>
+        /// Compares the business keys.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as DayComment);
-        }
+            if (this == obj) return true;
 
-        public bool Equals(DayComment dayComment)
-        {
-            return dayComment != null && Id == dayComment.Id;
+            DayComment dayComment = obj as DayComment;
+
+            return dayComment != null && Date == dayComment.Date;
         }
     }
 }

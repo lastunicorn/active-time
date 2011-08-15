@@ -15,17 +15,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
     /// <summary>
-    /// This class periodically updates the current opened record with the latest time.
+    /// The main purpose of this class is to keep the last active time record and
+    /// to updates it into the database when requested.
     /// </summary>
     public class Recorder : IDisposable
     {
-        private IRecordRepository recordRepository;
+        private ITimeRecordRepository timeRecordRepository;
 
         /// <summary>
         /// Specifies the state of the current instance.
@@ -36,12 +37,8 @@ namespace DustInTheWind.ActiveTime.Recording
 
         private Record previousRecord;
         private Record currentRecord;
-
-        public Record CurrentRecord
-        {
-            get { return currentRecord; }
-        }
-
+        private TimeRecord databaseRecord = null;
+        
         #region Event Started
 
         /// <summary>
@@ -131,19 +128,43 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// Initializes a new instance of the <see cref="Recorder"/> class.
         /// </summary>
-        /// <param name="dal">Dal class used to access the persistent layer.</param>
+        /// <param name="timeRecordRepository">Dal class used to access the persistent layer.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Recorder(IRecordRepository recordRepository)
+        public Recorder(ITimeRecordRepository timeRecordRepository)
         {
-            if (recordRepository == null)
-                throw new ArgumentNullException("recordRepository");
+            if (timeRecordRepository == null)
+                throw new ArgumentNullException("timeRecordRepository");
 
-            this.recordRepository = recordRepository;
+            this.timeRecordRepository = timeRecordRepository;
             State = RecorderState.Stopped;
         }
 
         #endregion
 
+        private void SaveCurrentRecordToDb()
+        {
+            if (currentRecord == null)
+                return;
+
+            if (databaseRecord == null)
+            {
+                databaseRecord = new TimeRecord
+                {
+                    Date = currentRecord.Date,
+                    StartTime = currentRecord.StartTime,
+                    RecordType = TimeRecordType.Normal
+                };
+
+                databaseRecord.EndTime = currentRecord.EndTime;
+
+                timeRecordRepository.Add(databaseRecord);
+            }
+            else
+            {
+                databaseRecord.EndTime = currentRecord.EndTime;
+                timeRecordRepository.Update(databaseRecord);
+            }
+        }
 
         private void NewRecordIfNeeded()
         {
@@ -155,7 +176,7 @@ namespace DustInTheWind.ActiveTime.Recording
                 {
                     // day was changed. update the last record.
                     currentRecord.EndTime = TimeSpan.FromDays(1).Subtract(TimeSpan.FromTicks(1));
-                    recordRepository.Update(currentRecord);
+                    SaveCurrentRecordToDb();
 
                     // create a new record starting from the beggining of the day.
                     currentRecord = CreateNewRecord(now.Date);
@@ -167,30 +188,20 @@ namespace DustInTheWind.ActiveTime.Recording
                     currentRecord = CreateNewRecord(now);
                 }
 
-                recordRepository.Add(currentRecord);
+                databaseRecord = null;
+                SaveCurrentRecordToDb();
             }
         }
 
         private Record CreateNewRecord(DateTime now)
         {
-            return new Record
-            {
-                Date = now.Date,
-                StartTime = now.TimeOfDay,
-                EndTime = now.TimeOfDay,
-                RecordType = RecordType.Normal
-            };
+            return new Record(now.Date, now.TimeOfDay);
         }
 
         private bool IsNewDay(DateTime now)
         {
             return currentRecord != null && currentRecord.Date != now.Date;
         }
-
-        //private void SetCurrentDate(DateTime now)
-        //{
-        //    currentDate = now.Date;
-        //}
 
         public TimeSpan? TimeFromLastStop()
         {
@@ -296,7 +307,9 @@ namespace DustInTheWind.ActiveTime.Recording
         private void UpdateTime()
         {
             currentRecord.EndTime = DateTime.Now.TimeOfDay;
-            recordRepository.Update(currentRecord);
+
+            SaveCurrentRecordToDb();
+            //timeRecordRepository.Update(currentRecord);
         }
 
         public void StopAndDeleteLastRecord()
@@ -311,7 +324,8 @@ namespace DustInTheWind.ActiveTime.Recording
                     {
                         //UpdateTime();
 
-                        recordRepository.Delete(currentRecord);
+                        DeleteCurrentRecordFromDb();
+                        //timeRecordRepository.Delete(currentRecord);
                         currentRecord = null;
 
                         State = RecorderState.Stopped;
@@ -324,6 +338,14 @@ namespace DustInTheWind.ActiveTime.Recording
                 default:
                     break;
             }
+        }
+
+        private void DeleteCurrentRecordFromDb()
+        {
+            if (databaseRecord == null)
+                return;
+
+            timeRecordRepository.Delete(databaseRecord);
         }
 
 

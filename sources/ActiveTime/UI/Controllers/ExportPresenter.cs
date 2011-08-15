@@ -20,6 +20,8 @@ using DustInTheWind.ActiveTime.Exporters;
 using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
+using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.UI.Controllers
 {
@@ -141,12 +143,13 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                             {
                                 DateTime date = new DateTime(year, month.Value, i);
 
-                                DayRecord dayRecords = activeTimeApplication.RecordRepository.GetDayRecord(date);
+                                IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(date);
+                                DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
 
-                                if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecords == null || dayRecords.IsEmpty))
+                                if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecord == null || dayRecord.IsEmpty))
                                     continue;
 
-                                exporter.ExportDayRecord(sw, dayRecords);
+                                exporter.ExportDayRecord(sw, dayRecord);
                             }
 
                             exporter.ExportFooter(sw);

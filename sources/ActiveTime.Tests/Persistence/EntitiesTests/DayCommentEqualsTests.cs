@@ -5,7 +5,7 @@ using System.Text;
 using DustInTheWind.ActiveTime.Persistence.Entities;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
+namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
 {
     [TestFixture]
     public class DayCommentEqualsTests
@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
 
             bool actualValue = dayComment1.Equals(dayComment2);
 
-            Assert.That(actualValue, Is.False);
+            Assert.That(actualValue, Is.True);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
 
             bool actualValue = dayComment1.Equals(dayComment2);
 
-            Assert.That(actualValue, Is.True);
+            Assert.That(actualValue, Is.False);
         }
 
         [Test]
@@ -82,9 +82,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.Entities
         }
 
         [Test]
-        public void TestEquals_AllDifferentButId()
+        public void TestEquals_AllDifferentButBusinessKey()
         {
-            dayComment2.Date = new DateTime(2011, 03, 05);
+            dayComment2.Id = 10;
             dayComment2.Comment = "some different comment";
 
             bool actualValue = dayComment1.Equals(dayComment2);

@@ -78,17 +78,20 @@
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
     <Compile Include="Persistence\Entities\DayComment.cs" />
-    <Compile Include="Persistence\Entities\DayCommentList.cs" />
-    <Compile Include="Persistence\Entities\RecordType.cs" />
-    <Compile Include="Persistence\Repositories\CommentRepository.cs" />
-    <Compile Include="Persistence\Repositories\ICommentRepository.cs" />
-    <Compile Include="Persistence\Repositories\IRecordRepository.cs" />
-    <Compile Include="Persistence\Entities\Record.cs" />
-    <Compile Include="Persistence\Entities\RecordList.cs" />
-    <Compile Include="Persistence\Repositories\RecordRepository.cs" />
+    <Compile Include="Persistence\Entities\EntityBase.cs" />
+    <Compile Include="Persistence\Entities\TimeRecordType.cs" />
+    <Compile Include="Persistence\SessionProvider.cs" />
+    <Compile Include="Persistence\Repositories\CrudRepositoryBase.cs" />
+    <Compile Include="Persistence\Repositories\DayCommentRepository.cs" />
+    <Compile Include="Persistence\Repositories\IDayCommentRepository.cs" />
+    <Compile Include="Persistence\Repositories\ITimeRecordRepository.cs" />
+    <Compile Include="Persistence\Entities\TimeRecord.cs" />
+    <Compile Include="Persistence\Repositories\TimeRecordRepository.cs" />
     <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
     <Compile Include="Recording\Break.cs" />
     <Compile Include="Recording\DayTimeInterval.cs" />
+    <Compile Include="Recording\Record.cs" />
+    <Compile Include="Recording\Recorder2.cs" />
     <Compile Include="ReminderStatus.cs" />
     <Compile Include="RingEventArgs.cs" />
     <Compile Include="UI\Controllers\CommentsPresenter.cs" />
@@ -218,10 +221,14 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
     <Resource Include="Resources\Leopard-Optical-Illusion.jpg" />
-    <EmbeddedResource Include="Persistence\Mappings\Record.hbm.xml">
+    <EmbeddedResource Include="Persistence\Mappings\TimeRecord.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Mappings\Comment.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\DayComment.hbm.xml" />
+    <Content Include="..\RefBin\SQLite\SQLite.Interop.dll">
+      <Link>SQLite.Interop.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="sql scripts\comments.sql" />
     <Content Include="sql scripts\records.sql" />
   </ItemGroup>

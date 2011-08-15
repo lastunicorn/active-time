@@ -15,7 +15,6 @@
 -- along with this program.  If not, see <http:--www.gnu.org/licenses/>.
 
 CREATE TABLE [comments] (
-[id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
-[date] DATE  NOT NULL,
-[comment] VARCHAR(1024)  NOT NULL
-)
+  [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+  [date] DATE NOT NULL UNIQUE, 
+  [comment] VARCHAR(1024) NOT NULL);

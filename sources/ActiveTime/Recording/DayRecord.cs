@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
@@ -30,7 +31,7 @@ namespace DustInTheWind.ActiveTime.Recording
         private DateTime date;
 
         /// <summary>
-        /// Gets or sets the date for which the current instance contains information.
+        /// Gets the date for which the current instance contains information.
         /// </summary>
         public DateTime Date
         {
@@ -40,12 +41,12 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// The records representing the active time.
         /// </summary>
-        private DayTimeInterval[] activeTimeRecords;
+        private List<DayTimeInterval> activeTimeRecords;
 
         /// <summary>
         /// Gets or sets the records representing the active time.
         /// </summary>
-        public DayTimeInterval[] ActiveTimeRecords
+        public List<DayTimeInterval> ActiveTimeRecords
         {
             get { return activeTimeRecords; }
             set { activeTimeRecords = value; }
@@ -61,12 +62,12 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public bool IsEmpty
         {
-            get { return (activeTimeRecords == null || activeTimeRecords.Length == 0) && (comment == null || comment.Length == 0); }
+            get { return (activeTimeRecords == null || activeTimeRecords.Count == 0) && (comment == null || comment.Length == 0); }
         }
 
         public bool HasRecords
         {
-            get { return activeTimeRecords != null && activeTimeRecords.Length > 0; }
+            get { return activeTimeRecords != null && activeTimeRecords.Count > 0; }
         }
 
         public bool HasComment
@@ -138,7 +139,7 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public TimeSpan? GetBeginTime()
         {
-            if (activeTimeRecords != null && activeTimeRecords.Length > 0)
+            if (activeTimeRecords != null && activeTimeRecords.Count > 0)
             {
                 return activeTimeRecords[0].StartTime;
             }
@@ -169,8 +170,8 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public DayTimeInterval[] GetRecords(bool includeBreaks)
         {
-            if (activeTimeRecords == null || activeTimeRecords.Length == 0 || !includeBreaks)
-                return activeTimeRecords;
+            if (activeTimeRecords == null || activeTimeRecords.Count == 0 || !includeBreaks)
+                return activeTimeRecords.ToArray();
 
 
             List<DayTimeInterval> allRecords = new List<DayTimeInterval>();
@@ -187,6 +188,30 @@ namespace DustInTheWind.ActiveTime.Recording
             }
 
             return allRecords.ToArray();
+        }
+
+        public static DayRecord FromTimeRecords(IList<TimeRecord> timeRecords)
+        {
+            if (timeRecords == null)
+                throw new ArgumentNullException("timeRecords");
+
+            if (timeRecords.Count == 0)
+                throw new ArgumentException("The list of TimeRecords contains no items.", "timeRecords");
+
+            DayRecord dayRecord = null;
+
+            foreach (TimeRecord timeRecord in timeRecords)
+            {
+                if (timeRecord == null)
+                    throw new ArgumentException("The list of TimeRecords contains null items.", "timeRecords");
+
+                if (dayRecord == null)
+                    dayRecord = new DayRecord(timeRecord.Date);
+
+                dayRecord.ActiveTimeRecords.Add(new DayTimeInterval(timeRecord.StartTime, timeRecord.EndTime));
+            }
+
+            return dayRecord;
         }
     }
 }

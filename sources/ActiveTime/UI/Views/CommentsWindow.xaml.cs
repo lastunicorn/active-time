@@ -20,6 +20,7 @@ using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.UI.Views
 {
@@ -40,7 +41,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
             InitializeComponent();
         }
 
-        internal CommentsWindow(ICommentRepository commentRepository, DateTime date)
+        internal CommentsWindow(IDayCommentRepository commentRepository, DateTime date)
             : this()
         {
             presenter = new CommentsPresenter(this, commentRepository, date);

@@ -19,17 +19,21 @@ using System.Windows;
 using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.UI.Controllers
 {
     internal class CommentsPresenter
     {
-        private ICommentRepository commentRepository;
+        private IDayCommentRepository commentRepository;
         //private DateTime date;
         private CommentsModel model;
         private ICommentsView view;
+        private DayComment databaseRecord;
 
-        public CommentsPresenter(ICommentsView view, ICommentRepository commentRepository, DateTime date)
+
+        public CommentsPresenter(ICommentsView view, IDayCommentRepository commentRepository, DateTime date)
         {
             if (view == null)
                 throw new ArgumentNullException("view");
@@ -52,12 +56,15 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 
         private void model_DateChanged(object sender, EventArgs e)
         {
+            databaseRecord = commentRepository.GetByDate(model.Date);
+            if (databaseRecord == null)
+                databaseRecord = new DayComment { Date = model.Date };
             UpdateModel();
         }
 
         private void UpdateModel()
         {
-            model.Comment = commentRepository.GetByDate(model.Date).Comment;
+            model.Comment = databaseRecord.Comment;
         }
 
         public void SaveButtonClicked()
@@ -89,7 +96,8 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 
         private void SaveInternal()
         {
-            commentRepository.AddOrUpdate(model.Date, model.Comment);
+            databaseRecord.Comment = model.Comment;
+            commentRepository.AddOrUpdate(databaseRecord);
         }
 
         public void CancelButtonClicked()

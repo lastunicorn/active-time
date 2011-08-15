@@ -21,35 +21,41 @@ namespace DustInTheWind.ActiveTime.Persistence.Entities
     /// <summary>
     /// Represents an interval of time within a day.
     /// </summary>
-    public class Record
+    public class TimeRecord : EntityBase
     {
-        public int Id { get; set; }
-    
         /// <summary>
         /// Gets or sets the date for which this record is created.
         /// </summary>
-        public DateTime Date { get; set; }
+        public virtual DateTime Date { get; set; }
 
         /// <summary>
         /// Gets or sets the time of day representing the start time.
         /// </summary>
-        public TimeSpan StartTime { get; set; }
+        public virtual TimeSpan StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time of day representing the end time.
         /// </summary>
-        public TimeSpan EndTime { get; set; }
+        public virtual TimeSpan EndTime { get; set; }
 
-        public RecordType RecordType { get; set; }
+        /// <summary>
+        /// Gets or sets the type of the time record. This type specifies if the record was normally created or was created manually.
+        /// </summary>
+        public virtual TimeRecordType RecordType { get; set; }
 
+
+        /// <summary>
+        /// Compares the business keys.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as Record);
-        }
+            if (this == obj) return true;
 
-        public bool Equals(Record record)
-        {
-            return record != null && Id == record.Id;
+            TimeRecord timeRecord = obj as TimeRecord;
+
+            return timeRecord != null && Date == timeRecord.Date && StartTime == timeRecord.StartTime && EndTime == timeRecord.EndTime;
         }
     }
 }

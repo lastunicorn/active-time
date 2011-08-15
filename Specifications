@@ -1,0 +1,7 @@
+Recorder
+--------
+The main purpose of the recorder is to keep the last active time record and to updates it into the database when requested.
+
+- When started, it creates a new record and inserts it in the database. The record is kept for further updates.
+- When stampped, it updates the EndTime of the existing record and also updates it in the database.
+- When stopped, it updates the EndTime of the existing record, updates it in the database and "forgets" about it.

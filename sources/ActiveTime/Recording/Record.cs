@@ -36,31 +36,38 @@ namespace DustInTheWind.ActiveTime.Recording
             get { return date; }
         }
 
+
         /// <summary>
         /// The time of day representing the start time.
         /// </summary>
-        private TimeSpan startTime;
+        private DayTimeInterval timeInterval;
+
+        /// <summary>
+        /// Gets the time of day representing the start time.
+        /// </summary>
+        public DayTimeInterval TimeInterval
+        {
+            get { return timeInterval; }
+        }
+
 
         /// <summary>
         /// Gets the time of day representing the start time.
         /// </summary>
         public TimeSpan StartTime
         {
-            get { return startTime; }
+            get { return timeInterval.StartTime; }
+            set { timeInterval.StartTime = value; }
         }
 
-        /// <summary>
-        /// The time of day representing the end time.
-        /// </summary>
-        private TimeSpan endTime;
 
         /// <summary>
         /// Gets or sets the time of day representing the end time.
         /// </summary>
         public TimeSpan EndTime
         {
-            get { return endTime; }
-            set { endTime = value; }
+            get { return timeInterval.EndTime; }
+            set { timeInterval.EndTime = value; }
         }
 
         #region Constructors
@@ -73,6 +80,7 @@ namespace DustInTheWind.ActiveTime.Recording
         public Record(DateTime date, TimeSpan startTime)
             : this(date, startTime, startTime)
         {
+
         }
 
         /// <summary>
@@ -84,10 +92,19 @@ namespace DustInTheWind.ActiveTime.Recording
         public Record(DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
             this.date = date;
-            this.startTime = startTime;
-            this.endTime = endTime;
+            this.timeInterval = new DayTimeInterval(startTime, endTime);
         }
 
         #endregion
+
+        public DateTime GetStartDateTime()
+        {
+            return Date + StartTime;
+        }
+
+        public DateTime GetEndDateTime()
+        {
+            return Date + EndTime;
+        }
     }
 }
