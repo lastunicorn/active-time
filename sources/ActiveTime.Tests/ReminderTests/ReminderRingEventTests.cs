@@ -65,7 +65,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
                 if (ringEvent.WaitOne())
                 {
-                    Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(10)));
+                    Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(20)));
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
                 if (ringEvent.WaitOne())
                 {
-                    Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(10)));
+                    Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(20)));
                 }
             }
         }
@@ -253,7 +253,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
                 if (ringEvent.WaitOne())
                 {
-                    Assert.That(ringTime - startTime, Is.EqualTo(ringMiliseconds).Within(TimeSpan.FromMilliseconds(10)));
+                    Assert.That(ringTime - startTime, Is.EqualTo(ringMiliseconds).Within(TimeSpan.FromMilliseconds(20)));
                 }
             }
         }

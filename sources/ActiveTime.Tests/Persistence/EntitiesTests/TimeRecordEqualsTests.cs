@@ -57,6 +57,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         }
 
         [Test]
+        public void TestEquals_SameInstance()
+        {
+            bool actualValue = record1.Equals(record1);
+
+            Assert.That(actualValue, Is.True);
+        }
+
+        [Test]
         public void TestEquals_DifferentId()
         {
             record2.Id = 10;

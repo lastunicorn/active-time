@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Persistence\EntitiesTests\DayCommentPropertyTests.cs" />
+    <Compile Include="Persistence\EntitiesTests\TimeRecordPropertyTests.cs" />
     <Compile Include="Persistence\RepositoriesTests\DayCommentRepositoryTests\DayCommentAssertUtil.cs">
       <SubType>Code</SubType>
     </Compile>

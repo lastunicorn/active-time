@@ -80,7 +80,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
             DateTime ringTime = DateTime.Now;
 
-            Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(10)));
+            Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(20)));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 
             DateTime ringTime = DateTime.Now;
 
-            Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(stopMiliseconds)).Within(TimeSpan.FromMilliseconds(10)));
+            Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(stopMiliseconds)).Within(TimeSpan.FromMilliseconds(20)));
         }
     }
 }
