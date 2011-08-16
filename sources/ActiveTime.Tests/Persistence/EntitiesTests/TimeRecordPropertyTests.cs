@@ -26,7 +26,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         private TimeRecord timeRecord;
 
         [SetUp]
-        private void SetUp()
+        public void SetUp()
         {
             timeRecord = new TimeRecord();
         }
@@ -37,7 +37,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
             DateTime date = new DateTime(2011, 06, 13);
             timeRecord.Date = date;
 
-            Assert.That(timeRecord.Date, Is.SameAs(date));
+            Assert.That(timeRecord.Date, Is.EqualTo(date));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
             TimeSpan startTime = new TimeSpan(12, 10, 30);
             timeRecord.StartTime = startTime;
 
-            Assert.That(timeRecord.StartTime, Is.SameAs(startTime));
+            Assert.That(timeRecord.StartTime, Is.EqualTo(startTime));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
             TimeSpan endTime = new TimeSpan(12, 10, 30);
             timeRecord.EndTime = endTime;
 
-            Assert.That(timeRecord.EndTime, Is.SameAs(endTime));
+            Assert.That(timeRecord.EndTime, Is.EqualTo(endTime));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
             TimeRecordType recordType = TimeRecordType.Fake;
             timeRecord.RecordType = recordType;
 
-            Assert.That(timeRecord.RecordType, Is.SameAs(recordType));
+            Assert.That(timeRecord.RecordType, Is.EqualTo(recordType));
         }
     }
 }

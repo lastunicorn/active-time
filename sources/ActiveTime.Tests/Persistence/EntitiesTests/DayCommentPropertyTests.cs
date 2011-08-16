@@ -26,7 +26,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         private DayComment dayComment;
 
         [SetUp]
-        private void SetUp()
+        public void SetUp()
         {
             dayComment = new DayComment();
         }
@@ -37,7 +37,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
             DateTime date = new DateTime(2011, 06, 13);
             dayComment.Date = date;
 
-            Assert.That(dayComment.Date, Is.SameAs(date));
+            Assert.That(dayComment.Date, Is.EqualTo(date));
         }
 
         [Test]
