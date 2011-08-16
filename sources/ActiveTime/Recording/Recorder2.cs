@@ -98,7 +98,7 @@ namespace DustInTheWind.ActiveTime.Recording
         }
 
         #endregion
-        
+
 
         #region Constructor
 
@@ -128,9 +128,7 @@ namespace DustInTheWind.ActiveTime.Recording
                     {
                         DoStart();
                     }
-
                     OnStarted(EventArgs.Empty);
-
                     break;
 
                 case RecorderState.Running:
@@ -143,41 +141,118 @@ namespace DustInTheWind.ActiveTime.Recording
 
         public void Stamp()
         {
+            switch (State)
+            {
+                case RecorderState.Stopped:
+                    lock (stateSynchronizer)
+                    {
+                        DoStart();
+                    }
+                    OnStarted(EventArgs.Empty);
+                    lock (stateSynchronizer)
+                    {
+                        DoStamp();
+                    }
+                    OnStamped(EventArgs.Empty);
+                    break;
+
+                case RecorderState.Running:
+                    lock (stateSynchronizer)
+                    {
+                        DoStamp();
+                    }
+                    OnStamped(EventArgs.Empty);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
-        public void Stop(bool deleteLastRecord)
+        public void Stop(bool deleteLastRecord = false)
         {
+            switch (State)
+            {
+                case RecorderState.Stopped:
+                    break;
+
+                case RecorderState.Running:
+                    lock (stateSynchronizer)
+                    {
+                        DoStop(deleteLastRecord);
+                    }
+                    OnStopped(EventArgs.Empty);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
 
         private void DoStart()
         {
-            NewRecordIfNeeded();
+            DateTime now = DateTime.Now;
+
+            // Create a new current record.
+            CreateNewCurrentRecord(now, false);
+            // Create a new database record from current record.
+            CreateNewDatabaseRecord();
+            // Save database record to db.
+            timeRecordRepository.Add(databaseRecord);
+            // Change the state.
             State = RecorderState.Running;
         }
 
-
-        private void NewRecordIfNeeded()
+        private void DoStamp()
         {
             DateTime now = DateTime.Now;
 
-            if (!ExistsCurrentRecord)
+            if (IsNewDay(now))
             {
-                CreateNewCurrentRecord(now, false);
-                SaveCurrentRecordToDb();
-            }
-            else if (IsNewDay(now))
-            {
-                // day was changed. update the last record.
+                // Update current record.
                 FillCurrentRecordToEndDay();
-                SaveCurrentRecordToDb();
+                // Update database record.
+                databaseRecord.EndTime = currentRecord.EndTime;
+                // Save database record to db.
+                timeRecordRepository.Update(databaseRecord);
 
-                // create a new record starting from the beginning of the day.
+                // Create a new current record.
                 CreateNewCurrentRecord(now, true);
-
-                SaveCurrentRecordToDb();
+                // Create a new database record from current record.
+                CreateNewDatabaseRecord();
+                // Save database record to db.
+                timeRecordRepository.Add(databaseRecord);
             }
+
+            // Update the current record's end time.
+            UpdateCurrentRecordEndTime(now);
+            // Update the database record's end time.
+            databaseRecord.EndTime = currentRecord.EndTime;
+            // Save database record in db.
+            timeRecordRepository.Update(databaseRecord);
         }
+
+        private void DoStop(bool deleteLastRecord)
+        {
+            if (deleteLastRecord)
+            {
+                // Delete database record from the db.
+                DeleteDatabaseRecordFromDb();
+            }
+            else
+            {
+                DoStamp();
+            }
+
+            // Delete database record.
+            databaseRecord = null;
+            // Delete current record.
+            currentRecord = null;
+            // Change the state.
+            State = RecorderState.Stopped;
+        }
+
 
         private bool IsNewDay(DateTime now)
         {
@@ -212,6 +287,11 @@ namespace DustInTheWind.ActiveTime.Recording
                 currentRecord = new Record(now.Date, now.TimeOfDay, now.TimeOfDay);
 
             databaseRecord = null;
+        }
+
+        private void UpdateCurrentRecordEndTime(DateTime now)
+        {
+            currentRecord.EndTime = now.TimeOfDay;
         }
 
         private void FillCurrentRecordToEndDay()
@@ -258,7 +338,7 @@ namespace DustInTheWind.ActiveTime.Recording
             };
         }
 
-        private void DeleteCurrentDatabaseRecordFromDb()
+        private void DeleteDatabaseRecordFromDb()
         {
             if (!ExistsDatabaseRecord)
                 return;
