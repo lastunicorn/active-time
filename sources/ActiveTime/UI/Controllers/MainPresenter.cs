@@ -18,10 +18,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
-using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.UI.Controllers
 {

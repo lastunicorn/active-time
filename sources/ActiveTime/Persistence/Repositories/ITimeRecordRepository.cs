@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Persistence.Entities;
-using DustInTheWind.ActiveTime.Recording;
 using System;
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.Persistence.Repositories
 {

@@ -15,9 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Exporters;
-using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
+using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime
 {

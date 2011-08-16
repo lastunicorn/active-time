@@ -15,10 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Persistence.Entities;
-using DustInTheWind.ActiveTime.Recording;
-using NHibernate;
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Persistence.Entities;
+using NHibernate;
 
 namespace DustInTheWind.ActiveTime.Persistence.Repositories
 {

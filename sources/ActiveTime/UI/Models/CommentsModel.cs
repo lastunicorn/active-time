@@ -16,7 +16,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Windows;
 
 namespace DustInTheWind.ActiveTime.UI.Models
 {

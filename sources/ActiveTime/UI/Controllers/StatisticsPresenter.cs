@@ -15,11 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Persistence.Entities;
 using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
-using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Persistence.Entities;
 
 namespace DustInTheWind.ActiveTime.UI.Controllers
 {

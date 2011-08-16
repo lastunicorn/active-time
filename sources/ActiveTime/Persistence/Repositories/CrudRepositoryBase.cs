@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using NHibernate;
 using System;
 using System.Collections.Generic;
+using NHibernate;
 
 namespace DustInTheWind.ActiveTime.Persistence.Repositories
 {
@@ -100,7 +100,7 @@ namespace DustInTheWind.ActiveTime.Persistence.Repositories
         /// Returns from the database the comment with the specified id.
         /// </summary>
         /// <param name="id">The id of the comment to return.</param>
-        /// <returns>An instance of <see cref="DayComment"/> containing the comment from the database.</returns>
+        /// <returns>An instance of <see cref="TEntity"/> containing the comment from the database.</returns>
         public TEntity GetById(int id)
         {
             return CurrentSession.Get<TEntity>(id);
@@ -109,7 +109,7 @@ namespace DustInTheWind.ActiveTime.Persistence.Repositories
         /// <summary>
         /// Returns from the database all the comments.
         /// </summary>
-        /// <returns>An instance of <see cref="DayCommentList"/> containing all the requested comments.</returns>
+        /// <returns>An instance of <see cref="TEntity"/> containing all the requested comments.</returns>
         public IList<TEntity> GetAll()
         {
             return CurrentSession.QueryOver<TEntity>().List();
