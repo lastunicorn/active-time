@@ -149,6 +149,7 @@ namespace DustInTheWind.ActiveTime.Recording
                         DoStart();
                     }
                     OnStarted(EventArgs.Empty);
+                    OnStamping(EventArgs.Empty);
                     lock (stateSynchronizer)
                     {
                         DoStamp();

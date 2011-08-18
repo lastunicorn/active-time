@@ -65,6 +65,38 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
 
         [Test]
         [Timeout(200)]
+        public void TestStart_InitialStopped_StampingEventCalled()
+        {
+            // Prepare
+            ManualResetEvent ev = new ManualResetEvent(false);
+            recorder.Stamping += new EventHandler((sender, e) => { ev.Set(); });
+
+            // Execute
+            recorder.Stamp();
+
+            // Verify
+            ev.WaitOne();
+        }
+
+        [Test]
+        [Timeout(200)]
+        public void TestStart_InitialStopped_StampingEvent_CheckSender()
+        {
+            // Prepare
+            ManualResetEvent ev = new ManualResetEvent(false);
+            object actualSender = null;
+            recorder.Stamping += new EventHandler((sender, e) => { actualSender = sender; ev.Set(); });
+
+            // Execute
+            recorder.Stamp();
+
+            // Verify
+            ev.WaitOne();
+            Assert.That(actualSender, Is.SameAs(recorder));
+        }
+
+        [Test]
+        [Timeout(200)]
         public void TestStamp_InitialStopped_StartedEventCalled()
         {
             // Prepare
@@ -157,6 +189,40 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
 
             // Verify
             Assert.That(recorder.State, Is.EqualTo(RecorderState.Running));
+        }
+
+        [Test]
+        [Timeout(200)]
+        public void TestStamp_InitialRunning_StampingEventCalled()
+        {
+            // Prepare
+            recorder.Start();
+            ManualResetEvent ev = new ManualResetEvent(false);
+            recorder.Stamping += new EventHandler((sender, e) => { ev.Set(); });
+
+            // Execute
+            recorder.Stamp();
+
+            // Verify
+            ev.WaitOne();
+        }
+
+        [Test]
+        [Timeout(200)]
+        public void TestStamp_InitialRunning_StampingEvent_CheckSender()
+        {
+            // Prepare
+            recorder.Start();
+            ManualResetEvent ev = new ManualResetEvent(false);
+            object actualSender = null;
+            recorder.Stamping += new EventHandler((sender, e) => { actualSender = sender; ev.Set(); });
+
+            // Execute
+            recorder.Stamp();
+
+            // Verify
+            ev.WaitOne();
+            Assert.That(actualSender, Is.SameAs(recorder));
         }
 
         [Test]

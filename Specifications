@@ -18,13 +18,14 @@ Four events:
 
 ----------------------------------
 "Start" action
-- When started, it creates a new record and inserts it in the database. The record is kept in memory for further updates.
-- The "Start" action is executed when the Recorder is in Stopped state. In any other state, the call is ignored.
+- What it does: When started, it creates a new record and inserts it in the database. The record is kept in memory for further updates.
+- Recorder's status: The "Start" action is executed when the Recorder is in Stopped state. In any other state, the call is ignored.
 
 "Stamp" action
-- When stampped, it changes the EndTime of the existing record and updates it into the database.
-- The "Stamp" action is executed when the Recorder is in Started state. If the Recorder is in Stopped state, it is automatically started. In any other state, the call is ignored.
+- What it does: When stampped, it changes the EndTime of the existing record and updates it into the database.
+- Recorder's status: The "Stamp" action is executed when the Recorder is in Started state. If the Recorder is in Stopped state, it is automatically started. In any other state, the call is ignored.
+- Events: The "Stamp" action raises two events: The first one, "Stamping" is raised before the "Stamp" is performed. The second one, "Stamped" is raised after the "Stamp" is performed.
 
 "Stop" action
-- When stopped, it changes the EndTime of the existing record, updates it into the database and "forgets" about it (deletes it from the memory).
-- The "Stop" action is executed when the Recorder is in Started state. If the Recorder is in Stopped state, it is automatically started and then, immediatelly stopped. In any other state, the call is ignored.
+- What it does: When stopped, it changes the EndTime of the existing record, updates it into the database and "forgets" about it (deletes it from the memory).
+- Recorder's status: The "Stop" action is executed when the Recorder is in Started state. If the Recorder is in Stopped state, it is automatically started and then, immediatelly stopped. In any other state, the call is ignored.
