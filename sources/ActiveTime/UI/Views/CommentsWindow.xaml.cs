@@ -41,7 +41,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
             InitializeComponent();
         }
 
-        internal CommentsWindow(IDayCommentRepository commentRepository, DateTime date)
+        public CommentsWindow(IDayCommentRepository commentRepository, DateTime date)
             : this()
         {
             presenter = new CommentsPresenter(this, commentRepository, date);

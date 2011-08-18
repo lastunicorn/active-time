@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Text;
 
 namespace DustInTheWind.ActiveTime.Persistence.Entities
 {
@@ -56,6 +57,20 @@ namespace DustInTheWind.ActiveTime.Persistence.Entities
             TimeRecord timeRecord = obj as TimeRecord;
 
             return timeRecord != null && Date == timeRecord.Date && StartTime == timeRecord.StartTime && EndTime == timeRecord.EndTime;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(Date.ToShortDateString());
+            sb.Append(" [");
+            sb.Append(StartTime.ToString());
+            sb.Append(" - ");
+            sb.Append(EndTime.ToString());
+            sb.Append("]");
+
+            return sb.ToString();
         }
     }
 }

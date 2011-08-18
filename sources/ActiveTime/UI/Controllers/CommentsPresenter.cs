@@ -48,8 +48,8 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 
             model = new CommentsModel();
 
-            model.Date = date;
             model.DateChanged += new EventHandler(model_DateChanged);
+            model.Date = date;
         }
 
         private void model_DateChanged(object sender, EventArgs e)

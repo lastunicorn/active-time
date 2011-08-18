@@ -91,7 +91,7 @@
     <Compile Include="Recording\Break.cs" />
     <Compile Include="Recording\DayTimeInterval.cs" />
     <Compile Include="Recording\Record.cs" />
-    <Compile Include="Recording\Recorder2.cs" />
+    <Compile Include="Recording\Recorder.cs" />
     <Compile Include="Reminding\ReminderStatus.cs" />
     <Compile Include="Reminding\RingEventArgs.cs" />
     <Compile Include="UI\Controllers\CommentsPresenter.cs" />

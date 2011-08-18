@@ -1,44 +1,20 @@
-﻿// ActiveTime
-// Copyright (C) 2011 Dust in the Wind
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-using System;
+﻿using System;
 using DustInTheWind.ActiveTime.Persistence.Entities;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
-    /// <summary>
-    /// The main purpose of this class is to keep the last active time record and
-    /// to updates it into the database when requested.
-    /// </summary>
-    public class Recorder : IDisposable
+    public class Recorder
     {
         private ITimeRecordRepository timeRecordRepository;
 
         private object stateSynchronizer = new object();
 
-        private Record previousRecord;
-        private Record currentRecord;
-        private TimeRecord databaseRecord = null;
-
         /// <summary>
         /// Specifies the state of the current instance.
         /// </summary>
         public RecorderState State { get; set; }
-        
+
 
         #region Event Started
 
@@ -129,7 +105,7 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// Initializes a new instance of the <see cref="Recorder"/> class.
         /// </summary>
-        /// <param name="timeRecordRepository">Dal class used to access the persistent layer.</param>
+        /// <param name="dal">Dal class used to access the persistent layer.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public Recorder(ITimeRecordRepository timeRecordRepository)
         {
@@ -142,76 +118,6 @@ namespace DustInTheWind.ActiveTime.Recording
 
         #endregion
 
-        private void SaveCurrentRecordToDb()
-        {
-            if (currentRecord == null)
-                return;
-
-            if (databaseRecord == null)
-            {
-                databaseRecord = new TimeRecord
-                {
-                    Date = currentRecord.Date,
-                    StartTime = currentRecord.StartTime,
-                    RecordType = TimeRecordType.Normal
-                };
-
-                databaseRecord.EndTime = currentRecord.EndTime;
-
-                timeRecordRepository.Add(databaseRecord);
-            }
-            else
-            {
-                databaseRecord.EndTime = currentRecord.EndTime;
-                timeRecordRepository.Update(databaseRecord);
-            }
-        }
-
-        private void NewRecordIfNeeded()
-        {
-            DateTime now = DateTime.Now;
-
-            if (IsNewDay(now) || currentRecord == null)
-            {
-                if (currentRecord != null)
-                {
-                    // day was changed. update the last record.
-                    currentRecord.EndTime = TimeSpan.FromDays(1).Subtract(TimeSpan.FromTicks(1));
-                    SaveCurrentRecordToDb();
-
-                    // create a new record starting from the beggining of the day.
-                    currentRecord = CreateNewRecord(now.Date);
-                    currentRecord.EndTime = now.TimeOfDay;
-                }
-                else
-                {
-                    // create a new record.
-                    currentRecord = CreateNewRecord(now);
-                }
-
-                databaseRecord = null;
-                SaveCurrentRecordToDb();
-            }
-        }
-
-        private Record CreateNewRecord(DateTime now)
-        {
-            return new Record(now.Date, now.TimeOfDay);
-        }
-
-        private bool IsNewDay(DateTime now)
-        {
-            return currentRecord != null && currentRecord.Date != now.Date;
-        }
-
-        public TimeSpan? TimeFromLastStop()
-        {
-            if (currentRecord != null) return null;
-            if (previousRecord == null) return null;
-
-            DateTime now = DateTime.Now;
-            return now - now.Date.Add(previousRecord.EndTime);
-        }
 
         public void Start()
         {
@@ -222,34 +128,10 @@ namespace DustInTheWind.ActiveTime.Recording
                     {
                         DoStart();
                     }
-
                     OnStarted(EventArgs.Empty);
-
                     break;
 
                 case RecorderState.Running:
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        public void Stop()
-        {
-            switch (State)
-            {
-                case RecorderState.Stopped:
-                    break;
-
-                case RecorderState.Running:
-                    lock (stateSynchronizer)
-                    {
-                        DoStop();
-                    }
-
-                    OnStopped(EventArgs.Empty);
-
                     break;
 
                 default:
@@ -262,19 +144,47 @@ namespace DustInTheWind.ActiveTime.Recording
             switch (State)
             {
                 case RecorderState.Stopped:
-                    break;
-
-                case RecorderState.Running:
+                    lock (stateSynchronizer)
+                    {
+                        DoStart();
+                    }
+                    OnStarted(EventArgs.Empty);
 
                     OnStamping(EventArgs.Empty);
-
                     lock (stateSynchronizer)
                     {
                         DoStamp();
                     }
-
                     OnStamped(EventArgs.Empty);
+                    break;
 
+                case RecorderState.Running:
+                    OnStamping(EventArgs.Empty);
+                    lock (stateSynchronizer)
+                    {
+                        DoStamp();
+                    }
+                    OnStamped(EventArgs.Empty);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void Stop(bool deleteLastRecord = false)
+        {
+            switch (State)
+            {
+                case RecorderState.Stopped:
+                    break;
+
+                case RecorderState.Running:
+                    lock (stateSynchronizer)
+                    {
+                        DoStop(deleteLastRecord);
+                    }
+                    OnStopped(EventArgs.Empty);
                     break;
 
                 default:
@@ -285,118 +195,182 @@ namespace DustInTheWind.ActiveTime.Recording
 
         private void DoStart()
         {
-            NewRecordIfNeeded();
+            DateTime now = DateTime.Now;
+
+            // Create a new current record.
+            CreateNewCurrentRecord(now, false);
+            // Create a new database record from current record.
+            CreateNewDatabaseRecord();
+            // Save database record to db.
+            timeRecordRepository.Add(databaseRecord);
+            // Change the state.
             State = RecorderState.Running;
-        }
-
-        private void DoStop()
-        {
-            NewRecordIfNeeded();
-            UpdateTime();
-
-            previousRecord = currentRecord;
-            currentRecord = null;
-
-            State = RecorderState.Stopped;
         }
 
         private void DoStamp()
         {
-            NewRecordIfNeeded();
-            UpdateTime();
-        }
+            DateTime now = DateTime.Now;
 
-
-        private void UpdateTime()
-        {
-            currentRecord.EndTime = DateTime.Now.TimeOfDay;
-
-            SaveCurrentRecordToDb();
-            //timeRecordRepository.Update(currentRecord);
-        }
-
-        public void StopAndDeleteLastRecord()
-        {
-            switch (State)
+            if (IsNewDay(now))
             {
-                case RecorderState.Stopped:
-                    break;
+                // Update current record.
+                FillCurrentRecordToEndDay();
+                // Update database record.
+                databaseRecord.EndTime = currentRecord.EndTime;
+                // Save database record to db.
+                timeRecordRepository.Update(databaseRecord);
 
-                case RecorderState.Running:
-                    lock (stateSynchronizer)
-                    {
-                        //UpdateTime();
+                // Create a new current record.
+                CreateNewCurrentRecord(now, true);
+                // Create a new database record from current record.
+                CreateNewDatabaseRecord();
+                // Save database record to db.
+                timeRecordRepository.Add(databaseRecord);
+            }
 
-                        DeleteCurrentRecordFromDb();
-                        //timeRecordRepository.Delete(currentRecord);
-                        currentRecord = null;
+            // Update the current record's end time.
+            UpdateCurrentRecordEndTime(now);
+            // Update the database record's end time.
+            databaseRecord.EndTime = currentRecord.EndTime;
+            // Save database record in db.
+            timeRecordRepository.Update(databaseRecord);
+        }
 
-                        State = RecorderState.Stopped;
-                    }
+        private void DoStop(bool deleteLastRecord)
+        {
+            if (deleteLastRecord)
+            {
+                // Delete database record from the db.
+                DeleteDatabaseRecordFromDb();
+            }
+            else
+            {
+                DoStamp();
+            }
 
-                    OnStopped(EventArgs.Empty);
+            // Delete database record.
+            databaseRecord = null;
+            // Delete current record.
+            currentRecord = null;
+            // Change the state.
+            State = RecorderState.Stopped;
+        }
 
-                    break;
 
-                default:
-                    break;
+        private bool IsNewDay(DateTime now)
+        {
+            return ExistsCurrentRecord && currentRecord.Date != now.Date;
+        }
+
+        #region Previous Record
+
+        private Record previousRecord;
+
+        private bool IsNeverStarted
+        {
+            get { return previousRecord == null; }
+        }
+
+        #endregion
+
+        #region Current Record
+
+        private Record currentRecord;
+
+        private bool ExistsCurrentRecord
+        {
+            get { return currentRecord != null; }
+        }
+
+        private void CreateNewCurrentRecord(DateTime now, bool startsFromBeginningOfDay)
+        {
+            if (startsFromBeginningOfDay)
+                currentRecord = new Record(now.Date, TimeSpan.Zero, now.TimeOfDay);
+            else
+                currentRecord = new Record(now.Date, now.TimeOfDay, now.TimeOfDay);
+
+            databaseRecord = null;
+        }
+
+        private void UpdateCurrentRecordEndTime(DateTime now)
+        {
+            currentRecord.EndTime = now.TimeOfDay;
+        }
+
+        private void FillCurrentRecordToEndDay()
+        {
+            currentRecord.EndTime = TimeSpan.FromDays(1).Subtract(TimeSpan.FromTicks(1));
+        }
+
+        private void SaveCurrentRecordToDb()
+        {
+            if (!ExistsCurrentRecord)
+                return;
+
+            if (ExistsDatabaseRecord)
+            {
+                databaseRecord.EndTime = currentRecord.EndTime;
+                timeRecordRepository.Update(databaseRecord);
+            }
+            else
+            {
+                CreateNewDatabaseRecord();
+                timeRecordRepository.Add(databaseRecord);
             }
         }
 
-        private void DeleteCurrentRecordFromDb()
+        #endregion
+
+        #region Database Record
+
+        private TimeRecord databaseRecord = null;
+
+        private bool ExistsDatabaseRecord
         {
-            if (databaseRecord == null)
+            get { return databaseRecord != null; }
+        }
+
+        private void CreateNewDatabaseRecord()
+        {
+            databaseRecord = new TimeRecord
+            {
+                Date = currentRecord.Date,
+                StartTime = currentRecord.StartTime,
+                EndTime = currentRecord.EndTime,
+                RecordType = TimeRecordType.Normal
+            };
+        }
+
+        private void DeleteDatabaseRecordFromDb()
+        {
+            if (!ExistsDatabaseRecord)
                 return;
 
             timeRecordRepository.Delete(databaseRecord);
         }
 
-
-        #region IDisposable Members
-
-        private bool disposed = false;
-
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        /// <remarks>
-        /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
-        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be disposed.</para>
-        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be disposed.</para>
-        /// </remarks>
-        /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            // Check to see if Dispose has already been called.
-            if (!this.disposed)
-            {
-                // If disposing equals true, dispose all managed resources.
-                if (disposing)
-                {
-                    // Dispose managed resources.
-                }
-
-                // Call the appropriate methods to clean up unmanaged resources here.
-                // ...
-
-                disposed = true;
-            }
-        }
-
-        ~Recorder()
-        {
-            Dispose(false);
-        }
-
         #endregion
+
+        public TimeSpan? GetTimeFromLastStop()
+        {
+            if (State == RecorderState.Running)
+                return null;
+
+            if (IsNeverStarted)
+                return null; // Recorder has never been started.
+
+            DateTime now = DateTime.Now;
+
+            if (previousRecord.Date < now.Date)
+            {
+                TimeSpan a = TimeSpan.FromDays(1) - previousRecord.EndTime;
+                TimeSpan b = now.Date - previousRecord.Date + TimeSpan.FromDays(1);
+                TimeSpan c = now.TimeOfDay;
+
+                return a + b + c;
+            }
+
+            return now - now.Date.Add(previousRecord.EndTime);
+        }
     }
 }

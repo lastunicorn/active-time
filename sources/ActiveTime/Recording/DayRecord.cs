@@ -49,7 +49,7 @@ namespace DustInTheWind.ActiveTime.Recording
         public List<DayTimeInterval> ActiveTimeRecords
         {
             get { return activeTimeRecords; }
-            set { activeTimeRecords = value; }
+            //set { activeTimeRecords = value; }
         }
 
         private string comment;
@@ -94,6 +94,7 @@ namespace DustInTheWind.ActiveTime.Recording
         public DayRecord(DateTime date)
         {
             this.date = date;
+            activeTimeRecords = new List<DayTimeInterval>();
         }
 
         #endregion
