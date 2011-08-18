@@ -76,14 +76,14 @@
     <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryCrudTests.cs" />
     <Compile Include="Recording\RecorderDisposeTests.cs" />
     <Compile Include="Recording\RecorderInitialTests.cs" />
-    <Compile Include="ReminderTests\ReminderDisposeTests.cs" />
-    <Compile Include="ReminderTests\ReminderInitializationTests.cs" />
-    <Compile Include="ReminderTests\ReminderRingEventTests.cs" />
-    <Compile Include="ReminderTests\ReminderSnoozeTests.cs" />
-    <Compile Include="ReminderTests\ReminderStartTests.cs" />
-    <Compile Include="ReminderTests\ReminderStoppedEventTests.cs" />
-    <Compile Include="ReminderTests\ReminderStopTests.cs" />
-    <Compile Include="ReminderTests\ReminderWaitUntilRingTests.cs" />
+    <Compile Include="Reminding\ReminderDisposeTests.cs" />
+    <Compile Include="Reminding\ReminderInitializationTests.cs" />
+    <Compile Include="Reminding\ReminderRingEventTests.cs" />
+    <Compile Include="Reminding\ReminderSnoozeTests.cs" />
+    <Compile Include="Reminding\ReminderStartTests.cs" />
+    <Compile Include="Reminding\ReminderStoppedEventTests.cs" />
+    <Compile Include="Reminding\ReminderStopTests.cs" />
+    <Compile Include="Reminding\ReminderWaitUntilRingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +98,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recording\TestCases.txt" />
-    <Content Include="ReminderTests\TestCases.txt" />
+    <Content Include="Reminding\TestCases.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ReminderTests\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

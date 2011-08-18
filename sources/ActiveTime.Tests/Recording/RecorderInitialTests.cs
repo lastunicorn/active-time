@@ -25,14 +25,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     [TestFixture]
     public class RecorderInitialTests
     {
-        private Recorder2 recorder;
+        private Recorder recorder;
         private Mock<ITimeRecordRepository> recordRepositoryMock;
 
         [SetUp]
         public void SetUp()
         {
             recordRepositoryMock = new Mock<ITimeRecordRepository>();
-            recorder = new Recorder2(recordRepositoryMock.Object);
+            recorder = new Recorder(recordRepositoryMock.Object);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestConstructorNull()
         {
-            new Recorder2(null);
+            new Recorder(null);
         }
 
         //[Test]

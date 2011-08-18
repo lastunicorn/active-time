@@ -27,14 +27,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     [TestFixture]
     public class RecorderStopTests
     {
-        private Recorder2 recorder;
+        private Recorder recorder;
         private Mock<ITimeRecordRepository> recordRepositoryMock;
 
         [SetUp]
         public void SetUp()
         {
             recordRepositoryMock = new Mock<ITimeRecordRepository>();
-            recorder = new Recorder2(recordRepositoryMock.Object);
+            recorder = new Recorder(recordRepositoryMock.Object);
         }
 
         #region Initial Stopped
@@ -70,7 +70,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         }
 
         [Test]
-        public void TestStamp_InitialStopped_NoEventRaised()
+        public void TestStamp_InitialStopped_StoppedEventNotRaised()
         {
             // Prepare
             ManualResetEvent ev = new ManualResetEvent(false);

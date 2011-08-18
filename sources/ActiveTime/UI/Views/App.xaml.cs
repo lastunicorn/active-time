@@ -203,7 +203,6 @@ namespace DustInTheWind.ActiveTime
                 if (activeTimeApplication.Recorder != null)
                 {
                     activeTimeApplication.Recorder.Stop();
-                    activeTimeApplication.Recorder.Dispose();
                 }
             }
 
@@ -252,7 +251,7 @@ namespace DustInTheWind.ActiveTime
 
         private void trayIconManager_StopAndDeleteClicked(object sender, EventArgs e)
         {
-            activeTimeApplication.Recorder.StopAndDeleteLastRecord();
+            activeTimeApplication.Recorder.Stop(true);
         }
 
         private void trayIconManager_ExitClicked(object sender, EventArgs e)
@@ -298,7 +297,7 @@ namespace DustInTheWind.ActiveTime
                 case SessionSwitchReason.SessionUnlock:
                     // The user returned to his desk.
 
-                    TimeSpan? timeFromLastStop = activeTimeApplication.Recorder.TimeFromLastStop();
+                    TimeSpan? timeFromLastStop = activeTimeApplication.Recorder.GetTimeFromLastStop();
 
                     activeTimeApplication.Recorder.Start();
 

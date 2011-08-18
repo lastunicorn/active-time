@@ -4,7 +4,7 @@ using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
-    public class Recorder2
+    public class Recorder
     {
         private ITimeRecordRepository timeRecordRepository;
 
@@ -107,12 +107,12 @@ namespace DustInTheWind.ActiveTime.Recording
         /// </summary>
         /// <param name="dal">Dal class used to access the persistent layer.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Recorder2(ITimeRecordRepository recordRepository)
+        public Recorder(ITimeRecordRepository timeRecordRepository)
         {
-            if (recordRepository == null)
-                throw new ArgumentNullException("recordRepository");
+            if (timeRecordRepository == null)
+                throw new ArgumentNullException("timeRecordRepository");
 
-            this.timeRecordRepository = recordRepository;
+            this.timeRecordRepository = timeRecordRepository;
             State = RecorderState.Stopped;
         }
 
@@ -149,6 +149,7 @@ namespace DustInTheWind.ActiveTime.Recording
                         DoStart();
                     }
                     OnStarted(EventArgs.Empty);
+
                     OnStamping(EventArgs.Empty);
                     lock (stateSynchronizer)
                     {
@@ -158,6 +159,7 @@ namespace DustInTheWind.ActiveTime.Recording
                     break;
 
                 case RecorderState.Running:
+                    OnStamping(EventArgs.Empty);
                     lock (stateSynchronizer)
                     {
                         DoStamp();

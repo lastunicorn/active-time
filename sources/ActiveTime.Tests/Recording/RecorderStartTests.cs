@@ -27,14 +27,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     [TestFixture]
     public class RecorderStartTests
     {
-        private Recorder2 recorder;
+        private Recorder recorder;
         private Mock<ITimeRecordRepository> recordRepositoryMock;
 
         [SetUp]
         public void SetUp()
         {
             recordRepositoryMock = new Mock<ITimeRecordRepository>();
-            recorder = new Recorder2(recordRepositoryMock.Object);
+            recorder = new Recorder(recordRepositoryMock.Object);
         }
 
         [Test]
