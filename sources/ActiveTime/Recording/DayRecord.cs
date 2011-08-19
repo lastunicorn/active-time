@@ -118,7 +118,7 @@ namespace DustInTheWind.ActiveTime.Recording
         {
             TimeSpan totalTime = TimeSpan.Zero;
 
-            if (activeTimeRecords != null)
+            if (activeTimeRecords != null && activeTimeRecords.Count > 0)
             {
                 TimeSpan beginHour = activeTimeRecords[0].StartTime;
                 TimeSpan endHour = activeTimeRecords[0].EndTime;
@@ -204,8 +204,8 @@ namespace DustInTheWind.ActiveTime.Recording
             if (timeRecords == null)
                 throw new ArgumentNullException("timeRecords");
 
-            if (timeRecords.Count == 0)
-                throw new ArgumentException("The list of TimeRecords contains no items.", "timeRecords");
+            //if (timeRecords.Count == 0)
+            //    throw new ArgumentException("The list of TimeRecords contains no items.", "timeRecords");
 
             DayRecord dayRecord = null;
 

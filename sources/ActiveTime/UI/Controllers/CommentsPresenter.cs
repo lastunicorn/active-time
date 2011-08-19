@@ -39,25 +39,25 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
             if (commentRepository == null)
                 throw new ArgumentNullException("commentRepository");
 
-            if (date == null)
-                throw new ArgumentNullException("date");
-
             this.view = view;
             this.commentRepository = commentRepository;
             //this.date = date;
 
             model = new CommentsModel();
 
-            model.DateChanged += new EventHandler(model_DateChanged);
             model.Date = date;
+            model.DateChanged += new EventHandler(model_DateChanged);
         }
 
         private void model_DateChanged(object sender, EventArgs e)
         {
-            databaseRecord = commentRepository.GetByDate(model.Date);
-            if (databaseRecord == null)
-                databaseRecord = new DayComment { Date = model.Date };
+            RefreshDatabaseRecordFromDb();
             UpdateModel();
+        }
+
+        private void RefreshDatabaseRecordFromDb()
+        {
+            databaseRecord = commentRepository.GetByDate(model.Date) ?? new DayComment {Date = model.Date};
         }
 
         private void UpdateModel()

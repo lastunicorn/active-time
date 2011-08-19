@@ -96,7 +96,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                     IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(date);
                     DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
 
-                    if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecord == null || dayRecord.IsEmpty))
+                    if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) || (dayRecord == null || dayRecord.IsEmpty))
                         continue;
 
                     if (dayRecord.HasRecords)

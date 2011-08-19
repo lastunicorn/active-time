@@ -152,7 +152,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
             {
                 IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(model.Date.Value);
                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
-                model.DayRecord = dayRecord;
+                model.DayRecord = dayRecord ?? new DayRecord(model.Date.Value);
             }
             else
             {
