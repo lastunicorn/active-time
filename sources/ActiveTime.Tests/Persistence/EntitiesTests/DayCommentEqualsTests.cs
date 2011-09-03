@@ -23,30 +23,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
     [TestFixture]
     public class DayCommentEqualsTests
     {
-        private DayComment dayComment1;
-        private DayComment dayComment2;
-
-        [SetUp]
-        public void SetUp()
-        {
-            dayComment1 = new DayComment
-            {
-                Id = 5,
-                Date = new DateTime(2000, 06, 13),
-                Comment = "some comment"
-            };
-
-            dayComment2 = new DayComment
-            {
-                Id = 5,
-                Date = new DateTime(2000, 06, 13),
-                Comment = "some comment"
-            };
-        }
+        #region Equals
 
         [Test]
         public void TestEqualsOk()
         {
+            DayComment dayComment1 = BuildNewDayComment();
+            DayComment dayComment2 = BuildNewDayComment();
+
             bool actualValue = dayComment1.Equals(dayComment2);
 
             Assert.That(actualValue, Is.True);
@@ -55,6 +39,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentId()
         {
+            DayComment dayComment1 = BuildNewDayComment();
+            DayComment dayComment2 = BuildNewDayComment();
             dayComment2.Id = 10;
 
             bool actualValue = dayComment1.Equals(dayComment2);
@@ -65,6 +51,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentDate()
         {
+            DayComment dayComment1 = BuildNewDayComment();
+            DayComment dayComment2 = BuildNewDayComment();
             dayComment2.Date = new DateTime(2011, 03, 05);
 
             bool actualValue = dayComment1.Equals(dayComment2);
@@ -75,6 +63,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentComment()
         {
+            DayComment dayComment1 = BuildNewDayComment();
+            DayComment dayComment2 = BuildNewDayComment();
             dayComment2.Comment = "some different comment";
 
             bool actualValue = dayComment1.Equals(dayComment2);
@@ -85,6 +75,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_AllDifferent()
         {
+            DayComment dayComment1 = BuildNewDayComment();
+            DayComment dayComment2 = BuildNewDayComment();
             dayComment2.Id = 10;
             dayComment2.Date = new DateTime(2011, 03, 05);
             dayComment2.Comment = "some different comment";
@@ -97,6 +89,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_AllDifferentButBusinessKey()
         {
+            DayComment dayComment1 = BuildNewDayComment();
+            DayComment dayComment2 = BuildNewDayComment();
             dayComment2.Id = 10;
             dayComment2.Comment = "some different comment";
 
@@ -104,5 +98,21 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
 
             Assert.That(actualValue, Is.True);
         }
+
+        #endregion
+
+        #region Utils
+
+        private DayComment BuildNewDayComment()
+        {
+            return new DayComment
+            {
+                Id = 5,
+                Date = new DateTime(2000, 06, 13),
+                Comment = "some comment"
+            };
+        }
+
+        #endregion
     }
 }

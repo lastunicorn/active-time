@@ -23,34 +23,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
     [TestFixture]
     public class TimeRecordEqualsTests
     {
-        private TimeRecord record1;
-        private TimeRecord record2;
-
-        [SetUp]
-        public void SetUp()
-        {
-            record1 = new TimeRecord
-            {
-                Id = 5,
-                Date = new DateTime(2000, 06, 13),
-                RecordType = TimeRecordType.Normal,
-                StartTime = new TimeSpan(1, 30, 20),
-                EndTime = new TimeSpan(12, 15, 30)
-            };
-
-            record2 = new TimeRecord
-            {
-                Id = 5,
-                Date = new DateTime(2000, 06, 13),
-                RecordType = TimeRecordType.Normal,
-                StartTime = new TimeSpan(1, 30, 20),
-                EndTime = new TimeSpan(12, 15, 30)
-            };
-        }
+        #region Equals
 
         [Test]
         public void TestEqualsOk()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
+
             bool actualValue = record1.Equals(record2);
 
             Assert.That(actualValue, Is.True);
@@ -59,6 +39,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_SameInstance()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
+
             bool actualValue = record1.Equals(record1);
 
             Assert.That(actualValue, Is.True);
@@ -67,6 +50,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentId()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
             record2.Id = 10;
 
             bool actualValue = record1.Equals(record2);
@@ -77,6 +62,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentDate()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
             record2.Date = new DateTime(2011, 03, 05);
 
             bool actualValue = record1.Equals(record2);
@@ -87,6 +74,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentRecordType()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
             record2.RecordType = TimeRecordType.Fake;
 
             bool actualValue = record1.Equals(record2);
@@ -97,6 +86,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentStartTime()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
             record2.StartTime = TimeSpan.FromHours(20);
 
             bool actualValue = record1.Equals(record2);
@@ -107,6 +98,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_DifferentEndTime()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
             record2.EndTime = TimeSpan.FromHours(20);
 
             bool actualValue = record1.Equals(record2);
@@ -117,6 +110,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_AllDifferent()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
             record2.Id = 10;
             record2.Date = new DateTime(2011, 03, 05);
             record2.RecordType = TimeRecordType.Fake;
@@ -131,6 +126,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
         [Test]
         public void TestEquals_AllDifferentButBusinessKey()
         {
+            TimeRecord record1 = BuildNewTimeRecord();
+            TimeRecord record2 = BuildNewTimeRecord();
             record2.Id = 10;
             record2.RecordType = TimeRecordType.Fake;
 
@@ -138,5 +135,23 @@ namespace DustInTheWind.ActiveTime.UnitTests.Persistence.EntitiesTests
 
             Assert.That(actualValue, Is.True);
         }
+
+        #endregion
+
+        #region Utils
+
+        private TimeRecord BuildNewTimeRecord()
+        {
+            return new TimeRecord
+            {
+                Id = 5,
+                Date = new DateTime(2000, 06, 13),
+                RecordType = TimeRecordType.Normal,
+                StartTime = new TimeSpan(1, 30, 20),
+                EndTime = new TimeSpan(12, 15, 30)
+            };
+        }
+
+        #endregion
     }
 }

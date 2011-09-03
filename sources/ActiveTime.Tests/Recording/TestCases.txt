@@ -1,4 +1,0 @@
-﻿TestCases
-=========
-
-1) Initial - Test the constructor. Test the status. Test the time from last stop.

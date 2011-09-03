@@ -13,7 +13,7 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// Specifies the state of the current instance.
         /// </summary>
-        public RecorderState State { get; set; }
+        public RecorderState State { get; private set; }
 
 
         #region Event Started
