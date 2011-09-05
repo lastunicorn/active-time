@@ -74,6 +74,7 @@
     <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryCrudTests.cs" />
     <Compile Include="Reminding\ReminderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\CommentsViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActiveTime\ActiveTime.csproj">
@@ -88,9 +89,7 @@
     </Content>
     <Content Include="Reminding\TestCases.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
