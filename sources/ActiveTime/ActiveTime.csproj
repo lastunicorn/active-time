@@ -44,6 +44,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\RefBin\LumenWorks\LumenWorks.Framework.IO.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\RefBin\Prism\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
+      <HintPath>..\RefBin\Prism\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefBin\Prism\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\RefBin\NHibernate\NHibernate.dll</HintPath>
     </Reference>
@@ -73,10 +83,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActiveTimeException.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Exporters\ParameterNullException.cs" />
     <Compile Include="Exporters\ParameterTypeException.cs" />
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
+    <Compile Include="Modules\Recording\RecordingModule.cs" />
     <Compile Include="Persistence\Entities\DayComment.cs" />
     <Compile Include="Persistence\Entities\EntityBase.cs" />
     <Compile Include="Persistence\Entities\TimeRecordType.cs" />
@@ -90,10 +102,14 @@
     <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
     <Compile Include="Recording\Break.cs" />
     <Compile Include="Recording\DayTimeInterval.cs" />
+    <Compile Include="Recording\IRecorder.cs" />
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\Recorder.cs" />
     <Compile Include="Reminding\ReminderStatus.cs" />
     <Compile Include="Reminding\RingEventArgs.cs" />
+    <Compile Include="Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controllers\CommentsPresenter.cs" />
     <Compile Include="Exporters\ExportersManager.cs" />
     <Compile Include="UI\Controllers\StatisticsPresenter.cs" />
@@ -146,6 +162,13 @@
       <DependentUpon>TrayIconManager.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Controllers\TrayIconPresenter.cs" />
+    <Content Include="ModuleCatalog.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Page Include="Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

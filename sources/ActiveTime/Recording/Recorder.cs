@@ -4,7 +4,7 @@ using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.Recording
 {
-    public class Recorder
+    public class Recorder : DustInTheWind.ActiveTime.Recording.IRecorder
     {
         private ITimeRecordRepository timeRecordRepository;
 

@@ -38,7 +38,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        internal MainWindow(ActiveTimeApplication activeTimeApplication)
+        public MainWindow(ActiveTimeApplication activeTimeApplication)
         {
             InitializeComponent();
 
@@ -76,6 +76,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
             {
                 CommentsWindow window = new CommentsWindow(new DayCommentRepository(), datePicker1.SelectedDate.Value);
 
+                window.Owner = this;
                 window.ShowDialog();
             }
         }
@@ -144,6 +145,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
         public void ShowExportWindow(ActiveTimeApplication activeTimeApplication)
         {
             ExportWindow window = new ExportWindow(activeTimeApplication);
+            window.Owner = this;
             window.ShowDialog();
         }
 
@@ -155,6 +157,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
         public void ShowStatisticsWindow(ActiveTimeApplication activeTimeApplication)
         {
             StatisticsWindow window = new StatisticsWindow(activeTimeApplication);
+            window.Owner = this;
             window.ShowDialog();
         }
 
@@ -166,6 +169,7 @@ namespace DustInTheWind.ActiveTime.UI.Views
         public void ShowAboutWindow()
         {
             AboutWindow window = new AboutWindow();
+            window.Owner = this;
             window.ShowDialog();
         }
     }

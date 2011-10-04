@@ -187,8 +187,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.UI
 
         #region CancelButtonClicked
 
-        [Test]
-        public void CancelButtonClicked_
+        //[Test]
+        //public void CancelButtonClicked_
 
         #endregion
 

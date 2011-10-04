@@ -116,6 +116,13 @@ namespace DustInTheWind.ActiveTime
             }
             else
             {
+                base.OnStartup(e);
+                Bootstrapper bootstrapper = new Bootstrapper();
+                bootstrapper.Run();
+                return;
+
+
+
                 activeTimeApplication = new ActiveTimeApplication();
 
                 //TasksManager tasksManager = new TasksManager(WinformsViewsManager.
