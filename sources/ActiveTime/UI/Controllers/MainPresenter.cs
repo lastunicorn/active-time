@@ -18,8 +18,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Persistence.Entities;
-using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 
@@ -36,11 +37,6 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         /// The model containing data displayed in the current window.
         /// </summary>
         private MainModel model;
-
-        /// <summary>
-        /// The application model.
-        /// </summary>
-        private ActiveTimeApplication activeTimeApplication;
 
         private TrayIconManager trayIconManager;
 
@@ -65,6 +61,8 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         /// </summary>
         private Timer timerStatus;
 
+        private IRecorder recorder;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPresenter"/> class.
         /// </summary>
@@ -72,26 +70,27 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         /// <param name="model"></param>
         /// <param name="activeTimeApplication">The application model.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public MainPresenter(IMainView view, MainModel model, ActiveTimeApplication activeTimeApplication)
+        public MainPresenter(IMainView view, MainModel model, IRecorder recorder)
         {
             if (view == null)
                 throw new ArgumentNullException("view");
 
-            if (activeTimeApplication == null)
-                throw new ArgumentNullException("activeTimeApplication");
+            if (recorder == null)
+                throw new ArgumentNullException("recorder");
 
             this.view = view;
-            this.activeTimeApplication = activeTimeApplication;
 
             timerStatus = new Timer(new TimerCallback(ResetStatusTextTh));
 
             this.model = model;
             model.DateChanged += new EventHandler(model_DateChanged);
 
-            activeTimeApplication.Recorder.Started += new EventHandler(recorder_Started);
-            activeTimeApplication.Recorder.Stopped += new EventHandler(recorder_Stopped);
-            activeTimeApplication.Recorder.Stamping += new EventHandler(recorder_Stamping);
-            activeTimeApplication.Recorder.Stamped += new EventHandler(recorder_Stamped);
+            this.recorder = recorder;
+
+            recorder.Started += new EventHandler(recorder_Started);
+            recorder.Stopped += new EventHandler(recorder_Stopped);
+            recorder.Stamping += new EventHandler(recorder_Stamping);
+            recorder.Stamped += new EventHandler(recorder_Stamped);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         {
             try
             {
-                view.ShowExportWindow(activeTimeApplication);
+                view.ShowExportWindow();
             }
             catch (Exception ex)
             {
@@ -260,7 +259,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         {
             try
             {
-                view.ShowStatisticsWindow(activeTimeApplication);
+                view.ShowStatisticsWindow();
             }
             catch (Exception ex)
             {

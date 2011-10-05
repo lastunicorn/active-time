@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Recording
+namespace DustInTheWind.ActiveTime.Common.Recording
 {
     /// <summary>
     /// Represents an interval of time within a day.

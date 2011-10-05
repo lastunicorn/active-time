@@ -28,9 +28,9 @@ namespace DustInTheWind.ActiveTime.UI.IViews
 
         void ExitApplication();
 
-        void ShowExportWindow(ActiveTimeApplication activeTimeApplication);
+        void ShowExportWindow();
 
-        void ShowStatisticsWindow(ActiveTimeApplication activeTimeApplication);
+        void ShowStatisticsWindow();
 
         void ShowAboutWindow();
     }

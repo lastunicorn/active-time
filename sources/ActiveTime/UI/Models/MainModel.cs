@@ -16,7 +16,7 @@
 
 using System;
 using System.ComponentModel;
-using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.UI.Models
 {

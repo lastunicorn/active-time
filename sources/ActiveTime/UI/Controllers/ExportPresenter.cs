@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -17,11 +17,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Exporters;
 using DustInTheWind.ActiveTime.Persistence.Entities;
-using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.UI.Controllers
 {
@@ -37,34 +38,27 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         /// </summary>
         private ExportModel model;
 
-        /// <summary>
-        /// The application model.
-        /// </summary>
-        private ActiveTimeApplication activeTimeApplication;
+        private ExportersManager exporters;
+        private ITimeRecordRepository recordRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExportPresenter"/> class.
         /// </summary>
         /// <param name="view">The view used to interact with the user.</param>
-        /// <param name="activeTimeApplication">The application model.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public ExportPresenter(IExportView view, ActiveTimeApplication activeTimeApplication)
+        public ExportPresenter(IExportView view)
         {
             if (view == null)
                 throw new ArgumentNullException("view");
 
-            if (activeTimeApplication == null)
-                throw new ArgumentNullException("activeTimeApplication");
-
             this.view = view;
-            this.activeTimeApplication = activeTimeApplication;
 
             DateTime now = DateTime.Now;
 
             model = new ExportModel();
             model.Year = now.Year;
             model.SelectedMonth = model.Months[now.Month - 1];
-            model.Exporters.AddRange(activeTimeApplication.Exporters.GetExporters());
+            model.Exporters.AddRange(exporters.GetExporters());
             model.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(model_PropertyChanged);
             model.DestinationFileName = "export.csv";
         }
@@ -143,7 +137,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
                             {
                                 DateTime date = new DateTime(year, month.Value, i);
 
-                                IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(date);
+                                IList<TimeRecord> timeRecords = recordRepository.GetByDate(date);
                                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
 
                                 if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) && (dayRecord == null || dayRecord.IsEmpty))

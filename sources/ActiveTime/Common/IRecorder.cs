@@ -1,5 +1,7 @@
 ﻿using System;
-namespace DustInTheWind.ActiveTime.Recording
+using DustInTheWind.ActiveTime.Common.Recording;
+
+namespace DustInTheWind.ActiveTime.Common
 {
     interface IRecorder
     {

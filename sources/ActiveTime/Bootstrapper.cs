@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using DustInTheWind.ActiveTime.Main.ModuleDefinitions;
 using DustInTheWind.ActiveTime.UI.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
@@ -15,15 +16,10 @@ namespace DustInTheWind.ActiveTime
 
 
 
-            //ModuleCatalog moduleCatalog = new ModuleCatalog();
-            //moduleCatalog.AddModule(typeof(ConfigurationModule))
-            //    .AddModule(typeof(GatesModule))
-            //    .AddModule(typeof(CatalogsModule), "ConfigurationModule")
-            //    .AddModule(typeof(StatusInfoModule))
-            //    .AddModule(typeof(ContentDetailsModule))
-            //    .AddModule(typeof(MainMenuModule));
+            ModuleCatalog moduleCatalog = new ModuleCatalog();
+            moduleCatalog.AddModule(typeof(MainModule));
 
-            //return moduleCatalog;
+            return moduleCatalog;
 
 
 
@@ -36,9 +32,9 @@ namespace DustInTheWind.ActiveTime
             //return moduleCatalog;
 
 
-            var catalog = new DirectoryModuleCatalog();
-            catalog.ModulePath = @".\Modules";
-            return catalog;
+            //var catalog = new DirectoryModuleCatalog();
+            //catalog.ModulePath = @".\Modules";
+            //return catalog;
         }
 
         protected override DependencyObject CreateShell()

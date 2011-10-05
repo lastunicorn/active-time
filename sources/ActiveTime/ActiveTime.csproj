@@ -88,7 +88,11 @@
     <Compile Include="Exporters\ParameterTypeException.cs" />
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
-    <Compile Include="Modules\Recording\RecordingModule.cs" />
+    <Compile Include="Main\ModuleDefinitions\MainModule.cs" />
+    <Compile Include="Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="Main\Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Entities\DayComment.cs" />
     <Compile Include="Persistence\Entities\EntityBase.cs" />
     <Compile Include="Persistence\Entities\TimeRecordType.cs" />
@@ -100,13 +104,15 @@
     <Compile Include="Persistence\Entities\TimeRecord.cs" />
     <Compile Include="Persistence\Repositories\TimeRecordRepository.cs" />
     <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
-    <Compile Include="Recording\Break.cs" />
-    <Compile Include="Recording\DayTimeInterval.cs" />
-    <Compile Include="Recording\IRecorder.cs" />
-    <Compile Include="Recording\Record.cs" />
-    <Compile Include="Recording\Recorder.cs" />
-    <Compile Include="Reminding\ReminderStatus.cs" />
-    <Compile Include="Reminding\RingEventArgs.cs" />
+    <Compile Include="Common\Recording\Break.cs" />
+    <Compile Include="Common\Recording\DayTimeInterval.cs" />
+    <Compile Include="Common\IRecorder.cs" />
+    <Compile Include="Common\Recording\Record.cs" />
+    <Compile Include="Main\Services\Recorder.cs" />
+    <Compile Include="Common\IReminder.cs" />
+    <Compile Include="Common\Reminding\ReminderStatus.cs" />
+    <Compile Include="Common\Reminding\RingEventArgs.cs" />
+    <Compile Include="RegionNames.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -117,7 +123,6 @@
     <Compile Include="UI\Models\ExportModel.cs" />
     <Compile Include="UI\Controllers\ExportPresenter.cs" />
     <Compile Include="UI\IViews\IExportView.cs" />
-    <Compile Include="ActiveTimeApplication.cs" />
     <Compile Include="UI\Models\Month.cs" />
     <Compile Include="UI\Models\StatisticsModel.cs" />
     <Compile Include="UI\BooleanConverter.cs" />
@@ -126,7 +131,7 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CsvUtil.cs" />
-    <Compile Include="Recording\DayRecord.cs" />
+    <Compile Include="Common\Recording\DayRecord.cs" />
     <Compile Include="UI\Views\CommentsWindow.xaml.cs">
       <DependentUpon>CommentsWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -153,7 +158,7 @@
     <Compile Include="UI\Models\CommentsModel.cs" />
     <Compile Include="UI\RecordConverter.cs" />
     <Compile Include="UI\RecordListConverter.cs" />
-    <Compile Include="Reminding\Reminder.cs" />
+    <Compile Include="Main\Services\Reminder.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\TrayIconManager.cs">
       <SubType>Component</SubType>
@@ -165,6 +170,10 @@
     <Content Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
     </Content>
+    <Page Include="Main\Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,7 +198,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Recording\RecorderState.cs" />
+    <Compile Include="Common\Recording\RecorderState.cs" />
     <Compile Include="UI\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -255,7 +264,9 @@
     <Content Include="sql scripts\comments.sql" />
     <Content Include="sql scripts\records.sql" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Reminding\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

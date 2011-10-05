@@ -16,8 +16,8 @@
 
 using System;
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Persistence.Entities;
-using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 
@@ -26,13 +26,11 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
     class StatisticsPresenter
     {
         private IStatisticsView view;
-        private ActiveTimeApplication activeTimeApplication;
         private StatisticsModel model;
 
-        public StatisticsPresenter(IStatisticsView view, ActiveTimeApplication activeTimeApplication)
+        public StatisticsPresenter(IStatisticsView view)
         {
             this.view = view;
-            this.activeTimeApplication = activeTimeApplication;
 
             DateTime now = DateTime.Now;
 
@@ -81,47 +79,47 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 
         private void RefreshData()
         {
-            TimeSpan totalWorkTime = TimeSpan.Zero;
-            TimeSpan totalBreakTime = TimeSpan.Zero;
+            //TimeSpan totalWorkTime = TimeSpan.Zero;
+            //TimeSpan totalBreakTime = TimeSpan.Zero;
 
-            int year = model.Year;
-            Month month = model.SelectedMonth;
-            if (year > 0 && month != null)
-            {
-                int daysInMonth = DateTime.DaysInMonth(year, month.Value);
-                for (int i = 1; i <= daysInMonth; i++)
-                {
-                    DateTime date = new DateTime(year, month.Value, i);
+            //int year = model.Year;
+            //Month month = model.SelectedMonth;
+            //if (year > 0 && month != null)
+            //{
+            //    int daysInMonth = DateTime.DaysInMonth(year, month.Value);
+            //    for (int i = 1; i <= daysInMonth; i++)
+            //    {
+            //        DateTime date = new DateTime(year, month.Value, i);
 
-                    IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(date);
-                    DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
+            //        IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(date);
+            //        DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
 
-                    if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) || (dayRecord == null || dayRecord.IsEmpty))
-                        continue;
+            //        if ((date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) || (dayRecord == null || dayRecord.IsEmpty))
+            //            continue;
 
-                    if (dayRecord.HasRecords)
-                    {
-                        TimeSpan lastHour = TimeSpan.Zero;
+            //        if (dayRecord.HasRecords)
+            //        {
+            //            TimeSpan lastHour = TimeSpan.Zero;
 
-                        foreach (DayTimeInterval record in dayRecord.ActiveTimeRecords)
-                        {
-                            if (lastHour != TimeSpan.Zero)
-                            {
-                                totalBreakTime += record.StartTime - lastHour;
-                            }
+            //            foreach (DayTimeInterval record in dayRecord.ActiveTimeRecords)
+            //            {
+            //                if (lastHour != TimeSpan.Zero)
+            //                {
+            //                    totalBreakTime += record.StartTime - lastHour;
+            //                }
 
-                            totalWorkTime += record.EndTime - record.StartTime;
+            //                totalWorkTime += record.EndTime - record.StartTime;
 
-                            lastHour = record.EndTime;
-                        }
-                    }
-                }
-            }
+            //                lastHour = record.EndTime;
+            //            }
+            //        }
+            //    }
+            //}
 
 
-            model.TotalWorkTime = totalWorkTime;
-            model.TotalBreakTime = totalBreakTime;
-            //view.DisplayInfoMessage(string.Format("Total work time: {0}\nTotal break time: {1}", TotalWorkTime, TotalBreakTime));
+            //model.TotalWorkTime = totalWorkTime;
+            //model.TotalBreakTime = totalBreakTime;
+            ////view.DisplayInfoMessage(string.Format("Total work time: {0}\nTotal break time: {1}", TotalWorkTime, TotalBreakTime));
         }
     }
 }

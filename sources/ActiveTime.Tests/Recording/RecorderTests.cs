@@ -16,6 +16,8 @@
 
 using System;
 using System.Threading;
+using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Main.Services;
 using DustInTheWind.ActiveTime.Persistence.Entities;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
 using DustInTheWind.ActiveTime.Recording;

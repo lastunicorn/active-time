@@ -30,11 +30,11 @@ namespace DustInTheWind.ActiveTime.UI.Views
     {
         private StatisticsPresenter presenter;
 
-        public StatisticsWindow(ActiveTimeApplication activeTimeApplication)
+        public StatisticsWindow()
         {
             InitializeComponent();
 
-            presenter = new StatisticsPresenter(this, activeTimeApplication);
+            presenter = new StatisticsPresenter(this);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Persistence.Entities;
 
-namespace DustInTheWind.ActiveTime.Recording
+namespace DustInTheWind.ActiveTime.Common.Recording
 {
     /// <summary>
     /// Contains activity information for a single day.

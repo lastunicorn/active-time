@@ -1,14 +1,16 @@
 ﻿using System;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Persistence.Entities;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
 
-namespace DustInTheWind.ActiveTime.Recording
+namespace DustInTheWind.ActiveTime.Main.Services
 {
-    public class Recorder : DustInTheWind.ActiveTime.Recording.IRecorder
+    public class Recorder : IRecorder
     {
-        private ITimeRecordRepository timeRecordRepository;
+        private readonly ITimeRecordRepository timeRecordRepository;
 
-        private object stateSynchronizer = new object();
+        private readonly object stateSynchronizer = new object();
 
         /// <summary>
         /// Specifies the state of the current instance.
@@ -47,7 +49,7 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <summary>
         /// Raises the <see cref="Stopped"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="StoppedEventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStopped(EventArgs e)
         {
             if (Stopped != null)

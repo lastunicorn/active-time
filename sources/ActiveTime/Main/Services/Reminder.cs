@@ -16,13 +16,15 @@
 
 using System;
 using System.Threading;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Reminding;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.Main.Services
 {
     /// <summary>
     /// It is a timer that "rings" after a specified time.
     /// </summary>
-    public class Reminder : IDisposable
+    public class Reminder : IDisposable, IReminder
     {
         /// <summary>
         /// Lock object used when the status needs to be changed.

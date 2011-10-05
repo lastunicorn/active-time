@@ -17,7 +17,8 @@
 using System;
 using System.Windows;
 using System.Windows.Threading;
-using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Common.Reminding;
+using DustInTheWind.ActiveTime.Main.Services;
 using DustInTheWind.ActiveTime.UI;
 using DustInTheWind.ActiveTime.UI.Views;
 using DustInTheWind.ActiveTime.Watchman;
@@ -30,59 +31,57 @@ namespace DustInTheWind.ActiveTime
     /// </summary>
     public partial class App : Application
     {
-        private ActiveTimeApplication activeTimeApplication;
+        //#region Recorder
 
-        #region Recorder
+        //public void recorder_Started(object sender, EventArgs e)
+        //{
+        //    if (trayIconManager != null)
+        //    {
+        //        trayIconManager.SetIconOn();
+        //        trayIconManager.StartEnabled = false;
+        //        trayIconManager.StopEnabled = true;
 
-        public void recorder_Started(object sender, EventArgs e)
-        {
-            if (trayIconManager != null)
-            {
-                trayIconManager.SetIconOn();
-                trayIconManager.StartEnabled = false;
-                trayIconManager.StopEnabled = true;
+        //        //activeTimeApplication.Reminder.Start(TimeSpan.FromHours(1));
+        //        activeTimeApplication.Reminder.Start(DustInTheWind.ActiveTime.Properties.Settings.Default.ReminderInterval);
+        //    }
+        //}
 
-                //activeTimeApplication.Reminder.Start(TimeSpan.FromHours(1));
-                activeTimeApplication.Reminder.Start(DustInTheWind.ActiveTime.Properties.Settings.Default.ReminderInterval);
-            }
-        }
+        //public void recorder_Stopped(object sender, EventArgs e)
+        //{
+        //    if (trayIconManager != null)
+        //    {
+        //        trayIconManager.SetIconOff();
+        //        trayIconManager.StartEnabled = true;
+        //        trayIconManager.StopEnabled = false;
 
-        public void recorder_Stopped(object sender, EventArgs e)
-        {
-            if (trayIconManager != null)
-            {
-                trayIconManager.SetIconOff();
-                trayIconManager.StartEnabled = true;
-                trayIconManager.StopEnabled = false;
+        //        activeTimeApplication.Reminder.Stop();
+        //    }
+        //}
 
-                activeTimeApplication.Reminder.Stop();
-            }
-        }
+        //#endregion
 
-        #endregion
-
-        private MainWindow window;
+        //private MainWindow window;
 
 #if !DEBUG
         private Guard guard;
 #endif
 
-        #region Timer
+        //#region Timer
 
-        /// <summary>
-        /// Timer used to update the current record's end Time.
-        /// </summary>
-        private DispatcherTimer timer;
+        ///// <summary>
+        ///// Timer used to update the current record's end Time.
+        ///// </summary>
+        //private DispatcherTimer timer;
 
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if (activeTimeApplication.Recorder != null)
-            {
-                activeTimeApplication.Recorder.Stamp();
-            }
-        }
+        //private void timer_Tick(object sender, EventArgs e)
+        //{
+        //    if (activeTimeApplication.Recorder != null)
+        //    {
+        //        activeTimeApplication.Recorder.Stamp();
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region Application
 
@@ -168,156 +167,156 @@ namespace DustInTheWind.ActiveTime
             }
         }
 
-        private void reminder_Ring(object sender, RingEventArgs e)
-        {
-            try
-            {
-                Reminder reminder = sender as Reminder;
-                string text = string.Format("Time passed: {0:hh\\:mm\\:ss}\n\nMake a pause NOW!", DateTime.Now - reminder.StartTime);
+        //private void reminder_Ring(object sender, RingEventArgs e)
+        //{
+        //    try
+        //    {
+        //        Reminder reminder = sender as Reminder;
+        //        string text = string.Format("Time passed: {0:hh\\:mm\\:ss}\n\nMake a pause NOW!", DateTime.Now - reminder.StartTime);
 
 
-                this.Dispatcher.Invoke(new ShowPause(delegate
-                {
-                    PauseWindow pauseWindow = new PauseWindow(text);
-                    pauseWindow.ShowDialog();
-                }));
+        //        this.Dispatcher.Invoke(new ShowPause(delegate
+        //        {
+        //            PauseWindow pauseWindow = new PauseWindow(text);
+        //            pauseWindow.ShowDialog();
+        //        }));
 
-                e.Snooze = true;
-                e.SnoozeTime = DustInTheWind.ActiveTime.Properties.Settings.Default.SnoozeInterval;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
+        //        e.Snooze = true;
+        //        e.SnoozeTime = DustInTheWind.ActiveTime.Properties.Settings.Default.SnoozeInterval;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString());
+        //    }
+        //}
 
-        private delegate void ShowPause();
+        //private delegate void ShowPause();
 
-        protected override void OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            base.OnLoadCompleted(e);
-        }
+        //protected override void OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs e)
+        //{
+        //    base.OnLoadCompleted(e);
+        //}
 
-        protected override void OnExit(ExitEventArgs e)
-        {
-            if (trayIconManager != null)
-            {
-                trayIconManager.HideIcon();
-            }
+        //protected override void OnExit(ExitEventArgs e)
+        //{
+        //    if (trayIconManager != null)
+        //    {
+        //        trayIconManager.HideIcon();
+        //    }
 
-            if (activeTimeApplication != null)
-            {
-                if (activeTimeApplication.Recorder != null)
-                {
-                    activeTimeApplication.Recorder.Stop();
-                }
-            }
+        //    if (activeTimeApplication != null)
+        //    {
+        //        if (activeTimeApplication.Recorder != null)
+        //        {
+        //            activeTimeApplication.Recorder.Stop();
+        //        }
+        //    }
 
-            base.OnExit(e);
-        }
-
-        #endregion
-
-        #region Tray Icon
-
-        private TrayIconManager trayIconManager;
-
-        private void trayIconManager_ShowClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                if (window == null)
-                {
-                    window = new MainWindow(activeTimeApplication);
-                    window.TrayIconManager = trayIconManager;
-                }
-
-                window.Show();
-
-                if (window.WindowState == WindowState.Minimized)
-                    window.WindowState = WindowState.Normal;
-
-                window.Activate();
-                window.Focus();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void trayIconManager_StartClicked(object sender, EventArgs e)
-        {
-            activeTimeApplication.Recorder.Start();
-        }
-
-        private void trayIconManager_StopClicked(object sender, EventArgs e)
-        {
-            activeTimeApplication.Recorder.Stop();
-        }
-
-        private void trayIconManager_StopAndDeleteClicked(object sender, EventArgs e)
-        {
-            activeTimeApplication.Recorder.Stop(true);
-        }
-
-        private void trayIconManager_ExitClicked(object sender, EventArgs e)
-        {
-            if (window != null)
-            {
-                window.AllowClose = true;
-                window.Close();
-            }
-
-            Shutdown();
-        }
+        //    base.OnExit(e);
+        //}
 
         #endregion
 
+        //#region Tray Icon
 
-        private void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
-        {
-            switch (e.Reason)
-            {
-                case SessionSwitchReason.ConsoleConnect:
-                    break;
+        //private TrayIconManager trayIconManager;
 
-                case SessionSwitchReason.ConsoleDisconnect:
-                    break;
+        //private void trayIconManager_ShowClicked(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (window == null)
+        //        {
+        //            window = new MainWindow(activeTimeApplication);
+        //            window.TrayIconManager = trayIconManager;
+        //        }
 
-                case SessionSwitchReason.RemoteConnect:
-                    break;
+        //        window.Show();
 
-                case SessionSwitchReason.RemoteDisconnect:
-                    break;
+        //        if (window.WindowState == WindowState.Minimized)
+        //            window.WindowState = WindowState.Normal;
 
-                case SessionSwitchReason.SessionRemoteControl:
-                    break;
+        //        window.Activate();
+        //        window.Focus();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
 
-                case SessionSwitchReason.SessionLogoff:
-                case SessionSwitchReason.SessionLock:
-                    // The user left the desk.
-                    activeTimeApplication.Recorder.Stop();
-                    break;
+        //private void trayIconManager_StartClicked(object sender, EventArgs e)
+        //{
+        //    activeTimeApplication.Recorder.Start();
+        //}
 
-                case SessionSwitchReason.SessionLogon:
-                case SessionSwitchReason.SessionUnlock:
-                    // The user returned to his desk.
+        //private void trayIconManager_StopClicked(object sender, EventArgs e)
+        //{
+        //    activeTimeApplication.Recorder.Stop();
+        //}
 
-                    TimeSpan? timeFromLastStop = activeTimeApplication.Recorder.GetTimeFromLastStop();
+        //private void trayIconManager_StopAndDeleteClicked(object sender, EventArgs e)
+        //{
+        //    activeTimeApplication.Recorder.Stop(true);
+        //}
 
-                    activeTimeApplication.Recorder.Start();
+        //private void trayIconManager_ExitClicked(object sender, EventArgs e)
+        //{
+        //    if (window != null)
+        //    {
+        //        window.AllowClose = true;
+        //        window.Close();
+        //    }
 
-                    if (timeFromLastStop < TimeSpan.FromSeconds(20))
-                    {
-                        PauseWindow pauseWindow = new PauseWindow("Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
-                        pauseWindow.ShowDialog();
-                    }
-                    break;
+        //    Shutdown();
+        //}
 
-                default:
-                    break;
-            }
-        }
+        //#endregion
+
+
+        //private void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
+        //{
+        //    switch (e.Reason)
+        //    {
+        //        case SessionSwitchReason.ConsoleConnect:
+        //            break;
+
+        //        case SessionSwitchReason.ConsoleDisconnect:
+        //            break;
+
+        //        case SessionSwitchReason.RemoteConnect:
+        //            break;
+
+        //        case SessionSwitchReason.RemoteDisconnect:
+        //            break;
+
+        //        case SessionSwitchReason.SessionRemoteControl:
+        //            break;
+
+        //        case SessionSwitchReason.SessionLogoff:
+        //        case SessionSwitchReason.SessionLock:
+        //            // The user left the desk.
+        //            activeTimeApplication.Recorder.Stop();
+        //            break;
+
+        //        case SessionSwitchReason.SessionLogon:
+        //        case SessionSwitchReason.SessionUnlock:
+        //            // The user returned to his desk.
+
+        //            TimeSpan? timeFromLastStop = activeTimeApplication.Recorder.GetTimeFromLastStop();
+
+        //            activeTimeApplication.Recorder.Start();
+
+        //            if (timeFromLastStop < TimeSpan.FromSeconds(20))
+        //            {
+        //                PauseWindow pauseWindow = new PauseWindow("Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
+        //                pauseWindow.ShowDialog();
+        //            }
+        //            break;
+
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 }

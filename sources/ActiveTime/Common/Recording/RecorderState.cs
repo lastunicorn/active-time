@@ -14,38 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.ActiveTime.Main.Services;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.Common.Recording
 {
     /// <summary>
-    /// Represents the status of the <see cref="Reminder"/>.
+    /// Represents the state of a <see cref="Recorder"/> instance.
     /// </summary>
-    public enum ReminderStatus
+    public enum RecorderState
     {
         /// <summary>
-        /// The timer is not started. Or it was forced to stop.
+        /// The recorder is stopped.
         /// </summary>
-        NotStarted,
+        Stopped,
 
         /// <summary>
-        /// The clock is running and the Ring event has not been triggered yet.
+        /// The recorder is running and updating the values in the database.
         /// </summary>
-        Running,
-
-        /// <summary>
-        /// The timer elapsed and the Ring event was raised, but the Reminder was
-        /// not stoppd yet. It still may be snoozed.
-        /// </summary>
-        Stopping,
-
-        /// <summary>
-        /// The clock has rang, but it was snoozed.
-        /// </summary>
-        Snooze,
-
-        /// <summary>
-        /// The clock was elapsed and the Ring event has already been triggered.
-        /// </summary>
-        Finished
+        Running
     }
 }

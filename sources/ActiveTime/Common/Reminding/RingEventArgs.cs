@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Main.Services;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.Common.Reminding
 {
     /// <summary>
     /// Provides data for <see cref="Ring"/> event.

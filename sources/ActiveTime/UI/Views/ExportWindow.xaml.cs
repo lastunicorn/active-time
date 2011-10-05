@@ -29,11 +29,11 @@ namespace DustInTheWind.ActiveTime.UI.Views
     {
         private ExportPresenter presenter;
 
-        public ExportWindow(ActiveTimeApplication activeTimeApplication)
+        public ExportWindow()
         {
             InitializeComponent();
 
-            presenter = new ExportPresenter(this, activeTimeApplication);
+            presenter = new ExportPresenter(this);
         }
 
         private void buttonExport_Click(object sender, RoutedEventArgs e)

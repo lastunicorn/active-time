@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Data;
-using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.UI
 {
