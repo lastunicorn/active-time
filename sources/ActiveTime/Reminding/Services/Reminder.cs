@@ -19,7 +19,7 @@ using System.Threading;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Reminding;
 
-namespace DustInTheWind.ActiveTime.Main.Services
+namespace DustInTheWind.ActiveTime.Reminding.Services
 {
     /// <summary>
     /// It is a timer that "rings" after a specified time.

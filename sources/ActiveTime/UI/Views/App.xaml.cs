@@ -14,15 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows;
-using System.Windows.Threading;
-using DustInTheWind.ActiveTime.Common.Reminding;
-using DustInTheWind.ActiveTime.Main.Services;
-using DustInTheWind.ActiveTime.UI;
-using DustInTheWind.ActiveTime.UI.Views;
-using DustInTheWind.ActiveTime.Watchman;
-using Microsoft.Win32;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -122,48 +114,48 @@ namespace DustInTheWind.ActiveTime
 
 
 
-                activeTimeApplication = new ActiveTimeApplication();
+                //activeTimeApplication = new ActiveTimeApplication();
 
-                //TasksManager tasksManager = new TasksManager(WinformsViewsManager.
-                //                                             GetDefaultConfig());
-                //tasksManager.StartTask(typeof(MainTask));
+                ////TasksManager tasksManager = new TasksManager(WinformsViewsManager.
+                ////                                             GetDefaultConfig());
+                ////tasksManager.StartTask(typeof(MainTask));
 
-                bool allowToContinue = true;
+                //bool allowToContinue = true;
 
-                if (!allowToContinue)
-                {
-                    Shutdown();
-                }
-                else
-                {
-                    trayIconManager = new TrayIconManager();
-                    trayIconManager.ExitClicked += new EventHandler(trayIconManager_ExitClicked);
-                    trayIconManager.ShowClicked += new EventHandler(trayIconManager_ShowClicked);
-                    trayIconManager.StopClicked += new EventHandler(trayIconManager_StopClicked);
-                    trayIconManager.StartClicked += new EventHandler(trayIconManager_StartClicked);
-                    trayIconManager.StopAndDeleteClicked += new EventHandler(trayIconManager_StopAndDeleteClicked);
+                //if (!allowToContinue)
+                //{
+                //    Shutdown();
+                //}
+                //else
+                //{
+                //    trayIconManager = new TrayIconManager();
+                //    trayIconManager.ExitClicked += new EventHandler(trayIconManager_ExitClicked);
+                //    trayIconManager.ShowClicked += new EventHandler(trayIconManager_ShowClicked);
+                //    trayIconManager.StopClicked += new EventHandler(trayIconManager_StopClicked);
+                //    trayIconManager.StartClicked += new EventHandler(trayIconManager_StartClicked);
+                //    trayIconManager.StopAndDeleteClicked += new EventHandler(trayIconManager_StopAndDeleteClicked);
 
-                    trayIconManager.ShowIcon();
+                //    trayIconManager.ShowIcon();
 
-                    Reminder reminder = activeTimeApplication.Reminder;
-                    reminder.SnoozeTime = TimeSpan.FromMinutes(10);
-                    reminder.Ring += new EventHandler<RingEventArgs>(reminder_Ring);
+                //    Reminder reminder = activeTimeApplication.Reminder;
+                //    reminder.SnoozeTime = TimeSpan.FromMinutes(10);
+                //    reminder.Ring += new EventHandler<RingEventArgs>(reminder_Ring);
 
-                    Recorder recorder = activeTimeApplication.Recorder;
-                    recorder.Started += new EventHandler(recorder_Started);
-                    recorder.Stopped += new EventHandler(recorder_Stopped);
-                    recorder.Start();
+                //    Recorder recorder = activeTimeApplication.Recorder;
+                //    recorder.Started += new EventHandler(recorder_Started);
+                //    recorder.Stopped += new EventHandler(recorder_Stopped);
+                //    recorder.Start();
 
 
-                    SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+                //    SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
 
-                    timer = new DispatcherTimer();
-                    timer.Tick += new EventHandler(timer_Tick);
-                    timer.Interval = TimeSpan.FromMinutes(1);
-                    timer.Start();
+                //    timer = new DispatcherTimer();
+                //    timer.Tick += new EventHandler(timer_Tick);
+                //    timer.Interval = TimeSpan.FromMinutes(1);
+                //    timer.Start();
 
-                    base.OnStartup(e);
-                }
+                //    base.OnStartup(e);
+                //}
             }
         }
 

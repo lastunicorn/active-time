@@ -15,9 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Persistence.Entities;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 

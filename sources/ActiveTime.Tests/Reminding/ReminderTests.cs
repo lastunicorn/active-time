@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using DustInTheWind.ActiveTime.Common.Reminding;
 using DustInTheWind.ActiveTime.Main.Services;
+using DustInTheWind.ActiveTime.Reminding.Services;
 using NUnit.Framework;
-using System.Threading;
 
 namespace DustInTheWind.ActiveTime.UnitTests.ReminderTests
 {

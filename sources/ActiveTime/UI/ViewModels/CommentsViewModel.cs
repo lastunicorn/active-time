@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DustInTheWind.ActiveTime.Persistence.Repositories;
 using System.ComponentModel;
 using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.UI.ViewModels
 {

@@ -20,9 +20,9 @@ using System.IO;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Exporters;
 using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
-using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.UI.Controllers
 {

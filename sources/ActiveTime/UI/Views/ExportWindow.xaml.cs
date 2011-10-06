@@ -14,11 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows;
+using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
-using DustInTheWind.ActiveTime.UI.Controllers;
 
 namespace DustInTheWind.ActiveTime.UI.Views
 {

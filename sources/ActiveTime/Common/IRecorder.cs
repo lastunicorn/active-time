@@ -3,7 +3,7 @@ using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.Common
 {
-    interface IRecorder
+    public interface IRecorder
     {
         TimeSpan? GetTimeFromLastStop();
         void Stamp();

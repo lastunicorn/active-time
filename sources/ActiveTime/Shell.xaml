@@ -3,10 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         
         xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
+        xmlns:atime="clr-namespace:DustInTheWind.ActiveTime"
         
         Title="Shell"
-        Height="300" Width="300"
-        ResizeMode="CanResizeWithGrip">
+        Height="400" Width="400"
+        ResizeMode="CanResizeWithGrip"
+        MinWidth="350" MinHeight="350"
+        UseLayoutRounding="True" VisualClearTypeHint="Enabled" VisualTextRenderingMode="Auto"
+        
+        Closing="Window_Closing">
 
     <DockPanel>
 
@@ -23,12 +28,9 @@
             </MenuItem>
         </Menu>
 
-        <StatusBar Name="statusBar1" DockPanel.Dock="Bottom">
-            <StatusBarItem MinHeight="23"
-                    Content="{Binding Path=StatusText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}" />
-        </StatusBar>
+        <ContentControl DockPanel.Dock="Bottom" regions:RegionManager.RegionName="{x:Static atime:RegionNames.StatusInfoRegion}"/>
 
-        <ContentControl regions:RegionManager.RegionName="MainContentRegion"/>
+        <ContentControl regions:RegionManager.RegionName="{x:Static atime:RegionNames.MainContentRegion}"/>
 
     </DockPanel>
     

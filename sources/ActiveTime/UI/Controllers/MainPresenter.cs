@@ -21,6 +21,7 @@ using System.Threading;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 
@@ -63,6 +64,8 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
 
         private IRecorder recorder;
 
+        private ITimeRecordRepository recordRepository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPresenter"/> class.
         /// </summary>
@@ -70,7 +73,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         /// <param name="model"></param>
         /// <param name="activeTimeApplication">The application model.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public MainPresenter(IMainView view, MainModel model, IRecorder recorder)
+        public MainPresenter(IMainView view, MainModel model, IRecorder recorder, ITimeRecordRepository recordRepository)
         {
             if (view == null)
                 throw new ArgumentNullException("view");
@@ -78,14 +81,17 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
             if (recorder == null)
                 throw new ArgumentNullException("recorder");
 
+            if (recordRepository == null)
+                throw new ArgumentNullException("recordRepository");
+
             this.view = view;
+            this.recorder = recorder;
+            this.recordRepository = recordRepository;
 
             timerStatus = new Timer(new TimerCallback(ResetStatusTextTh));
 
             this.model = model;
             model.DateChanged += new EventHandler(model_DateChanged);
-
-            this.recorder = recorder;
 
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
@@ -149,7 +155,7 @@ namespace DustInTheWind.ActiveTime.UI.Controllers
         {
             if (model.Date != null)
             {
-                IList<TimeRecord> timeRecords = activeTimeApplication.RecordRepository.GetByDate(model.Date.Value);
+                IList<TimeRecord> timeRecords = recordRepository.GetByDate(model.Date.Value);
                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
                 model.DayRecord = dayRecord ?? new DayRecord(model.Date.Value);
             }

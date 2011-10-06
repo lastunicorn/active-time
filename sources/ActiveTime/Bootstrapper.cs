@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using DustInTheWind.ActiveTime.Main.ModuleDefinitions;
-using DustInTheWind.ActiveTime.UI.Views;
+using DustInTheWind.ActiveTime.Reminding.ModuleDefinitions;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
+using DustInTheWind.ActiveTime.Recording.ModuleDefinitions;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -17,7 +17,9 @@ namespace DustInTheWind.ActiveTime
 
 
             ModuleCatalog moduleCatalog = new ModuleCatalog();
-            moduleCatalog.AddModule(typeof(MainModule));
+            moduleCatalog.AddModule(typeof(MainModule), "RecordingModule")
+                .AddModule(typeof(RecordingModule), "RemindingModule")
+                .AddModule(typeof(RemindingModule));
 
             return moduleCatalog;
 
@@ -28,7 +30,7 @@ namespace DustInTheWind.ActiveTime
 
             //Uri uri = new Uri("/ActiveTime;component/ModuleCatalog.xaml", UriKind.Relative);
             //ModuleCatalog moduleCatalog = Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(uri);
-            
+
             //return moduleCatalog;
 
 
@@ -39,7 +41,7 @@ namespace DustInTheWind.ActiveTime
 
         protected override DependencyObject CreateShell()
         {
-            MainWindow shell = Container.Resolve<MainWindow>();
+            Shell shell = Container.Resolve<Shell>();
             shell.Show();
             return shell;
         }

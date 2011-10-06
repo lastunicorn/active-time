@@ -46,41 +46,41 @@
 
         <DatePicker Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"  Height="25" Margin="3" Name="datePicker1" VerticalAlignment="Top"
                     SelectedDateFormat="Long"
-                    SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Source={StaticResource ResourceKey=model}}"
+                    SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     HorizontalAlignment="Left" MinWidth="150" SelectedDateChanged="datePicker1_SelectedDateChanged" />
 
         <Label Grid.Row="1" Grid.Column="0" Content="Active Time:" Name="label1" Margin="3" />
 
         <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Name="textBoxActiveTime"
                      VerticalAlignment="Center"
-                    Text="{Binding Path=ActiveTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
+                    Text="{Binding Path=ActiveTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
 
         <Label Grid.Row="2" Grid.Column="0" Content="Total Time:" Name="label4" Margin="3" />
 
         <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Name="textBoxTotalTime"
                      VerticalAlignment="Center"
-                    Text="{Binding Path=TotalTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
+                    Text="{Binding Path=TotalTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
 
         <Label Grid.Row="1" Grid.Column="2" Content="Begin:" Name="label5" Margin="3" />
 
         <TextBox Grid.Row="1" Grid.Column="3" Margin="3" Name="textBoxBeginTime"
                      VerticalAlignment="Center"
-                    Text="{Binding Path=BeginTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
+                    Text="{Binding Path=BeginTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
 
         <Label Grid.Row="2" Grid.Column="2" Content="Estimated End:" Name="label6" Margin="3"></Label>
 
         <TextBox Grid.Row="2" Grid.Column="3" Margin="3" Name="textBoxEstimatedEndTime"
                      VerticalAlignment="Center"
-                    Text="{Binding Path=EstimatedEndTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay,Source={StaticResource ResourceKey=model}}"
+                    Text="{Binding Path=EstimatedEndTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
 
         <Label Grid.Row="3" Grid.Column="0" Content="Records:" Name="label3" Margin="3" />
 
         <ListBox Grid.Row="3" Grid.Column="1" Margin="3" Grid.ColumnSpan="3" Name="listBox1"
-                    ItemsSource="{Binding Path=Records,Source={StaticResource ResourceKey=model}}"
+                    ItemsSource="{Binding Path=Records}"
                     SelectionMode="Extended">
 
 

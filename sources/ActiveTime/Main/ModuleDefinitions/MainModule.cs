@@ -2,9 +2,10 @@
 using DustInTheWind.ActiveTime.Main.Services;
 using DustInTheWind.ActiveTime.Main.Views;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
+using DustInTheWind.ActiveTime.Reminding.Services;
 using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.Main.ModuleDefinitions
 {
@@ -21,12 +22,10 @@ namespace DustInTheWind.ActiveTime.Main.ModuleDefinitions
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IRecorder, Recorder>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IReminder, Reminder>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<ITimeRecordRepository, TimeRecordRepository>(new ContainerControlledLifetimeManager());
-            //unityContainer.RegisterType<ITimeRecordRepository, ExportersManager>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
 
-            regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof (MainView));
+            regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
+            regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
         }
     }
 }

@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -21,6 +10,31 @@ namespace DustInTheWind.ActiveTime
         public Shell()
         {
             InitializeComponent();
+        }
+
+        private void menuItemExport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuItemStatistics_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuItemAbout_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }
