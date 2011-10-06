@@ -43,15 +43,5 @@ namespace DustInTheWind.ActiveTime.Main.Views
         {
 
         }
-
-        private void buttonRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
-
-        private void buttonComments_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
     }
 }

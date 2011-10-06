@@ -91,13 +91,23 @@
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
     <Compile Include="Main\ModuleDefinitions\MainModule.cs" />
-    <Compile Include="Main\Services\StatusInfoService.cs" />
+    <Compile Include="Common\ITrayIconService.cs" />
+    <Compile Include="Main\Services\IconState.cs" />
+    <Compile Include="StatusInfo\ModuleDefinitions\StatusInfoModule.cs" />
+    <Compile Include="StatusInfo\Services\StatusInfoService.cs" />
+    <Compile Include="Main\Services\TrayIconService.cs" />
+    <Compile Include="Main\Views\TrayIconView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Main\Views\TrayIconView.Designer.cs">
+      <DependentUpon>TrayIconView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\ViewModels\MainViewModel.cs" />
-    <Compile Include="Main\ViewModels\StatusInfoViewModel.cs" />
+    <Compile Include="StatusInfo\ViewModels\StatusInfoViewModel.cs" />
     <Compile Include="Main\Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\Views\StatusInfoView.xaml.cs">
+    <Compile Include="StatusInfo\Views\StatusInfoView.xaml.cs">
       <DependentUpon>StatusInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Entities\DayComment.cs" />
@@ -169,13 +179,12 @@
     <Compile Include="UI\RecordListConverter.cs" />
     <Compile Include="Reminding\Services\Reminder.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="UI\TrayIconManager.cs">
+    <Compile Include="TrayIconManager.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\TrayIconManager.Designer.cs">
+    <Compile Include="TrayIconManager.Designer.cs">
       <DependentUpon>TrayIconManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controllers\TrayIconPresenter.cs" />
     <Content Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
     </Content>
@@ -183,7 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Main\Views\StatusInfoView.xaml">
+    <Page Include="StatusInfo\Views\StatusInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,11 +241,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Main\Views\TrayIconView.resx">
+      <DependentUpon>TrayIconView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\TrayIconManager.resx">
+    <EmbeddedResource Include="TrayIconManager.resx">
       <DependentUpon>TrayIconManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />

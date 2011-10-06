@@ -6,6 +6,7 @@
              
              xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.UI"
              xmlns:Recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording"
+             xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -86,12 +87,12 @@
 
             <ListBox.ContextMenu>
                 <ContextMenu Name="contextMenuRecords">
-                    <MenuItem Name="menuItemNew" Header="New" Click="menuItemNew_Click" IsEnabled="False" />
-                    <Separator Margin="0" />
-                    <MenuItem Name="menuItemMerge" Header="Merge" Click="menuItemMerge_Click" IsEnabled="False" />
-                    <MenuItem Name="menuItemSplit" Header="Split" Click="menuItemSplit_Click" IsEnabled="False" />
-                    <Separator Margin="0" />
-                    <MenuItem Name="menuItemDelete" Header="Delete" Click="menuItemDelete_Click" />
+                    <MenuItem Name="menuItemNew" Header="New" Click="menuItemNew_Click" IsEnabled="False"/>
+                    <Separator Margin="0"/>
+                    <MenuItem Name="menuItemMerge" Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
+                    <MenuItem Name="menuItemSplit" Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
+                    <Separator Margin="0"/>
+                    <MenuItem Name="menuItemDelete" Header="Delete" Click="menuItemDelete_Click"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
 
@@ -99,12 +100,10 @@
 
         <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" Name="stackPanel2" Orientation="Horizontal">
 
-            <Button Content="Comments" MinWidth="75" Name="buttonComments" Margin="0,0,5,0"
-                        Click="buttonComments_Click" />
-            <Button Content="Refresh" Margin="0,0,5,0" Name="buttonRefresh" Click="buttonRefresh_Click"
-                        MinWidth="75" />
+            <Button Content="Comments" MinWidth="75" Name="buttonComments" Margin="0,0,5,0" cmd:Click.Command="{Binding CommentsCommand}"/>
+            <Button Content="Refresh" Margin="0,0,5,0" Name="buttonRefresh" cmd:Click.Command="{Binding RefreshCommand}" MinWidth="75" />
 
         </StackPanel>
     </Grid>
-    
+
 </UserControl>

@@ -5,6 +5,8 @@ using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Persistence.Entities;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
 namespace DustInTheWind.ActiveTime.Main.ViewModels
 {
@@ -104,6 +106,17 @@ namespace DustInTheWind.ActiveTime.Main.ViewModels
             }
         }
 
+        private ICommand commentsCommand;
+        public ICommand CommentsCommand
+        {
+            get { return commentsCommand; }
+        }
+
+        private ICommand refreshCommand;
+        public ICommand RefreshCommand
+        {
+            get { return refreshCommand; }
+        }
 
         public MainViewModel(IRecorder recorder, IStatusInfoService statusInfoService, ITimeRecordRepository recordRepository)
         {
@@ -120,12 +133,33 @@ namespace DustInTheWind.ActiveTime.Main.ViewModels
             this.statusInfoService = statusInfoService;
             this.recordRepository = recordRepository;
 
+            commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
+            refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
+            Date = DateTime.Today;
+
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
             recorder.Stamping += new EventHandler(recorder_Stamping);
             recorder.Stamped += new EventHandler(recorder_Stamped);
 
             statusInfoService.SetStatus("Alez", STATUS_TIMEOUT);
+        }
+
+        private void OnRefreshCommandExecuted()
+        {
+            UpdateModel();
+            statusInfoService.SetStatus("Refreshed.", STATUS_TIMEOUT);
+        }
+
+        private void OnCommentsCommandExecuted()
+        {
+            if (Date != null)
+            {
+                //CommentsWindow window = new CommentsWindow(new DayCommentRepository(), datePicker1.SelectedDate.Value);
+
+                //window.Owner = this;
+                //window.ShowDialog();
+            }
         }
 
         private void recorder_Started(object sender, EventArgs e)

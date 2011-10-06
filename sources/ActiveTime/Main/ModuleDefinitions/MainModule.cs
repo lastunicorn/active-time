@@ -14,6 +14,8 @@ namespace DustInTheWind.ActiveTime.Main.ModuleDefinitions
         private readonly IUnityContainer unityContainer;
         private readonly IRegionManager regionManager;
 
+        private TrayIconView trayIconView;
+
         public MainModule(IUnityContainer unityContainer, IRegionManager regionManager)
         {
             this.unityContainer = unityContainer;
@@ -22,10 +24,15 @@ namespace DustInTheWind.ActiveTime.Main.ModuleDefinitions
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ITrayIconService, TrayIconService>(new ContainerControlledLifetimeManager());
 
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
-            regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
+
+            trayIconView = unityContainer.Resolve<TrayIconView>();
+
+            ITrayIconService trayIconService = unityContainer.Resolve<ITrayIconService>();
+            trayIconService.IconState = IconState.On;
+            trayIconService.IconVisible = true;
         }
     }
 }

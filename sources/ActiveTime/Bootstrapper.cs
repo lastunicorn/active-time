@@ -5,6 +5,7 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using DustInTheWind.ActiveTime.Recording.ModuleDefinitions;
+using DustInTheWind.ActiveTime.StatusInfo.ModuleDefinitions;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -17,10 +18,11 @@ namespace DustInTheWind.ActiveTime
 
 
             ModuleCatalog moduleCatalog = new ModuleCatalog();
-            moduleCatalog.AddModule(typeof(MainModule), "RecordingModule")
+            moduleCatalog.AddModule(typeof(MainModule), "RecordingModule", "StatusInfoModule")
                 .AddModule(typeof(RecordingModule), "RemindingModule")
-                .AddModule(typeof(RemindingModule));
-
+                .AddModule(typeof(RemindingModule))
+                .AddModule(typeof(StatusInfoModule));
+            
             return moduleCatalog;
 
 
