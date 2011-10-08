@@ -93,6 +93,8 @@
     <Compile Include="Main\ModuleDefinitions\MainModule.cs" />
     <Compile Include="Common\ITrayIconService.cs" />
     <Compile Include="Main\Services\IconState.cs" />
+    <Compile Include="Common\IMainService.cs" />
+    <Compile Include="Main\Services\MainService.cs" />
     <Compile Include="StatusInfo\ModuleDefinitions\StatusInfoModule.cs" />
     <Compile Include="StatusInfo\Services\StatusInfoService.cs" />
     <Compile Include="Main\Services\TrayIconService.cs" />

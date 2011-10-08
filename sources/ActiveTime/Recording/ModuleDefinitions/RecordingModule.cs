@@ -25,36 +25,6 @@ namespace DustInTheWind.ActiveTime.Recording.ModuleDefinitions
             unityContainer.RegisterType<IRecorder, Recorder>(new ContainerControlledLifetimeManager());
 
             IRecorder recorder = unityContainer.Resolve<IRecorder>();
-
-            recorder.Started += new EventHandler(recorder_Started);
-            recorder.Stopped += new EventHandler(recorder_Stopped);
-            recorder.Start();
-        }
-
-        public void recorder_Started(object sender, EventArgs e)
-        {
-            //if (trayIconManager != null)
-            {
-                //trayIconManager.SetIconOn();
-                //trayIconManager.StartEnabled = false;
-                //trayIconManager.StopEnabled = true;
-
-                IReminder reminder = unityContainer.Resolve<IReminder>();
-                reminder.Start(DustInTheWind.ActiveTime.Properties.Settings.Default.ReminderInterval);
-            }
-        }
-
-        public void recorder_Stopped(object sender, EventArgs e)
-        {
-            //if (trayIconManager != null)
-            {
-                //trayIconManager.SetIconOff();
-                //trayIconManager.StartEnabled = true;
-                //trayIconManager.StopEnabled = false;
-
-                IReminder reminder = unityContainer.Resolve<IReminder>();
-                reminder.Stop();
-            }
         }
     }
 }
