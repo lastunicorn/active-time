@@ -7,7 +7,7 @@ using Microsoft.Practices.Unity;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
 using DustInTheWind.ActiveTime.Common;
 
-namespace DustInTheWind.ActiveTime.RepositoryModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions
 {
     public class PersistenceModule : IModule
     {

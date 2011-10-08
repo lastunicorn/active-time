@@ -83,7 +83,7 @@
     <Compile Include="Exporters\ParameterTypeException.cs" />
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
-    <Compile Include="Reminding\ModuleDefinitions\RemindingModule.cs" />
+    <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -99,7 +99,6 @@
     <Compile Include="Watchman\Guard.cs" />
     <Compile Include="Watchman\GuardLevel.cs" />
     <Compile Include="Exporters\IExporter.cs" />
-    <Compile Include="Reminding\Services\Reminder.cs" />
     <Compile Include="Settings.cs" />
     <Resource Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
@@ -158,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Reminding\ModuleDefinitions\" />
+    <Folder Include="Reminding\Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

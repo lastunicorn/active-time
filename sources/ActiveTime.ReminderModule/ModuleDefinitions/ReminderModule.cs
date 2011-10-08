@@ -3,13 +3,13 @@ using DustInTheWind.ActiveTime.Reminding.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.Reminding.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
 {
-    class RemindingModule : IModule
+    public class ReminderModule : IModule
     {
         private readonly IUnityContainer unityContainer;
 
-        public RemindingModule(IUnityContainer unityContainer)
+        public ReminderModule(IUnityContainer unityContainer)
         {
             this.unityContainer = unityContainer;
         }

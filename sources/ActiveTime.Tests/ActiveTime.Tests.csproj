@@ -45,7 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\RefBin\SQLite\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\ExternalLibraries\SQLite\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -78,16 +78,28 @@
     <Compile Include="UI\CommentsViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
+      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
+      <Name>ActiveTime.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.csproj">
+      <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>
+      <Name>ActiveTime.PersistenceModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.RecorderModule\ActiveTime.RecorderModule.csproj">
+      <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
+      <Name>ActiveTime.RecorderModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime\ActiveTime.csproj">
       <Project>{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}</Project>
       <Name>ActiveTime</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\RefBin\SQLite\SQLite.Interop.dll">
+    <None Include="..\ExternalLibraries\SQLite\SQLite.Interop.dll">
       <Link>SQLite.Interop.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Reminding\TestCases.txt" />
   </ItemGroup>
   <ItemGroup />

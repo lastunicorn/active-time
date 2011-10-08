@@ -25,35 +25,6 @@ namespace DustInTheWind.ActiveTime
     /// </summary>
     public partial class App : Application
     {
-        //#region Recorder
-
-        //public void recorder_Started(object sender, EventArgs e)
-        //{
-        //    if (trayIconManager != null)
-        //    {
-        //        trayIconManager.SetIconOn();
-        //        trayIconManager.StartEnabled = false;
-        //        trayIconManager.StopEnabled = true;
-
-        //        //activeTimeApplication.Reminder.Start(TimeSpan.FromHours(1));
-        //        activeTimeApplication.Reminder.Start(DustInTheWind.ActiveTime.Properties.Settings.Default.ReminderInterval);
-        //    }
-        //}
-
-        //public void recorder_Stopped(object sender, EventArgs e)
-        //{
-        //    if (trayIconManager != null)
-        //    {
-        //        trayIconManager.SetIconOff();
-        //        trayIconManager.StartEnabled = true;
-        //        trayIconManager.StopEnabled = false;
-
-        //        activeTimeApplication.Reminder.Stop();
-        //    }
-        //}
-
-        //#endregion
-
         //private MainWindow window;
 
 #if !DEBUG
@@ -118,10 +89,6 @@ namespace DustInTheWind.ActiveTime
 
                 //activeTimeApplication = new ActiveTimeApplication();
 
-                ////TasksManager tasksManager = new TasksManager(WinformsViewsManager.
-                ////                                             GetDefaultConfig());
-                ////tasksManager.StartTask(typeof(MainTask));
-
                 //bool allowToContinue = true;
 
                 //if (!allowToContinue)
@@ -130,15 +97,6 @@ namespace DustInTheWind.ActiveTime
                 //}
                 //else
                 //{
-                //    trayIconManager = new TrayIconManager();
-                //    trayIconManager.ExitClicked += new EventHandler(trayIconManager_ExitClicked);
-                //    trayIconManager.ShowClicked += new EventHandler(trayIconManager_ShowClicked);
-                //    trayIconManager.StopClicked += new EventHandler(trayIconManager_StopClicked);
-                //    trayIconManager.StartClicked += new EventHandler(trayIconManager_StartClicked);
-                //    trayIconManager.StopAndDeleteClicked += new EventHandler(trayIconManager_StopAndDeleteClicked);
-
-                //    trayIconManager.ShowIcon();
-
                 //    Reminder reminder = activeTimeApplication.Reminder;
                 //    reminder.SnoozeTime = TimeSpan.FromMinutes(10);
                 //    reminder.Ring += new EventHandler<RingEventArgs>(reminder_Ring);
@@ -210,64 +168,7 @@ namespace DustInTheWind.ActiveTime
         //}
 
         #endregion
-
-        //#region Tray Icon
-
-        //private TrayIconManager trayIconManager;
-
-        //private void trayIconManager_ShowClicked(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (window == null)
-        //        {
-        //            window = new MainWindow(activeTimeApplication);
-        //            window.TrayIconManager = trayIconManager;
-        //        }
-
-        //        window.Show();
-
-        //        if (window.WindowState == WindowState.Minimized)
-        //            window.WindowState = WindowState.Normal;
-
-        //        window.Activate();
-        //        window.Focus();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
-
-        //private void trayIconManager_StartClicked(object sender, EventArgs e)
-        //{
-        //    activeTimeApplication.Recorder.Start();
-        //}
-
-        //private void trayIconManager_StopClicked(object sender, EventArgs e)
-        //{
-        //    activeTimeApplication.Recorder.Stop();
-        //}
-
-        //private void trayIconManager_StopAndDeleteClicked(object sender, EventArgs e)
-        //{
-        //    activeTimeApplication.Recorder.Stop(true);
-        //}
-
-        //private void trayIconManager_ExitClicked(object sender, EventArgs e)
-        //{
-        //    if (window != null)
-        //    {
-        //        window.AllowClose = true;
-        //        window.Close();
-        //    }
-
-        //    Shutdown();
-        //}
-
-        //#endregion
-
-
+        
         //private void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
         //{
         //    switch (e.Reason)
