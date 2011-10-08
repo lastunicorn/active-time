@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Common.Entities;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
 using NHibernate;
 using NHibernate.Exceptions;

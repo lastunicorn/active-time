@@ -16,14 +16,16 @@
 
 using System;
 using System.ComponentModel;
-using DustInTheWind.ActiveTime.Persistence.Entities;
-using DustInTheWind.ActiveTime.Persistence.Repositories;
+using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
-namespace DustInTheWind.ActiveTime.UI.ViewModels
+namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
-    class CommentsViewModel : INotifyPropertyChanged
+    class CommentsViewModel : ViewModelBase
     {
-        private IDayCommentRepository commentRepository;
+        private IDayCommentRepository dayCommentRepository;
 
         private DateTime date = DateTime.Today;
         public DateTime Date
@@ -32,7 +34,7 @@ namespace DustInTheWind.ActiveTime.UI.ViewModels
             set
             {
                 date = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Date"));
+                NotifyPropertyChanged("Date");
             }
         }
 
@@ -43,7 +45,7 @@ namespace DustInTheWind.ActiveTime.UI.ViewModels
             set
             {
                 comment = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Comment"));
+                NotifyPropertyChanged("Comment");
             }
         }
 
@@ -54,42 +56,58 @@ namespace DustInTheWind.ActiveTime.UI.ViewModels
             set
             {
                 commentTextWrap = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("CommentTextWrap"));
+                NotifyPropertyChanged("CommentTextWrap");
             }
         }
 
-        #region PropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        private ICommand applyCommand;
+        public ICommand ApplyCommand
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, e);
+            get { return applyCommand; }
         }
 
-        #endregion
+        private ICommand cancelCommand;
+        public ICommand CancelCommand
+        {
+            get { return cancelCommand; }
+        }
+
+        private ICommand saveCommand;
+        public ICommand SaveCommand
+        {
+            get { return saveCommand; }
+        }
 
         public CommentsViewModel(IDayCommentRepository dayCommentRepository)
         {
             if (dayCommentRepository == null)
                 throw new ArgumentNullException("dayCommentRepository");
 
-            this.commentRepository = dayCommentRepository;
+            this.dayCommentRepository = dayCommentRepository;
+            applyCommand = new DelegateCommand(new Action(OnApplyCommandExecuted));
+            cancelCommand = new DelegateCommand(new Action(OnCancelCommandExecuted));
+            cancelCommand = new DelegateCommand(new Action(OnSaveCommandExecuted));
+        }
+
+        private void OnApplyCommandExecuted()
+        {
+
+        }
+
+        private void OnCancelCommandExecuted()
+        {
+
+        }
+
+        private void OnSaveCommandExecuted()
+        {
+
         }
 
         public void WindowLoaded()
         {
-            try
-            {
-                DayComment dayComment = commentRepository.GetByDate(date);
-                Comment = dayComment == null ? string.Empty : dayComment.Comment;
-            }
-            catch
-            {
-                //view.DisplayError(ex);
-            }
-
+            DayComment dayComment = dayCommentRepository.GetByDate(date);
+            Comment = dayComment == null ? string.Empty : dayComment.Comment;
         }
     }
 }

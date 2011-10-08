@@ -20,37 +20,30 @@ using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
+using DustInTheWind.ActiveTime.MainModule.ViewModels;
 
-namespace DustInTheWind.ActiveTime.UI.Views
+namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
     /// Interaction logic for CommentsWindow.xaml
     /// </summary>
-    public partial class CommentsWindow : WindowBase, ICommentsView
+    public partial class CommentsWindow : Window
     {
-        private CommentsPresenter presenter;
-
-        public CommentsModel Model
+        public CommentsWindow(CommentsViewModel viewModel)
         {
-            set { DataContext = value; }
-        }
+            if (viewModel == null)
+                throw new ArgumentNullException("viewModel");
 
-        public CommentsWindow()
-        {
             InitializeComponent();
-        }
 
-        public CommentsWindow(IDayCommentRepository commentRepository, DateTime date)
-            : this()
-        {
-            presenter = new CommentsPresenter(this, commentRepository, date);
+            Loaded += (s, e) => DataContext = viewModel;
 
             datePickerDate.IsEnabled = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            presenter.WindowLoaded();
+            (DataContext as CommentsViewModel).WindowLoaded();
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

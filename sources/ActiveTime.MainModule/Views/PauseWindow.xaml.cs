@@ -14,40 +14,30 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
-    /// Interaction logic for Shell.xaml
+    /// Interaction logic for PauseWindow.xaml
     /// </summary>
-    public partial class Shell : Window
+    public partial class PauseWindow : Window
     {
-        public Shell()
+        public PauseWindow()
         {
             InitializeComponent();
         }
 
-        private void menuItemExport_Click(object sender, RoutedEventArgs e)
+        public PauseWindow(string text)
         {
+            InitializeComponent();
 
+            textBlockMessage.Text = text;
         }
 
-        private void menuItemStatistics_Click(object sender, RoutedEventArgs e)
+        private void buttonSnooze_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void menuItemExit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void menuItemAbout_Click(object sender, RoutedEventArgs e)
-        {
-
+            Close();
         }
     }
 }

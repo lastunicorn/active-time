@@ -19,12 +19,12 @@ using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 
-namespace DustInTheWind.ActiveTime.UI.Views
+namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
     /// Interaction logic for ExportWindow.xaml
     /// </summary>
-    public partial class ExportWindow : WindowBase, IExportView
+    public partial class ExportWindow : Window
     {
         private ExportPresenter presenter;
 

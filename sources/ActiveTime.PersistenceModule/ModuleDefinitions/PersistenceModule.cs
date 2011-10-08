@@ -41,6 +41,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions
         {
             //unityContainer.RegisterType<ITimeRecordRepository, TimeRecordRepository>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterInstance<ITimeRecordRepository>(new TimeRecordRepository(), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterInstance<IDayCommentRepository>(new DayCommentRepository(), new ContainerControlledLifetimeManager());
         }
     }
 }

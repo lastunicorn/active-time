@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Common.Entities;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
 using NUnit.Framework;
 

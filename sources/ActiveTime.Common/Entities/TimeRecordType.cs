@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Persistence.Entities
+namespace DustInTheWind.ActiveTime.Common.Entities
 {
     /// <summary>
     /// Specifies the type of a TimeRecord.

@@ -16,28 +16,16 @@
 
 using System.Windows;
 
-namespace DustInTheWind.ActiveTime.UI.Views
+namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
-    /// Interaction logic for PauseWindow.xaml
+    /// Interaction logic for AboutWindow.xaml
     /// </summary>
-    public partial class PauseWindow : WindowBase
+    public partial class AboutWindow : Window
     {
-        public PauseWindow()
+        public AboutWindow()
         {
             InitializeComponent();
-        }
-
-        public PauseWindow(string text)
-        {
-            InitializeComponent();
-
-            textBlockMessage.Text = text;
-        }
-
-        private void buttonSnooze_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

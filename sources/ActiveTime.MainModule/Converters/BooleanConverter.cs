@@ -18,7 +18,7 @@ using System;
 using System.Windows;
 using System.Windows.Data;
 
-namespace DustInTheWind.ActiveTime.UI
+namespace DustInTheWind.ActiveTime.MainModule.Converters
 {
     /// <summary>
     /// Converts the <see cref="TextWrapping"/> value into <see cref="Boolean"/> value and viceversa.

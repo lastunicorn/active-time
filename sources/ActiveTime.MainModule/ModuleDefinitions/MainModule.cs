@@ -40,6 +40,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
         {
             unityContainer.RegisterType<IApplicationService, ApplicationService>();
 
+            regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
         }
     }

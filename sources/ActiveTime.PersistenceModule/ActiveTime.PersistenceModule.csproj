@@ -56,7 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CrudRepositoryBase.cs" />
     <Compile Include="Repositories\DayCommentRepository.cs" />
-    <Compile Include="Repositories\IDayCommentRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\TimeRecordRepository.cs" />
     <Compile Include="SessionProvider.cs" />

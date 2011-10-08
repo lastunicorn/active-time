@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Common.Entities;
 
 namespace DustInTheWind.ActiveTime.Common
 {

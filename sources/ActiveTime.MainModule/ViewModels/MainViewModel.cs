@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Common.Entities;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 

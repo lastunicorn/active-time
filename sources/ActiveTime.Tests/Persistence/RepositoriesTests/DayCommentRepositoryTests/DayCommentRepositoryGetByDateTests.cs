@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Common.Entities;
 using DustInTheWind.ActiveTime.Persistence.Repositories;
 using NUnit.Framework;
 

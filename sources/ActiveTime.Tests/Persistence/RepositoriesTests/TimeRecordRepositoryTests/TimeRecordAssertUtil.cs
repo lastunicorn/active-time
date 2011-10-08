@@ -16,7 +16,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Common.Entities;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.Persistence.RepositoriesTests.TimeRecordRepositoryTests

@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Persistence.Entities;
+using DustInTheWind.ActiveTime.Common.Entities;
 using System.Threading;
 using Microsoft.Practices.Prism.Events;
 using DustInTheWind.ActiveTime.Common.Events;

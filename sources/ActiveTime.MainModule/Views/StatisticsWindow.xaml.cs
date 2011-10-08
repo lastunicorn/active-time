@@ -20,12 +20,12 @@ using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
 
-namespace DustInTheWind.ActiveTime.UI.Views
+namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
     /// Interaction logic for StatisticsWindow.xaml
     /// </summary>
-    public partial class StatisticsWindow : WindowBase, IStatisticsView
+    public partial class StatisticsWindow : Window
     {
         private StatisticsPresenter presenter;
 

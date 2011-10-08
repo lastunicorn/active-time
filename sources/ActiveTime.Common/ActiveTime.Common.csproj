@@ -34,22 +34,30 @@
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\MenuItemClick.cs" />
+    <Compile Include="Commands\MenuItemClickCommandBehavior.cs" />
     <Compile Include="Entities\DayComment.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\TimeRecord.cs" />
     <Compile Include="Entities\TimeRecordType.cs" />
     <Compile Include="Events\ApplicationExitEvent.cs" />
     <Compile Include="IApplicationService.cs" />
+    <Compile Include="IDayCommentRepository.cs" />
     <Compile Include="IMainService.cs" />
     <Compile Include="IRecorder.cs">
       <SubType>Code</SubType>
