@@ -40,22 +40,21 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LumenWorks.Framework.IO, Version=3.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\RefBin\LumenWorks\LumenWorks.Framework.IO.dll</HintPath>
+      <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\RefBin\Prism\Microsoft.Practices.Prism.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
-      <HintPath>..\RefBin\Prism\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Prism.UnityExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\RefBin\Prism\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\RefBin\NHibernate\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalLibraries\NHibernate\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -78,158 +77,39 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="UI\Views\App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Include="ActiveTimeException.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Common\IStatusInfoService.cs" />
-    <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="Exporters\ParameterNullException.cs" />
     <Compile Include="Exporters\ParameterTypeException.cs" />
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
-    <Compile Include="Main\ModuleDefinitions\MainModule.cs" />
-    <Compile Include="Common\ITrayIconService.cs" />
-    <Compile Include="Main\Services\IconState.cs" />
-    <Compile Include="Common\IMainService.cs" />
-    <Compile Include="Main\Services\MainService.cs" />
-    <Compile Include="StatusInfo\ModuleDefinitions\StatusInfoModule.cs" />
-    <Compile Include="StatusInfo\Services\StatusInfoService.cs" />
-    <Compile Include="Main\Services\TrayIconService.cs" />
-    <Compile Include="Main\Views\TrayIconView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Main\Views\TrayIconView.Designer.cs">
-      <DependentUpon>TrayIconView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Main\ViewModels\MainViewModel.cs" />
-    <Compile Include="StatusInfo\ViewModels\StatusInfoViewModel.cs" />
-    <Compile Include="Main\Views\MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StatusInfo\Views\StatusInfoView.xaml.cs">
-      <DependentUpon>StatusInfoView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Persistence\Entities\DayComment.cs" />
-    <Compile Include="Persistence\Entities\EntityBase.cs" />
-    <Compile Include="Persistence\Entities\TimeRecordType.cs" />
-    <Compile Include="Persistence\SessionProvider.cs" />
-    <Compile Include="Persistence\Repositories\CrudRepositoryBase.cs" />
-    <Compile Include="Persistence\Repositories\DayCommentRepository.cs" />
-    <Compile Include="Persistence\Repositories\IDayCommentRepository.cs" />
-    <Compile Include="Persistence\Repositories\ITimeRecordRepository.cs" />
-    <Compile Include="Persistence\Entities\TimeRecord.cs" />
-    <Compile Include="Persistence\Repositories\TimeRecordRepository.cs" />
-    <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
-    <Compile Include="Common\Recording\Break.cs" />
-    <Compile Include="Common\Recording\DayTimeInterval.cs" />
-    <Compile Include="Common\IRecorder.cs" />
-    <Compile Include="Common\Recording\Record.cs" />
-    <Compile Include="Recording\ModuleDefinitions\RecordingModule.cs" />
-    <Compile Include="Recording\Services\Recorder.cs" />
-    <Compile Include="Common\IReminder.cs" />
-    <Compile Include="Common\Reminding\ReminderStatus.cs" />
-    <Compile Include="Common\Reminding\RingEventArgs.cs" />
-    <Compile Include="RegionNames.cs" />
     <Compile Include="Reminding\ModuleDefinitions\RemindingModule.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controllers\CommentsPresenter.cs" />
     <Compile Include="Exporters\ExportersManager.cs" />
-    <Compile Include="UI\Controllers\StatisticsPresenter.cs" />
-    <Compile Include="UI\IViews\IStatisticsView.cs" />
-    <Compile Include="UI\Models\ExportModel.cs" />
-    <Compile Include="UI\Controllers\ExportPresenter.cs" />
-    <Compile Include="UI\IViews\IExportView.cs" />
-    <Compile Include="UI\Models\Month.cs" />
-    <Compile Include="UI\Models\StatisticsModel.cs" />
-    <Compile Include="UI\BooleanConverter.cs" />
-    <Compile Include="UI\ViewModels\CommentsViewModel.cs" />
-    <Compile Include="UI\Views\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CsvUtil.cs" />
-    <Compile Include="Common\Recording\DayRecord.cs" />
-    <Compile Include="UI\Views\CommentsWindow.xaml.cs">
-      <DependentUpon>CommentsWindow.xaml</DependentUpon>
+    <Compile Include="UI\RecordConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\Views\ExportWindow.xaml.cs">
-      <DependentUpon>ExportWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\Views\PauseWindow.xaml.cs">
-      <DependentUpon>PauseWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Views\StatisticsWindow.xaml.cs">
-      <DependentUpon>StatisticsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Views\WindowBase.cs" />
-    <Compile Include="Watchman\Guard.cs" />
-    <Compile Include="Watchman\GuardLevel.cs" />
-    <Compile Include="UI\IViews\ICommentsView.cs" />
-    <Compile Include="Exporters\IExporter.cs" />
-    <Compile Include="UI\IViews\IMainView.cs" />
-    <Compile Include="UI\IViews\ITrayIconView.cs" />
-    <Compile Include="UI\IViews\IViewBase.cs" />
-    <Compile Include="UI\Controllers\MainPresenter.cs" />
-    <Compile Include="UI\Models\CommentsModel.cs" />
-    <Compile Include="UI\RecordConverter.cs" />
-    <Compile Include="UI\RecordListConverter.cs" />
-    <Compile Include="Reminding\Services\Reminder.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="TrayIconManager.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TrayIconManager.Designer.cs">
-      <DependentUpon>TrayIconManager.cs</DependentUpon>
-    </Compile>
-    <Content Include="ModuleCatalog.xaml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Page Include="Main\Views\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StatusInfo\Views\StatusInfoView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Views\AboutWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Views\CommentsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Views\ExportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Compile Include="UI\Views\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Recording\RecorderState.cs" />
-    <Page Include="UI\Views\PauseWindow.xaml">
+    <Compile Include="Watchman\Guard.cs" />
+    <Compile Include="Watchman\GuardLevel.cs" />
+    <Compile Include="Exporters\IExporter.cs" />
+    <Compile Include="Reminding\Services\Reminder.cs" />
+    <Compile Include="Settings.cs" />
+    <Resource Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Views\StatisticsWindow.xaml">
+    </Resource>
+    <Page Include="Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\Models\MainModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -243,15 +123,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Main\Views\TrayIconView.resx">
-      <DependentUpon>TrayIconView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrayIconManager.resx">
-      <DependentUpon>TrayIconManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="db.s3db">
@@ -272,18 +146,19 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
     <Resource Include="Resources\Leopard-Optical-Illusion.jpg" />
-    <EmbeddedResource Include="Persistence\Mappings\TimeRecord.hbm.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Mappings\DayComment.hbm.xml" />
-    <Content Include="..\RefBin\SQLite\SQLite.Interop.dll">
-      <Link>SQLite.Interop.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sql scripts\comments.sql" />
-    <Content Include="sql scripts\records.sql" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
+      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
+      <Name>ActiveTime.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="UI\Views\App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

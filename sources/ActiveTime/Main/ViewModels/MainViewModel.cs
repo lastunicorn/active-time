@@ -4,7 +4,6 @@ using System.ComponentModel;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Persistence.Entities;
-using DustInTheWind.ActiveTime.Persistence.Repositories;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 

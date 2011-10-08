@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         
         xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
-        xmlns:atime="clr-namespace:DustInTheWind.ActiveTime"
+        xmlns:common="clr-namespace:DustInTheWind.ActiveTime.Common;assembly=ActiveTime.Common"
         
         Title="Shell"
         Height="400" Width="400"
@@ -28,9 +28,9 @@
             </MenuItem>
         </Menu>
 
-        <ContentControl DockPanel.Dock="Bottom" regions:RegionManager.RegionName="{x:Static atime:RegionNames.StatusInfoRegion}"/>
+        <ContentControl DockPanel.Dock="Bottom" regions:RegionManager.RegionName="{x:Static common:RegionNames.StatusInfoRegion}"/>
 
-        <ContentControl regions:RegionManager.RegionName="{x:Static atime:RegionNames.MainContentRegion}"/>
+        <ContentControl regions:RegionManager.RegionName="{x:Static common:RegionNames.MainContentRegion}"/>
 
     </DockPanel>
     

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              
              xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.UI"
-             xmlns:Recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording"
+             xmlns:Recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording;assembly=ActiveTime.Common"
              xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              
              mc:Ignorable="d" 
@@ -14,7 +14,7 @@
     <Grid Margin="5">
         <Grid.Resources>
 
-            <ui:RecordListConverter x:Key="RecordListConverter" />
+            <!--<ui:RecordListConverter x:Key="RecordListConverter" />-->
             <ui:RecordConverter x:Key="RecordConverter" />
             <DataTemplate DataType="{x:Type Recording:DayTimeInterval}">
                 <Label Padding="10,0,0,0"

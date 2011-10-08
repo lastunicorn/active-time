@@ -20,7 +20,6 @@ using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.UI.Controllers;
 using DustInTheWind.ActiveTime.UI.IViews;
 using DustInTheWind.ActiveTime.UI.Models;
-using DustInTheWind.ActiveTime.Persistence.Repositories;
 
 namespace DustInTheWind.ActiveTime.UI.Views
 {

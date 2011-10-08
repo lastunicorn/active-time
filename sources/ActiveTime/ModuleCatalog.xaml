@@ -6,27 +6,31 @@
     xmlns:Modularity="clr-namespace:Microsoft.Practices.Prism.Modularity;assembly=Microsoft.Practices.Prism">
     
     <Modularity:ModuleInfo
-        Ref="file://ActiveTime.Recording.dll"
-        ModuleName="ActiveTime.Recording"
-        ModuleType="DustInTheWind.ActiveTime.Recording.ModuleDefinitions.RecordingModule, ActiveTime.Recording, Version=1.0.0.0"
-        InitializationMode="WhenAvailable">
-    </Modularity:ModuleInfo>
-    
-    <!--<Modularity:ModuleInfo
-        Ref="file://Azzul.exe"
-        ModuleName="GatesModule"
-        ModuleType="DustInTheWind.Azzul.Wpf.Modules.GatesModule, Azzul"
+        Ref="file://ActiveTime.PersistenceModule.dll"
+        ModuleName="PersistenceModule"
+        ModuleType="DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
     
     <Modularity:ModuleInfo
-        Ref="file://Azzul.exe"
-        ModuleName="CatalogsModule"
-        ModuleType="DustInTheWind.Azzul.Wpf.Modules.CatalogsModule, Azzul"
+        Ref="file://ActiveTime.RecorderModule.dll"
+        ModuleName="RecorderModule"
+        ModuleType="DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions.RecorderModule, ActiveTime.RecorderModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
-            <sys:String>ConfigurationModule</sys:String>
+            <sys:String>PersistenceModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
-    </Modularity:ModuleInfo>-->
+    </Modularity:ModuleInfo>
+    
+    <Modularity:ModuleInfo
+        Ref="file://ActiveTime.TrayIconModule.dll"
+        ModuleName="TrayIconModule"
+        ModuleType="DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions.TrayIconModule, ActiveTime.TrayIconModule, Version=1.0.0.0"
+        InitializationMode="WhenAvailable">
+        <Modularity:ModuleInfo.DependsOn>
+            <sys:String>RecorderModule</sys:String>
+            <sys:String>ApplicationModule</sys:String>
+        </Modularity:ModuleInfo.DependsOn>
+    </Modularity:ModuleInfo>
     
 </Modularity:ModuleCatalog>

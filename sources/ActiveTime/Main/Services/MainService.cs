@@ -12,9 +12,8 @@ namespace DustInTheWind.ActiveTime.Main.Services
     {
         private readonly IRecorder recorder;
         private readonly IReminder reminder;
-        private readonly ITrayIconService trayIconService;
 
-        public MainService(IRecorder recorder, IReminder reminder, ITrayIconService trayIconService)
+        public MainService(IRecorder recorder, IReminder reminder)
         {
             if (recorder == null)
                 throw new ArgumentNullException("recorder");
@@ -22,15 +21,8 @@ namespace DustInTheWind.ActiveTime.Main.Services
             if (reminder == null)
                 throw new ArgumentNullException("reminder");
 
-            if (trayIconService == null)
-                throw new ArgumentNullException("trayIconService");
-
             this.recorder = recorder;
             this.reminder = reminder;
-            this.trayIconService = trayIconService;
-
-            trayIconService.IconState = IconState.Off;
-            trayIconService.IconVisible = true;
 
             reminder.SnoozeTime = TimeSpan.FromMinutes(10);
             reminder.Ring += new EventHandler<RingEventArgs>(reminder_Ring);
@@ -42,20 +34,11 @@ namespace DustInTheWind.ActiveTime.Main.Services
 
         private void recorder_Started(object sender, EventArgs e)
         {
-            trayIconService.IconState = IconState.On;
-            trayIconService.StartEnabled = false;
-            trayIconService.StopEnabled = true;
-
             reminder.Start(DustInTheWind.ActiveTime.Properties.Settings.Default.ReminderInterval);
         }
 
         private void recorder_Stopped(object sender, EventArgs e)
         {
-
-            trayIconService.IconState = IconState.Off;
-            trayIconService.StartEnabled = true;
-            trayIconService.StopEnabled = false;
-
             reminder.Stop();
         }
 
