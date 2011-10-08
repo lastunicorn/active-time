@@ -75,7 +75,7 @@
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ExporterException.cs" />
     <Compile Include="Exporters\ExportersManager.cs" />
-    <Compile Include="UI\Views\App.xaml.cs">
+    <Compile Include="UI\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -125,14 +125,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="UI\Views\App.xaml">
+    <ApplicationDefinition Include="UI\App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
