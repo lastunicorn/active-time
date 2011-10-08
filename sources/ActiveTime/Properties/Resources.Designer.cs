@@ -59,19 +59,5 @@ namespace DustInTheWind.ActiveTime.Properties {
                 resourceCulture = value;
             }
         }
-        
-        internal static System.Drawing.Icon tray_off {
-            get {
-                object obj = ResourceManager.GetObject("tray_off", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon tray_on {
-            get {
-                object obj = ResourceManager.GetObject("tray_on", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
     }
 }

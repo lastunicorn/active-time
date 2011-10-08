@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Timers;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Persistence.Entities;
+using System.Threading;
+using Microsoft.Practices.Prism.Events;
+using DustInTheWind.ActiveTime.Common.Events;
 
 namespace DustInTheWind.ActiveTime.RecorderModule.Services
 {
-    public class Recorder : IRecorder
+    public class Recorder : IRecorder, IDisposable
     {
         private readonly ITimeRecordRepository timeRecordRepository;
 
@@ -19,6 +21,9 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// Specifies the state of the current instance.
         /// </summary>
         public RecorderState State { get; private set; }
+
+        private Timer timer;
+        private TimeSpan stampingInterval;
 
 
         #region Event Started
@@ -112,17 +117,37 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         /// <param name="dal">Dal class used to access the persistent layer.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Recorder(ITimeRecordRepository timeRecordRepository)
+        public Recorder(ITimeRecordRepository timeRecordRepository, IEventAggregator eventAggregator)
         {
             if (timeRecordRepository == null)
                 throw new ArgumentNullException("timeRecordRepository");
 
+            if (eventAggregator == null)
+                throw new ArgumentNullException("eventAggregator");
+
             this.timeRecordRepository = timeRecordRepository;
+            
             State = RecorderState.Stopped;
+
+            timer = new Timer(new TimerCallback(timer_tick));
+            stampingInterval = TimeSpan.FromMinutes(1);
+
+            ApplicationExitEvent applicationExitEvent = eventAggregator.GetEvent<ApplicationExitEvent>();
+            if (applicationExitEvent != null)
+                applicationExitEvent.Subscribe(new Action<object>(OnApplicationExitEvent));
         }
 
         #endregion
 
+        private void OnApplicationExitEvent(object o)
+        {
+            Stop();
+        }
+
+        private void timer_tick(object o)
+        {
+            Stamp();
+        }
 
         public void Start()
         {
@@ -208,6 +233,8 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             CreateNewDatabaseRecord();
             // Save database record to db.
             timeRecordRepository.Add(databaseRecord);
+            // Start timer
+            timer.Change(stampingInterval, stampingInterval);
             // Change the state.
             State = RecorderState.Running;
         }
@@ -243,6 +270,9 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         private void DoStop(bool deleteLastRecord)
         {
+            // Stop timer
+            timer.Change(-1, -1);
+
             if (deleteLastRecord)
             {
                 // Delete database record from the db.
@@ -378,57 +408,56 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             return now - now.Date.Add(previousRecord.EndTime);
         }
 
+        #region IDisposable Members
 
+        /// <summary>
+        /// Specifies if the current instance has already been disposed.
+        /// </summary>
+        private bool disposed = false;
 
+        /// <summary>
+        /// Releases all resources used by the current instance.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        /// <summary>
+        /// Releases the unmanaged resources used by the current instance and optionally releases the managed resources.
+        /// </summary>
+        /// <remarks>
+        /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
+        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be disposed.</para>
+        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be disposed.</para>
+        /// </remarks>
+        /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!disposed)
+            {
+                // If disposing equals true, dispose all managed resources.
+                if (disposing)
+                {
+                    // Dispose managed resources.
 
-        //private Timer timer;
-        //private bool isStarted = false;
-        //public bool IsStarted
-        //{
-        //    get { return isStarted; }
-        //    set
-        //    {
-        //        isStarted = value;
-        //        OnIsStartedChanged(EventArgs.Empty);
-        //    }
-        //}
+                    timer.Dispose();
+                }
 
-        //public event EventHandler IsStartedChanged;
+                // Call the appropriate methods to clean up unmanaged resources here.
+                // ...
 
-        //protected virtual void OnIsStartedChanged(EventArgs e)
-        //{
-        //    if (IsStartedChanged != null)
-        //        IsStartedChanged(this, e);
-        //}
+                disposed = true;
+            }
+        }
 
-        //public Recorder()
-        //{
-        //    timer = new Timer(1000);
+        ~Recorder()
+        {
+            Dispose(false);
+        }
 
-        //    timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
-
-        //    timer.Start();
-        //}
-
-        //void timer_Elapsed(object sender, ElapsedEventArgs e)
-        //{
-        //    Toggle();
-        //}
-
-        //public void Toggle()
-        //{
-        //    IsStarted = !IsStarted;
-        //}
-
-        //public void Start()
-        //{
-        //    IsStarted = true;
-        //}
-
-        //public void Stop()
-        //{
-        //    IsStarted = false;
-        //}
+        #endregion
     }
 }

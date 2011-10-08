@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="DustInTheWind.ActiveTime.Persistence.Entities" assembly="ActiveTime">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="DustInTheWind.ActiveTime.Persistence.Entities" assembly="ActiveTime.Common">
   <class name="TimeRecord" table="records">
     <id name="Id" column="id" unsaved-value="0">
       <generator class="native"/>

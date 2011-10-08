@@ -6,7 +6,7 @@ using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Reminding;
 using DustInTheWind.ActiveTime.Reminding.Services;
 
-namespace DustInTheWind.ActiveTime.Main.Services
+namespace DustInTheWind.ActiveTime.MainModule.Services
 {
     class MainService : IMainService
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Controls;
-using DustInTheWind.ActiveTime.Main.ViewModels;
+using DustInTheWind.ActiveTime.MainModule.ViewModels;
 
-namespace DustInTheWind.ActiveTime.Main.Views
+namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
     /// Interaction logic for MainView.xaml

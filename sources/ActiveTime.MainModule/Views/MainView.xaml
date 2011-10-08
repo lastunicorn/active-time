@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="DustInTheWind.ActiveTime.Main.Views.MainView"
+﻿<UserControl x:Class="DustInTheWind.ActiveTime.MainModule.Views.MainView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              
-             xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.UI"
+             xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.MainModule.Converters"
              xmlns:Recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording;assembly=ActiveTime.Common"
              xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              
@@ -15,7 +15,7 @@
         <Grid.Resources>
 
             <!--<ui:RecordListConverter x:Key="RecordListConverter" />-->
-            <ui:RecordConverter x:Key="RecordConverter" />
+            <converters:RecordConverter x:Key="RecordConverter" />
             <DataTemplate DataType="{x:Type Recording:DayTimeInterval}">
                 <Label Padding="10,0,0,0"
                                 Content="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />

@@ -1,12 +1,11 @@
 ﻿using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Main.Services;
-using DustInTheWind.ActiveTime.Main.Views;
-using DustInTheWind.ActiveTime.Reminding.Services;
+using DustInTheWind.ActiveTime.MainModule.Services;
+using DustInTheWind.ActiveTime.MainModule.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.Main.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
 {
     public class MainModule : IModule
     {
@@ -23,11 +22,9 @@ namespace DustInTheWind.ActiveTime.Main.ModuleDefinitions
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IMainService, MainService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IApplicationService, ApplicationService>();
 
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
-            mainService = unityContainer.Resolve<IMainService>();
-            mainService.Start();
         }
     }
 }

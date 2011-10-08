@@ -4,8 +4,10 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
+using System.Windows;
+using DustInTheWind.ActiveTime.MainModule.Views;
 
-namespace DustInTheWind.ActiveTime.Services
+namespace DustInTheWind.ActiveTime.MainModule.Services
 {
     class ApplicationService : IApplicationService
     {
@@ -30,7 +32,7 @@ namespace DustInTheWind.ActiveTime.Services
             if (applicationExitEvent != null)
                 applicationExitEvent.Publish(null);
 
-            App.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         //public void Dispatch(Delegate method)
@@ -41,7 +43,7 @@ namespace DustInTheWind.ActiveTime.Services
 
         public void ShowMainWindow()
         {
-            App.Current.Dispatcher.Invoke(new Action(ShowMainWindowInternal));
+            Application.Current.Dispatcher.Invoke(new Action(ShowMainWindowInternal));
         }
 
         private Shell shell;

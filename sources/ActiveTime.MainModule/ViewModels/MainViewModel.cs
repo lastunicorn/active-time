@@ -7,7 +7,7 @@ using DustInTheWind.ActiveTime.Persistence.Entities;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 
-namespace DustInTheWind.ActiveTime.Main.ViewModels
+namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

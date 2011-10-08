@@ -18,7 +18,7 @@ using System;
 using System.Windows.Data;
 using DustInTheWind.ActiveTime.Common.Recording;
 
-namespace DustInTheWind.ActiveTime.UI
+namespace DustInTheWind.ActiveTime.MainModule.Converters
 {
     public class RecordConverter : IValueConverter
     {

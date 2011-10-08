@@ -23,6 +23,7 @@ using Moq;
 using NUnit.Framework;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.RecorderModule.Services;
+using Microsoft.Practices.Prism.Events;
 
 namespace DustInTheWind.ActiveTime.UnitTests.Recording
 {
@@ -31,12 +32,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     {
         private Recorder recorder;
         private Mock<ITimeRecordRepository> recordRepositoryMock;
+        private Mock<IEventAggregator> eventAggregatorMock;
 
         [SetUp]
         public void SetUp()
         {
             recordRepositoryMock = new Mock<ITimeRecordRepository>();
-            recorder = new Recorder(recordRepositoryMock.Object);
+            eventAggregatorMock = new Mock<IEventAggregator>();
+            recorder = new Recorder(recordRepositoryMock.Object, eventAggregatorMock.Object);
         }
 
         #region Constructor
@@ -50,7 +53,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestConstructorNull()
         {
-            new Recorder(null);
+            new Recorder(null, null);
         }
 
         [Test]

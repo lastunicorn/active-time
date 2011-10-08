@@ -25,28 +25,9 @@ namespace DustInTheWind.ActiveTime
     /// </summary>
     public partial class App : Application
     {
-        //private MainWindow window;
-
 #if !DEBUG
         private Guard guard;
 #endif
-
-        //#region Timer
-
-        ///// <summary>
-        ///// Timer used to update the current record's end Time.
-        ///// </summary>
-        //private DispatcherTimer timer;
-
-        //private void timer_Tick(object sender, EventArgs e)
-        //{
-        //    if (activeTimeApplication.Recorder != null)
-        //    {
-        //        activeTimeApplication.Recorder.Stamp();
-        //    }
-        //}
-
-        //#endregion
 
         #region Application
 
@@ -108,12 +89,7 @@ namespace DustInTheWind.ActiveTime
 
 
                 //    SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
-
-                //    timer = new DispatcherTimer();
-                //    timer.Tick += new EventHandler(timer_Tick);
-                //    timer.Interval = TimeSpan.FromMinutes(1);
-                //    timer.Start();
-
+                
                 //    base.OnStartup(e);
                 //}
             }
@@ -143,11 +119,6 @@ namespace DustInTheWind.ActiveTime
         //}
 
         //private delegate void ShowPause();
-
-        //protected override void OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs e)
-        //{
-        //    base.OnLoadCompleted(e);
-        //}
 
         //protected override void OnExit(ExitEventArgs e)
         //{

@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
     /// Interaction logic for Shell.xaml
@@ -28,11 +30,6 @@ namespace DustInTheWind.ActiveTime
         }
 
         private void menuItemAbout_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }

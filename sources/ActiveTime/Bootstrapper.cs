@@ -1,11 +1,9 @@
 ﻿using System.Windows;
-using DustInTheWind.ActiveTime.Reminding.ModuleDefinitions;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using System;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Services;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -14,8 +12,6 @@ namespace DustInTheWind.ActiveTime
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-
-            Container.RegisterType<IApplicationService, ApplicationService>();
         }
 
         protected override Microsoft.Practices.Prism.Modularity.IModuleCatalog CreateModuleCatalog()

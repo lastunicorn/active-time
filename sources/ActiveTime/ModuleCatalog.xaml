@@ -23,12 +23,20 @@
     </Modularity:ModuleInfo>
     
     <Modularity:ModuleInfo
+        Ref="file://ActiveTime.MainModule.dll"
+        ModuleName="MainModule"
+        ModuleType="DustInTheWind.ActiveTime.MainModule.ModuleDefinitions.MainModule, ActiveTime.MainModule, Version=1.0.0.0"
+        InitializationMode="WhenAvailable">
+    </Modularity:ModuleInfo>
+    
+    <Modularity:ModuleInfo
         Ref="file://ActiveTime.TrayIconModule.dll"
         ModuleName="TrayIconModule"
         ModuleType="DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions.TrayIconModule, ActiveTime.TrayIconModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
+            <sys:String>MainModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
     
