@@ -28,7 +28,12 @@ namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
         /// <summary>
         /// The default Text of the status.
         /// </summary>
-        private const string DEFAULT_STATUS = "Ready";
+        private const string DEFAULT_STATUS_TEXT = "Ready";
+
+        /// <summary>
+        /// The default time in miliseconds after which the status text will be reset to its default value.
+        /// </summary>
+        private const int DEFAULT_STATUS_TIMEOUT = 5000;
 
         /// <summary>
         /// The text representing the status.
@@ -74,9 +79,13 @@ namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
 
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StatusInfoService"/> class.
+        /// </summary>
         public StatusInfoService()
         {
             timerStatus = new Timer(new TimerCallback(ResetStatusTextTh));
+            statusText = DEFAULT_STATUS_TEXT;
         }
 
         /// <summary>
@@ -85,7 +94,7 @@ namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
         /// <param name="o">Unused</param>
         private void ResetStatusTextTh(object o)
         {
-            StatusText = DEFAULT_STATUS;
+            StatusText = DEFAULT_STATUS_TEXT;
         }
 
         /// <summary>
@@ -101,6 +110,11 @@ namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
             {
                 timerStatus.Change(timeout, -1);
             }
+        }
+
+        public void SetStatus(string text)
+        {
+            SetStatus(text, DEFAULT_STATUS_TIMEOUT);
         }
     }
 }

@@ -21,13 +21,6 @@ namespace DustInTheWind.ActiveTime.Common
 {
     public interface IRecorder
     {
-        //bool IsStarted { get; set; }
-
-        //event EventHandler IsStartedChanged;
-        
-
-
-
         RecorderState State { get; }
 
         event EventHandler Started;
@@ -39,6 +32,6 @@ namespace DustInTheWind.ActiveTime.Common
         //void Stamp();
         void Stop(bool deleteLastRecord = false);
 
-        //TimeSpan? GetTimeFromLastStop();
+        TimeSpan? GetTimeFromLastStop();
     }
 }

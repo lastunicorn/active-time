@@ -27,21 +27,34 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
     {
         private readonly IUnityContainer unityContainer;
         private readonly IRegionManager regionManager;
+        private readonly IShellNavigator navigator;
 
         private IMainService mainService;
 
-        public MainModule(IUnityContainer unityContainer, IRegionManager regionManager)
+        public MainModule(IUnityContainer unityContainer, IRegionManager regionManager, IShellNavigator navigator)
         {
             this.unityContainer = unityContainer;
             this.regionManager = regionManager;
+            this.navigator = navigator;
         }
 
         public void Initialize()
         {
             unityContainer.RegisterType<IApplicationService, ApplicationService>();
+            unityContainer.RegisterType<ICommentsService, CommentsService>(new ContainerControlledLifetimeManager());
+
+            SystemSessionService systemSessionService = unityContainer.Resolve<SystemSessionService>();
+            unityContainer.RegisterInstance<SystemSessionService>(systemSessionService, new ContainerControlledLifetimeManager());
 
             regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
+
+            unityContainer.RegisterType<object, MainView>(ViewNames.MainView);
+            unityContainer.RegisterType<object, CommentsView>(ViewNames.CommentsView);
+
+            navigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
+            navigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(PauseWindow)));
+            navigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow)));
         }
     }
 }

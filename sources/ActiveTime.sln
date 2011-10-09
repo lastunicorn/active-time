@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.StatusInfoModule
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule", "ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ShellNavigationModule", "ActiveTime.ShellNavigationModule\ActiveTime.ShellNavigationModule.csproj", "{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,16 @@ Global
 		{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}.Release|x86.ActiveCfg = Release|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

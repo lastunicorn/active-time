@@ -14,30 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows;
+using DustInTheWind.ActiveTime.Common;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Unity;
+using DustInTheWind.ActiveTime.ShellNavigationModule.Services;
 
-namespace DustInTheWind.ActiveTime.MainModule.Views
+namespace DustInTheWind.ActiveTime.ShellNavigationModule.ModuleDefinitions
 {
-    /// <summary>
-    /// Interaction logic for PauseWindow.xaml
-    /// </summary>
-    public partial class PauseWindow : Window
+    public class ShellNavigationModule : IModule
     {
-        //public PauseWindow()
-        //{
-        //    InitializeComponent();
-        //}
+        private readonly IUnityContainer unityContainer;
 
-        public PauseWindow()
+        public ShellNavigationModule(IUnityContainer unityContainer)
         {
-            InitializeComponent();
-
-            textBlockMessage.Text = "Test";
+            this.unityContainer = unityContainer;
         }
 
-        private void buttonSnooze_Click(object sender, RoutedEventArgs e)
+        public void Initialize()
         {
-            Close();
+            unityContainer.RegisterType<IShellNavigator, ShellNavigator>(new ContainerControlledLifetimeManager());
         }
     }
 }

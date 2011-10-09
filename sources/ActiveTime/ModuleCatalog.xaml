@@ -23,10 +23,21 @@
     </Modularity:ModuleInfo>
     
     <Modularity:ModuleInfo
+        Ref="file://ActiveTime.ShellNavigationModule.dll"
+        ModuleName="ShellNavigationModule"
+        ModuleType="DustInTheWind.ActiveTime.ShellNavigationModule.ModuleDefinitions.ShellNavigationModule, ActiveTime.ShellNavigationModule, Version=1.0.0.0"
+        InitializationMode="WhenAvailable">
+    </Modularity:ModuleInfo>
+    
+    <Modularity:ModuleInfo
         Ref="file://ActiveTime.MainModule.dll"
         ModuleName="MainModule"
         ModuleType="DustInTheWind.ActiveTime.MainModule.ModuleDefinitions.MainModule, ActiveTime.MainModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
+        <Modularity:ModuleInfo.DependsOn>
+            <sys:String>PersistenceModule</sys:String>
+            <sys:String>ShellNavigationModule</sys:String>
+        </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
     
     <Modularity:ModuleInfo

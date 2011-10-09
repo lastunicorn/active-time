@@ -40,5 +40,7 @@ namespace DustInTheWind.ActiveTime.Common
         /// <param name="text">The Text to be set as status.</param>
         /// <param name="timeout">The Time in miliseconds after which the status will be reset to the default Text. If this Value is 0, the status will never be reset.</param>
         void SetStatus(string text, int timeout);
+
+        void SetStatus(string text);
     }
 }

@@ -20,15 +20,23 @@ using DustInTheWind.ActiveTime.Common.Entities;
 using DustInTheWind.ActiveTime.Common;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
-    class CommentsViewModel : ViewModelBase
+    public class CommentsViewModel : ViewModelBase
     {
-        private IDayCommentRepository dayCommentRepository;
+        private readonly ICommentsService commentsService;
+        private readonly IRegionManager regionManager;
 
-        private DateTime date = DateTime.Today;
-        public DateTime Date
+        private readonly ButtonBarViewModel buttonBarViewModel;
+        public ButtonBarViewModel ButtonBarViewModel
+        {
+            get { return buttonBarViewModel; }
+        }
+
+        private DateTime? date;
+        public DateTime? Date
         {
             get { return date; }
             set
@@ -60,54 +68,85 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             }
         }
 
-        private ICommand applyCommand;
-        public ICommand ApplyCommand
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommentsViewModel"/> class.
+        /// </summary>
+        /// <param name="dayCommentRepository"></param>
+        public CommentsViewModel(ICommentsService commentsService, IRegionManager regionManager)
         {
-            get { return applyCommand; }
+            if (commentsService == null)
+                throw new ArgumentNullException("commentsService");
+
+            if (regionManager == null)
+                throw new ArgumentNullException("regionManager");
+
+            this.commentsService = commentsService;
+            this.regionManager = regionManager;
+
+            buttonBarViewModel = new ButtonBarViewModel();
+            buttonBarViewModel.ApplyButtonClicked += new EventHandler(buttonBarViewModel_ApplyButtonClicked);
+            buttonBarViewModel.CancelButtonClicked += new EventHandler(buttonBarViewModel_CancelButtonClicked);
+            buttonBarViewModel.SaveButtonClicked += new EventHandler(buttonBarViewModel_SaveButtonClicked);
+            
+            commentsService.RecordChanged += new EventHandler(commentsService_RecordChanged);
+            commentsService.RetrieveRecord(DateTime.Today);
+            RefreshDisplayedData();
         }
 
-        private ICommand cancelCommand;
-        public ICommand CancelCommand
+        void commentsService_RecordChanged(object sender, EventArgs e)
         {
-            get { return cancelCommand; }
+            RefreshDisplayedData();
         }
 
-        private ICommand saveCommand;
-        public ICommand SaveCommand
+        private void RefreshDisplayedData()
         {
-            get { return saveCommand; }
+            if (commentsService.Record == null)
+            {
+                Date = null;
+                Comment = null;
+
+                buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.NoData;
+            }
+            else
+            {
+                Date = commentsService.Record.Date;
+                Comment = commentsService.Record.Comment;
+
+                buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
+            }
         }
 
-        public CommentsViewModel(IDayCommentRepository dayCommentRepository)
+        void buttonBarViewModel_ApplyButtonClicked(object sender, EventArgs e)
         {
-            if (dayCommentRepository == null)
-                throw new ArgumentNullException("dayCommentRepository");
-
-            this.dayCommentRepository = dayCommentRepository;
-            applyCommand = new DelegateCommand(new Action(OnApplyCommandExecuted));
-            cancelCommand = new DelegateCommand(new Action(OnCancelCommandExecuted));
-            cancelCommand = new DelegateCommand(new Action(OnSaveCommandExecuted));
+            SaveInternal();
         }
 
-        private void OnApplyCommandExecuted()
+        void buttonBarViewModel_CancelButtonClicked(object sender, EventArgs e)
         {
-
+            NavigateToMainView();
         }
 
-        private void OnCancelCommandExecuted()
+        void buttonBarViewModel_SaveButtonClicked(object sender, EventArgs e)
         {
-
+            SaveInternal();
+            NavigateToMainView();
         }
 
-        private void OnSaveCommandExecuted()
+        private void NavigateToMainView()
         {
-
+            regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.MainView);
         }
 
-        public void WindowLoaded()
+        private void SaveInternal()
         {
-            DayComment dayComment = dayCommentRepository.GetByDate(date);
-            Comment = dayComment == null ? string.Empty : dayComment.Comment;
+            if (commentsService.Record == null)
+            {
+                if (Date == null) return;
+                commentsService.Record = new DayComment { Date = Date.Value };
+            }
+            commentsService.Record.Comment = Comment;
+            commentsService.SaveRecord();
+            buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
         }
     }
 }

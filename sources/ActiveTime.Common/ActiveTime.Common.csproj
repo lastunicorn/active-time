@@ -56,9 +56,13 @@
     <Compile Include="Entities\TimeRecord.cs" />
     <Compile Include="Entities\TimeRecordType.cs" />
     <Compile Include="Events\ApplicationExitEvent.cs" />
-    <Compile Include="IApplicationService.cs" />
+    <Compile Include="IApplicationService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ICommentsService.cs" />
     <Compile Include="IDayCommentRepository.cs" />
     <Compile Include="IMainService.cs" />
+    <Compile Include="IShellNavigator.cs" />
     <Compile Include="IRecorder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -75,7 +79,10 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Reminding\ReminderStatus.cs" />
     <Compile Include="Reminding\RingEventArgs.cs" />
+    <Compile Include="ShellInfo.cs" />
+    <Compile Include="ShellNames.cs" />
     <Compile Include="ViewModelBase.cs" />
+    <Compile Include="ViewNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\DayComment.hbm.xml" />

@@ -43,11 +43,13 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
         private Icon iconOn;
         private Icon iconOff;
 
-        private IEventAggregator eventAggregator;
-        private IRecorder recorder;
-        private IApplicationService applicationService;
+        private readonly IEventAggregator eventAggregator;
+        private readonly IRecorder recorder;
+        private readonly IApplicationService applicationService;
+        private readonly IShellNavigator shellNavigator;
 
-        public TrayIconPresenter(IRecorder recorder, IEventAggregator eventAggregator, IApplicationService applicationService)
+        public TrayIconPresenter(IRecorder recorder, IEventAggregator eventAggregator, IApplicationService applicationService,
+            IShellNavigator shellNavigator)
         {
             if (recorder == null)
                 throw new ArgumentNullException("recorder");
@@ -58,9 +60,13 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             if (applicationService == null)
                 throw new ArgumentNullException("applicationService");
 
+            if (shellNavigator == null)
+                throw new ArgumentNullException("shellNavigator");
+
             this.recorder = recorder;
             this.eventAggregator = eventAggregator;
             this.applicationService = applicationService;
+            this.shellNavigator = shellNavigator;
 
             iconOn = Properties.Resources.tray_on;
             iconOff = Properties.Resources.tray_off;
@@ -190,12 +196,12 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
 
         public void ShowClicked()
         {
-            applicationService.ShowMainWindow();
+            shellNavigator.Navigate(ShellNames.MainShell);
         }
 
         public void LeftDoubleClicked()
         {
-            applicationService.ShowMainWindow();
+            shellNavigator.Navigate(ShellNames.MainShell);
         }
     }
 }

@@ -19,31 +19,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DustInTheWind.ActiveTime.MainModule.ViewModels;
 
-namespace DustInTheWind.ActiveTime.MainModule.Views
+namespace DustInTheWind.ActiveTime.Common
 {
-    /// <summary>
-    /// Interaction logic for MainMenuView.xaml
-    /// </summary>
-    public partial class MainMenuView : UserControl
+    public class ShellInfo
     {
-        public MainMenuView(MainMenuViewModel viewModel)
+        public Type ShellType { get; private set; }
+        public string ShellName { get; private set; }
+        public string OwnerName { get; private set; }
+
+        public ShellInfo(string shellName, Type shellType, string ownerName = null)
         {
-            if (viewModel == null)
-                throw new ArgumentNullException("viewModel");
+            if (shellName == null)
+                throw new ArgumentNullException("shellName");
 
-            InitializeComponent();
+            if (shellType == null)
+                throw new ArgumentNullException("shellType");
 
-            Loaded += (s, e) => DataContext = viewModel;
+            if (shellType.BaseType != typeof(Window))
+                throw new ArgumentException("A shell must be derived from System.Windows.Window base class.", "shellType");
+
+            this.ShellName = shellName;
+            this.ShellType = shellType;
+            this.OwnerName = ownerName;
         }
     }
 }

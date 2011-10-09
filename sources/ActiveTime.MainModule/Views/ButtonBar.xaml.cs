@@ -27,23 +27,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DustInTheWind.ActiveTime.MainModule.ViewModels;
 
 namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
-    /// Interaction logic for MainMenuView.xaml
+    /// Interaction logic for ButtonBar.xaml
     /// </summary>
-    public partial class MainMenuView : UserControl
+    public partial class ButtonBar : UserControl
     {
-        public MainMenuView(MainMenuViewModel viewModel)
+        public ButtonBar()
         {
-            if (viewModel == null)
-                throw new ArgumentNullException("viewModel");
-
             InitializeComponent();
-
-            Loaded += (s, e) => DataContext = viewModel;
         }
     }
 }

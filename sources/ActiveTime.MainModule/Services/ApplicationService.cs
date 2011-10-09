@@ -123,7 +123,7 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
 
         private void CreatePauseWindow(string text)
         {
-            pauseWindow = new PauseWindow(text);
+            pauseWindow = new PauseWindow();
             pauseWindow.Closed += (s, e) =>
             {
                 RegionManager.SetRegionManager(pauseWindow, null);

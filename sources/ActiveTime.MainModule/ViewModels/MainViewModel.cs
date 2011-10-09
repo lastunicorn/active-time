@@ -22,6 +22,7 @@ using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Entities;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
@@ -30,12 +31,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         private readonly IRecorder recorder;
         private readonly IStatusInfoService statusInfoService;
         private readonly ITimeRecordRepository recordRepository;
-
-        /// <summary>
-        /// The Time in miliseconds after which the status Text will be reset to the default one.
-        /// </summary>
-        private const int STATUS_TIMEOUT = 5000;
-
+        private readonly IRegionManager regionManager;
+        private readonly IShellNavigator navigator;
 
         private DateTime? date;
 
@@ -46,7 +43,6 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             {
                 date = value;
                 NotifyPropertyChanged("Date");
-                //OnDateChanged(EventArgs.Empty);
             }
         }
 
@@ -85,10 +81,6 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
                 dayRecord = value;
                 NotifyPropertyChanged("DayRecord");
                 NotifyPropertyChanged("Records");
-                UpdateActiveTime();
-                UpdateTotalTime();
-                UpdateBeginTime();
-                UpdateEstimatedEndTime();
             }
         }
 
@@ -133,7 +125,14 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             get { return refreshCommand; }
         }
 
-        public MainViewModel(IRecorder recorder, IStatusInfoService statusInfoService, ITimeRecordRepository recordRepository)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// </summary>
+        /// <param name="recorder"></param>
+        /// <param name="statusInfoService"></param>
+        /// <param name="recordRepository"></param>
+        public MainViewModel(IRecorder recorder, IStatusInfoService statusInfoService,
+            ITimeRecordRepository recordRepository, IRegionManager regionManager, IShellNavigator navigator)
         {
             if (recorder == null)
                 throw new ArgumentNullException("recorder");
@@ -144,12 +143,21 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             if (recordRepository == null)
                 throw new ArgumentNullException("recordRepository");
 
+            if (regionManager == null)
+                throw new ArgumentNullException("regionManager");
+
+            if (navigator == null)
+                throw new ArgumentNullException("navigator");
+
             this.recorder = recorder;
             this.statusInfoService = statusInfoService;
             this.recordRepository = recordRepository;
+            this.regionManager = regionManager;
+            this.navigator = navigator;
 
             commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
             refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
+
             Date = DateTime.Today;
 
             recorder.Started += new EventHandler(recorder_Started);
@@ -157,19 +165,22 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             recorder.Stamping += new EventHandler(recorder_Stamping);
             recorder.Stamped += new EventHandler(recorder_Stamped);
 
-            statusInfoService.SetStatus("Alez", STATUS_TIMEOUT);
+            UpdateDisplayedData();
         }
 
         private void OnRefreshCommandExecuted()
         {
-            UpdateModel();
-            statusInfoService.SetStatus("Refreshed.", STATUS_TIMEOUT);
+            UpdateDisplayedData();
+            statusInfoService.SetStatus("Refreshed.");
         }
 
         private void OnCommentsCommandExecuted()
         {
             if (Date != null)
             {
+                navigator.Navigate("MessageShell");
+                //regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
+
                 //CommentsWindow window = new CommentsWindow(new DayCommentRepository(), datePicker1.SelectedDate.Value);
 
                 //window.Owner = this;
@@ -179,28 +190,28 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 
         private void recorder_Started(object sender, EventArgs e)
         {
-            UpdateModel();
-            statusInfoService.SetStatus("Recorder started.", STATUS_TIMEOUT);
+            UpdateDisplayedData();
+            statusInfoService.SetStatus("Recorder started.");
         }
 
         private void recorder_Stopped(object sender, EventArgs e)
         {
-            UpdateModel();
-            statusInfoService.SetStatus("Recorder stopped.", STATUS_TIMEOUT);
+            UpdateDisplayedData();
+            statusInfoService.SetStatus("Recorder stopped.");
         }
 
         private void recorder_Stamping(object sender, EventArgs e)
         {
-            statusInfoService.SetStatus("Updating the current record's time.", STATUS_TIMEOUT);
+            statusInfoService.SetStatus("Updating the current record's time.");
         }
 
         private void recorder_Stamped(object sender, EventArgs e)
         {
-            statusInfoService.SetStatus("Current record's time has been updated.", STATUS_TIMEOUT);
-            UpdateModel();
+            statusInfoService.SetStatus("Current record's time has been updated.");
+            UpdateDisplayedData();
         }
 
-        private void UpdateModel()
+        private void UpdateDisplayedData()
         {
             if (Date != null)
             {
@@ -212,6 +223,11 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             {
                 DayRecord = null;
             }
+
+            UpdateActiveTime();
+            UpdateTotalTime();
+            UpdateBeginTime();
+            UpdateEstimatedEndTime();
         }
 
         private void UpdateActiveTime()

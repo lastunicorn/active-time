@@ -24,8 +24,8 @@ namespace DustInTheWind.ActiveTime.Common
     public interface IApplicationService
     {
         void Exit();
-        void ShowMainWindow();
-        void ShowAboutWindow();
-        void ShowPauseWindow(string text);
+        //void ShowMainWindow();
+        //void ShowAboutWindow();
+        //void ShowPauseWindow(string text);
     }
 }

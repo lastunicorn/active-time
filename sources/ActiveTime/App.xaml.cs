@@ -120,24 +120,6 @@ namespace DustInTheWind.ActiveTime
 
         //private delegate void ShowPause();
 
-        //protected override void OnExit(ExitEventArgs e)
-        //{
-        //    if (trayIconManager != null)
-        //    {
-        //        trayIconManager.HideIcon();
-        //    }
-
-        //    if (activeTimeApplication != null)
-        //    {
-        //        if (activeTimeApplication.Recorder != null)
-        //        {
-        //            activeTimeApplication.Recorder.Stop();
-        //        }
-        //    }
-
-        //    base.OnExit(e);
-        //}
-
         #endregion
         
         //private void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)

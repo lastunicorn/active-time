@@ -18,32 +18,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DustInTheWind.ActiveTime.MainModule.ViewModels;
+using DustInTheWind.ActiveTime.Common.Entities;
 
-namespace DustInTheWind.ActiveTime.MainModule.Views
+namespace DustInTheWind.ActiveTime.Common
 {
-    /// <summary>
-    /// Interaction logic for MainMenuView.xaml
-    /// </summary>
-    public partial class MainMenuView : UserControl
+    public interface ICommentsService
     {
-        public MainMenuView(MainMenuViewModel viewModel)
-        {
-            if (viewModel == null)
-                throw new ArgumentNullException("viewModel");
+        DayComment Record { get; set; }
 
-            InitializeComponent();
+        event EventHandler RecordChanged;
 
-            Loaded += (s, e) => DataContext = viewModel;
-        }
+        void RetrieveRecord(DateTime date);
+        void SaveRecord();
     }
 }
