@@ -15,13 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Windows;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
     /// Interaction logic for PauseWindow.xaml
     /// </summary>
-    public partial class PauseWindow : Window
+    public partial class PauseWindow : Window, IShell
     {
         //public PauseWindow()
         //{
@@ -32,12 +34,31 @@ namespace DustInTheWind.ActiveTime.MainModule.Views
         {
             InitializeComponent();
 
-            textBlockMessage.Text = "Test";
+            textBlockMessage.Text = "No message for now.\n\nPlease go back to what you were doing.";
         }
 
         private void buttonSnooze_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private Dictionary<string, object> navigationParameters;
+        public Dictionary<string, object> NavigationParameters
+        {
+            get { return navigationParameters; }
+            set
+            {
+                navigationParameters = value;
+                UpdateTextFromNavigationParameters();
+            }
+        }
+
+        private void UpdateTextFromNavigationParameters()
+        {
+            if (navigationParameters != null && navigationParameters.ContainsKey("Text") && navigationParameters["Text"] is string)
+            {
+                textBlockMessage.Text = navigationParameters["Text"] as string;
+            }
         }
     }
 }

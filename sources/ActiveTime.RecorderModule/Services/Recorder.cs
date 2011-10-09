@@ -15,19 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Entities;
 using System.Threading;
-using Microsoft.Practices.Prism.Events;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Entities;
 using DustInTheWind.ActiveTime.Common.Events;
+using DustInTheWind.ActiveTime.Common.Recording;
+using Microsoft.Practices.Prism.Events;
 
 namespace DustInTheWind.ActiveTime.RecorderModule.Services
 {
-    public class Recorder : IRecorder, IDisposable
+    class Recorder : IRecorder, IDisposable
     {
         private readonly ITimeRecordRepository timeRecordRepository;
 

@@ -25,6 +25,6 @@ namespace DustInTheWind.ActiveTime.Common
     {
         void RegisterShell(ShellInfo shellInfo);
 
-        void Navigate(string shellName);
+        void Navigate(string shellName, Dictionary<string, object> parameters = null);
     }
 }

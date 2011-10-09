@@ -23,7 +23,7 @@ namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
     /// <summary>
     /// A service that stores different status messages.
     /// </summary>
-    public class StatusInfoService : IStatusInfoService
+    class StatusInfoService : IStatusInfoService
     {
         /// <summary>
         /// The default Text of the status.

@@ -62,7 +62,8 @@
     <Compile Include="ICommentsService.cs" />
     <Compile Include="IDayCommentRepository.cs" />
     <Compile Include="IMainService.cs" />
-    <Compile Include="IShellNavigator.cs" />
+    <Compile Include="ShellNavigation\IShell.cs" />
+    <Compile Include="ShellNavigation\IShellNavigator.cs" />
     <Compile Include="IRecorder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,7 +80,7 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Reminding\ReminderStatus.cs" />
     <Compile Include="Reminding\RingEventArgs.cs" />
-    <Compile Include="ShellInfo.cs" />
+    <Compile Include="ShellNavigation\ShellInfo.cs" />
     <Compile Include="ShellNames.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewNames.cs" />

@@ -9,8 +9,18 @@
         WindowStartupLocation="CenterScreen">
 
     <DockPanel>
-        <Button Name="buttonSnooze" DockPanel.Dock="Bottom" Content="Close" Margin="5" Click="buttonSnooze_Click" TabIndex="0" />
-        <TextBlock Name="textBlockMessage" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" Focusable="False">Make a pause!</TextBlock>
+        
+        <Button DockPanel.Dock="Bottom" Content="Close" Margin="5" Click="buttonSnooze_Click" TabIndex="0" />
+        
+        <TextBlock
+            HorizontalAlignment="Stretch" VerticalAlignment="Center"
+            TextAlignment="Center"
+            TextWrapping="Wrap"
+            FontSize="20"
+            Focusable="False"
+            Padding="5"
+            Text="Make a pause!"/>
+        
     </DockPanel>
 
 </Window>

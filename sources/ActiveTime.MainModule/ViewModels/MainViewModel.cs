@@ -178,7 +178,9 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         {
             if (Date != null)
             {
-                navigator.Navigate("MessageShell");
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                parameters.Add("Text", "alez");
+                navigator.Navigate("MessageShell", parameters);
                 //regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
 
                 //CommentsWindow window = new CommentsWindow(new DayCommentRepository(), datePicker1.SelectedDate.Value);

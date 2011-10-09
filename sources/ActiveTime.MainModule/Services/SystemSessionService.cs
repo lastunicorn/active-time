@@ -92,7 +92,9 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
                     if (timeFromLastStop != null && timeFromLastStop < TimeSpan.FromMinutes(1))
                     {
                         //navigator.DisplayMessageWindow("Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
-                        navigator.Navigate(ShellNames.MessageShell);
+                        Dictionary<string, object> parameters = new Dictionary<string, object>();
+                        parameters.Add("Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
+                        navigator.Navigate(ShellNames.MessageShell, parameters);
                         
                         //PauseWindow pauseWindow = new PauseWindow("Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
                         //pauseWindow.ShowDialog();
