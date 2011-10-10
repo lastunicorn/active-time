@@ -16,8 +16,6 @@
 
 using System;
 using System.Windows;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
-using System.Collections.Generic;
 using DustInTheWind.ActiveTime.MainModule.ViewModels;
 
 namespace DustInTheWind.ActiveTime.MainModule.Views

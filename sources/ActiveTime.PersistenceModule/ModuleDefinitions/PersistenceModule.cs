@@ -15,13 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Persistence.Repositories;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
-using DustInTheWind.ActiveTime.Persistence.Repositories;
-using DustInTheWind.ActiveTime.Common;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions
 {

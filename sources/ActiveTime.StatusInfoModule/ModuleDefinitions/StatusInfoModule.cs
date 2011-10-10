@@ -14,16 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Prism.Regions;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.StatusInfoModule.Services;
 using DustInTheWind.ActiveTime.StatusInfoModule.Views;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.StatusInfoModule.ModuleDefinitions
 {

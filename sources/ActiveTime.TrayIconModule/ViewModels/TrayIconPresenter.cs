@@ -15,15 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using System.Windows;
-using Microsoft.Practices.Prism.Events;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
 using DustInTheWind.ActiveTime.Common.Recording;
+using Microsoft.Practices.Prism.Events;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
 {

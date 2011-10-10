@@ -15,11 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DustInTheWind.ActiveTime.Common;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Common;
 using Microsoft.Practices.Prism.Commands;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels

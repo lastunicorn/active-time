@@ -16,9 +16,9 @@
 
 using System;
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Entities;
 using NHibernate;
-using DustInTheWind.ActiveTime.Common;
 
 namespace DustInTheWind.ActiveTime.Persistence.Repositories
 {

@@ -16,11 +16,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Entities;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common.Recording;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 

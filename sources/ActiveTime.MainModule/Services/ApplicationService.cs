@@ -15,13 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
+using System.Windows;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
-using System.Windows;
-using DustInTheWind.ActiveTime.MainModule.Views;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {

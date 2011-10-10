@@ -16,10 +16,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Win32;
 using DustInTheWind.ActiveTime.Common;
+using Microsoft.Win32;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {

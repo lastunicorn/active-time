@@ -18,9 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using DustInTheWind.ActiveTime.Common;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Prism.Regions;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
 {

@@ -15,11 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DustInTheWind.ActiveTime.Common.Entities;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Entities;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {
