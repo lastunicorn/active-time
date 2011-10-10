@@ -14,51 +14,35 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Windows;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.MainModule.ViewModels;
 
 namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
-    /// Interaction logic for PauseWindow.xaml
+    /// Interaction logic for MessageWindow.xaml
     /// </summary>
-    public partial class PauseWindow : Window, IShell
+    public partial class MessageWindow : Window
     {
-        //public PauseWindow()
-        //{
-        //    InitializeComponent();
-        //}
-
-        public PauseWindow()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageWindow"/> class.
+        /// </summary>
+        public MessageWindow(MessageViewModel viewModel)
         {
+            if (viewModel == null)
+                throw new ArgumentNullException("viewModel");
+
             InitializeComponent();
 
-            textBlockMessage.Text = "No message for now.\n\nPlease go back to what you were doing.";
+            Loaded += (s, e) => DataContext = viewModel;
         }
 
         private void buttonSnooze_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private Dictionary<string, object> navigationParameters;
-        public Dictionary<string, object> NavigationParameters
-        {
-            get { return navigationParameters; }
-            set
-            {
-                navigationParameters = value;
-                UpdateTextFromNavigationParameters();
-            }
-        }
-
-        private void UpdateTextFromNavigationParameters()
-        {
-            if (navigationParameters != null && navigationParameters.ContainsKey("Text") && navigationParameters["Text"] is string)
-            {
-                textBlockMessage.Text = navigationParameters["Text"] as string;
-            }
         }
     }
 }

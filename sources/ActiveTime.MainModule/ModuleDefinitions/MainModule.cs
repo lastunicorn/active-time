@@ -53,7 +53,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
             unityContainer.RegisterType<object, CommentsView>(ViewNames.CommentsView);
 
             navigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
-            navigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(PauseWindow)));
+            navigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow)));
             navigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow)));
         }
     }

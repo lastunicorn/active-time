@@ -57,83 +57,83 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
         //}
 
 
-        public void ShowMainWindow()
-        {
-            Application.Current.Dispatcher.Invoke(new Action(ShowMainWindowInternal));
-        }
+        //public void ShowMainWindow()
+        //{
+        //    Application.Current.Dispatcher.Invoke(new Action(ShowMainWindowInternal));
+        //}
 
-        private MainWindow mainWindow;
-        private AboutWindow aboutWindow;
-        private PauseWindow pauseWindow;
+        //private MainWindow mainWindow;
+        //private AboutWindow aboutWindow;
+        //private MessageWindow pauseWindow;
 
-        private void ShowMainWindowInternal()
-        {
-            if (mainWindow == null)
-                CreateMainWindow();
+        //private void ShowMainWindowInternal()
+        //{
+        //    if (mainWindow == null)
+        //        CreateMainWindow();
 
-            mainWindow.Show();
-            mainWindow.Activate();
-        }
+        //    mainWindow.Show();
+        //    mainWindow.Activate();
+        //}
 
-        private void CreateMainWindow()
-        {
-            mainWindow = new MainWindow();
-            mainWindow.Closed += (s, e) =>
-            {
-                RegionManager.SetRegionManager(mainWindow, null);
-                RegionManager.UpdateRegions();
-                mainWindow = null;
-            };
+        //private void CreateMainWindow()
+        //{
+        //    mainWindow = new MainWindow();
+        //    mainWindow.Closed += (s, e) =>
+        //    {
+        //        RegionManager.SetRegionManager(mainWindow, null);
+        //        RegionManager.UpdateRegions();
+        //        mainWindow = null;
+        //    };
 
-            RegionManager.SetRegionManager(mainWindow, unityContainer.Resolve<IRegionManager>());
-            RegionManager.UpdateRegions();
-        }
+        //    RegionManager.SetRegionManager(mainWindow, unityContainer.Resolve<IRegionManager>());
+        //    RegionManager.UpdateRegions();
+        //}
 
 
-        public void ShowAboutWindow()
-        {
-            if (aboutWindow == null)
-                CreateAboutWindow();
+        //public void ShowAboutWindow()
+        //{
+        //    if (aboutWindow == null)
+        //        CreateAboutWindow();
 
-            aboutWindow.ShowDialog();
-        }
+        //    aboutWindow.ShowDialog();
+        //}
 
-        private void CreateAboutWindow()
-        {
-            aboutWindow = new AboutWindow();
-            aboutWindow.Closed += (s, e) =>
-            {
-                RegionManager.SetRegionManager(aboutWindow, null);
-                RegionManager.UpdateRegions();
-                aboutWindow = null;
-            };
+        //private void CreateAboutWindow()
+        //{
+        //    aboutWindow = new AboutWindow();
+        //    aboutWindow.Closed += (s, e) =>
+        //    {
+        //        RegionManager.SetRegionManager(aboutWindow, null);
+        //        RegionManager.UpdateRegions();
+        //        aboutWindow = null;
+        //    };
 
-            RegionManager.SetRegionManager(aboutWindow, unityContainer.Resolve<IRegionManager>());
-            RegionManager.UpdateRegions();
-            aboutWindow.Owner = mainWindow;
-        }
+        //    RegionManager.SetRegionManager(aboutWindow, unityContainer.Resolve<IRegionManager>());
+        //    RegionManager.UpdateRegions();
+        //    aboutWindow.Owner = mainWindow;
+        //}
 
-        public void ShowPauseWindow(string text)
-        {
-            if (pauseWindow == null)
-                CreatePauseWindow(text);
+        //public void ShowPauseWindow(string text)
+        //{
+        //    if (pauseWindow == null)
+        //        CreatePauseWindow(text);
 
-            pauseWindow.ShowDialog();
-        }
+        //    pauseWindow.ShowDialog();
+        //}
 
-        private void CreatePauseWindow(string text)
-        {
-            pauseWindow = new PauseWindow();
-            pauseWindow.Closed += (s, e) =>
-            {
-                RegionManager.SetRegionManager(pauseWindow, null);
-                RegionManager.UpdateRegions();
-                pauseWindow = null;
-            };
+        //private void CreatePauseWindow(string text)
+        //{
+        //    pauseWindow = new MessageWindow();
+        //    pauseWindow.Closed += (s, e) =>
+        //    {
+        //        RegionManager.SetRegionManager(pauseWindow, null);
+        //        RegionManager.UpdateRegions();
+        //        pauseWindow = null;
+        //    };
 
-            RegionManager.SetRegionManager(pauseWindow, unityContainer.Resolve<IRegionManager>());
-            RegionManager.UpdateRegions();
-            pauseWindow.Owner = mainWindow;
-        }
+        //    RegionManager.SetRegionManager(pauseWindow, unityContainer.Resolve<IRegionManager>());
+        //    RegionManager.UpdateRegions();
+        //    pauseWindow.Owner = mainWindow;
+        //}
     }
 }

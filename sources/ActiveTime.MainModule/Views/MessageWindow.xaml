@@ -1,4 +1,4 @@
-﻿<Window x:Class="DustInTheWind.ActiveTime.MainModule.Views.PauseWindow"
+﻿<Window x:Class="DustInTheWind.ActiveTime.MainModule.Views.MessageWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         
@@ -19,7 +19,7 @@
             FontSize="20"
             Focusable="False"
             Padding="5"
-            Text="Make a pause!"/>
+            Text="{Binding Message}"/>
         
     </DockPanel>
 

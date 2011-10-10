@@ -101,11 +101,17 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
         {
             Window shell = (Window)unityContainer.Resolve(shellInfo.ShellType);
             RegionManager.SetRegionManager(shell, regionManager);
+            RegionManager.UpdateRegions();
 
             if (!string.IsNullOrEmpty(shellInfo.OwnerName) && shells.ContainsKey(shellInfo.OwnerName))
                 shell.Owner = shells[shellInfo.OwnerName];
 
-            shell.Closed += (s, e) => shells.Remove(shellInfo.ShellName);
+            shell.Closed += (s, e) =>
+                                {
+                                    shells.Remove(shellInfo.ShellName);
+                                    RegionManager.SetRegionManager(shell, null);
+                                    RegionManager.UpdateRegions();
+                                };
 
             shells.Add(shellInfo.ShellName, shell);
         }
@@ -116,7 +122,7 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
 
             if (shell is IShell)
                 ((IShell)shell).NavigationParameters = parameters;
-            else if(shell.DataContext is IShell)
+            else if (shell.DataContext is IShell)
                 ((IShell)shell.DataContext).NavigationParameters = parameters;
 
             shell.Show();

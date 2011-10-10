@@ -63,6 +63,7 @@
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -81,8 +82,8 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PauseWindow.xaml.cs">
-      <DependentUpon>PauseWindow.xaml</DependentUpon>
+    <Compile Include="Views\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +121,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\PauseWindow.xaml">
+    <Page Include="Views\MessageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
