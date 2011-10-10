@@ -77,6 +77,7 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
         /// previously registered.
         /// </summary>
         /// <param name="shellName">The name of the shell to navigate to.</param>
+        /// <param name="parameters">The list of parameters to be passed to the destination shell.</param>
         public void Navigate(string shellName, Dictionary<string, object> parameters = null)
         {
             if (shellName == null)
@@ -120,13 +121,13 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
         {
             Window shell = shells[shellName];
 
+            shell.Show();
+            shell.Activate();
+
             if (shell is IShell)
                 ((IShell)shell).NavigationParameters = parameters;
             else if (shell.DataContext is IShell)
                 ((IShell)shell.DataContext).NavigationParameters = parameters;
-
-            shell.Show();
-            shell.Activate();
         }
     }
 }
