@@ -21,7 +21,7 @@ using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
-    public class CommentsViewModel : ViewModelBase
+    public class CommentsViewModel : ViewModelBase, INavigationAware
     {
         private readonly ICommentsService commentsService;
         private readonly IRegionManager regionManager;
@@ -144,6 +144,28 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             commentsService.Record.Comment = Comment;
             commentsService.SaveRecord();
             buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            string dateTicksAsString = navigationContext.Parameters["Date"];
+
+            long dateTicks;
+
+            if (long.TryParse(dateTicksAsString, out dateTicks))
+            {
+                Date = new DateTime(dateTicks);
+            }
         }
     }
 }

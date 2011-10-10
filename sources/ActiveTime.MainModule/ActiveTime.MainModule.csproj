@@ -58,12 +58,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\CommentsService.cs" />
+    <Compile Include="Services\StatusInfoService.cs" />
     <Compile Include="Services\SystemSessionService.cs" />
     <Compile Include="ViewModels\ButtonBarViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\StatusInfoViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -84,6 +86,9 @@
     </Compile>
     <Compile Include="Views\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusInfoView.xaml.cs">
+      <DependentUpon>StatusInfoView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +115,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StatusInfoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

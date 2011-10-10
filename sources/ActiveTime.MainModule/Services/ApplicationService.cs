@@ -23,11 +23,21 @@ using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {
+    /// <summary>
+    /// This service has only one method that closes the application.
+    /// Before the application is closed, an event is published to announce
+    /// all the modules of this action.
+    /// </summary>
     class ApplicationService : IApplicationService
     {
-        private IEventAggregator eventAggregator;
-        private IUnityContainer unityContainer;
+        private readonly IEventAggregator eventAggregator;
+        private readonly IUnityContainer unityContainer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationService"/> class.
+        /// </summary>
+        /// <param name="unityContainer"></param>
+        /// <param name="eventAggregator"></param>
         public ApplicationService(IUnityContainer unityContainer, IEventAggregator eventAggregator)
         {
             if (unityContainer == null)
@@ -40,6 +50,9 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
             this.eventAggregator = eventAggregator;
         }
 
+        /// <summary>
+        /// Publishes the <see cref="ApplicationExitEvent"/> and then exits the application.
+        /// </summary>
         public void Exit()
         {
             ApplicationExitEvent applicationExitEvent = eventAggregator.GetEvent<ApplicationExitEvent>();
@@ -48,90 +61,5 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
 
             Application.Current.Shutdown();
         }
-
-        //public void Dispatch(Delegate method)
-        //{
-        //    App.Current.Dispatcher.Invoke(method);
-        //}
-
-
-        //public void ShowMainWindow()
-        //{
-        //    Application.Current.Dispatcher.Invoke(new Action(ShowMainWindowInternal));
-        //}
-
-        //private MainWindow mainWindow;
-        //private AboutWindow aboutWindow;
-        //private MessageWindow pauseWindow;
-
-        //private void ShowMainWindowInternal()
-        //{
-        //    if (mainWindow == null)
-        //        CreateMainWindow();
-
-        //    mainWindow.Show();
-        //    mainWindow.Activate();
-        //}
-
-        //private void CreateMainWindow()
-        //{
-        //    mainWindow = new MainWindow();
-        //    mainWindow.Closed += (s, e) =>
-        //    {
-        //        RegionManager.SetRegionManager(mainWindow, null);
-        //        RegionManager.UpdateRegions();
-        //        mainWindow = null;
-        //    };
-
-        //    RegionManager.SetRegionManager(mainWindow, unityContainer.Resolve<IRegionManager>());
-        //    RegionManager.UpdateRegions();
-        //}
-
-
-        //public void ShowAboutWindow()
-        //{
-        //    if (aboutWindow == null)
-        //        CreateAboutWindow();
-
-        //    aboutWindow.ShowDialog();
-        //}
-
-        //private void CreateAboutWindow()
-        //{
-        //    aboutWindow = new AboutWindow();
-        //    aboutWindow.Closed += (s, e) =>
-        //    {
-        //        RegionManager.SetRegionManager(aboutWindow, null);
-        //        RegionManager.UpdateRegions();
-        //        aboutWindow = null;
-        //    };
-
-        //    RegionManager.SetRegionManager(aboutWindow, unityContainer.Resolve<IRegionManager>());
-        //    RegionManager.UpdateRegions();
-        //    aboutWindow.Owner = mainWindow;
-        //}
-
-        //public void ShowPauseWindow(string text)
-        //{
-        //    if (pauseWindow == null)
-        //        CreatePauseWindow(text);
-
-        //    pauseWindow.ShowDialog();
-        //}
-
-        //private void CreatePauseWindow(string text)
-        //{
-        //    pauseWindow = new MessageWindow();
-        //    pauseWindow.Closed += (s, e) =>
-        //    {
-        //        RegionManager.SetRegionManager(pauseWindow, null);
-        //        RegionManager.UpdateRegions();
-        //        pauseWindow = null;
-        //    };
-
-        //    RegionManager.SetRegionManager(pauseWindow, unityContainer.Resolve<IRegionManager>());
-        //    RegionManager.UpdateRegions();
-        //    pauseWindow.Owner = mainWindow;
-        //}
     }
 }

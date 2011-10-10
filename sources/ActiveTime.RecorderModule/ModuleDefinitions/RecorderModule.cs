@@ -36,7 +36,11 @@ namespace DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IRecorder, Recorder>(new ContainerControlledLifetimeManager());
+            //unityContainer.RegisterType<IRecorder, Recorder>(new ContainerControlledLifetimeManager());
+
+            Recorder recorder = unityContainer.Resolve<Recorder>();
+            recorder.Start();
+            unityContainer.RegisterInstance<IRecorder>(recorder, new ContainerControlledLifetimeManager());
         }
     }
 }

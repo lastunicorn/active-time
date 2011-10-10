@@ -18,15 +18,26 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
 using Microsoft.Win32;
+using DustInTheWind.ActiveTime.Common.Recording;
+using System.IO;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {
+    /// <summary>
+    /// This service monitorizes the Windows session and stops the recorder when the user
+    /// locks the session or logs off. When the user unlocks the session, the recorder
+    /// is started only if it was previously running.
+    /// </summary>
     class SystemSessionService
     {
         private readonly IRecorder recorder;
         private readonly IShellNavigator navigator;
 
-        private bool checkPauseLength = false;
+        /// <summary>
+        /// This value is used when the user unlocks the session and specifies if the
+        /// Recorder was running when the session was locked.
+        /// </summary>
+        private bool recorderWasRunning = false;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SystemSessionService"/> class.
@@ -66,36 +77,45 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
                     break;
 
                 case SessionSwitchReason.SessionLogoff:
+                    using (StreamWriter sw = new StreamWriter("logon.txt", true))
+                    {
+                        sw.WriteLine("I received the SessionLogoff event");
+                    }
+                    break;
+
                 case SessionSwitchReason.SessionLock:
                     // The user left the desk.
-                    if (recorder.State == Common.Recording.RecorderState.Running)
+                    if (recorder.State == RecorderState.Running)
                     {
-                        checkPauseLength = true;
+                        recorderWasRunning = true;
                         recorder.Stop();
                     }
                     else
                     {
-                        checkPauseLength = false;
+                        recorderWasRunning = false;
                     }
                     break;
 
                 case SessionSwitchReason.SessionLogon:
+                    using (StreamWriter sw = new StreamWriter("logon.txt", true))
+                    {
+                        sw.WriteLine("I received the SessionLogon event");
+                    }
+                    break;
+
                 case SessionSwitchReason.SessionUnlock:
                     // The user returned to his desk.
 
-                    TimeSpan? timeFromLastStop = checkPauseLength ? recorder.GetTimeFromLastStop() : null;
+                    TimeSpan? timeFromLastStop = recorderWasRunning ? recorder.GetTimeFromLastStop() : null;
 
-                    recorder.Start();
+                    if (recorderWasRunning)
+                        recorder.Start();
 
                     if (timeFromLastStop != null && timeFromLastStop < TimeSpan.FromMinutes(1))
                     {
-                        //navigator.DisplayMessageWindow("Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
                         Dictionary<string, object> parameters = new Dictionary<string, object>();
                         parameters.Add("Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
                         navigator.Navigate(ShellNames.MessageShell, parameters);
-                        
-                        //PauseWindow pauseWindow = new PauseWindow("Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
-                        //pauseWindow.ShowDialog();
                     }
                     break;
 

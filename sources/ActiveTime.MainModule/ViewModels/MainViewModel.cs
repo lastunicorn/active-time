@@ -42,6 +42,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             {
                 date = value;
                 NotifyPropertyChanged("Date");
+                UpdateDisplayedData();
             }
         }
 
@@ -157,14 +158,14 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
             refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
 
-            Date = DateTime.Today;
-
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
             recorder.Stamping += new EventHandler(recorder_Stamping);
             recorder.Stamped += new EventHandler(recorder_Stamped);
 
-            UpdateDisplayedData();
+            Date = DateTime.Today;
+
+            //UpdateDisplayedData();
         }
 
         private void OnRefreshCommandExecuted()
@@ -177,10 +178,11 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         {
             if (Date != null)
             {
-                Dictionary<string, object> parameters = new Dictionary<string, object>();
-                parameters.Add("Text", "alez");
-                navigator.Navigate("MessageShell", parameters);
-                //regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
+                //Dictionary<string, object> parameters = new Dictionary<string, object>();
+                //parameters.Add("Text", "alez");
+                //navigator.Navigate("MessageShell", parameters);
+
+                regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
 
                 //CommentsWindow window = new CommentsWindow(new DayCommentRepository(), datePicker1.SelectedDate.Value);
 

@@ -20,6 +20,8 @@ using DustInTheWind.ActiveTime.MainModule.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
+using DustInTheWind.ActiveTime.StatusInfoModule.Services;
+using DustInTheWind.ActiveTime.StatusInfoModule.Views;
 
 namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
 {
@@ -27,34 +29,45 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
     {
         private readonly IUnityContainer unityContainer;
         private readonly IRegionManager regionManager;
-        private readonly IShellNavigator navigator;
+        private readonly IShellNavigator shellNavigator;
 
-        private IMainService mainService;
-
-        public MainModule(IUnityContainer unityContainer, IRegionManager regionManager, IShellNavigator navigator)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainModule"/> class.
+        /// </summary>
+        /// <param name="unityContainer"></param>
+        /// <param name="regionManager"></param>
+        /// <param name="shellNavigator"></param>
+        public MainModule(IUnityContainer unityContainer, IRegionManager regionManager, IShellNavigator shellNavigator)
         {
             this.unityContainer = unityContainer;
             this.regionManager = regionManager;
-            this.navigator = navigator;
+            this.shellNavigator = shellNavigator;
         }
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IApplicationService, ApplicationService>();
+            // Register passive services.
+            unityContainer.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ICommentsService, CommentsService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
 
+            // Register active services.
             SystemSessionService systemSessionService = unityContainer.Resolve<SystemSessionService>();
             unityContainer.RegisterInstance<SystemSessionService>(systemSessionService, new ContainerControlledLifetimeManager());
 
+            // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
+            regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
 
+            // register views in container. (Needed for view navigation.)
             unityContainer.RegisterType<object, MainView>(ViewNames.MainView);
             unityContainer.RegisterType<object, CommentsView>(ViewNames.CommentsView);
 
-            navigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
-            navigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow)));
-            navigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow)));
+            // Register shells in the shell navigator. (Needed for shell navigation.)
+            shellNavigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
+            shellNavigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow)));
+            shellNavigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow)));
         }
     }
 }
