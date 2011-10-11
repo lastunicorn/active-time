@@ -55,6 +55,8 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBoxShow = new System.Windows.Forms.ToolStripTextBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -66,49 +68,51 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
             this.toolStripMenuItemStop,
             this.toolStripMenuItemStopAndDelete,
             this.toolStripSeparator2,
+            this.toolStripMenuItemAbout,
+            this.toolStripSeparator3,
             this.toolStripMenuItemExit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(205, 126);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 154);
             // 
             // toolStripMenuItemShow
             // 
             this.toolStripMenuItemShow.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.toolStripMenuItemShow.Name = "toolStripMenuItemShow";
-            this.toolStripMenuItemShow.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemShow.Size = new System.Drawing.Size(214, 22);
             this.toolStripMenuItemShow.Text = "&Show";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(211, 6);
             // 
             // toolStripMenuItemStart
             // 
             this.toolStripMenuItemStart.Name = "toolStripMenuItemStart";
-            this.toolStripMenuItemStart.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemStart.Size = new System.Drawing.Size(214, 22);
             this.toolStripMenuItemStart.Text = "St&art";
             // 
             // toolStripMenuItemStop
             // 
             this.toolStripMenuItemStop.Name = "toolStripMenuItemStop";
-            this.toolStripMenuItemStop.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemStop.Size = new System.Drawing.Size(214, 22);
             this.toolStripMenuItemStop.Text = "St&op";
             // 
             // toolStripMenuItemStopAndDelete
             // 
             this.toolStripMenuItemStopAndDelete.Name = "toolStripMenuItemStopAndDelete";
-            this.toolStripMenuItemStopAndDelete.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemStopAndDelete.Size = new System.Drawing.Size(214, 22);
             this.toolStripMenuItemStopAndDelete.Text = "Stop and delete last record";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(211, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(214, 22);
             this.toolStripMenuItemExit.Text = "E&xit";
             // 
             // toolStripTextBoxShow
@@ -122,6 +126,17 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
             this.notifyIcon1.Text = "Active Time";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // toolStripMenuItemAbout
+            // 
+            this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(214, 22);
+            this.toolStripMenuItemAbout.Text = "&About";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(211, 6);
             this.contextMenuStrip1.ResumeLayout(false);
 
         }
@@ -138,5 +153,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStart;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStopAndDelete;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

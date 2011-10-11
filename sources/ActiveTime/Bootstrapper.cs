@@ -23,12 +23,7 @@ namespace DustInTheWind.ActiveTime
 {
     class Bootstrapper : UnityBootstrapper
     {
-        protected override void ConfigureContainer()
-        {
-            base.ConfigureContainer();
-        }
-
-        protected override Microsoft.Practices.Prism.Modularity.IModuleCatalog CreateModuleCatalog()
+        protected override IModuleCatalog CreateModuleCatalog()
         {
             Uri uri = new Uri("/ActiveTime;component/ModuleCatalog.xaml", UriKind.Relative);
             ModuleCatalog moduleCatalog = Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(uri);

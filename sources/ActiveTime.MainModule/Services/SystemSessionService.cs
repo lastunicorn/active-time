@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Win32;
 using DustInTheWind.ActiveTime.Common.Recording;
 using System.IO;
@@ -43,6 +44,8 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
         /// Initializes a new instance of <see cref="SystemSessionService"/> class.
         /// </summary>
         /// <param name="recorder"></param>
+        /// <param name="navigator"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public SystemSessionService(IRecorder recorder, IShellNavigator navigator)
         {
             if (recorder == null)

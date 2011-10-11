@@ -32,7 +32,7 @@ namespace DustInTheWind.ActiveTime.Watchman
         /// The <see cref="Mutex"/> object used to ensure that only one instance
         /// of the class is created on the current machine. (Machine level)
         /// </summary>
-        private Mutex mutex;
+        private readonly Mutex mutex;
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace DustInTheWind.ActiveTime.Watchman
         /// Contains the names of the <see cref="Guard"/> instances running at the application level
         /// in the current application.
         /// </summary>
-        private static Hashtable localInstanceNames = new Hashtable(); 
+        private static readonly Hashtable localInstanceNames = new Hashtable(); 
         
         #endregion
 
@@ -94,7 +94,7 @@ namespace DustInTheWind.ActiveTime.Watchman
         /// <param name="guardLevel">The level at which the new instance will have efect.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="AutomaticOrderSystemException"></exception>
+        /// <exception cref="ActiveTimeException"></exception>
         public Guard(string name, GuardLevel guardLevel)
         {
             if (name == null)

@@ -108,6 +108,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
                         IsSaveButtonEnabled = true;
                         break;
                 }
+
+                dataState = value;
             }
         }
 

@@ -16,9 +16,8 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Entities;
 
-namespace DustInTheWind.ActiveTime.Common
+namespace DustInTheWind.ActiveTime.Common.Persistence
 {
     public interface IDayCommentRepository
     {
@@ -68,7 +67,7 @@ namespace DustInTheWind.ActiveTime.Common
         /// <summary>
         ///  When implemented in a class, returns from the database all the comments.
         /// </summary>
-        /// <returns>An instance of <see cref="DayCommentList"/> containing all the requested comments.</returns>
+        /// <returns>A list of <see cref="DayComment"/> containing all the requested comments.</returns>
         IList<DayComment> GetAll();
     }
 }

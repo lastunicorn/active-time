@@ -16,9 +16,8 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Entities;
 
-namespace DustInTheWind.ActiveTime.Common
+namespace DustInTheWind.ActiveTime.Common.Persistence
 {
     public interface ITimeRecordRepository
     {

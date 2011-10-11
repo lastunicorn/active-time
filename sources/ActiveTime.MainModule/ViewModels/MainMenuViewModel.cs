@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 using System;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Practices.Prism.Commands;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels
@@ -26,25 +27,25 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         private readonly IApplicationService applicationService;
         private readonly IShellNavigator shellNavigator;
 
-        private ICommand exportCommand;
+        private readonly ICommand exportCommand;
         public ICommand ExportCommand
         {
             get { return exportCommand; }
         }
 
-        private ICommand statisticsCommand;
+        private readonly ICommand statisticsCommand;
         public ICommand StatisticsCommand
         {
             get { return statisticsCommand; }
         }
 
-        private ICommand exitCommand;
+        private readonly ICommand exitCommand;
         public ICommand ExitCommand
         {
             get { return exitCommand; }
         }
 
-        private ICommand aboutCommand;
+        private readonly ICommand aboutCommand;
         public ICommand AboutCommand
         {
             get { return aboutCommand; }

@@ -19,7 +19,7 @@ using System;
 namespace DustInTheWind.ActiveTime.Common.Reminding
 {
     /// <summary>
-    /// Provides data for <see cref="Ring"/> event.
+    /// Provides data for <see cref="IReminder.Ring"/> event.
     /// </summary>
     public class RingEventArgs : EventArgs
     {
@@ -30,9 +30,9 @@ namespace DustInTheWind.ActiveTime.Common.Reminding
 
         /// <summary>
         /// Gets or sets a value that specifies if the timer should be delayed.
-        /// The <see cref="P:SnoozeTime"/> property specifies the time of the delay.
-        /// If the <see cref="P:SnoozeTime"/> value is not set, the default time of
-        /// the <see cref="Reminder"/> is used.
+        /// The <see cref="SnoozeTime"/> property specifies the time of the delay.
+        /// If the <see cref="SnoozeTime"/> value is not set, the default time of
+        /// the <see cref="IReminder"/> is used.
         /// </summary>
         public bool Snooze
         {
@@ -48,7 +48,7 @@ namespace DustInTheWind.ActiveTime.Common.Reminding
         /// <summary>
         /// Gets or sets the time used to delay the ring.
         /// If this value is not set, the default time of
-        /// the <see cref="Reminder"/> is used.
+        /// the <see cref="IReminder"/> is used.
         /// </summary>
         public TimeSpan? SnoozeTime
         {
@@ -60,7 +60,6 @@ namespace DustInTheWind.ActiveTime.Common.Reminding
         /// Initializes a new instance of the <see cref="RingEventArgs"/> class.
         /// </summary>
         public RingEventArgs()
-            : base()
         {
             snooze = false;
             snoozeTime = null;

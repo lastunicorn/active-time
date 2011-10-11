@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.ActiveTime.PersistenceModule;
 using NHibernate;
 
-namespace DustInTheWind.ActiveTime.Persistence.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
 {
     /// <summary>
     /// Provides basic functionality for a repository class.
@@ -26,29 +27,22 @@ namespace DustInTheWind.ActiveTime.Persistence.Repositories
         /// <summary>
         /// The session used to access the database.
         /// </summary>
-        private ISession currentSession;
+        private readonly ISession currentSession;
 
         /// <summary>
         /// Gets the session used to access the database.
         /// </summary>
         protected ISession CurrentSession
         {
-            get
-            {
-                if (currentSession == null)
-                {
-                    currentSession = SessionProvider.OpenSession();
-                }
-
-                return currentSession;
-            }
+            get { return currentSession; }
         }
 
         /// <summary>
         /// Initializes a new instnace of the <see cref="RepositoryBase"/> class.
         /// </summary>
-        public RepositoryBase()
+        protected RepositoryBase()
         {
+            currentSession = SessionProvider.OpenSession();
         }
 
         /// <summary>
@@ -56,9 +50,9 @@ namespace DustInTheWind.ActiveTime.Persistence.Repositories
         /// the session instance to be used to access the database.
         /// </summary>
         /// <param name="session">The session instance to be used to access the database.</param>
-        public RepositoryBase(ISession session)
+        protected RepositoryBase(ISession session)
         {
-            this.currentSession = session;
+            currentSession = session;
         }
     }
 }

@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Common;
 
-namespace DustInTheWind.ActiveTime.StatusInfoModule.ViewModels
+namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
     public class StatusInfoViewModel : ViewModelBase
     {

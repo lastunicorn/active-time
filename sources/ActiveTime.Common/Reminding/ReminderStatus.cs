@@ -17,7 +17,7 @@
 namespace DustInTheWind.ActiveTime.Common.Reminding
 {
     /// <summary>
-    /// Represents the status of the <see cref="Reminder"/>.
+    /// Represents the status of the <see cref="IReminder"/>.
     /// </summary>
     public enum ReminderStatus
     {

@@ -18,6 +18,10 @@
             <Separator Margin="0" />
             <MenuItem Header="E_xit" customcmd:MenuItemClick.Command="{Binding ExitCommand}"/>
         </MenuItem>
+        <MenuItem Header="_Recorder">
+            <MenuItem Header="St_art" customcmd:MenuItemClick.Command="{Binding StartCommand}"/>
+            <MenuItem Header="St_op" customcmd:MenuItemClick.Command="{Binding StopCommand}"/>
+        </MenuItem>
         <MenuItem Header="_Help">
             <MenuItem Header="_About" customcmd:MenuItemClick.Command="{Binding AboutCommand}"/>
         </MenuItem>

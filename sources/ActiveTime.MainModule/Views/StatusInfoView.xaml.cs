@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -16,9 +16,9 @@
 
 using System;
 using System.Windows.Controls;
-using DustInTheWind.ActiveTime.StatusInfoModule.ViewModels;
+using DustInTheWind.ActiveTime.MainModule.ViewModels;
 
-namespace DustInTheWind.ActiveTime.StatusInfoModule.Views
+namespace DustInTheWind.ActiveTime.MainModule.Views
 {
     /// <summary>
     /// Interaction logic for StatusView.xaml

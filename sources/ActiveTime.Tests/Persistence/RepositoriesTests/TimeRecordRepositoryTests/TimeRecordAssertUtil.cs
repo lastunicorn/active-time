@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.Persistence.RepositoriesTests.TimeRecordRepositoryTests

@@ -31,22 +31,16 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
     class ApplicationService : IApplicationService
     {
         private readonly IEventAggregator eventAggregator;
-        private readonly IUnityContainer unityContainer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationService"/> class.
         /// </summary>
-        /// <param name="unityContainer"></param>
         /// <param name="eventAggregator"></param>
-        public ApplicationService(IUnityContainer unityContainer, IEventAggregator eventAggregator)
+        public ApplicationService(IEventAggregator eventAggregator)
         {
-            if (unityContainer == null)
-                throw new ArgumentNullException("unityContainer");
-
             if (eventAggregator == null)
                 throw new ArgumentNullException("eventAggregator");
 
-            this.unityContainer = unityContainer;
             this.eventAggregator = eventAggregator;
         }
 

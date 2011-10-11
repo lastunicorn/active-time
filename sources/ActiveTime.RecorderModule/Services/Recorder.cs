@@ -17,8 +17,8 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Entities;
 using DustInTheWind.ActiveTime.Common.Events;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using Microsoft.Practices.Prism.Events;
 
@@ -35,7 +35,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         public RecorderState State { get; private set; }
 
-        private Timer timer;
+        private readonly Timer timer;
         private TimeSpan stampingInterval;
 
 
@@ -128,7 +128,8 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="Recorder"/> class.
         /// </summary>
-        /// <param name="dal">Dal class used to access the persistent layer.</param>
+        /// <param name="timeRecordRepository"></param>
+        /// <param name="eventAggregator"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public Recorder(ITimeRecordRepository timeRecordRepository, IEventAggregator eventAggregator)
         {
@@ -139,10 +140,10 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
                 throw new ArgumentNullException("eventAggregator");
 
             this.timeRecordRepository = timeRecordRepository;
-            
+
             State = RecorderState.Stopped;
 
-            timer = new Timer(new TimerCallback(timer_tick));
+            timer = new Timer(timer_tick);
             stampingInterval = TimeSpan.FromMinutes(1);
 
             ApplicationExitEvent applicationExitEvent = eventAggregator.GetEvent<ApplicationExitEvent>();
@@ -332,10 +333,9 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         private void CreateNewCurrentRecord(DateTime now, bool startsFromBeginningOfDay)
         {
-            if (startsFromBeginningOfDay)
-                currentRecord = new Record(now.Date, TimeSpan.Zero, now.TimeOfDay);
-            else
-                currentRecord = new Record(now.Date, now.TimeOfDay, now.TimeOfDay);
+            currentRecord = startsFromBeginningOfDay ?
+                new Record(now.Date, TimeSpan.Zero, now.TimeOfDay) :
+                new Record(now.Date, now.TimeOfDay, now.TimeOfDay);
 
             databaseRecord = null;
         }
@@ -371,7 +371,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         #region Database Record
 
-        private TimeRecord databaseRecord = null;
+        private TimeRecord databaseRecord;
 
         private bool ExistsDatabaseRecord
         {

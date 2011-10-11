@@ -40,7 +40,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// <param name="startTime">The time of day representing the start time.</param>
         /// <param name="endTime">The time of day representing the end time.</param>
         public Break(TimeSpan startTime, TimeSpan endTime)
-            : base(startTime, startTime)
+            : base(startTime, endTime)
         {
         }
 

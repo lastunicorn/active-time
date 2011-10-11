@@ -17,7 +17,7 @@
 using System;
 using System.Windows;
 
-namespace DustInTheWind.ActiveTime.Common
+namespace DustInTheWind.ActiveTime.Common.ShellNavigation
 {
     public class ShellInfo
     {

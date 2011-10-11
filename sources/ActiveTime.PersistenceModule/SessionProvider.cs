@@ -15,18 +15,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 
-namespace DustInTheWind.ActiveTime.Persistence
+namespace DustInTheWind.ActiveTime.PersistenceModule
 {
     public static class SessionProvider
     {
-        private static string databaseFileName = "db.s3db";
+        private const string databaseFileName = "db.s3db";
 
         private static ISessionFactory _sessionFactory;
 

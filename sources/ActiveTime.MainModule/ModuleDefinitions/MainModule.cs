@@ -15,13 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.MainModule.Services;
 using DustInTheWind.ActiveTime.MainModule.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
-using DustInTheWind.ActiveTime.StatusInfoModule.Services;
-using DustInTheWind.ActiveTime.StatusInfoModule.Views;
 
 namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
 {
@@ -66,8 +65,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
 
             // Register shells in the shell navigator. (Needed for shell navigation.)
             shellNavigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
-            shellNavigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow)));
-            shellNavigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow)));
+            shellNavigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow), ShellNames.MainShell));
+            shellNavigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow), ShellNames.MainShell));
         }
     }
 }

@@ -92,7 +92,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         public Record(DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
             this.date = date;
-            this.timeInterval = new DayTimeInterval(startTime, endTime);
+            timeInterval = new DayTimeInterval(startTime, endTime);
         }
 
         #endregion

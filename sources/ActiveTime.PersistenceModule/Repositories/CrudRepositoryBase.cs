@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using NHibernate;
 
-namespace DustInTheWind.ActiveTime.Persistence.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
 {
     /// <summary>
     /// Provides basic functionality for a repository class.
@@ -27,18 +27,18 @@ namespace DustInTheWind.ActiveTime.Persistence.Repositories
         where TEntity : class
     {
         /// <summary>
-        /// Initializes a new instnace of the <see cref="CrudRepositoryBase"/> class.
+        /// Initializes a new instnace of the <see cref="CrudRepositoryBase{T}"/> class.
         /// </summary>
-        public CrudRepositoryBase()
+        protected CrudRepositoryBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instnace of the <see cref="CrudRepositoryBase"/> class with
+        /// Initializes a new instnace of the <see cref="CrudRepositoryBase{T}"/> class with
         /// the session instance to be used to access the database.
         /// </summary>
         /// <param name="session">The session instance to be used to access the database.</param>
-        public CrudRepositoryBase(ISession session)
+        protected CrudRepositoryBase(ISession session)
             : base(session)
         {
         }

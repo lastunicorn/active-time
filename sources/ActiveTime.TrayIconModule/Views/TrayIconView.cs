@@ -15,12 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.ComponentModel;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.TrayIconModule.ViewModels;
 
@@ -28,7 +25,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
 {
     partial class TrayIconView : Component, ITrayIconView
     {
-        private TrayIconPresenter presenter;
+        private readonly TrayIconPresenter presenter;
 
         public TrayIconView(TrayIconPresenter presenter)
         {
@@ -39,11 +36,12 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
 
             InitializeComponent();
 
-            this.toolStripMenuItemShow.Click += new EventHandler(toolStripMenuItemShow_Click);
-            this.toolStripMenuItemExit.Click += new EventHandler(toolStripMenuItemExit_Click);
-            this.toolStripMenuItemStart.Click += new EventHandler(toolStripMenuItemStart_Click);
-            this.toolStripMenuItemStop.Click += new EventHandler(toolStripMenuItemStop_Click);
-            this.toolStripMenuItemStopAndDelete.Click += new EventHandler(toolStripMenuItemStopAndDelete_Click);
+            toolStripMenuItemShow.Click += new EventHandler(toolStripMenuItemShow_Click);
+            toolStripMenuItemExit.Click += new EventHandler(toolStripMenuItemExit_Click);
+            toolStripMenuItemStart.Click += new EventHandler(toolStripMenuItemStart_Click);
+            toolStripMenuItemStop.Click += new EventHandler(toolStripMenuItemStop_Click);
+            toolStripMenuItemStopAndDelete.Click += new EventHandler(toolStripMenuItemStopAndDelete_Click);
+            toolStripMenuItemAbout.Click += new EventHandler(toolStripMenuItemAbout_Click);
 
             presenter.View = this;
         }
@@ -111,6 +109,11 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
         private void toolStripMenuItemExit_Click(object sender, EventArgs e)
         {
             presenter.ExitClicked();
+        }
+
+        private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
+        {
+            presenter.AboutClicked();
         }
 
         private void toolStripMenuItemShow_Click(object sender, System.EventArgs e)

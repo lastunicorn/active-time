@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 
@@ -113,14 +114,26 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             }
         }
 
-        private ICommand commentsCommand;
+        private readonly ICommand commentsCommand;
         public ICommand CommentsCommand
         {
             get { return commentsCommand; }
         }
 
-        private ICommand refreshCommand;
+        private readonly ICommand refreshCommand;
         public ICommand RefreshCommand
+        {
+            get { return refreshCommand; }
+        }
+
+        private readonly ICommand startCommand;
+        public ICommand StartCommand
+        {
+            get { return startCommand; }
+        }
+
+        private readonly ICommand stopCommand;
+        public ICommand StopCommand
         {
             get { return refreshCommand; }
         }
@@ -131,6 +144,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         /// <param name="recorder"></param>
         /// <param name="statusInfoService"></param>
         /// <param name="recordRepository"></param>
+        /// <param name="regionManager"></param>
+        /// <param name="navigator"></param>
         public MainViewModel(IRecorder recorder, IStatusInfoService statusInfoService,
             ITimeRecordRepository recordRepository, IRegionManager regionManager, IShellNavigator navigator)
         {
@@ -157,6 +172,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 
             commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
             refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
+            startCommand = new DelegateCommand(OnStartCommandExecuted);
+            stopCommand = new DelegateCommand(OnStopCommandExecuted);
 
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
@@ -166,6 +183,16 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             Date = DateTime.Today;
 
             //UpdateDisplayedData();
+        }
+
+        private void OnStartCommandExecuted()
+        {
+            recorder.Start();
+        }
+
+        private void OnStopCommandExecuted()
+        {
+            recorder.Stop();
         }
 
         private void OnRefreshCommandExecuted()

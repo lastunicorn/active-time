@@ -59,7 +59,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             set
             {
                 if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
-                    throw new ArgumentOutOfRangeException("endTime", "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+                    throw new ArgumentOutOfRangeException("value", "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
                 endTime = value;
             }

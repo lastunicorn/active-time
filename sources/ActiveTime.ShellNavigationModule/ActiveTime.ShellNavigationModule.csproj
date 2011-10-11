@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ModuleDefinitions\ShellNavigationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
   </ItemGroup>
   <ItemGroup>

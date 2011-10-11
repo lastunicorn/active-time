@@ -19,6 +19,7 @@ using System.Drawing;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Practices.Prism.Events;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
@@ -36,10 +37,9 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             }
         }
 
-        private Icon iconOn;
-        private Icon iconOff;
+        private readonly Icon iconOn;
+        private readonly Icon iconOff;
 
-        private readonly IEventAggregator eventAggregator;
         private readonly IRecorder recorder;
         private readonly IApplicationService applicationService;
         private readonly IShellNavigator shellNavigator;
@@ -60,7 +60,6 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
                 throw new ArgumentNullException("shellNavigator");
 
             this.recorder = recorder;
-            this.eventAggregator = eventAggregator;
             this.applicationService = applicationService;
             this.shellNavigator = shellNavigator;
 
@@ -70,17 +69,16 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             ApplicationExitEvent applicationExitEvent = eventAggregator.GetEvent<ApplicationExitEvent>();
             applicationExitEvent.Subscribe(OnApplicationExitEvent);
 
-            //recorder.IsStartedChanged += new EventHandler(recorder_IsStartedChanged);
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
         }
 
-        void recorder_Stopped(object sender, EventArgs e)
+        private void recorder_Stopped(object sender, EventArgs e)
         {
             RefreshView();
         }
 
-        void recorder_Started(object sender, EventArgs e)
+        private void recorder_Started(object sender, EventArgs e)
         {
             RefreshView();
         }
@@ -89,11 +87,6 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
         {
             Hide();
         }
-
-        //void recorder_IsStartedChanged(object sender, EventArgs e)
-        //{
-        //    RefreshView();
-        //}
 
         private void RefreshView()
         {
@@ -198,6 +191,11 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
         public void LeftDoubleClicked()
         {
             shellNavigator.Navigate(ShellNames.MainShell);
+        }
+
+        internal void AboutClicked()
+        {
+            shellNavigator.Navigate(ShellNames.AboutShell);
         }
     }
 }

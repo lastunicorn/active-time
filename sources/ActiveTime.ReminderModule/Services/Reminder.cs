@@ -19,7 +19,7 @@ using System.Threading;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Reminding;
 
-namespace DustInTheWind.ActiveTime.Reminding.Services
+namespace DustInTheWind.ActiveTime.ReminderModule.Services
 {
     /// <summary>
     /// It is a timer that "rings" after a specified time.
@@ -29,7 +29,7 @@ namespace DustInTheWind.ActiveTime.Reminding.Services
         /// <summary>
         /// Lock object used when the status needs to be changed.
         /// </summary>
-        private object lockStatus = new object();
+        private readonly object lockStatus = new object();
 
         #region StartTime
 
@@ -92,7 +92,7 @@ namespace DustInTheWind.ActiveTime.Reminding.Services
 
         /// <summary>
         /// Event raised when the current instance is stopped. After the Ring event or after
-        /// a call of the <see cref="M:Stop"/> or <see cref="M:Reset"/> methods.
+        /// a call of the <see cref="Stop"/> or <see cref="Reset"/> methods.
         /// </summary>
         public event EventHandler Stopped;
 
@@ -119,7 +119,7 @@ namespace DustInTheWind.ActiveTime.Reminding.Services
         public Reminder()
         {
             flagFinished = new ManualResetEvent(false);
-            timer = new Timer(new TimerCallback(TimerElapsed), null, Timeout.Infinite, Timeout.Infinite);
+            timer = new Timer(TimerElapsed, null, Timeout.Infinite, Timeout.Infinite);
         }
 
         #endregion
@@ -196,7 +196,7 @@ namespace DustInTheWind.ActiveTime.Reminding.Services
         /// <summary>
         /// Start the timer.
         /// </summary>
-        /// <param name="Time">A <see cref="Timespan"/> representing the amount of time to delay before the clock will ring.</param>
+        /// <param name="time">A <see cref="TimeSpan"/> representing the amount of time to delay before the clock will ring.</param>
         /// <exception cref="ObjectDisposedException">The current instance was disposed.</exception>
         public void Start(TimeSpan time)
         {
@@ -282,7 +282,8 @@ namespace DustInTheWind.ActiveTime.Reminding.Services
         /// <summary>
         /// Sets the timer to ring after the snoose time.
         /// </summary>
-        private void Snooze(TimeSpan? snoozeTime)
+        /// <param name="snoozeTime">The time to postpone the <see cref="Ring"/> event.</param>
+        private void Snooze(TimeSpan? snoozeTime = null)
         {
             lock (lockStatus)
             {
@@ -312,7 +313,7 @@ namespace DustInTheWind.ActiveTime.Reminding.Services
         /// <summary>
         /// The internal timer.
         /// </summary>
-        private Timer timer = null;
+        private Timer timer;
 
         /// <summary>
         /// Call back function triggered when the timer elapsed.
@@ -352,7 +353,7 @@ namespace DustInTheWind.ActiveTime.Reminding.Services
         /// A semaphore that turns green (true) when the clock rings or is stopped.
         /// That means it is red (false) only if the clock is running.
         /// </summary>
-        private ManualResetEvent flagFinished = null;
+        private ManualResetEvent flagFinished;
 
         /// <summary>
         /// Blocks the current thread until the clock rangs or it is stopped.

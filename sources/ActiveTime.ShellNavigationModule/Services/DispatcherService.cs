@@ -15,22 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows;
 
-namespace DustInTheWind.ActiveTime.Common.Recording
+namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
 {
-    public interface IRecorder
+    class DispatcherService
     {
-        RecorderState State { get; }
-
-        event EventHandler Started;
-        event EventHandler Stopped;
-        event EventHandler Stamped;
-        event EventHandler Stamping;
-
-        void Start();
-        //void Stamp();
-        void Stop(bool deleteLastRecord = false);
-
-        TimeSpan? GetTimeFromLastStop();
+        public void Dispatch(Action action)
+        {
+            Application.Current.Dispatcher.Invoke(action);
+        }
     }
 }

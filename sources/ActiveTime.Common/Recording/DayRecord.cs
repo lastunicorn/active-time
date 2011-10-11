@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.Common.Recording
 {
@@ -171,6 +171,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
 
         public DayTimeInterval[] GetTimeRecords(bool includeBreaks)
         {
+            // todo: possible a bug.
             if (activeTimeRecords == null || activeTimeRecords.Count == 0 || !includeBreaks)
                 return activeTimeRecords.ToArray();
 

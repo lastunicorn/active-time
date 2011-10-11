@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels
@@ -68,7 +68,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="CommentsViewModel"/> class.
         /// </summary>
-        /// <param name="dayCommentRepository"></param>
+        /// <param name="commentsService"></param>
+        /// <param name="regionManager"></param>
         public CommentsViewModel(ICommentsService commentsService, IRegionManager regionManager)
         {
             if (commentsService == null)

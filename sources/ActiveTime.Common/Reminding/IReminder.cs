@@ -15,9 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Reminding;
 
-namespace DustInTheWind.ActiveTime.Common
+namespace DustInTheWind.ActiveTime.Common.Reminding
 {
     public interface IReminder
     {
@@ -28,7 +27,7 @@ namespace DustInTheWind.ActiveTime.Common
         DateTime StartTime { get; }
 
         /// <summary>
-        /// Gets the status of the current instance of the <see cref="Reminder"/>.
+        /// Gets the status of the current instance of the <see cref="IReminder"/>.
         /// </summary>
         ReminderStatus Status { get; }
 
@@ -45,7 +44,7 @@ namespace DustInTheWind.ActiveTime.Common
 
         /// <summary>
         /// Event raised when the current instance is stopped. After the Ring event or after
-        /// a call of the <see cref="M:Stop"/> or <see cref="M:Reset"/> methods.
+        /// a call of the <see cref="Stop"/> or <see cref="Reset"/> methods.
         /// </summary>
         event EventHandler Stopped;
 
@@ -73,7 +72,7 @@ namespace DustInTheWind.ActiveTime.Common
         /// <summary>
         /// Start the timer.
         /// </summary>
-        /// <param name="Time">A <see cref="Timespan"/> representing the amount of time to delay before the clock will ring.</param>
+        /// <param name="time">A <see cref="TimeSpan"/> representing the amount of time to delay before the clock will ring.</param>
         /// <exception cref="ObjectDisposedException">The current instance was disposed.</exception>
         void Start(TimeSpan time);
 

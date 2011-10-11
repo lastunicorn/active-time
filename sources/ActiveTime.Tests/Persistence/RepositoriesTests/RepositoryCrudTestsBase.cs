@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DustInTheWind.ActiveTime.Common.Entities;
-using DustInTheWind.ActiveTime.Persistence.Repositories;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.PersistenceModule.Repositories;
 using NHibernate;
 using NHibernate.Exceptions;
 using NUnit.Framework;

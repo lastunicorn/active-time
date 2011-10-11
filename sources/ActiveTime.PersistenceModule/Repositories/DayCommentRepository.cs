@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,10 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Entities;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using NHibernate;
 
-namespace DustInTheWind.ActiveTime.Persistence.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
 {
     /// <summary>
     ///  Repository class that provides access to the comment records storred in the persistent layer.

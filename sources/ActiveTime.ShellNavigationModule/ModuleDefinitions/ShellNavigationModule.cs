@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.ShellNavigationModule.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
@@ -33,6 +34,7 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.ModuleDefinitions
         public void Initialize()
         {
             unityContainer.RegisterType<IShellNavigator, ShellNavigator>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<DispatcherService, DispatcherService>(new ContainerControlledLifetimeManager());
         }
     }
 }

@@ -31,22 +31,23 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
     {
         private readonly IUnityContainer unityContainer;
         private readonly IRegionManager regionManager;
+        private readonly DispatcherService dispatcherService;
 
         /// <summary>
         /// The list of shell info objects indexed by the shell's name.
         /// These objects are used to create shells.
         /// </summary>
-        private Dictionary<string, ShellInfo> shellInfos = new Dictionary<string, ShellInfo>();
+        private readonly Dictionary<string, ShellInfo> shellInfos = new Dictionary<string, ShellInfo>();
 
         /// <summary>
         /// The list of existing shells.
         /// </summary>
-        private Dictionary<string, Window> shells = new Dictionary<string, Window>();
+        private readonly Dictionary<string, Window> shells = new Dictionary<string, Window>();
 
         /// <summary>
         /// Initialize a new instance of the <see cref="ShellNavigator"/> class.
         /// </summary>
-        public ShellNavigator(IUnityContainer unityContainer, IRegionManager regionManager)
+        public ShellNavigator(IUnityContainer unityContainer, IRegionManager regionManager, DispatcherService dispatcherService)
         {
             if (unityContainer == null)
                 throw new ArgumentNullException("unityContainer");
@@ -54,8 +55,12 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
             if (regionManager == null)
                 throw new ArgumentNullException("regionManager");
 
+            if (dispatcherService == null)
+                throw new ArgumentNullException("dispatcherService");
+
             this.unityContainer = unityContainer;
             this.regionManager = regionManager;
+            this.dispatcherService = dispatcherService;
         }
 
         /// <summary>
@@ -105,7 +110,12 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
             RegionManager.UpdateRegions();
 
             if (!string.IsNullOrEmpty(shellInfo.OwnerName) && shells.ContainsKey(shellInfo.OwnerName))
-                shell.Owner = shells[shellInfo.OwnerName];
+            {
+                dispatcherService.Dispatch(() =>
+                                               {
+                                                   shell.Owner = shells[shellInfo.OwnerName];
+                                               });
+            }
 
             shell.Closed += (s, e) =>
                                 {
@@ -121,8 +131,11 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
         {
             Window shell = shells[shellName];
 
-            shell.Show();
-            shell.Activate();
+            dispatcherService.Dispatch(() =>
+                                           {
+                                               shell.Show();
+                                               shell.Activate();
+                                           });
 
             if (shell is IShell)
                 ((IShell)shell).NavigationParameters = parameters;

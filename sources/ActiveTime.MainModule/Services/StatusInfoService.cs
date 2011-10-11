@@ -18,7 +18,7 @@ using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common;
 
-namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
+namespace DustInTheWind.ActiveTime.MainModule.Services
 {
     /// <summary>
     /// A service that stores different status messages.
@@ -56,7 +56,7 @@ namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
         /// <summary>
         /// Timer used to reset the status Text.
         /// </summary>
-        private Timer timerStatus;
+        private readonly Timer timerStatus;
 
         #region Event StatusTextChanged
 
@@ -84,7 +84,7 @@ namespace DustInTheWind.ActiveTime.StatusInfoModule.Services
         /// </summary>
         public StatusInfoService()
         {
-            timerStatus = new Timer(new TimerCallback(ResetStatusTextTh));
+            timerStatus = new Timer(ResetStatusTextTh);
             statusText = DEFAULT_STATUS_TEXT;
         }
 
