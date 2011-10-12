@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Windows;
+using DustInTheWind.ActiveTime.Watchman;
+using System;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -87,7 +89,7 @@ namespace DustInTheWind.ActiveTime
 
 
                 //    SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
-                
+
                 //    base.OnStartup(e);
                 //}
             }
@@ -119,7 +121,7 @@ namespace DustInTheWind.ActiveTime
         //private delegate void ShowPause();
 
         #endregion
-        
+
         //private void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
         //{
         //    switch (e.Reason)

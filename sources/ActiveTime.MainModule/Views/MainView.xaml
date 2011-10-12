@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              
              xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.MainModule.Converters"
-             xmlns:Recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording;assembly=ActiveTime.Common"
+             xmlns:recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording;assembly=ActiveTime.Common"
              xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
+             xmlns:customcmd="clr-namespace:DustInTheWind.ActiveTime.Common.Commands;assembly=ActiveTime.Common"
              
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -16,15 +17,15 @@
 
             <!--<ui:RecordListConverter x:Key="RecordListConverter" />-->
             <converters:RecordConverter x:Key="RecordConverter" />
-            <DataTemplate DataType="{x:Type Recording:DayTimeInterval}">
+            <!--<DataTemplate DataType="{x:Type recording:DayTimeInterval}">
                 <Label Padding="10,0,0,0"
                                 Content="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type Recording:Break}">
+            <DataTemplate DataType="{x:Type recording:Break}">
                 <TextBlock Padding="0,0,10,0" HorizontalAlignment="Right"
                            Background="Azure"
                                 Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
-            </DataTemplate>
+            </DataTemplate>-->
 
         </Grid.Resources>
 
@@ -48,7 +49,7 @@
         <DatePicker Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"  Height="25" Margin="3" Name="datePicker1" VerticalAlignment="Top"
                     SelectedDateFormat="Long"
                     SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                    HorizontalAlignment="Left" MinWidth="150" SelectedDateChanged="datePicker1_SelectedDateChanged" />
+                    HorizontalAlignment="Left" MinWidth="150"/>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Active Time:" Name="label1" Margin="3" />
 
@@ -84,6 +85,11 @@
                     ItemsSource="{Binding Path=Records}"
                     SelectionMode="Extended">
 
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
+                    <TextBlock Padding="10,1,0,1" Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
 
             <ListBox.ContextMenu>
                 <ContextMenu Name="contextMenuRecords">
@@ -92,7 +98,9 @@
                     <MenuItem Name="menuItemMerge" Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
                     <MenuItem Name="menuItemSplit" Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
                     <Separator Margin="0"/>
-                    <MenuItem Name="menuItemDelete" Header="Delete" Click="menuItemDelete_Click"/>
+                    <MenuItem Name="menuItemDelete" Header="Delete"
+                              customcmd:MenuItemClick.Command="{Binding DeleteCommand}"
+                              customcmd:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
 

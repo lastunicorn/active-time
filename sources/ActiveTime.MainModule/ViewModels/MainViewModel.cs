@@ -43,6 +43,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             {
                 date = value;
                 NotifyPropertyChanged("Date");
+
+                statusInfoService.SetStatus("Date changed.");
                 UpdateDisplayedData();
             }
         }
@@ -126,16 +128,10 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             get { return refreshCommand; }
         }
 
-        private readonly ICommand startCommand;
-        public ICommand StartCommand
+        private readonly ICommand deleteCommand;
+        public ICommand DeleteCommand
         {
-            get { return startCommand; }
-        }
-
-        private readonly ICommand stopCommand;
-        public ICommand StopCommand
-        {
-            get { return refreshCommand; }
+            get { return deleteCommand; }
         }
 
         /// <summary>
@@ -172,8 +168,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 
             commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
             refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
-            startCommand = new DelegateCommand(OnStartCommandExecuted);
-            stopCommand = new DelegateCommand(OnStopCommandExecuted);
+            deleteCommand = new DelegateCommand<DayTimeInterval>(OnDeleteCommandExecuted);
 
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
@@ -185,14 +180,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             //UpdateDisplayedData();
         }
 
-        private void OnStartCommandExecuted()
+        private void OnDeleteCommandExecuted(DayTimeInterval item)
         {
-            recorder.Start();
-        }
-
-        private void OnStopCommandExecuted()
-        {
-            recorder.Stop();
         }
 
         private void OnRefreshCommandExecuted()
@@ -205,16 +194,8 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         {
             if (Date != null)
             {
-                //Dictionary<string, object> parameters = new Dictionary<string, object>();
-                //parameters.Add("Text", "alez");
-                //navigator.Navigate("MessageShell", parameters);
-
+                // todo: send the Date value.
                 regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
-
-                //CommentsWindow window = new CommentsWindow(new DayCommentRepository(), datePicker1.SelectedDate.Value);
-
-                //window.Owner = this;
-                //window.ShowDialog();
             }
         }
 

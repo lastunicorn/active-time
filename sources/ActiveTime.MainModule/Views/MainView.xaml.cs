@@ -35,11 +35,6 @@ namespace DustInTheWind.ActiveTime.MainModule.Views
             Loaded += (s, e) => DataContext = viewModel;
         }
 
-        private void datePicker1_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void menuItemNew_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
@@ -52,7 +47,6 @@ namespace DustInTheWind.ActiveTime.MainModule.Views
 
         private void menuItemSplit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
         }
 
         private void menuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)

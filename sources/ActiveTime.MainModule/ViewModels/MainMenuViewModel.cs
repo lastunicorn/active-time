@@ -19,6 +19,7 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Practices.Prism.Commands;
+using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
@@ -26,6 +27,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
     {
         private readonly IApplicationService applicationService;
         private readonly IShellNavigator shellNavigator;
+        private readonly IRecorder recorder;
 
         private readonly ICommand exportCommand;
         public ICommand ExportCommand
@@ -51,7 +53,19 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             get { return aboutCommand; }
         }
 
-        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator)
+        private readonly ICommand startCommand;
+        public ICommand StartCommand
+        {
+            get { return startCommand; }
+        }
+
+        private readonly ICommand stopCommand;
+        public ICommand StopCommand
+        {
+            get { return stopCommand; }
+        }
+
+        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorder recorder)
         {
             if (applicationService == null)
                 throw new ArgumentNullException("applicationService");
@@ -59,13 +73,19 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             if (shellNavigator == null)
                 throw new ArgumentNullException("shellNavigator");
 
+            if (recorder == null)
+                throw new ArgumentNullException("recorder");
+
             this.applicationService = applicationService;
             this.shellNavigator = shellNavigator;
+            this.recorder = recorder;
 
             exportCommand = new DelegateCommand(OnExportCommandExecuted);
             statisticsCommand = new DelegateCommand(OnStatisticsCommandExecuted);
             exitCommand = new DelegateCommand(OnExitCommandExecuted);
             aboutCommand = new DelegateCommand(OnAboutCommandExecuted);
+            startCommand = new DelegateCommand(OnStartCommandExecuted);
+            stopCommand = new DelegateCommand(OnStopCommandExecuted);
         }
 
         private void OnExportCommandExecuted()
@@ -84,6 +104,16 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         private void OnAboutCommandExecuted()
         {
             shellNavigator.Navigate(ShellNames.AboutShell);
+        }
+
+        private void OnStartCommandExecuted()
+        {
+            recorder.Start();
+        }
+
+        private void OnStopCommandExecuted()
+        {
+            recorder.Stop();
         }
     }
 }
