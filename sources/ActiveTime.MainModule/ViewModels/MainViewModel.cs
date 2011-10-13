@@ -134,6 +134,12 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             get { return deleteCommand; }
         }
 
+        private DayTimeInterval aaa = new DayTimeInterval(TimeSpan.Zero, TimeSpan.Zero);
+        public DayTimeInterval AAA
+        {
+            get { return aaa; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
@@ -168,7 +174,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 
             commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
             refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
-            deleteCommand = new DelegateCommand<DayTimeInterval>(OnDeleteCommandExecuted);
+            deleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
 
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
@@ -180,7 +186,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             //UpdateDisplayedData();
         }
 
-        private void OnDeleteCommandExecuted(DayTimeInterval item)
+        private void OnDeleteCommandExecuted(object item)
         {
         }
 

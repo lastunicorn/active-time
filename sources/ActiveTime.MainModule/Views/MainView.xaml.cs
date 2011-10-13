@@ -53,5 +53,10 @@ namespace DustInTheWind.ActiveTime.MainModule.Views
         {
 
         }
+
+        private void contextMenuRecords_Opened(object sender, System.Windows.RoutedEventArgs e)
+        {
+            menuItemDelete.upDate
+        }
     }
 }

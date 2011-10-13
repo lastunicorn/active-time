@@ -81,7 +81,7 @@
 
         <Label Grid.Row="3" Grid.Column="0" Content="Records:" Name="label3" Margin="3" />
 
-        <ListBox Grid.Row="3" Grid.Column="1" Margin="3" Grid.ColumnSpan="3" Name="listBox1"
+        <ListBox Grid.Row="3" Grid.Column="1" Margin="3" Grid.ColumnSpan="3" x:Name="listBox1"
                     ItemsSource="{Binding Path=Records}"
                     SelectionMode="Extended">
 
@@ -92,7 +92,7 @@
             </ListBox.ItemTemplate>
 
             <ListBox.ContextMenu>
-                <ContextMenu Name="contextMenuRecords">
+                <ContextMenu Name="contextMenuRecords" Opened="contextMenuRecords_Opened">
                     <MenuItem Name="menuItemNew" Header="New" Click="menuItemNew_Click" IsEnabled="False"/>
                     <Separator Margin="0"/>
                     <MenuItem Name="menuItemMerge" Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
@@ -100,7 +100,7 @@
                     <Separator Margin="0"/>
                     <MenuItem Name="menuItemDelete" Header="Delete"
                               customcmd:MenuItemClick.Command="{Binding DeleteCommand}"
-                              customcmd:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem}"/>
+                              customcmd:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, UpdateSourceTrigger=Explicit}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
 
@@ -110,6 +110,14 @@
 
             <Button Content="Comments" MinWidth="75" Name="buttonComments" Margin="0,0,5,0" cmd:Click.Command="{Binding CommentsCommand}"/>
             <Button Content="Refresh" Margin="0,0,5,0" Name="buttonRefresh" cmd:Click.Command="{Binding RefreshCommand}" MinWidth="75" />
+            
+            <!--<MenuItem Header="Delete2"
+                              customcmd:MenuItemClick.Command="{Binding DeleteCommand}"
+                              customcmd:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, Mode=TwoWay}"/>-->
+            
+            <!--<Button Content="click"
+                    cmd:Click.Command="{Binding DeleteCommand}"
+                    cmd:Click.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem}"/>-->
 
         </StackPanel>
     </Grid>

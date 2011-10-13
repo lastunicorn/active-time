@@ -17,6 +17,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System;
 
 namespace DustInTheWind.ActiveTime.Common.Commands
 {
@@ -113,6 +114,29 @@ namespace DustInTheWind.ActiveTime.Common.Commands
         }
 
         #endregion
+
+        public static readonly DependencyProperty AlezProperty = DependencyProperty.RegisterAttached(
+            "Alez", typeof(object), typeof(MenuItemClick), new PropertyMetadata(OnSetAlezCallback));
+
+        private static void OnSetAlezCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+        }
+
+        public static object GetAlez(MenuItem menuItem)
+        {
+            if (menuItem == null)
+                throw new ArgumentNullException("menuItem");
+
+            return menuItem.GetValue(AlezProperty);
+        }
+
+        public static void SetAlez(MenuItem menuItem, object alez)
+        {
+            if (menuItem == null)
+                throw new ArgumentNullException("menuItem");
+
+            menuItem.SetValue(AlezProperty, alez);
+        }
     }
 
 }
