@@ -19,7 +19,6 @@ using System.Windows;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
 using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {

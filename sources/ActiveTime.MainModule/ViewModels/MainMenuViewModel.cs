@@ -17,9 +17,9 @@
 using System;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Practices.Prism.Commands;
-using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {

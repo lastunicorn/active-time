@@ -16,11 +16,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Win32;
-using DustInTheWind.ActiveTime.Common.Recording;
-using System.IO;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {
@@ -29,6 +29,9 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
     /// locks the session or logs off. When the user unlocks the session, the recorder
     /// is started only if it was previously running.
     /// </summary>
+    /// <remarks>
+    /// This is an active service, that initiates actions.
+    /// </remarks>
     class SystemSessionService
     {
         private readonly IRecorder recorder;

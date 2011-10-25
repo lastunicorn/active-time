@@ -24,6 +24,11 @@ using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
 {
+    /// <summary>
+    /// This module initializes a few services needed by the application and also
+    /// creates the main shell and some aditional, less important shells like MessageShell
+    /// and AboutShell. Additionally it registers the main views.
+    /// </summary>
     public class MainModule : IModule
     {
         private readonly IUnityContainer unityContainer;
@@ -52,7 +57,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
 
             // Register active services.
             SystemSessionService systemSessionService = unityContainer.Resolve<SystemSessionService>();
-            unityContainer.RegisterInstance<SystemSessionService>(systemSessionService, new ContainerControlledLifetimeManager());
+            unityContainer.RegisterInstance(systemSessionService, new ContainerControlledLifetimeManager());
 
             // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));

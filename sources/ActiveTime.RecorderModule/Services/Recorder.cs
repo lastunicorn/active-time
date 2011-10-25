@@ -16,7 +16,6 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
