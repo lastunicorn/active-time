@@ -40,11 +40,11 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
         private readonly Icon iconOn;
         private readonly Icon iconOff;
 
-        private readonly IRecorder recorder;
+        private readonly IRecorderService recorder;
         private readonly IApplicationService applicationService;
         private readonly IShellNavigator shellNavigator;
 
-        public TrayIconPresenter(IRecorder recorder, IEventAggregator eventAggregator, IApplicationService applicationService,
+        public TrayIconPresenter(IRecorderService recorder, IEventAggregator eventAggregator, IApplicationService applicationService,
             IShellNavigator shellNavigator)
         {
             if (recorder == null)

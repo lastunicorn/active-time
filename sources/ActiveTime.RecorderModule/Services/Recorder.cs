@@ -23,7 +23,7 @@ using Microsoft.Practices.Prism.Events;
 
 namespace DustInTheWind.ActiveTime.RecorderModule.Services
 {
-    class Recorder : IRecorder, IDisposable
+    class Recorder : IRecorderService, IDisposable
     {
         private readonly ITimeRecordRepository timeRecordRepository;
 

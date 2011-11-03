@@ -4,7 +4,13 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.RecorderModule.Services
 {
-    class Scrib
+    /// <summary>
+    /// Keeps track of a current record and updates it in the database when requested.
+    /// </summary>
+    /// <remarks>
+    /// The current record can be obtained in two ways: 1) from the database or 2) created new.
+    /// </remarks>
+    class Scrib : IScrib
     {
         private readonly ITimeRecordRepository repository;
         private readonly ITimeProvider timeProvider;
@@ -28,32 +34,71 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             this.timeProvider = timeProvider;
         }
 
-        public void CreateNewRecord()
+        public void StampNew()
         {
             CreateNewRecordInternal();
         }
 
+        /// <summary>
+        /// Updates the current record with the current time and saves it into the
+        /// repository. If there is no record a new one is automatically created.
+        /// </summary>
         public void Stamp()
         {
             if (record == null)
                 CreateNewRecordInternal();
-
-            repository.Update(record);
+            else
+                repository.Update(record);
         }
 
+        /// <summary>
+        /// Creates a new record with default values and saves it into the repository.
+        /// </summary>
         private void CreateNewRecordInternal()
         {
             DateTime now = timeProvider.GetDateTime();
-            TimeRecord record = new TimeRecord
+            TimeRecord newRecord = new TimeRecord
                                     {
                                         RecordType = TimeRecordType.Normal,
                                         Date = now.Date,
                                         StartTime = now.TimeOfDay,
                                         EndTime = now.TimeOfDay
                                     };
-            repository.Add(record);
+            repository.Add(newRecord);
+            record = newRecord;
+        }
 
-            this.record = record;
+        private bool IsNewDay()
+        {
+            DateTime now = timeProvider.GetDateTime();
+            return record != null && record.Date != now.Date;
+        }
+
+
+        public void DeleteDatabaseRecord()
+        {
+            if (record != null)
+                repository.Delete(record);
+        }
+
+        public TimeSpan? GetTimeFromLastStamp()
+        {
+            if (record == null) return null;
+
+            DateTime now = timeProvider.GetDateTime();
+
+            if (record.Date < now.Date)
+            {
+                TimeSpan a = TimeSpan.FromDays(1) - record.EndTime;
+                TimeSpan b = now.Date - record.Date + TimeSpan.FromDays(1);
+                TimeSpan c = now.TimeOfDay;
+
+                return a + b + c;
+            }
+            else
+            {
+                return now - now.Date.Add(record.EndTime);
+            }
         }
     }
 }

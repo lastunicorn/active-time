@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.RecorderModule.Services;
 using Microsoft.Practices.Prism.Modularity;
@@ -36,11 +37,11 @@ namespace DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions
 
         public void Initialize()
         {
-            //unityContainer.RegisterType<IRecorder, Recorder>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IScrib, Scrib>(new ContainerControlledLifetimeManager());
 
-            Recorder recorder = unityContainer.Resolve<Recorder>();
+            RecorderService recorder = unityContainer.Resolve<RecorderService>();
             recorder.Start();
-            unityContainer.RegisterInstance<IRecorder>(recorder, new ContainerControlledLifetimeManager());
+            unityContainer.RegisterInstance<IRecorderService>(recorder, new ContainerControlledLifetimeManager());
         }
     }
 }

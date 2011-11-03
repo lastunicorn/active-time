@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Commands\MenuItemClick.cs" />
     <Compile Include="Commands\MenuItemClickCommandBehavior.cs" />
+    <Compile Include="IScrib.cs" />
     <Compile Include="ITimeProvider.cs" />
     <Compile Include="Persistence\DayComment.cs" />
     <Compile Include="Persistence\EntityBase.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="ShellNavigation\IShell.cs" />
     <Compile Include="ShellNavigation\IShellNavigator.cs" />
-    <Compile Include="Recording\IRecorder.cs">
+    <Compile Include="Recording\IRecorderService.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Reminding\IReminder.cs" />

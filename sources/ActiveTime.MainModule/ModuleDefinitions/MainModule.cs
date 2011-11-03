@@ -54,6 +54,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
             unityContainer.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ICommentsService, CommentsService>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
 
             // Register active services.
             SystemSessionService systemSessionService = unityContainer.Resolve<SystemSessionService>();

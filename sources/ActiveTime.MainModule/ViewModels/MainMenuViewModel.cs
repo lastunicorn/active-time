@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
     {
         private readonly IApplicationService applicationService;
         private readonly IShellNavigator shellNavigator;
-        private readonly IRecorder recorder;
+        private readonly IRecorderService recorder;
 
         private readonly ICommand exportCommand;
         public ICommand ExportCommand
@@ -65,7 +65,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
             get { return stopCommand; }
         }
 
-        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorder recorder)
+        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder)
         {
             if (applicationService == null)
                 throw new ArgumentNullException("applicationService");

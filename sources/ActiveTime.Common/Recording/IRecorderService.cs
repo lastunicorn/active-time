@@ -18,7 +18,7 @@ using System;
 
 namespace DustInTheWind.ActiveTime.Common.Recording
 {
-    public interface IRecorder
+    public interface IRecorderService
     {
         RecorderState State { get; }
 

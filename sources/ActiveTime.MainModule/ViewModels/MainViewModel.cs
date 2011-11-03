@@ -28,7 +28,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly IRecorder recorder;
+        private readonly IRecorderService recorder;
         private readonly IStatusInfoService statusInfoService;
         private readonly ITimeRecordRepository recordRepository;
         private readonly IRegionManager regionManager;
@@ -148,7 +148,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ViewModels
         /// <param name="recordRepository"></param>
         /// <param name="regionManager"></param>
         /// <param name="navigator"></param>
-        public MainViewModel(IRecorder recorder, IStatusInfoService statusInfoService,
+        public MainViewModel(IRecorderService recorder, IStatusInfoService statusInfoService,
             ITimeRecordRepository recordRepository, IRegionManager regionManager, IShellNavigator navigator)
         {
             if (recorder == null)

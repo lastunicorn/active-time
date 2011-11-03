@@ -25,16 +25,6 @@
         ModuleType="DustInTheWind.ActiveTime.ShellNavigationModule.ModuleDefinitions.ShellNavigationModule, ActiveTime.ShellNavigationModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
-
-    <Modularity:ModuleInfo
-        Ref="file://ActiveTime.RecorderModule.dll"
-        ModuleName="RecorderModule"
-        ModuleType="DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions.RecorderModule, ActiveTime.RecorderModule, Version=1.0.0.0"
-        InitializationMode="WhenAvailable">
-        <Modularity:ModuleInfo.DependsOn>
-            <sys:String>PersistenceModule</sys:String>
-        </Modularity:ModuleInfo.DependsOn>
-    </Modularity:ModuleInfo>
     
     <Modularity:ModuleInfo
         Ref="file://ActiveTime.MainModule.dll"
@@ -44,6 +34,17 @@
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>PersistenceModule</sys:String>
             <sys:String>ShellNavigationModule</sys:String>
+        </Modularity:ModuleInfo.DependsOn>
+    </Modularity:ModuleInfo>
+
+    <Modularity:ModuleInfo
+        Ref="file://ActiveTime.RecorderModule.dll"
+        ModuleName="RecorderModule"
+        ModuleType="DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions.RecorderModule, ActiveTime.RecorderModule, Version=1.0.0.0"
+        InitializationMode="WhenAvailable">
+        <Modularity:ModuleInfo.DependsOn>
+            <sys:String>MainModule</sys:String>
+            <sys:String>PersistenceModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
     

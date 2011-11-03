@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
     /// </remarks>
     class SystemSessionService
     {
-        private readonly IRecorder recorder;
+        private readonly IRecorderService recorder;
         private readonly IShellNavigator navigator;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
         /// <param name="recorder"></param>
         /// <param name="navigator"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public SystemSessionService(IRecorder recorder, IShellNavigator navigator)
+        public SystemSessionService(IRecorderService recorder, IShellNavigator navigator)
         {
             if (recorder == null)
                 throw new ArgumentNullException("recorder");

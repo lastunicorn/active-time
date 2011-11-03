@@ -46,19 +46,19 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         }
 
         [Test]
-        public void CreateNewRecord_calls_timeProvider()
+        public void StampNew_calls_timeProvider()
         {
             Scrib recorder = CreateRecorder();
             DateTime now = DateTime.Now;
             timeProviderMock.Setup(x => x.GetDateTime()).Returns(now);
             
-            recorder.CreateNewRecord();
+            recorder.StampNew();
 
             timeProviderMock.VerifyAll();
         }
 
         [Test]
-        public void CreateNewRecord_saves_a_new_record_in_repository()
+        public void StampNew_saves_a_new_record_in_repository()
         {
             Scrib recorder = CreateRecorder();
             DateTime now = DateTime.Now;
@@ -68,21 +68,21 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
                                                                    r.Date == now.Date &&
                                                                    (r.StartTime - now.TimeOfDay) < TimeSpan.FromSeconds(1) &&
                                                                    r.EndTime == r.StartTime)));
-            recorder.CreateNewRecord();
+            recorder.StampNew();
 
             repositoryMock.VerifyAll();
         }
 
         [Test]
-        public void CreateNewRecord_called_twice_adds_new_record()
+        public void StampNew_called_twice_adds_new_record()
         {
             Scrib recorder = CreateRecorder();
 
             repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()));
             repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()));
 
-            recorder.CreateNewRecord();
-            recorder.CreateNewRecord();
+            recorder.StampNew();
+            recorder.StampNew();
 
             repositoryMock.VerifyAll();
         }

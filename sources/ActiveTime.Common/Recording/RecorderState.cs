@@ -17,7 +17,7 @@
 namespace DustInTheWind.ActiveTime.Common.Recording
 {
     /// <summary>
-    /// Represents the state of a <see cref="IRecorder"/> instance.
+    /// Represents the state of a <see cref="IRecorderService"/> instance.
     /// </summary>
     public enum RecorderState
     {
