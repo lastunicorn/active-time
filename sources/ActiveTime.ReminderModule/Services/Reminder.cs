@@ -16,7 +16,6 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Reminding;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services

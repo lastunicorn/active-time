@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using NHibernate;
 

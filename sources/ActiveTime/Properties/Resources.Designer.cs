@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DustInTheWind.ActiveTime.Properties {
-    using System;
-    
-    
+namespace DustInTheWind.ActiveTime.Properties
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

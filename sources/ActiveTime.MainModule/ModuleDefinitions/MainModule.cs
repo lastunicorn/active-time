@@ -15,10 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.MainModule.Services;
 using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions

@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
