@@ -31,20 +31,14 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
     public class MainModule : IModule
     {
         private readonly IUnityContainer unityContainer;
-        private readonly IRegionManager regionManager;
-        private readonly IShellNavigator shellNavigator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainModule"/> class.
         /// </summary>
         /// <param name="unityContainer"></param>
-        /// <param name="regionManager"></param>
-        /// <param name="shellNavigator"></param>
-        public MainModule(IUnityContainer unityContainer, IRegionManager regionManager, IShellNavigator shellNavigator)
+        public MainModule(IUnityContainer unityContainer)
         {
             this.unityContainer = unityContainer;
-            this.regionManager = regionManager;
-            this.shellNavigator = shellNavigator;
         }
 
         public void Initialize()
