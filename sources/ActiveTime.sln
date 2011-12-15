@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ShellNavigationM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.SystemSessionModule", "ActiveTime.SystemSessionModule\ActiveTime.SystemSessionModule.csproj", "{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.MainGuiModule", "ActiveTime.MainGuiModule\ActiveTime.MainGuiModule.csproj", "{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,16 @@ Global
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Release|x86.ActiveCfg = Release|Any CPU
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|x86.ActiveCfg = Debug|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|x86.Build.0 = Debug|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|Any CPU.ActiveCfg = Release|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|x86.ActiveCfg = Release|x86
+		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

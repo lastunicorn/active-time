@@ -17,7 +17,6 @@
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.MainModule.Services;
-using DustInTheWind.ActiveTime.MainModule.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
@@ -52,23 +51,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
         {
             // Register passive services.
             unityContainer.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<ICommentsService, CommentsService>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
-
-            // Register views in regions.
-            regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
-            regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
-            regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
-
-            // register views in container. (Needed for view navigation.)
-            unityContainer.RegisterType<object, MainView>(ViewNames.MainView);
-            unityContainer.RegisterType<object, CommentsView>(ViewNames.CommentsView);
-
-            // Register shells in the shell navigator. (Needed for shell navigation.)
-            shellNavigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
-            shellNavigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow), ShellNames.MainShell));
-            shellNavigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow), ShellNames.MainShell));
         }
     }
 }
