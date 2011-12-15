@@ -60,7 +60,6 @@
     <Compile Include="Services\CommentsService.cs" />
     <Compile Include="Services\CurrentTimeProvider.cs" />
     <Compile Include="Services\StatusInfoService.cs" />
-    <Compile Include="Services\SystemSessionService.cs" />
     <Compile Include="ViewModels\ButtonBarViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />

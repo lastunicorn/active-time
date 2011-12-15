@@ -1,4 +1,4 @@
-// ActiveTime
+﻿// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,25 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Common.Reminding;
-using DustInTheWind.ActiveTime.ReminderModule.Services;
+using System;
+using DustInTheWind.ActiveTime.SystemSessionModule.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.SystemSessionModule.ModuleDefinitions
 {
-    public class ReminderModule : IModule
+    public class SystemSessionModule : IModule
     {
         private readonly IUnityContainer unityContainer;
 
-        public ReminderModule(IUnityContainer unityContainer)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemSessionModule"/> class.
+        /// </summary>
+        public SystemSessionModule(IUnityContainer unityContainer)
         {
+            if (unityContainer == null)
+                throw new ArgumentNullException("unityContainer");
+
             this.unityContainer = unityContainer;
         }
-
+        
         public void Initialize()
         {
-            unityContainer.RegisterType<IReminder, Reminder>(new ContainerControlledLifetimeManager());
+            SystemSessionService systemSessionService = unityContainer.Resolve<SystemSessionService>();
+            unityContainer.RegisterInstance(systemSessionService, new ContainerControlledLifetimeManager());
         }
     }
 }

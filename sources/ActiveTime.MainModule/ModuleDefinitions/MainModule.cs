@@ -56,10 +56,6 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
             unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
 
-            // Register active services.
-            SystemSessionService systemSessionService = unityContainer.Resolve<SystemSessionService>();
-            unityContainer.RegisterInstance(systemSessionService, new ContainerControlledLifetimeManager());
-
             // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));

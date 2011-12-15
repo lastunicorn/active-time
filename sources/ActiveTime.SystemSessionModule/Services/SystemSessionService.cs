@@ -22,7 +22,7 @@ using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Win32;
 
-namespace DustInTheWind.ActiveTime.MainModule.Services
+namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
 {
     /// <summary>
     /// This service monitorizes the Windows session and stops the recorder when the user
