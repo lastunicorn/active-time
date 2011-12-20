@@ -101,7 +101,10 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         public void DeleteDatabaseRecord()
         {
             if (record != null)
+            {
                 repository.Delete(record);
+                record = null;
+            }
         }
 
         public TimeSpan? GetTimeFromLastStamp()

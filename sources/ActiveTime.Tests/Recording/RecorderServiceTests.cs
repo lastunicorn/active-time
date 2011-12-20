@@ -15,10 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
 using DustInTheWind.ActiveTime.Common.Recording;
@@ -26,7 +24,6 @@ using DustInTheWind.ActiveTime.RecorderModule.Services;
 using Microsoft.Practices.Prism.Events;
 using Moq;
 using NUnit.Framework;
-using System.Threading;
 
 namespace DustInTheWind.ActiveTime.UnitTests.Recording
 {
@@ -35,6 +32,17 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     {
         private Mock<IScrib> scribMock;
         private Mock<IEventAggregator> eventAggregatorMock;
+
+        /// <summary>
+        /// Time interval in miliseconds that is used in tests for the StampingInterval of the RecorderService.
+        /// This value is used by the RecorderService to configure its internal timer.
+        /// </summary>
+        private const int STAMPING_INTERVAL = 100;
+
+        /// <summary>
+        /// Time in miliseconds that is used in tests to wait for the internal timer to do its job.
+        /// </summary>
+        private const int WAIT_TIME_FOR_TIMER_ACTION = 200;
 
         [SetUp]
         public void SetUp()
@@ -48,7 +56,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
             return new RecorderService(scribMock.Object, eventAggregatorMock.Object);
         }
 
-        #region Constructor Tests
+        #region Constructor tests
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -83,6 +91,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
 
         #endregion
 
+        #region Start tests
+
         [Test]
         public void Start_stamps_a_new_record()
         {
@@ -108,15 +118,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         public void Start_raises_Started_event()
         {
             RecorderService recorderService = CreateRecorderService();
-            bool eventCalled = false;
+            bool eventRaised = false;
             recorderService.Started += (s, e) =>
                                            {
-                                               eventCalled = true;
+                                               eventRaised = true;
                                            };
 
             recorderService.Start();
 
-            Assert.That(eventCalled, Is.True);
+            Assert.That(eventRaised, Is.True);
         }
 
         [Test]
@@ -138,6 +148,26 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         }
 
         [Test]
+        public void Start_does_not_raise_Started_event_if_recorder_is_already_started()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            ManualResetEvent semaphore = new ManualResetEvent(false);
+            recorderService.Start();
+            recorderService.Started += (sender, args) => semaphore.Set();
+
+            recorderService.Start();
+
+            if (semaphore.WaitOne(WAIT_TIME_FOR_TIMER_ACTION))
+            {
+                Assert.Fail("Started event was raised. It was expected it would not.");
+            }
+        }
+
+        #endregion
+
+        #region StampingInterval tests
+
+        [Test]
         public void StampingInterval_initial_value_is_1min()
         {
             RecorderService recorderService = CreateRecorderService();
@@ -154,6 +184,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
             Assert.That(recorderService.StampingInterval, Is.EqualTo(TimeSpan.FromSeconds(10)));
         }
 
+        #endregion
+
+        #region Internal timer tests
+
         [Test]
         public void InternalTimer_stamps_at_correct_time_interval()
         {
@@ -161,7 +195,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
             ManualResetEvent semaphore = new ManualResetEvent(false);
 
             RecorderService recorderService = CreateRecorderService();
-            recorderService.StampingInterval = TimeSpan.FromMilliseconds(100);
+            recorderService.StampingInterval = TimeSpan.FromMilliseconds(STAMPING_INTERVAL);
             scribMock.Setup(x => x.Stamp()).Callback(() =>
             {
                 stopwatch.Stop();
@@ -171,9 +205,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
             stopwatch.Start();
             recorderService.Start();
 
-            if (semaphore.WaitOne(200))
+            if (semaphore.WaitOne(WAIT_TIME_FOR_TIMER_ACTION))
             {
-                Assert.That(stopwatch.ElapsedMilliseconds, Is.EqualTo(100).Within(50));
+                Assert.That(stopwatch.ElapsedMilliseconds, Is.EqualTo(STAMPING_INTERVAL).Within(20));
             }
             else
             {
@@ -181,9 +215,129 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
             }
         }
 
+        [Test]
         public void InternalTimer_raises_Stamping_event()
         {
-            
+            RecorderService recorderService = CreateRecorderService();
+            ManualResetEvent semaphore = new ManualResetEvent(false);
+
+            recorderService.Stamping += (sender, args) => semaphore.Set();
+            recorderService.StampingInterval = TimeSpan.FromMilliseconds(STAMPING_INTERVAL);
+
+            recorderService.Start();
+
+            if (!semaphore.WaitOne(200))
+            {
+                Assert.Fail("Stamping event was not raised.");
+            }
         }
+
+        [Test]
+        public void InternalTimer_raises_Stamped_event()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            ManualResetEvent semaphore = new ManualResetEvent(false);
+
+            recorderService.Stamped += (sender, args) => semaphore.Set();
+            recorderService.StampingInterval = TimeSpan.FromMilliseconds(STAMPING_INTERVAL);
+
+            recorderService.Start();
+
+            if (!semaphore.WaitOne(WAIT_TIME_FOR_TIMER_ACTION))
+            {
+                Assert.Fail("Stamped event was not raised.");
+            }
+        }
+
+        #endregion
+
+        #region Stop tests
+
+        [Test]
+        public void Stop_raises_Stopped_event()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            ManualResetEvent semaphore = new ManualResetEvent(false);
+            recorderService.Start();
+
+            recorderService.Stopped += (sender, args) => semaphore.Set();
+            recorderService.Stop();
+
+            if (!semaphore.WaitOne(WAIT_TIME_FOR_TIMER_ACTION))
+            {
+                Assert.Fail("Stopped event was not raised.");
+            }
+        }
+
+        [Test]
+        public void Stop_does_not_raise_Stopped_event_if_recorder_is_already_stopped()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            ManualResetEvent semaphore = new ManualResetEvent(false);
+
+            recorderService.Stopped += (sender, args) => semaphore.Set();
+            recorderService.Stop();
+
+            if (semaphore.WaitOne(WAIT_TIME_FOR_TIMER_ACTION))
+            {
+                Assert.Fail("Stopped event was raised. Was expected it would not.");
+            }
+        }
+
+        #endregion
+
+        #region GetTimeFromLastStop
+
+        [Test]
+        public void GetTimeFromLastStop_returns_null_if_not_started()
+        {
+            RecorderService recorderService = CreateRecorderService();
+
+            Assert.That(recorderService.GetTimeFromLastStop(), Is.Null);
+        }
+
+        [Test]
+        public void GetTimeFromLastStop_returns_null_if_started_but_never_stopped()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            recorderService.Start();
+
+            Assert.That(recorderService.GetTimeFromLastStop(), Is.Null);
+        }
+
+        [Test]
+        public void GetTimeFromLastStop_returns_correct_value_after_service_is_started_and_stopped()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            recorderService.Start();
+            Thread.Sleep(50);
+            recorderService.Stop();
+            Thread.Sleep(100);
+
+            Assert.That(recorderService.GetTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
+        }
+
+        [Test]
+        public void GetTimeFromLastStop_returns_correct_value_after_service_started_second_time()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            recorderService.Start();
+            Thread.Sleep(50);
+            recorderService.Stop();
+            Thread.Sleep(50);
+            recorderService.Start();
+            Thread.Sleep(50);
+
+            Assert.That(recorderService.GetTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
+        }
+
+        #endregion
+
+        //[Test]
+        //public void EventAggregator_raises_ApplicationExitEvent_service_should_stop()
+        //{
+        //    RecorderService recorderService = CreateRecorderService();
+            
+        //}
     }
 }
