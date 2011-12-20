@@ -50,6 +50,9 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             this.timeProvider = timeProvider;
         }
 
+        /// <summary>
+        /// Creates a new record and saves it in the repository.
+        /// </summary>
         public void StampNew()
         {
             CreateNewRecordInternal();
@@ -64,7 +67,11 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             if (record == null)
                 CreateNewRecordInternal();
             else
+            {
+                DateTime now = timeProvider.GetDateTime();
+                record.EndTime = now.TimeOfDay;
                 repository.Update(record);
+            }
         }
 
         /// <summary>

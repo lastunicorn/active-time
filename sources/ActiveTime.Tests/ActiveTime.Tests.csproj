@@ -67,6 +67,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryGetByDateTests.cs" />
+    <Compile Include="Recording\RecorderServiceTests.cs" />
     <Compile Include="Recording\RecorderTests.cs" />
     <Compile Include="Recording\RecordTests.cs" />
     <Compile Include="Persistence\EntitiesTests\TimeRecordTypeTests.cs" />

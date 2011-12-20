@@ -67,6 +67,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
                 throw new ArgumentNullException("entity");
 
             CurrentSession.Update(entity);
+            CurrentSession.Flush();
         }
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
                 throw new ArgumentNullException("entity");
 
             CurrentSession.SaveOrUpdate(entity);
+            CurrentSession.Flush();
         }
 
         /// <summary>
@@ -94,6 +96,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
                 throw new ArgumentNullException("entity");
 
             CurrentSession.Delete(entity);
+            CurrentSession.Flush();
         }
 
         /// <summary>

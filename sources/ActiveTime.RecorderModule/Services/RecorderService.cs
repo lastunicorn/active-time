@@ -31,6 +31,21 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         private readonly IScrib scrib;
         private readonly Timer timer;
         private TimeSpan stampingInterval;
+        public TimeSpan StampingInterval
+        {
+            get { return stampingInterval; }
+            set
+            {
+                lock (stateSynchronizer)
+                {
+                    stampingInterval = value;
+                    if (State == RecorderState.Running)
+                    {
+                        timer.Change(stampingInterval, stampingInterval);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Specifies the state of the current recorder service.
@@ -154,6 +169,13 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         private void timer_tick(object o)
         {
             DoStamp();
+
+            //OnStamping(EventArgs.Empty);
+            //lock (stateSynchronizer)
+            //{
+            //    DoStamp();
+            //}
+            //OnStamped(EventArgs.Empty);
         }
 
         public void Start()
@@ -233,10 +255,10 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         {
             // Stamp
             scrib.StampNew();
-            
+
             // Start timer
             timer.Change(stampingInterval, stampingInterval);
-           
+
             // Change the state.
             State = RecorderState.Running;
         }
