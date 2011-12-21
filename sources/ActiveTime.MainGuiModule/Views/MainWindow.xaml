@@ -6,7 +6,7 @@
     xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
     xmlns:common="clr-namespace:DustInTheWind.ActiveTime.Common;assembly=ActiveTime.Common"
         
-    Title="Shell"
+    Title="{Binding Path=WindowTitle}"
     Height="400" Width="400"
     ResizeMode="CanResizeWithGrip"
     MinWidth="350" MinHeight="350"

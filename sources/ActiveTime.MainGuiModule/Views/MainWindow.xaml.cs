@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Windows;
+using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.Views
 {
@@ -23,9 +25,14 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainWindowModel viewModel)
         {
+            if (viewModel == null)
+                throw new ArgumentNullException("viewModel");
+
             InitializeComponent();
+
+            Loaded += (s, e) => DataContext = viewModel;
         }
     }
 }

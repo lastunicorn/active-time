@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
@@ -83,10 +82,6 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
                     break;
 
                 case SessionSwitchReason.SessionLogoff:
-                    using (StreamWriter sw = new StreamWriter("logon.txt", true))
-                    {
-                        sw.WriteLine("I received the SessionLogoff event");
-                    }
                     break;
 
                 case SessionSwitchReason.SessionLock:
@@ -103,10 +98,6 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
                     break;
 
                 case SessionSwitchReason.SessionLogon:
-                    using (StreamWriter sw = new StreamWriter("logon.txt", true))
-                    {
-                        sw.WriteLine("I received the SessionLogon event");
-                    }
                     break;
 
                 case SessionSwitchReason.SessionUnlock:

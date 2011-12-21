@@ -78,6 +78,7 @@
     <Compile Include="Persistence\RepositoriesTests\RepositoryTestsBase.cs" />
     <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryCrudTests.cs" />
     <Compile Include="Recording\ScribTests.cs" />
+    <Compile Include="Reminding\PauseReminderTests.cs" />
     <Compile Include="Reminding\ReminderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIServices\StatusInfoServiceTests.cs" />
