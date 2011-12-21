@@ -9,13 +9,17 @@ using DustInTheWind.ActiveTime.Common.Reminding;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services
 {
-    class PauseReminder
+    class PauseReminder : IPauseReminder
     {
         private IRecorderService recorderService;
         private IShellNavigator shellNavigator;
         private IReminder reminder;
 
-        private TimeSpan maxWorkTime;
+        private bool isMonitoring = false;
+
+        public TimeSpan PauseInterval { get; set; }
+
+        public TimeSpan SnoozeInterval { get; set; }
 
         public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder)
         {
@@ -33,16 +37,26 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
             this.shellNavigator = shellNavigator;
             this.reminder = reminder;
 
-            maxWorkTime = TimeSpan.FromHours(1);
+            PauseInterval = TimeSpan.FromHours(1);
+            //PauseInterval = TimeSpan.FromSeconds(5);
+            SnoozeInterval = TimeSpan.FromMinutes(3);
+        }
+
+        public void StartMonitoring()
+        {
+            if (isMonitoring) return;
 
             recorderService.Started += new EventHandler(recorderService_Started);
             recorderService.Stopped += new EventHandler(recorderService_Stopped);
             reminder.Ring += new EventHandler<RingEventArgs>(reminder_Ring);
+
+            if (recorderService.State == RecorderState.Running)
+                reminder.Start(PauseInterval);
         }
 
         private void recorderService_Started(object sender, EventArgs e)
         {
-            reminder.Start(maxWorkTime);
+            reminder.Start(PauseInterval);
         }
 
         private void recorderService_Stopped(object sender, EventArgs e)
@@ -53,8 +67,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         private void reminder_Ring(object sender, RingEventArgs e)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("Pause", "Make a pause.");
+            parameters.Add("Text", "Make a pause.");
             shellNavigator.Navigate(ShellNames.MessageShell, parameters);
+
+            e.Snooze = true;
+            e.SnoozeTime = SnoozeInterval;
         }
     }
 }

@@ -64,6 +64,8 @@
     </Compile>
     <Compile Include="ICommentsService.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
+    <Compile Include="Reminding\IPauseReminder.cs" />
+    <Compile Include="Reminding\Reminder.cs" />
     <Compile Include="ShellNavigation\IShell.cs" />
     <Compile Include="ShellNavigation\IShellNavigator.cs" />
     <Compile Include="Recording\IRecorderService.cs">

@@ -26,6 +26,10 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
     /// <summary>
     /// 
     /// </summary>
+    /// <remarks>
+    /// Need to make this class thread safe.
+    /// the shels collesction and shelInfos.
+    /// </remarks>
     class ShellNavigator : IShellNavigator
     {
         private readonly IUnityContainer unityContainer;
@@ -104,17 +108,20 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
         /// <param name="shellInfo">The <see cref="ShellInfo"/> object containing the information about the shell that needs to be created.</param>
         private void CreateNewShell(ShellInfo shellInfo)
         {
-            Window shell = (Window)unityContainer.Resolve(shellInfo.ShellType);
-            RegionManager.SetRegionManager(shell, regionManager);
-            RegionManager.UpdateRegions();
-
-            if (!string.IsNullOrEmpty(shellInfo.OwnerName) && shells.ContainsKey(shellInfo.OwnerName))
+            Window shell = null;
+            dispatcherService.Dispatch(() =>
             {
-                dispatcherService.Dispatch(() =>
-                                               {
-                                                   shell.Owner = shells[shellInfo.OwnerName];
-                                               });
-            }
+                shell = (Window)unityContainer.Resolve(shellInfo.ShellType);
+
+                RegionManager.SetRegionManager(shell, regionManager);
+                RegionManager.UpdateRegions();
+
+                if (!string.IsNullOrEmpty(shellInfo.OwnerName) && shells.ContainsKey(shellInfo.OwnerName))
+                {
+                    shell.Owner = shells[shellInfo.OwnerName];
+                }
+
+            });
 
             shell.Closed += (s, e) =>
                                 {
@@ -128,18 +135,20 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
 
         private void NavigateInternal(string shellName, Dictionary<string, object> parameters)
         {
+            if (!shells.ContainsKey(shellName)) return;
+
             Window shell = shells[shellName];
 
             dispatcherService.Dispatch(() =>
-                                           {
-                                               shell.Show();
-                                               shell.Activate();
-                                           });
+            {
+                shell.Show();
+                shell.Activate();
 
-            if (shell is IShell)
-                ((IShell)shell).NavigationParameters = parameters;
-            else if (shell.DataContext is IShell)
-                ((IShell)shell.DataContext).NavigationParameters = parameters;
+                if (shell is IShell)
+                    ((IShell)shell).NavigationParameters = parameters;
+                else if (shell.DataContext is IShell)
+                    ((IShell)shell.DataContext).NavigationParameters = parameters;
+            });
         }
     }
 }

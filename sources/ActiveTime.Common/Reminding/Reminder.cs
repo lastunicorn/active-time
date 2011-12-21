@@ -23,7 +23,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
     /// <summary>
     /// It is a timer that "rings" after a specified time.
     /// </summary>
-    class Reminder : IDisposable, IReminder
+    public class Reminder : IDisposable, IReminder
     {
         /// <summary>
         /// Lock object used when the status needs to be changed.

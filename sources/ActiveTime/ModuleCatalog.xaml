@@ -11,14 +11,6 @@
         ModuleType="DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
-
-    <!-- Not used yet. Will be added later. -->
-    <Modularity:ModuleInfo
-        Ref="file://ActiveTime.ReminderModule.dll"
-        ModuleName="ReminderModule"
-        ModuleType="DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions.ReminderModule, ActiveTime.ReminderModule, Version=1.0.0.0"
-        InitializationMode="WhenAvailable">
-    </Modularity:ModuleInfo>
     
     <Modularity:ModuleInfo
         Ref="file://ActiveTime.MainModule.dll"
@@ -57,11 +49,21 @@
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
 
-    <!-- Not used yet. Will be added later. -->
     <Modularity:ModuleInfo
         Ref="file://ActiveTime.SystemSessionModule.dll"
         ModuleName="SystemSessionModule"
         ModuleType="DustInTheWind.ActiveTime.SystemSessionModule.ModuleDefinitions.SystemSessionModule, ActiveTime.SystemSessionModule, Version=1.0.0.0"
+        InitializationMode="WhenAvailable">
+        <Modularity:ModuleInfo.DependsOn>
+            <sys:String>RecorderModule</sys:String>
+            <sys:String>ShellNavigationModule</sys:String>
+        </Modularity:ModuleInfo.DependsOn>
+    </Modularity:ModuleInfo>
+
+    <Modularity:ModuleInfo
+        Ref="file://ActiveTime.ReminderModule.dll"
+        ModuleName="ReminderModule"
+        ModuleType="DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions.ReminderModule, ActiveTime.ReminderModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
