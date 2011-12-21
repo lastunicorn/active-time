@@ -1,0 +1,28 @@
+Main Module
+	Application Service - used to close the application.
+	Current Time Provider - Provides the date and time of the system.
+
+-------------------------------------------------
+
+Persistence Module - writes into the database
+
+Recorder Module
+	Scrib
+	Recorder Service (Active)
+
+*Reminder Module
+	Reminder 
+	Pause Reminder (Active) - used for the pause remainder.
+
+System Session Module
+	System Session Service (Active) - Stops the Recorder when user locks the computer.
+
+-------------------------------------------------
+
+Main Gui Module
+	Status Info Service
+	Views 
+
+Shell Navigation Module
+
+Tray Icon Module
