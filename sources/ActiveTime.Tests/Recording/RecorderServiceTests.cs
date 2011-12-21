@@ -31,7 +31,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     public class RecorderServiceTests
     {
         private Mock<IScrib> scribMock;
-        private Mock<IEventAggregator> eventAggregatorMock;
+        private Mock<IApplicationService> applicationService;
 
         /// <summary>
         /// Time interval in miliseconds that is used in tests for the StampingInterval of the RecorderService.
@@ -48,12 +48,12 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         public void SetUp()
         {
             scribMock = new Mock<IScrib>();
-            eventAggregatorMock = new Mock<IEventAggregator>();
+            applicationService = new Mock<IApplicationService>();
         }
 
         private RecorderService CreateRecorderService()
         {
-            return new RecorderService(scribMock.Object, eventAggregatorMock.Object);
+            return new RecorderService(scribMock.Object, applicationService.Object);
         }
 
         #region Constructor tests
@@ -62,12 +62,12 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_throws_if_scrib_is_null()
         {
-            new RecorderService(null, eventAggregatorMock.Object);
+            new RecorderService(null, applicationService.Object);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_throws_if_eventAggregator_is_null()
+        public void Constructor_throws_if_applicationService_is_null()
         {
             new RecorderService(scribMock.Object, null);
         }
@@ -76,17 +76,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         public void Constructor_successfully_called()
         {
             CreateRecorderService();
-        }
-
-        [Test]
-        public void Constructor_subscribes_to_ApplicationExitEvent()
-        {
-            ApplicationExitEvent ev = new ApplicationExitEvent();
-            eventAggregatorMock.Setup(x => x.GetEvent<ApplicationExitEvent>()).Returns(ev);
-
-            RecorderService recorderService = CreateRecorderService();
-
-            eventAggregatorMock.VerifyAll();
         }
 
         #endregion
@@ -333,11 +322,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
 
         #endregion
 
-        //[Test]
-        //public void EventAggregator_raises_ApplicationExitEvent_service_should_stop()
-        //{
-        //    RecorderService recorderService = CreateRecorderService();
-            
-        //}
+        [Test]
+        public void Service_is_stopped_when_ApplicationService_raises_Exiting_event()
+        {
+            RecorderService recorderService = CreateRecorderService();
+            recorderService.Start();
+
+            applicationService.Raise(x=>x.Exiting += null, EventArgs.Empty);
+
+            Assert.That(recorderService.State, Is.EqualTo(RecorderState.Stopped));
+        }
     }
 }

@@ -18,7 +18,6 @@ using System;
 using System.Windows;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
-using Microsoft.Practices.Prism.Events;
 
 namespace DustInTheWind.ActiveTime.MainModule.Services
 {
@@ -29,28 +28,34 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
     /// </summary>
     class ApplicationService : IApplicationService
     {
-        private readonly IEventAggregator eventAggregator;
+        #region Event Exiting
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationService"/> class.
+        /// Event raised when ... Well, is raised when it should be raised. Ok?
         /// </summary>
-        /// <param name="eventAggregator"></param>
-        public ApplicationService(IEventAggregator eventAggregator)
-        {
-            if (eventAggregator == null)
-                throw new ArgumentNullException("eventAggregator");
+        public event EventHandler Exiting;
 
-            this.eventAggregator = eventAggregator;
+        /// <summary>
+        /// Raises the Exiting event.
+        /// </summary>
+        /// <param name="e">An EventArgs that contains the event data.</param>
+        protected virtual void OnExiting(EventArgs e)
+        {
+            if (Exiting != null)
+            {
+                Exiting(this, e);
+            }
         }
 
+        #endregion
+        
         /// <summary>
         /// Publishes the <see cref="ApplicationExitEvent"/> and then exits the application.
         /// </summary>
         public void Exit()
         {
-            ApplicationExitEvent applicationExitEvent = eventAggregator.GetEvent<ApplicationExitEvent>();
-            if (applicationExitEvent != null)
-                applicationExitEvent.Publish(null);
+            try { OnExiting(EventArgs.Empty); }
+            catch { }
 
             Application.Current.Shutdown();
         }

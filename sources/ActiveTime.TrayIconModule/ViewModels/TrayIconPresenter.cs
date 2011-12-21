@@ -44,14 +44,11 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
         private readonly IApplicationService applicationService;
         private readonly IShellNavigator shellNavigator;
 
-        public TrayIconPresenter(IRecorderService recorder, IEventAggregator eventAggregator, IApplicationService applicationService,
+        public TrayIconPresenter(IRecorderService recorder, IApplicationService applicationService,
             IShellNavigator shellNavigator)
         {
             if (recorder == null)
                 throw new ArgumentNullException("recorder");
-
-            if (eventAggregator == null)
-                throw new ArgumentNullException("eventAggregator");
 
             if (applicationService == null)
                 throw new ArgumentNullException("applicationService");
@@ -66,8 +63,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             iconOn = Properties.Resources.tray_on;
             iconOff = Properties.Resources.tray_off;
 
-            ApplicationExitEvent applicationExitEvent = eventAggregator.GetEvent<ApplicationExitEvent>();
-            applicationExitEvent.Subscribe(OnApplicationExitEvent);
+            applicationService.Exiting += new EventHandler(applicationService_Exiting);
 
             recorder.Started += new EventHandler(recorder_Started);
             recorder.Stopped += new EventHandler(recorder_Stopped);
@@ -83,7 +79,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             RefreshView();
         }
 
-        private void OnApplicationExitEvent(object o)
+        private void applicationService_Exiting(object sender, EventArgs e)
         {
             Hide();
         }

@@ -127,28 +127,26 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// Initializes a new instance of the <see cref="RecorderService"/> class.
         /// </summary>
         /// <param name="scrib"></param>
-        /// <param name="eventAggregator"></param>
+        /// <param name="applicationService"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public RecorderService(IScrib scrib, IEventAggregator eventAggregator)
+        public RecorderService(IScrib scrib, IApplicationService applicationService)
         {
             if (scrib == null)
                 throw new ArgumentNullException("scrib");
 
-            if (eventAggregator == null)
-                throw new ArgumentNullException("eventAggregator");
+            if (applicationService == null)
+                throw new ArgumentNullException("applicationService");
 
             this.scrib = scrib;
             timer = new Timer(timer_tick);
             stampingInterval = TimeSpan.FromMinutes(1);
 
-            ApplicationExitEvent applicationExitEvent = eventAggregator.GetEvent<ApplicationExitEvent>();
-            if (applicationExitEvent != null)
-                applicationExitEvent.Subscribe(new Action<object>(OnApplicationExitEvent));
+            applicationService.Exiting += new EventHandler(applicationService_Exiting);
         }
 
         #endregion
 
-        private void OnApplicationExitEvent(object o)
+        private void applicationService_Exiting(object sender, EventArgs e)
         {
             DoStop(false);
             //StopWithEvents(false);

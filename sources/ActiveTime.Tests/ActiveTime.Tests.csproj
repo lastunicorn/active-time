@@ -68,7 +68,6 @@
     </Compile>
     <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryGetByDateTests.cs" />
     <Compile Include="Recording\RecorderServiceTests.cs" />
-    <Compile Include="Recording\RecorderTests.cs" />
     <Compile Include="Recording\RecordTests.cs" />
     <Compile Include="Persistence\EntitiesTests\TimeRecordTypeTests.cs" />
     <Compile Include="Persistence\EntitiesTests\TimeRecordEqualsTests.cs" />
@@ -81,12 +80,17 @@
     <Compile Include="Recording\ScribTests.cs" />
     <Compile Include="Reminding\ReminderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIServices\StatusInfoServiceTests.cs" />
     <Compile Include="UI\CommentsViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.MainGuiModule\ActiveTime.MainGuiModule.csproj">
+      <Project>{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}</Project>
+      <Name>ActiveTime.MainGuiModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.csproj">
       <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>
