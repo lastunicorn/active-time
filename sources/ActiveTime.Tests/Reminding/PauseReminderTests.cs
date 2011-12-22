@@ -1,14 +1,28 @@
-﻿using System;
+﻿// ActiveTime
+// Copyright (C) 2011 Dust in the Wind
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common.Reminding;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
 using Moq;
 using NUnit.Framework;
-using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Reminding;
 using System.Threading;
 
 namespace DustInTheWind.ActiveTime.UnitTests.Reminding
@@ -45,9 +59,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.Reminding
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_throws_if_recorderService_is_null()
         {
-            Mock<IShellNavigator> shellNavigatorMock = new Mock<IShellNavigator>();
-            Mock<IReminder> reminderMock = new Mock<IReminder>();
-
             new PauseReminder(null, shellNavigatorMock.Object, reminderMock.Object);
         }
 
@@ -55,19 +66,13 @@ namespace DustInTheWind.ActiveTime.UnitTests.Reminding
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_throws_if_shellNavigator_is_null()
         {
-            Mock<IRecorderService> recordServiceMock = new Mock<IRecorderService>();
-            Mock<IReminder> reminderMock = new Mock<IReminder>();
-
-            new PauseReminder(recordServiceMock.Object, null, reminderMock.Object);
+            new PauseReminder(recorderServiceMock.Object, null, reminderMock.Object);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_throws_if_reminder_is_null()
         {
-            Mock<IRecorderService> recorderServiceMock = new Mock<IRecorderService>();
-            Mock<IShellNavigator> shellNavigatorMock = new Mock<IShellNavigator>();
-
             new PauseReminder(recorderServiceMock.Object, shellNavigatorMock.Object, null);
         }
 
