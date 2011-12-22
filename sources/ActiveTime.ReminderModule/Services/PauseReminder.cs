@@ -31,6 +31,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
     /// </summary>
     class PauseReminder : IPauseReminder
     {
+        private IRecorderService recorderService;
 
         /// <summary>
         /// It is used to display a message box to the user.
