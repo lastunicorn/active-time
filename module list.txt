@@ -10,7 +10,7 @@ Recorder Module
 	Scrib
 	Recorder Service (Active)
 
-*Reminder Module
+Reminder Module
 	Reminder 
 	Pause Reminder (Active) - used for the pause remainder.
 
@@ -20,9 +20,11 @@ System Session Module
 -------------------------------------------------
 
 Main Gui Module
-	Status Info Service
+	Status Info Service - (single instance)
 	Views 
 
 Shell Navigation Module
+	Shell Navigator
+	Dispatcher Service
 
 Tray Icon Module
