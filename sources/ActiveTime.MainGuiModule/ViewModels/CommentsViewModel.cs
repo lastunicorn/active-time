@@ -35,14 +35,10 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             get { return buttonBarViewModel; }
         }
 
-        private DateTime? date;
         public DateTime? Date
         {
-            get { return date; }
-            set
-            {
-                stateService.CurrentDate = value;
-            }
+            get { return stateService.CurrentDate; }
+            set { stateService.CurrentDate = value; }
         }
 
         private string comment;
@@ -94,14 +90,14 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
             stateService.CurrentDateChanged += new EventHandler(commentsService_CurrentDateChanged);
 
-            RetrieveCurrentDate();
             RetrieveRecord();
             RefreshDisplayedData();
         }
 
         void commentsService_CurrentDateChanged(object sender, EventArgs e)
         {
-            RetrieveCurrentDate();
+            NotifyPropertyChanged("Date");
+
             RetrieveRecord();
             RefreshDisplayedData();
         }
@@ -120,14 +116,10 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             }
         }
 
-        private void RetrieveCurrentDate()
-        {
-            date = stateService.CurrentDate;
-            NotifyPropertyChanged("Date");
-        }
-
         private void RetrieveRecord()
         {
+            DateTime? date = stateService.CurrentDate;
+
             if (date == null)
             {
                 record = null;
@@ -167,10 +159,12 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private void SaveInternal()
         {
+            DateTime? date = stateService.CurrentDate;
+
             if (record == null)
             {
-                if (Date == null) return;
-                record = new DayComment { Date = Date.Value };
+                if (date == null) return;
+                record = new DayComment { Date = date.Value };
             }
             record.Comment = Comment;
             dayCommentRepository.AddOrUpdate(record);

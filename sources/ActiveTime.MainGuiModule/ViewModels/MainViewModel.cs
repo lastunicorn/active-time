@@ -33,20 +33,12 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         private readonly ITimeRecordRepository recordRepository;
         private readonly IRegionManager regionManager;
         private readonly IShellNavigator navigator;
-
-        private DateTime? date;
+        private readonly IStateService stateService;
 
         public DateTime? Date
         {
-            get { return date; }
-            set
-            {
-                date = value;
-                NotifyPropertyChanged("Date");
-
-                statusInfoService.SetStatus("Date changed.");
-                UpdateDisplayedData();
-            }
+            get { return stateService.CurrentDate; }
+            set { stateService.CurrentDate = value; }
         }
 
         private TimeSpan activeTime;
@@ -149,7 +141,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// <param name="regionManager"></param>
         /// <param name="navigator"></param>
         public MainViewModel(IRecorderService recorder, IStatusInfoService statusInfoService,
-            ITimeRecordRepository recordRepository, IRegionManager regionManager, IShellNavigator navigator)
+            ITimeRecordRepository recordRepository, IRegionManager regionManager, IShellNavigator navigator,
+            IStateService stateService)
         {
             if (recorder == null)
                 throw new ArgumentNullException("recorder");
@@ -166,11 +159,15 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             if (navigator == null)
                 throw new ArgumentNullException("navigator");
 
+            if (stateService == null)
+                throw new ArgumentNullException("stateService");
+
             this.recorder = recorder;
             this.statusInfoService = statusInfoService;
             this.recordRepository = recordRepository;
             this.regionManager = regionManager;
             this.navigator = navigator;
+            this.stateService = stateService;
 
             commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
             refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
@@ -181,9 +178,15 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             recorder.Stamping += new EventHandler(recorder_Stamping);
             recorder.Stamped += new EventHandler(recorder_Stamped);
 
-            Date = DateTime.Today;
+            stateService.CurrentDateChanged += new EventHandler(stateService_CurrentDateChanged);
 
             //UpdateDisplayedData();
+        }
+
+        void stateService_CurrentDateChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("Date");
+            UpdateDisplayedData();
         }
 
         private void OnDeleteCommandExecuted(object item)

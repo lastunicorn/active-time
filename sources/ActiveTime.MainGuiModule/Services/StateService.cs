@@ -22,6 +22,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
 {
     class StateService : IStateService
     {
+        private readonly IStatusInfoService statusInfoService;
+
         private DateTime? currentDate;
         public DateTime? CurrentDate
         {
@@ -29,6 +31,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
             set
             {
                 currentDate = value;
+                statusInfoService.SetStatus("Date changed.");
                 OnCurrentDateChanged(EventArgs.Empty);
             }
         }
@@ -46,8 +49,14 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="StateService"/> class.
         /// </summary>
-        public StateService()
+        public StateService(IStatusInfoService statusInfoService)
         {
+            if (statusInfoService == null)
+                throw new ArgumentNullException("statusInfoService");
+
+            this.statusInfoService = statusInfoService;
+
+            currentDate = DateTime.Today;
         }
     }
 }
