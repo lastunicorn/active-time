@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ModuleDefinitions
         public void Initialize()
         {
             // Register passive services.
-            unityContainer.RegisterType<ICommentsService, CommentsService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IStateService, StateService>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
 
             // Register views in regions.

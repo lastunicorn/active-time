@@ -19,13 +19,9 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.Common
 {
-    public interface ICommentsService
+    public interface IStateService
     {
-        DayComment Record { get; set; }
-
-        event EventHandler RecordChanged;
-
-        void RetrieveRecord(DateTime date);
-        void SaveRecord();
+        DateTime? CurrentDate { get; set; }
+        event EventHandler CurrentDateChanged;
     }
 }

@@ -67,7 +67,7 @@
       <SubType>Code</SubType>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <Compile Include="Services\CommentsService.cs" />
+    <Compile Include="Services\StateService.cs" />
     <Compile Include="Services\StatusInfoService.cs" />
     <Compile Include="ViewModels\ButtonBarViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />

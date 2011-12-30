@@ -62,7 +62,7 @@
     <Compile Include="IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ICommentsService.cs" />
+    <Compile Include="IStateService.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="Reminding\IPauseReminder.cs" />
     <Compile Include="Reminding\Reminder.cs" />

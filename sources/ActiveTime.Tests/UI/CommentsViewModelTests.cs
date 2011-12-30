@@ -14,219 +14,292 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using NUnit.Framework;
-//using Moq;
-//using DustInTheWind.ActiveTime.Persistence.Repositories;
-//using System.Linq.Expressions;
-//using DustInTheWind.ActiveTime.Persistence.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
+using Moq;
+using DustInTheWind.ActiveTime.PersistenceModule.Repositories;
+using System.Linq.Expressions;
+using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
+using DustInTheWind.ActiveTime.Common;
+using Microsoft.Practices.Prism.Regions;
+using DustInTheWind.ActiveTime.Common.Persistence;
 
-//namespace DustInTheWind.ActiveTime.UnitTests.UI
-//{
-//    [TestFixture]
-//    public class CommentsViewModelTests
-//    {
-//        #region Constructor
+namespace DustInTheWind.ActiveTime.UnitTests.UI
+{
+    [TestFixture]
+    public class CommentsViewModelTests
+    {
+        Mock<IStateService> stateServiceMock;
+        Mock<IRegionManager> regionManagerMock;
+        Mock<IDayCommentRepository> dayCommentRepositoryMock;
 
-//        [Test]
-//        [ExpectedException(typeof(ArgumentNullException))]
-//        public void Constructor_throws_if_repository_is_null()
-//        {
-//            CommentsViewModel viewModel = new CommentsViewModel(null);
-//        }
+        [SetUp]
+        public void SetUp()
+        {
+            stateServiceMock = new Mock<IStateService>();
+            regionManagerMock = new Mock<IRegionManager>();
+            dayCommentRepositoryMock = new Mock<IDayCommentRepository>();
+        }
 
-//        [Test]
-//        public void Constructor_Ok()
-//        {
-//            Mock<IDayCommentRepository> dayCommentRepository = new Mock<IDayCommentRepository>();
-//            CommentsViewModel viewModel = new CommentsViewModel(dayCommentRepository.Object);
-//        }
+        #region Constructor Parameters
 
-//        #endregion
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_throws_if_stateService_is_null()
+        {
+            new CommentsViewModel(null, regionManagerMock.Object, dayCommentRepositoryMock.Object);
+        }
 
-//        #region Date
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_throws_if_regionManager_is_null()
+        {
+            new CommentsViewModel(stateServiceMock.Object, null, dayCommentRepositoryMock.Object);
+        }
 
-//        [Test]
-//        public void Date_initially_is_current_date()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_throws_if_repository_is_null()
+        {
+            new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, null);
+        }
 
-//            Assert.That(viewModel.Date, Is.EqualTo(DateTime.Today));
-//        }
+        [Test]
+        public void Constructor_Ok()
+        {
+            new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, dayCommentRepositoryMock.Object);
+        }
 
-//        [Test]
-//        public void Date_raises_PropertyChanged_event()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+        #endregion
 
-//            bool eventWasCalled = false;
-//            viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
+        #region Constructor
 
-//            viewModel.Date = new DateTime(2000, 06, 13);
+        [Test]
+        public void Constructor_reads_Date_from_stateService()
+        {
+            DateTime date = new DateTime(2011, 06, 13);
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
 
-//            Assert.That(eventWasCalled, Is.True);
-//        }
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//        [Test]
-//        public void Date_raises_PropertyChanged_event_with_correct_PropertyName()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+            stateServiceMock.VerifyAll();
+            Assert.That(viewModel.Date, Is.EqualTo(date));
+        }
 
-//            string propertyName = null;
-//            viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
+        [Test]
+        public void Constructor_clears_Date_if_Date_from_stateService_is_null()
+        {
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(null as DateTime?);
 
-//            viewModel.Date = new DateTime(2000, 06, 13);
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.Date)));
-//        }
+            Assert.That(viewModel.Date, Is.Null);
+        }
 
-//        #endregion
+        [Test]
+        public void Constructor_clears_Comment_if_Date_from_stateService_is_null()
+        {
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(null as DateTime?);
 
-//        #region CommentTextWrap
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//        [Test]
-//        public void CommentTextWrap_is_initially_true()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+            Assert.That(viewModel.Comment, Is.Null);
+        }
 
-//            Assert.That(viewModel.CommentTextWrap, Is.True);
-//        }
+        [Test]
+        public void Constructor_retrieves_DayComment_from_repository_if_date_is_not_null()
+        {
+            DateTime date = new DateTime(2011, 06, 13);
 
-//        [Test]
-//        public void CommentTextWrap_raises_PropertyChanged_event()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
+            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayComment);
 
-//            bool eventWasCalled = false;
-//            viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
+            CreateNewViewModel();
 
-//            viewModel.CommentTextWrap = false;
+            dayCommentRepositoryMock.VerifyAll();
+        }
 
-//            Assert.That(eventWasCalled, Is.True);
-//        }
+        [Test]
+        public void Constructor_clears_Comment_if_retrieved_DayComment_is_null()
+        {
+            DateTime date = new DateTime(2011, 06, 13);
 
-//        [Test]
-//        public void CommentTextWrap_raises_PropertyChanged_event_with_correct_PropertyName()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
+            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayComment);
 
-//            string propertyName = null;
-//            viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//            viewModel.CommentTextWrap = false;
+            Assert.That(viewModel.Comment, Is.Null);
+        }
 
-//            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.CommentTextWrap)));
-//        }
+        [Test]
+        public void Constructor_clears_Comment_if_retrieved_DayComment_has_wrong_date()
+        {
+            DateTime date = new DateTime(2011, 06, 13);
+            DateTime differentDate = new DateTime(2000, 03, 05);
+            DayComment dayComment = new DayComment { Id = 10, Date = differentDate, Comment = "some comment" };
 
-//        #endregion
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
+            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(dayComment);
 
-//        #region CommentTextWrap
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//        [Test]
-//        public void Comment_is_initially_empty()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+            Assert.That(viewModel.Comment, Is.Null);
+        }
 
-//            Assert.That(viewModel.Comment, Is.Null);
-//        }
+        [Test]
+        public void Constructor_sets_Comment_from_retrieved_DayComment()
+        {
+            DateTime date = new DateTime(2011, 06, 13);
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
+            DayComment dayComment = new DayComment { Id = 10, Date = date, Comment = "some comment" };
+            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(dayComment);
 
-//        [Test]
-//        public void Comment_raises_PropertyChanged_event()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//            bool eventWasCalled = false;
-//            viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
+            Assert.That(viewModel.Comment, Is.EqualTo(dayComment.Comment));
+        }
 
-//            viewModel.Comment = "some comment";
+        #endregion
 
-//            Assert.That(eventWasCalled, Is.True);
-//        }
+        #region Date
 
-//        [Test]
-//        public void Comment_raises_PropertyChanged_event_with_correct_PropertyName()
-//        {
-//            CommentsViewModel viewModel = CreateNewViewModel();
+        [Test]
+        public void Date_sets_stateService_CurrentDate()
+        {
+            DateTime date = new DateTime(2011, 06, 13);
+            CommentsViewModel viewModel = CreateNewViewModel();
+            stateServiceMock.SetupSet(x => x.CurrentDate = date);
 
-//            string propertyName = null;
-//            viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
+            viewModel.Date = date;
 
-//            viewModel.Comment = "some comment";
+            stateServiceMock.VerifyAll();
+        }
 
-//            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.Comment)));
-//        }
+        #endregion
 
-//        #endregion
+        #region StateService -> CurrentDateChanged
 
-//        #region WindowLoaded
+        [Test]
+        public void StateService_CurrentDateChanged_changes_Date()
+        {
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//        [Test]
-//        public void WindowLoaded_initializes_Comment_value()
-//        {
-//            DayComment dayComment = BuildNewDayComment();
-//            Mock<IDayCommentRepository> dayCommentRepository = new Mock<IDayCommentRepository>();
-//            dayCommentRepository.Setup(x => x.GetByDate(dayComment.Date)).Returns(dayComment);
+            DateTime date = new DateTime(2011, 06, 13);
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
 
-//            CommentsViewModel viewModel = new CommentsViewModel(dayCommentRepository.Object);
-//            viewModel.WindowLoaded();
+            stateServiceMock.Raise(x => x.CurrentDateChanged += null, EventArgs.Empty);
 
-//            Assert.That(viewModel.Comment, Is.EqualTo(dayComment.Comment));
-//        }
+            Assert.That(viewModel.Date, Is.EqualTo(date));
+        }
 
-//        [Test]
-//        public void WindowLoaded_initializes_with_empty_comment_if_no_DayComment_exists()
-//        {
-//            Mock<IDayCommentRepository> dayCommentRepository = new Mock<IDayCommentRepository>();
-//            dayCommentRepository.Setup(x => x.GetByDate(It.IsAny<DateTime>())).Returns(null as DayComment);
+        [Test]
+        public void StateService_CurrentDateChanged_changes_Comment()
+        {
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//            CommentsViewModel viewModel = new CommentsViewModel(dayCommentRepository.Object);
-//            viewModel.WindowLoaded();
+            DateTime date = new DateTime(2011, 06, 13);
+            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
 
-//            Assert.That(viewModel.Comment, Is.EqualTo(string.Empty));
-//        }
+            DayComment dayComment = new DayComment { Id = 10, Date = date, Comment = "some comment here" };
+            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(dayComment);
 
-//        [Test]
-//        public void WindowLoaded_not_throws_when_exception()
-//        {
-//            Mock<IDayCommentRepository> dayCommentRepository = new Mock<IDayCommentRepository>();
-//            dayCommentRepository.Setup(x => x.GetByDate(It.IsAny<DateTime>())).Throws(new Exception());
+            stateServiceMock.Raise(x => x.CurrentDateChanged += null, EventArgs.Empty);
 
-//            CommentsViewModel viewModel = new CommentsViewModel(dayCommentRepository.Object);
-//            viewModel.WindowLoaded();
-//        }
+            Assert.That(viewModel.Comment, Is.EqualTo(dayComment.Comment));
+        }
 
-//        #endregion
+        #endregion
 
-//        #region CancelButtonClicked
+        #region CommentTextWrap
 
-//        //[Test]
-//        //public void CancelButtonClicked_
+        [Test]
+        public void CommentTextWrap_is_initially_true()
+        {
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//        #endregion
+            Assert.That(viewModel.CommentTextWrap, Is.True);
+        }
 
+        [Test]
+        public void CommentTextWrap_raises_PropertyChanged_event()
+        {
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//        #region Utils
+            bool eventWasCalled = false;
+            viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
 
-//        private static CommentsViewModel CreateNewViewModel()
-//        {
-//            Mock<IDayCommentRepository> dayCommentRepository = new Mock<IDayCommentRepository>();
-//            CommentsViewModel viewModel = new CommentsViewModel(dayCommentRepository.Object);
-//            return viewModel;
-//        }
+            viewModel.CommentTextWrap = false;
 
-//        private string GetNameOfMember<T>(Expression<Func<T>> action)
-//        {
-//            return ((MemberExpression)action.Body).Member.Name;
-//        }
+            Assert.That(eventWasCalled, Is.True);
+        }
 
-//        private DayComment BuildNewDayComment()
-//        {
-//            return new DayComment() { Id = 10, Date = DateTime.Today, Comment = "some comment" };
-//        }
+        [Test]
+        public void CommentTextWrap_raises_PropertyChanged_event_with_correct_PropertyName()
+        {
+            CommentsViewModel viewModel = CreateNewViewModel();
 
-//        #endregion
-//    }
-//}
+            string propertyName = null;
+            viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
+
+            viewModel.CommentTextWrap = false;
+
+            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.CommentTextWrap)));
+        }
+
+        #endregion
+
+        #region Comment
+
+        [Test]
+        public void Comment_raises_PropertyChanged_event()
+        {
+            CommentsViewModel viewModel = CreateNewViewModel();
+
+            bool eventWasCalled = false;
+            viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
+
+            viewModel.Comment = "some comment";
+
+            Assert.That(eventWasCalled, Is.True);
+        }
+
+        [Test]
+        public void Comment_raises_PropertyChanged_event_with_correct_PropertyName()
+        {
+            CommentsViewModel viewModel = CreateNewViewModel();
+
+            string propertyName = null;
+            viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
+
+            viewModel.Comment = "some comment";
+
+            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.Comment)));
+        }
+
+        #endregion
+
+        #region ButtonBar
+
+        // The ButtonBar is a private instance. Cannot mock, cannot test.
+
+        #endregion
+
+        #region Utils
+
+        private CommentsViewModel CreateNewViewModel()
+        {
+            return new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, dayCommentRepositoryMock.Object);
+        }
+
+        private string GetNameOfMember<T>(Expression<Func<T>> action)
+        {
+            return ((MemberExpression)action.Body).Member.Name;
+        }
+
+        #endregion
+    }
+}
