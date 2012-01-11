@@ -58,7 +58,8 @@ namespace DustInTheWind.ActiveTime.PersistenceModule
                                        //{ Environment.CurrentSessionContextClass, typeof(CurrentSessionContext).AssemblyQualifiedName },
                                        //{ Environment.Hbm2ddlAuto, "create" },
                                        //{ Environment.ShowSql, true.ToString() }
-                                       { Environment.QuerySubstitutions, "true=1;false=0" }
+                                       { Environment.QuerySubstitutions, "true=1;false=0" },
+                                       { Environment.ShowSql, "true" }
                                    });
         }
 

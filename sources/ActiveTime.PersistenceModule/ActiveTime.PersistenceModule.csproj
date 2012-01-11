@@ -60,6 +60,7 @@
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\TimeRecordRepository.cs" />
     <Compile Include="SessionProvider.cs" />
+    <Compile Include="SQLiteDateTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sql scripts\comments.sql" />
