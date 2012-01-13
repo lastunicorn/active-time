@@ -93,7 +93,9 @@
     <EmbeddedResource Include="Persistence\Mappings\DayComment.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Persistence\Mappings\TimeRecord.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\TimeRecord.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

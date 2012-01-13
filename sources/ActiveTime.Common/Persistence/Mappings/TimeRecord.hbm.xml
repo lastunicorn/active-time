@@ -5,7 +5,7 @@
       <generator class="native"/>
     </id>
     <natural-id mutable="true">
-      <property name="Date" column="date"/>
+      <property name="Date" column="date" type="Date"/>
       <property name="StartTime" column="start_time" type="TimeAsTimeSpan"/>
       <property name="EndTime" column="end_time" type="TimeAsTimeSpan"/>
     </natural-id>
