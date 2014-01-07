@@ -21,7 +21,7 @@ using NHibernate;
 namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
 {
     /// <summary>
-    ///  Repository class that provides access to the comment records storred in the persistent layer.
+    ///  Repository class that provides access to the comment records stored in the persistent layer.
     /// </summary>
     public class DayCommentRepository : CrudRepositoryBase<DayComment>, IDayCommentRepository
     {

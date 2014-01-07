@@ -24,34 +24,26 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
     public abstract class RepositoryBase
     {
         /// <summary>
-        /// The session used to access the database.
-        /// </summary>
-        private readonly ISession currentSession;
-
-        /// <summary>
         /// Gets the session used to access the database.
         /// </summary>
-        protected ISession CurrentSession
-        {
-            get { return currentSession; }
-        }
+        protected ISession CurrentSession { get; private set; }
 
         /// <summary>
-        /// Initializes a new instnace of the <see cref="RepositoryBase"/> class.
+        /// Initializes a new instance of the <see cref="RepositoryBase"/> class.
         /// </summary>
         protected RepositoryBase()
         {
-            currentSession = SessionProvider.OpenSession();
+            CurrentSession = SessionProvider.OpenSession();
         }
 
         /// <summary>
-        /// Initializes a new instnace of the <see cref="RepositoryBase"/> class with
+        /// Initializes a new instance of the <see cref="RepositoryBase"/> class with
         /// the session instance to be used to access the database.
         /// </summary>
         /// <param name="session">The session instance to be used to access the database.</param>
         protected RepositoryBase(ISession session)
         {
-            currentSession = session;
+            CurrentSession = session;
         }
     }
 }
