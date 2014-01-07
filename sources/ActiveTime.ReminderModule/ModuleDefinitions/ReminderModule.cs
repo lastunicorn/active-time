@@ -18,7 +18,6 @@ using DustInTheWind.ActiveTime.Common.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
-using System;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
 {

@@ -33,7 +33,7 @@ namespace DustInTheWind.ActiveTime.Common.Reminding
 
         /// <summary>
         /// The timer elapsed and the Ring event was raised, but the Reminder was
-        /// not stoppd yet. It still may be snoozed.
+        /// not stopped yet. It still may be snoozed.
         /// </summary>
         Stopping,
 

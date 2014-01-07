@@ -24,45 +24,27 @@ namespace DustInTheWind.ActiveTime.Common.Reminding
     public class RingEventArgs : EventArgs
     {
         /// <summary>
-        /// Specifies if the timer should be delayed.
-        /// </summary>
-        private bool snooze;
-
-        /// <summary>
         /// Gets or sets a value that specifies if the timer should be delayed.
         /// The <see cref="SnoozeTime"/> property specifies the time of the delay.
         /// If the <see cref="SnoozeTime"/> value is not set, the default time of
         /// the <see cref="IReminder"/> is used.
         /// </summary>
-        public bool Snooze
-        {
-            get { return snooze; }
-            set { snooze = value; }
-        }
-
-        /// <summary>
-        /// The time used to delay the ring.
-        /// </summary>
-        private TimeSpan? snoozeTime;
+        public bool Snooze { get; set; }
 
         /// <summary>
         /// Gets or sets the time used to delay the ring.
         /// If this value is not set, the default time of
         /// the <see cref="IReminder"/> is used.
         /// </summary>
-        public TimeSpan? SnoozeTime
-        {
-            get { return snoozeTime; }
-            set { snoozeTime = value; }
-        }
+        public TimeSpan? SnoozeTime { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RingEventArgs"/> class.
         /// </summary>
         public RingEventArgs()
         {
-            snooze = false;
-            snoozeTime = null;
+            Snooze = false;
+            SnoozeTime = null;
         }
     }
 }

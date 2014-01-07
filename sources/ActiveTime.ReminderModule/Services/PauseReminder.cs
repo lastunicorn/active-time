@@ -16,32 +16,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Reminding;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services
 {
     /// <summary>
-    /// This class uses a reminder to deremine when the user should maka a pause. The recorder is
-    /// monitorize and when the recorder starts, the reminder is started, too.
+    /// The recorder is watched and a notification is displayed to the user when the
+    /// <see cref="PauseInterval"/> is elapsed.
     /// </summary>
     class PauseReminder : IPauseReminder
     {
-        private IRecorderService recorderService;
+        private readonly IRecorderService recorderService;
 
-        /// <summary>
-        /// It is used to display a message box to the user.
-        /// </summary>
-        private IShellNavigator shellNavigator;
+        private readonly IShellNavigator shellNavigator;
 
-        /// <summary>
-        /// It is used to determine the time when the user should make a pause.
-        /// </summary>
-        private IReminder reminder;
+        private readonly IReminder reminder;
 
         private bool isMonitoring = false;
 
@@ -52,12 +44,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="PauseReminder"/> class.
         /// </summary>
-        /// <param name="recorderService">The recorder that is monitorized to check when the user is working.</param>
+        /// <param name="recorderService">The recorder used to check when the user is working.</param>
         /// <param name="shellNavigator">It is used to display a message box to the user.</param>
         /// <param name="reminder">It is used to determine the time when the user should make a pause.</param>
         public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder)
         {
-            this.reminder = reminder;
             if (recorderService == null)
                 throw new ArgumentNullException("recorderService");
 
@@ -72,17 +63,17 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
             this.reminder = reminder;
 
             PauseInterval = TimeSpan.FromHours(1);
-            //PauseInterval = TimeSpan.FromSeconds(5);
             SnoozeInterval = TimeSpan.FromMinutes(3);
         }
 
         public void StartMonitoring()
         {
-            if (isMonitoring) return;
+            if (isMonitoring)
+                return;
 
-            recorderService.Started += new EventHandler(recorderService_Started);
-            recorderService.Stopped += new EventHandler(recorderService_Stopped);
-            reminder.Ring += new EventHandler<RingEventArgs>(reminder_Ring);
+            recorderService.Started += recorderService_Started;
+            recorderService.Stopped += recorderService_Stopped;
+            reminder.Ring += reminder_Ring;
 
             if (recorderService.State == RecorderState.Running)
                 reminder.Start(PauseInterval);
@@ -100,8 +91,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
 
         private void reminder_Ring(object sender, RingEventArgs e)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("Text", "Make a pause.");
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "Text", "Make a pause." }
+            };
+
             shellNavigator.Navigate(ShellNames.MessageShell, parameters);
 
             e.Snooze = true;

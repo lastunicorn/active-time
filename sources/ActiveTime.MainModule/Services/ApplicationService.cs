@@ -42,9 +42,7 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
         protected virtual void OnExiting(EventArgs e)
         {
             if (Exiting != null)
-            {
                 Exiting(this, e);
-            }
         }
 
         #endregion

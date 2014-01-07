@@ -27,14 +27,14 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.Repositories
         where TEntity : class
     {
         /// <summary>
-        /// Initializes a new instnace of the <see cref="CrudRepositoryBase{T}"/> class.
+        /// Initializes a new instance of the <see cref="CrudRepositoryBase{T}"/> class.
         /// </summary>
         protected CrudRepositoryBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instnace of the <see cref="CrudRepositoryBase{T}"/> class with
+        /// Initializes a new instance of the <see cref="CrudRepositoryBase{T}"/> class with
         /// the session instance to be used to access the database.
         /// </summary>
         /// <param name="session">The session instance to be used to access the database.</param>

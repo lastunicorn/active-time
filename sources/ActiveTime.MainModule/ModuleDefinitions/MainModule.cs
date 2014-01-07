@@ -23,7 +23,7 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
 {
     /// <summary>
     /// This module initializes a few services needed by the application and also
-    /// creates the main shell and some aditional, less important shells like MessageShell
+    /// creates the main shell and some additional, less important shells like MessageShell
     /// and AboutShell. Additionally it registers the main views.
     /// </summary>
     public class MainModule : IModule

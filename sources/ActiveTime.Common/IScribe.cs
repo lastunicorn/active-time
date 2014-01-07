@@ -18,7 +18,7 @@ using System;
 
 namespace DustInTheWind.ActiveTime.Common
 {
-    public interface IScrib
+    public interface IScribe
     {
         void Stamp();
         void StampNew();

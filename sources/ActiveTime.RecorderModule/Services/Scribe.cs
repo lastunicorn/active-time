@@ -26,19 +26,19 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
     /// <remarks>
     /// The current record can be obtained in two ways: 1) from the database or 2) created new.
     /// </remarks>
-    class Scrib : IScrib
+    class Scribe : IScribe
     {
         private readonly ITimeRecordRepository repository;
         private readonly ITimeProvider timeProvider;
         private TimeRecord record;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Scrib"/> class.
+        /// Initializes a new instance of the <see cref="Scribe"/> class.
         /// </summary>
         /// <param name="repository"></param>
         /// <param name="timeProvider"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Scrib(ITimeRecordRepository repository, ITimeProvider timeProvider)
+        public Scribe(ITimeRecordRepository repository, ITimeProvider timeProvider)
         {
             if (repository == null)
                 throw new ArgumentNullException("repository");
@@ -100,11 +100,11 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         public void DeleteDatabaseRecord()
         {
-            if (record != null)
-            {
-                repository.Delete(record);
-                record = null;
-            }
+            if (record == null)
+                return;
+
+            repository.Delete(record);
+            record = null;
         }
 
         public TimeSpan? GetTimeFromLastStamp()

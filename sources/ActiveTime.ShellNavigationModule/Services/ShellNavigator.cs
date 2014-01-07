@@ -28,7 +28,7 @@ namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
     /// </summary>
     /// <remarks>
     /// Need to make this class thread safe.
-    /// the shels collesction and shelInfos.
+    /// the shells collection and shellInfos.
     /// </remarks>
     class ShellNavigator : IShellNavigator
     {

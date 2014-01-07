@@ -24,7 +24,7 @@ using Microsoft.Win32;
 namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
 {
     /// <summary>
-    /// This service monitorizes the Windows session and stops the recorder when the user
+    /// This service monitors the Windows session and stops the recorder when the user
     /// locks the session or logs off. When the user unlocks the session, the recorder
     /// is started only if it was previously running.
     /// </summary>
@@ -85,39 +85,50 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
                     break;
 
                 case SessionSwitchReason.SessionLock:
-                    // The user left the desk.
-                    if (recorder.State == RecorderState.Running)
-                    {
-                        recorderWasRunning = true;
-                        recorder.Stop();
-                    }
-                    else
-                    {
-                        recorderWasRunning = false;
-                    }
+                    StopRecorder();
                     break;
 
                 case SessionSwitchReason.SessionLogon:
                     break;
 
                 case SessionSwitchReason.SessionUnlock:
-                    // The user returned to his desk.
-
-                    TimeSpan? timeFromLastStop = recorderWasRunning ? recorder.GetTimeFromLastStop() : null;
-
-                    if (recorderWasRunning)
-                        recorder.Start();
-
-                    if (timeFromLastStop != null && timeFromLastStop < TimeSpan.FromMinutes(1))
-                    {
-                        Dictionary<string, object> parameters = new Dictionary<string, object>();
-                        parameters.Add("Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause.");
-                        navigator.Navigate(ShellNames.MessageShell, parameters);
-                    }
+                    StartRecorder();
                     break;
+            }
+        }
 
-                default:
-                    break;
+        private void StopRecorder()
+        {
+            // The user left the desk.
+
+            if (recorder.State == RecorderState.Running)
+            {
+                recorderWasRunning = true;
+                recorder.Stop();
+            }
+            else
+            {
+                recorderWasRunning = false;
+            }
+        }
+
+        private void StartRecorder()
+        {
+            // The user returned to his desk.
+
+            TimeSpan? timeFromLastStop = recorderWasRunning ? recorder.GetTimeFromLastStop() : null;
+
+            if (recorderWasRunning)
+                recorder.Start();
+
+            if (timeFromLastStop != null && timeFromLastStop < TimeSpan.FromMinutes(1))
+            {
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause." }
+                };
+
+                navigator.Navigate(ShellNames.MessageShell, parameters);
             }
         }
     }

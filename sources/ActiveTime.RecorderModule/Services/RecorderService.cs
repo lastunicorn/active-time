@@ -17,18 +17,16 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Events;
 using DustInTheWind.ActiveTime.Common.Recording;
-using Microsoft.Practices.Prism.Events;
 
 namespace DustInTheWind.ActiveTime.RecorderModule.Services
 {
     /// <summary>
-    /// Periodically calls the scrib to update the time of the current record in the database.
+    /// Periodically calls the scribe to update the time of the current record in the database.
     /// </summary>
     class RecorderService : IRecorderService
     {
-        private readonly IScrib scrib;
+        private readonly IScribe scribe;
 
         /// <summary>
         /// Specifies the state of the current recorder service.
@@ -51,9 +49,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         protected virtual void OnStarted(EventArgs e)
         {
             if (Started != null)
-            {
                 Started(this, e);
-            }
         }
 
         #endregion
@@ -72,9 +68,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         protected virtual void OnStopped(EventArgs e)
         {
             if (Stopped != null)
-            {
                 Stopped(this, e);
-            }
         }
 
         #endregion
@@ -92,9 +86,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         protected virtual void OnStamping(EventArgs e)
         {
             if (Stamping != null)
-            {
                 Stamping(this, e);
-            }
         }
 
         #endregion
@@ -113,9 +105,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         protected virtual void OnStamped(EventArgs e)
         {
             if (Stamped != null)
-            {
                 Stamped(this, e);
-            }
         }
 
         #endregion
@@ -126,18 +116,18 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="RecorderService"/> class.
         /// </summary>
-        /// <param name="scrib"></param>
+        /// <param name="scribe"></param>
         /// <param name="applicationService"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public RecorderService(IScrib scrib, IApplicationService applicationService)
+        public RecorderService(IScribe scribe, IApplicationService applicationService)
         {
-            if (scrib == null)
-                throw new ArgumentNullException("scrib");
+            if (scribe == null)
+                throw new ArgumentNullException("scribe");
 
             if (applicationService == null)
                 throw new ArgumentNullException("applicationService");
 
-            this.scrib = scrib;
+            this.scribe = scribe;
             timer = new Timer(timer_tick);
             stampingInterval = TimeSpan.FromMinutes(1);
 
@@ -165,10 +155,9 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
                 lock (stateSynchronizer)
                 {
                     stampingInterval = value;
+                    
                     if (State == RecorderState.Running)
-                    {
                         timer.Change(stampingInterval, stampingInterval);
-                    }
                 }
             }
         }
@@ -187,7 +176,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// only if the instance is stopped.
         /// </summary>
         /// <remarks>
-        /// An internal timer is started that will ellapse acording to the <see cref="StampingInterval"/> value.
+        /// An internal timer is started that will elapse according to the <see cref="StampingInterval"/> value.
         /// </remarks>
         public void Start()
         {
@@ -262,6 +251,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             {
                 DoStart();
             }
+
             OnStarted(EventArgs.Empty);
         }
 
@@ -273,10 +263,12 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         private void StampWithEvents()
         {
             OnStamping(EventArgs.Empty);
+
             lock (stateSynchronizer)
             {
                 DoStamp();
             }
+
             OnStamped(EventArgs.Empty);
         }
 
@@ -292,6 +284,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             {
                 DoStop(deleteLastRecord);
             }
+
             OnStopped(EventArgs.Empty);
         }
 
@@ -306,7 +299,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         private void DoStart()
         {
             // Stamp
-            scrib.StampNew();
+            scribe.StampNew();
 
             // Start timer
             timer.Change(stampingInterval, stampingInterval);
@@ -321,7 +314,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         private void DoStamp()
         {
-            scrib.Stamp();
+            scribe.Stamp();
         }
 
         /// <summary>
@@ -337,7 +330,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             if (deleteLastRecord)
             {
                 // Delete database record from the db.
-                scrib.DeleteDatabaseRecord();
+                scribe.DeleteDatabaseRecord();
             }
             else
             {

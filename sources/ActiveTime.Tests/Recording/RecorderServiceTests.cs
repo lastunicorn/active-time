@@ -30,7 +30,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     [TestFixture]
     public class RecorderServiceTests
     {
-        private Mock<IScrib> scribMock;
+        private Mock<IScribe> scribMock;
         private Mock<IApplicationService> applicationService;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         [SetUp]
         public void SetUp()
         {
-            scribMock = new Mock<IScrib>();
+            scribMock = new Mock<IScribe>();
             applicationService = new Mock<IApplicationService>();
         }
 

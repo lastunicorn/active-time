@@ -108,6 +108,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="db.new.s3db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="db.s3db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

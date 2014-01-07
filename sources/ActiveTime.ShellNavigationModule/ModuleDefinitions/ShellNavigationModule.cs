@@ -21,6 +21,7 @@ using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.ShellNavigationModule.ModuleDefinitions
 {
+    // todo: the content of this module (the two services) should be put in the main assembly.
     public class ShellNavigationModule : IModule
     {
         private readonly IUnityContainer unityContainer;
