@@ -43,8 +43,7 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         /// Gets or sets the type of the time record. This type specifies if the record was normally created or was created manually.
         /// </summary>
         public virtual TimeRecordType RecordType { get; set; }
-
-
+        
         /// <summary>
         /// Compares the business keys.
         /// </summary>

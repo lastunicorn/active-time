@@ -32,8 +32,7 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         /// Gets or sets the comment text.
         /// </summary>
         public virtual string Comment { get; set; }
-
-
+        
         /// <summary>
         /// Compares the business keys.
         /// </summary>
