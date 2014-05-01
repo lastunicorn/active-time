@@ -68,7 +68,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveTimeException.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Exporters\ParameterNullException.cs" />
     <Compile Include="Exporters\ParameterTypeException.cs" />
@@ -79,13 +78,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Watchman\ApplicationLevelGuard.cs" />
-    <Compile Include="Watchman\Guard.cs" />
-    <Compile Include="Watchman\GuardLevel.cs" />
     <Compile Include="Exporters\IExporter.cs" />
+    <Compile Include="Services\ApplicationService.cs" />
+    <Compile Include="Services\DispatcherService.cs" />
+    <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Watchman\IGuard.cs" />
-    <Compile Include="Watchman\MachineLevelGuard.cs" />
     <Resource Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
     </Resource>

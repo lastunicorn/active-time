@@ -15,21 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common;
 
-namespace DustInTheWind.ActiveTime.Common.Recording
+namespace DustInTheWind.ActiveTime.BusinessLogicModule.Services
 {
-    public interface IRecorderService
+    class CurrentTimeProvider : ITimeProvider
     {
-        RecorderState State { get; }
-
-        event EventHandler Started;
-        event EventHandler Stopped;
-        event EventHandler Stamped;
-        event EventHandler Stamping;
-
-        void Start();
-        void Stop(bool deleteLastRecord = false);
-
-        TimeSpan? CalculateTimeFromLastStop();
+        public DateTime GetDateTime()
+        {
+            return DateTime.Now;
+        }
     }
 }

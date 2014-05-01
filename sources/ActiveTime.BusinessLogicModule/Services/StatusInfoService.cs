@@ -18,7 +18,7 @@ using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common;
 
-namespace DustInTheWind.ActiveTime.MainGuiModule.Services
+namespace DustInTheWind.ActiveTime.BusinessLogicModule.Services
 {
     /// <summary>
     /// A service that stores different status messages.
@@ -40,8 +40,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
         /// </summary>
         private readonly Timer timerStatus;
         
-        #region Status Text Property
-
         /// <summary>
         /// The text representing the status.
         /// </summary>
@@ -59,8 +57,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
                 OnStatusTextChanged(EventArgs.Empty);
             }
         }
-
-        #endregion
 
         #region Event StatusTextChanged
 

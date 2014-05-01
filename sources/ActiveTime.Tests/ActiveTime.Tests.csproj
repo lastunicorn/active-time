@@ -58,8 +58,8 @@
   <ItemGroup>
     <Compile Include="Common\Persistence\DayCommentPropertyTests.cs" />
     <Compile Include="Common\Persistence\TimeRecordPropertyTests.cs" />
-    <Compile Include="MainGuiModule\Services\StatusInfoServiceTests\ConstructorTests.cs" />
-    <Compile Include="MainGuiModule\Services\StatusInfoServiceTests\StatusTextTests.cs" />
+    <Compile Include="BusinessLogic\Services\StatusInfoServiceTests\ConstructorTests.cs" />
+    <Compile Include="BusinessLogic\Services\StatusInfoServiceTests\StatusTextTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\ConstructorTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\PropertyChangedTests.cs" />
     <Compile Include="PersistenceModule\AdoRepositories\DbAssert.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="ReminderModule\Services\PauseReminderTests\RecorderServiceEventsTests.cs" />
     <Compile Include="ReminderModule\Services\PauseReminderTests\ReminderEventsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MainGuiModule\Services\StatusInfoServiceTests\SetStatusTests.cs" />
+    <Compile Include="BusinessLogic\Services\StatusInfoServiceTests\SetStatusTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\DateTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +101,10 @@
     <ProjectReference Include="..\ActiveTime.MainGuiModule\ActiveTime.MainGuiModule.csproj">
       <Project>{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}</Project>
       <Name>ActiveTime.MainGuiModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.BusinessLogicModule\ActiveTime.BusinessLogicModule.csproj">
+      <Project>{7f342cbb-0fd1-48cb-a186-8c60f8c75772}</Project>
+      <Name>ActiveTime.BusinessLogicModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.csproj">
       <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>

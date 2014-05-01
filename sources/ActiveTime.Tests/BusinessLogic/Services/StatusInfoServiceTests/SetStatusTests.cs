@@ -15,10 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Threading;
-using DustInTheWind.ActiveTime.MainGuiModule.Services;
+using DustInTheWind.ActiveTime.BusinessLogicModule.Services;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.UnitTests.BusinessLogic.Services.StatusInfoServiceTests
 {
     [TestFixture]
     public class SetStatusTests

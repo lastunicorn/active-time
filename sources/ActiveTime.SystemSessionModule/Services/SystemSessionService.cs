@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.UI;
@@ -117,7 +116,7 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         {
             // The user returned to his desk.
 
-            TimeSpan? timeFromLastStop = recorderWasRunning ? recorder.GetTimeFromLastStop() : null;
+            TimeSpan? timeFromLastStop = recorderWasRunning ? recorder.CalculateTimeFromLastStop() : null;
 
             if (recorderWasRunning)
                 recorder.Start();

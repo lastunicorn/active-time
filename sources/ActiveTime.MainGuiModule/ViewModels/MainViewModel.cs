@@ -20,7 +20,6 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
@@ -29,11 +28,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly IRecorderService recorder;
         private readonly IStatusInfoService statusInfoService;
         private readonly ITimeRecordRepository timeRecordRepository;
         private readonly IRegionManager regionManager;
-        private readonly IShellNavigator navigator;
         private readonly IStateService stateService;
 
         public DateTime? Date
@@ -109,23 +106,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             }
         }
 
-        private readonly ICommand commentsCommand;
-        public ICommand CommentsCommand
-        {
-            get { return commentsCommand; }
-        }
+        public ICommand CommentsCommand { get; private set; }
 
-        private readonly ICommand refreshCommand;
-        public ICommand RefreshCommand
-        {
-            get { return refreshCommand; }
-        }
+        public ICommand RefreshCommand { get; private set; }
 
-        private readonly ICommand deleteCommand;
-        public ICommand DeleteCommand
-        {
-            get { return deleteCommand; }
-        }
+        public ICommand DeleteCommand { get; private set; }
 
         private DayTimeInterval aaa = new DayTimeInterval(TimeSpan.Zero, TimeSpan.Zero);
         public DayTimeInterval AAA
@@ -136,14 +121,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
-        /// <param name="recorder"></param>
-        /// <param name="statusInfoService"></param>
-        /// <param name="timeRecordRepository"></param>
-        /// <param name="regionManager"></param>
-        /// <param name="navigator"></param>
         public MainViewModel(IRecorderService recorder, IStatusInfoService statusInfoService,
-            ITimeRecordRepository timeRecordRepository, IRegionManager regionManager, IShellNavigator navigator,
-            IStateService stateService)
+            ITimeRecordRepository timeRecordRepository, IRegionManager regionManager, IStateService stateService)
         {
             if (recorder == null)
                 throw new ArgumentNullException("recorder");
@@ -157,34 +136,27 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             if (regionManager == null)
                 throw new ArgumentNullException("regionManager");
 
-            if (navigator == null)
-                throw new ArgumentNullException("navigator");
-
             if (stateService == null)
                 throw new ArgumentNullException("stateService");
 
-            this.recorder = recorder;
             this.statusInfoService = statusInfoService;
             this.timeRecordRepository = timeRecordRepository;
             this.regionManager = regionManager;
-            this.navigator = navigator;
             this.stateService = stateService;
 
-            commentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
-            refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
-            deleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
+            CommentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
+            RefreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
+            DeleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
 
             recorder.Started += HandleRecorderStarted;
             recorder.Stopped += HandleRecorderStopped;
             recorder.Stamping += HandleRecorderStamping;
             recorder.Stamped += HandleRecorderStamped;
 
-            stateService.CurrentDateChanged += stateService_CurrentDateChanged;
-
-            //UpdateDisplayedData();
+            stateService.CurrentDateChanged += HandleStateService_CurrentDateChanged;
         }
 
-        void stateService_CurrentDateChanged(object sender, EventArgs e)
+        private void HandleStateService_CurrentDateChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("Date");
             UpdateDisplayedData();
@@ -205,7 +177,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             if (Date == null)
                 return;
 
-            // todo: send the Date value.
             regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
         }
 

@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Common;
 
-namespace DustInTheWind.ActiveTime.MainGuiModule.Services
+namespace DustInTheWind.ActiveTime.BusinessLogicModule.Services
 {
     class StateService : IStateService
     {

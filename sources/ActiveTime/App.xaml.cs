@@ -62,6 +62,7 @@ namespace DustInTheWind.ActiveTime
                 base.OnStartup(e);
                 Bootstrapper bootstrapper = new Bootstrapper();
                 bootstrapper.Run();
+
                 return;
 
 
@@ -149,7 +150,7 @@ namespace DustInTheWind.ActiveTime
         //        case SessionSwitchReason.SessionUnlock:
         //            // The user returned to his desk.
 
-        //            TimeSpan? timeFromLastStop = activeTimeApplication.Recorder.GetTimeFromLastStop();
+        //            TimeSpan? timeFromLastStop = activeTimeApplication.Recorder.CalculateTimeFromLastStop();
 
         //            activeTimeApplication.Recorder.Start();
 

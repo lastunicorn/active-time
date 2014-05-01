@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.Common
 {
     /// <summary>
     /// Exception raised by AutomaticOrderSystemException.

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Watchman
+namespace DustInTheWind.ActiveTime.Common.Watchman
 {
     /// <summary>
     /// This class ensures that an instance of itself with the same name

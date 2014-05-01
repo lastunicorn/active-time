@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.UI;
 

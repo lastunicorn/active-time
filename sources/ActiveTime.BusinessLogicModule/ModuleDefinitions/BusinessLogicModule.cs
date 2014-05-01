@@ -14,27 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.ActiveTime.BusinessLogicModule.Services;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.MainModule.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.BusinessLogicModule.ModuleDefinitions
 {
     /// <summary>
     /// This module initializes a few services needed by the application and also
     /// creates the main shell and some additional, less important shells like MessageShell
     /// and AboutShell. Additionally it registers the main views.
     /// </summary>
-    public class MainModule : IModule
+    public class BusinessLogicModule : IModule
     {
         private readonly IUnityContainer unityContainer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainModule"/> class.
+        /// Initializes a new instance of the <see cref="BusinessLogicModule"/> class.
         /// </summary>
         /// <param name="unityContainer"></param>
-        public MainModule(IUnityContainer unityContainer)
+        public BusinessLogicModule(IUnityContainer unityContainer)
         {
             this.unityContainer = unityContainer;
         }
@@ -42,8 +42,9 @@ namespace DustInTheWind.ActiveTime.MainModule.ModuleDefinitions
         public void Initialize()
         {
             // Register passive services.
-            unityContainer.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IStateService, StateService>(new ContainerControlledLifetimeManager());
         }
     }
 }

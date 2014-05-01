@@ -16,8 +16,12 @@
 
 using System;
 using System.Windows;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
+using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -27,8 +31,17 @@ namespace DustInTheWind.ActiveTime
         {
             Uri uri = new Uri("/ActiveTime;component/ModuleCatalog.xaml", UriKind.Relative);
             ModuleCatalog moduleCatalog = Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(uri);
-            
+
             return moduleCatalog;
+        }
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            Container.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IShellNavigator, ShellNavigator>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<DispatcherService, DispatcherService>(new ContainerControlledLifetimeManager());
         }
 
         protected override DependencyObject CreateShell()

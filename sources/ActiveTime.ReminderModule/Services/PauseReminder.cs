@@ -29,24 +29,40 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
     /// </summary>
     class PauseReminder : IPauseReminder
     {
+        /// <summary>
+        /// The recorder is used to check when the user is working.
+        /// </summary>
         private readonly IRecorderService recorderService;
 
+        /// <summary>
+        /// It is used to display a message box to the user.
+        /// </summary>
         private readonly IShellNavigator shellNavigator;
 
+        /// <summary>
+        /// It is used to calculate the time when the user should make a pause.
+        /// </summary>
         private readonly IReminder reminder;
 
-        private bool isMonitoring = false;
+        private bool isMonitoring;
 
+        /// <summary>
+        /// The interval time after which the "pause" message should be displayed.
+        /// This value should be set before calling the <see cref="M:StartMonitoring"/> method.
+        /// </summary>
         public TimeSpan PauseInterval { get; set; }
 
+        /// <summary>
+        /// The interval time after which the "snooze" message should be displayed.
+        /// </summary>
         public TimeSpan SnoozeInterval { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PauseReminder"/> class.
         /// </summary>
-        /// <param name="recorderService">The recorder used to check when the user is working.</param>
+        /// <param name="recorderService">The recorder is used to check when the user is working.</param>
         /// <param name="shellNavigator">It is used to display a message box to the user.</param>
-        /// <param name="reminder">It is used to determine the time when the user should make a pause.</param>
+        /// <param name="reminder">It is used to calculate the time when the user should make a pause.</param>
         public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder)
         {
             if (recorderService == null)

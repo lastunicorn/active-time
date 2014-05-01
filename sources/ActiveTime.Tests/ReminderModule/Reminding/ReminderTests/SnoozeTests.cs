@@ -17,7 +17,6 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
-using DustInTheWind.ActiveTime.ReminderModule.Services;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTests

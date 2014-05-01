@@ -18,7 +18,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.TrayIconModule.ViewModels;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.Views

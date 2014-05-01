@@ -17,7 +17,7 @@
 using System;
 using System.Windows;
 
-namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
+namespace DustInTheWind.ActiveTime.Services
 {
     class DispatcherService
     {

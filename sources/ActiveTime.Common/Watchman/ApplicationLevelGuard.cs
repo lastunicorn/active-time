@@ -1,22 +1,30 @@
 using System;
-using System.Threading;
+using System.Collections;
 
-namespace DustInTheWind.ActiveTime.Watchman
+namespace DustInTheWind.ActiveTime.Common.Watchman
 {
-    public class MachineLevelGuard : IGuard
+    public class ApplicationLevelGuard : IGuard
     {
+        /// <summary>
+        /// Contains the names of the <see cref="Guard"/> instances running at the application level
+        /// in the current application.
+        /// </summary>
+        private static readonly Hashtable LocalInstanceNames = new Hashtable();
+
         /// <summary>
         /// Gets the name of the current instance.
         /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
-        /// The <see cref="Mutex"/> object used to ensure that only one instance
-        /// of the class is created on the current machine. (Machine level)
+        /// Initializes a new instance of the <see cref="Guard"/> class with
+        /// the name that identifies it.
         /// </summary>
-        private Mutex mutex;
-
-        public MachineLevelGuard(string name)
+        /// <param name="name">The name that identifies the instance that will be created.</param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ActiveTimeException"></exception>
+        public ApplicationLevelGuard(string name)
         {
             if (name == null)
                 throw new ArgumentNullException("name");
@@ -28,22 +36,21 @@ namespace DustInTheWind.ActiveTime.Watchman
 
         private void CreateGuard()
         {
-            // Create the mutex.
-            mutex = new Mutex(false, Name);
-
-            // Gain exclusive access to the mutex.
-            bool access = mutex.WaitOne(0, true);
-
-            if (!access)
+            lock (LocalInstanceNames)
             {
-                string errorMessage = string.Format("Another instance with the name '{0}' already exists.", Name);
-                throw new ActiveTimeException(errorMessage);
+                if (LocalInstanceNames.ContainsKey(Name))
+                {
+                    string errorMessage = string.Format("Another instance with the name '{0}' already exists.", Name);
+                    throw new ActiveTimeException(errorMessage);
+                }
+
+                LocalInstanceNames.Add(Name, Name);
             }
         }
 
         #region IDisposable Members
 
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Releases all resources used by the current instance.
@@ -75,8 +82,10 @@ namespace DustInTheWind.ActiveTime.Watchman
                 // Dispose managed resources.
                 // ...
 
-                if (mutex != null)
-                    mutex.Close();
+                lock (LocalInstanceNames)
+                {
+                    LocalInstanceNames.Remove(Name);
+                }
             }
 
             // Call the appropriate methods to clean up unmanaged resources here.
@@ -85,7 +94,7 @@ namespace DustInTheWind.ActiveTime.Watchman
             disposed = true;
         }
 
-        ~MachineLevelGuard()
+        ~ApplicationLevelGuard()
         {
             Dispose(false);
         }

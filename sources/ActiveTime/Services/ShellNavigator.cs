@@ -21,7 +21,7 @@ using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.ShellNavigationModule.Services
+namespace DustInTheWind.ActiveTime.Services
 {
     /// <summary>
     /// 

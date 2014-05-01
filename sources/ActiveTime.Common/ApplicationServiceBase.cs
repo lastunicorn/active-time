@@ -15,24 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Events;
 
-namespace DustInTheWind.ActiveTime.MainModule.Services
+namespace DustInTheWind.ActiveTime.Common
 {
     /// <summary>
     /// This service has only one method that closes the application.
     /// Before the application is closed, an event is published to announce
     /// all the modules of this action.
     /// </summary>
-    class ApplicationService : IApplicationService
+    public abstract class ApplicationServiceBase : IApplicationService
     {
         #region Event Exiting
 
         /// <summary>
-        /// Event raised when ... Well, is raised when it should be raised. Ok?
-        /// todo: write meaningful comment
+        /// Event raised just before existing the application.
+        /// This is an occasion for every module to shut down itself.
         /// </summary>
         public event EventHandler Exiting;
 
@@ -47,7 +45,7 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
         }
 
         #endregion
-        
+
         /// <summary>
         /// Publishes the <see cref="ApplicationExitEvent"/> and then exits the application.
         /// </summary>
@@ -56,7 +54,9 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
             try { OnExiting(EventArgs.Empty); }
             catch { }
 
-            Application.Current.Shutdown();
+            PerformExit();
         }
+
+        protected abstract void PerformExit();
     }
 }

@@ -53,14 +53,15 @@
   <ItemGroup>
     <Compile Include="ModuleDefinitions\ShellNavigationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DispatcherService.cs" />
-    <Compile Include="Services\ShellNavigator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -14,16 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using DustInTheWind.ActiveTime.Common;
+using System.Windows;
 
-namespace DustInTheWind.ActiveTime.MainModule.Services
+namespace DustInTheWind.ActiveTime.Services
 {
-    class CurrentTimeProvider : ITimeProvider
+    class ApplicationService : ApplicationServiceBase
     {
-        public DateTime GetDateTime()
+        protected override void PerformExit()
         {
-            return DateTime.Now;
+            Application.Current.Shutdown();
         }
     }
 }

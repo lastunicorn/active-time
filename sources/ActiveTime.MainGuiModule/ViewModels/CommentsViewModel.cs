@@ -89,18 +89,31 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             buttonBarViewModel.CancelButtonClicked += HandleButtonBarCancelButtonClicked;
             buttonBarViewModel.SaveButtonClicked += HandleButtonBarSaveButtonClicked;
 
-            stateService.CurrentDateChanged += HandleCommentsServiceCurrentDateChanged;
+            stateService.CurrentDateChanged += HandleStateServiceCurrentDateChanged;
 
             RetrieveRecord();
             RefreshDisplayedData();
         }
 
-        private void HandleCommentsServiceCurrentDateChanged(object sender, EventArgs e)
+        private void HandleStateServiceCurrentDateChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("Date");
 
             RetrieveRecord();
             RefreshDisplayedData();
+        }
+
+        private void RetrieveRecord()
+        {
+            DateTime? date = stateService.CurrentDate;
+
+            if (date == null)
+            {
+                currentDayComment = null;
+                return;
+            }
+            
+            currentDayComment = dayCommentRepository.GetByDate(date.Value);
         }
 
         private void RefreshDisplayedData()
@@ -117,24 +130,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             }
         }
 
-        private void RetrieveRecord()
-        {
-            DateTime? date = stateService.CurrentDate;
-
-            if (date == null)
-            {
-                currentDayComment = null;
-            }
-            else
-            {
-                currentDayComment = dayCommentRepository.GetByDate(date.Value);
-                if (currentDayComment != null && currentDayComment.Date != date)
-                    currentDayComment = null;
-            }
-        }
-
-        #region Apply / Cancel / Save Buttons
-
         private void HandleButtonBarApplyButtonClicked(object sender, EventArgs e)
         {
             SaveInternal();
@@ -150,8 +145,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             SaveInternal();
             NavigateToMainView();
         }
-
-        #endregion
 
         private void NavigateToMainView()
         {
@@ -184,7 +177,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

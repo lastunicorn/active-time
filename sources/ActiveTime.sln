@@ -1,13 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime", "ActiveTime\ActiveTime.csproj", "{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Tests", "ActiveTime.Tests\ActiveTime.Tests.csproj", "{7F9750D1-19F4-4F69-9552-A38C4DB3F15B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Common", "ActiveTime.Common\ActiveTime.Common.csproj", "{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.MainModule", "ActiveTime.MainModule\ActiveTime.MainModule.csproj", "{7F342CBB-0FD1-48CB-A186-8C60F8C75772}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.BusinessLogicModule", "ActiveTime.BusinessLogicModule\ActiveTime.BusinessLogicModule.csproj", "{7F342CBB-0FD1-48CB-A186-8C60F8C75772}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.TrayIconModule", "ActiveTime.TrayIconModule\ActiveTime.TrayIconModule.csproj", "{D993640F-730C-472F-8625-80365A397D19}"
 EndProject
@@ -16,8 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule", "ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule", "ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ShellNavigationModule", "ActiveTime.ShellNavigationModule\ActiveTime.ShellNavigationModule.csproj", "{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.SystemSessionModule", "ActiveTime.SystemSessionModule\ActiveTime.SystemSessionModule.csproj", "{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}"
 EndProject
@@ -113,16 +111,6 @@ Global
 		{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}.Release|x86.ActiveCfg = Release|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B54EF64F-8B4E-486E-9E52-7DD9CAA8D203}.Release|x86.ActiveCfg = Release|Any CPU
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

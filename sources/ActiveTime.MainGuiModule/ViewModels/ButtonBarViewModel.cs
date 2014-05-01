@@ -16,7 +16,6 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Commands;
 

@@ -13,16 +13,9 @@
     </Modularity:ModuleInfo>
     
     <Modularity:ModuleInfo
-        Ref="file://ActiveTime.MainModule.dll"
-        ModuleName="MainModule"
-        ModuleType="DustInTheWind.ActiveTime.MainModule.ModuleDefinitions.MainModule, ActiveTime.MainModule, Version=1.0.0.0"
-        InitializationMode="WhenAvailable">
-    </Modularity:ModuleInfo>
-    
-    <Modularity:ModuleInfo
-        Ref="file://ActiveTime.ShellNavigationModule.dll"
-        ModuleName="ShellNavigationModule"
-        ModuleType="DustInTheWind.ActiveTime.ShellNavigationModule.ModuleDefinitions.ShellNavigationModule, ActiveTime.ShellNavigationModule, Version=1.0.0.0"
+        Ref="file://ActiveTime.BusinessLogicModule.dll"
+        ModuleName="BusinessLogicModule"
+        ModuleType="DustInTheWind.ActiveTime.BusinessLogicModule.ModuleDefinitions.BusinessLogicModule, ActiveTime.BusinessLogicModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
 
@@ -33,7 +26,7 @@
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>PersistenceModule</sys:String>
-            <sys:String>MainModule</sys:String>
+            <sys:String>BusinessLogicModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
 
@@ -44,7 +37,6 @@
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>PersistenceModule</sys:String>
-            <sys:String>ShellNavigationModule</sys:String>
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
@@ -56,7 +48,6 @@
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
-            <sys:String>ShellNavigationModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
 
@@ -67,7 +58,6 @@
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
-            <sys:String>ShellNavigationModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
 
@@ -78,7 +68,7 @@
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
-            <sys:String>MainModule</sys:String>
+            <sys:String>BusinessLogicModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
     

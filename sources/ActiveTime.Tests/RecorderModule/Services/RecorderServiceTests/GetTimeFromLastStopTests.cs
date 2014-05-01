@@ -45,7 +45,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.RecorderSer
         {
             RecorderService recorderService = new RecorderService(scribMock.Object, applicationService.Object);
 
-            Assert.That(recorderService.GetTimeFromLastStop(), Is.Null);
+            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.Null);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.RecorderSer
         {
             recorderService.Start();
 
-            Assert.That(recorderService.GetTimeFromLastStop(), Is.Null);
+            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.Null);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.RecorderSer
             recorderService.Stop();
             Thread.Sleep(100);
 
-            Assert.That(recorderService.GetTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
+            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.RecorderSer
             recorderService.Start();
             Thread.Sleep(50);
 
-            Assert.That(recorderService.GetTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
+            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
         }
     }
 }

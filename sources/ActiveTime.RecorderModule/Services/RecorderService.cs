@@ -29,10 +29,36 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         private readonly IScribe scribe;
 
         /// <summary>
-        /// Specifies the state of the current recorder service.
+        /// Gets the state of the current recorder service.
         /// </summary>
         public RecorderState State { get; private set; }
+
         private readonly object stateSynchronizer = new object();
+
+        private DateTime? lastStopTime;
+
+        private readonly Timer timer;
+
+        private TimeSpan stampingInterval;
+
+        /// <summary>
+        /// Gets or sets the interval of time to wait between two stamping actions.
+        /// A stamp consists in updating the time record in the persistence layer (usually the database).
+        /// </summary>
+        public TimeSpan StampingInterval
+        {
+            get { return stampingInterval; }
+            set
+            {
+                lock (stateSynchronizer)
+                {
+                    stampingInterval = value;
+
+                    if (State == RecorderState.Running)
+                        timer.Change(stampingInterval, stampingInterval);
+                }
+            }
+        }
 
         #region Event Started
 
@@ -137,34 +163,12 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             DoStop(false);
         }
 
-        #region Internal Timer
-
-        private readonly Timer timer;
-
-        private TimeSpan stampingInterval;
-        public TimeSpan StampingInterval
-        {
-            get { return stampingInterval; }
-            set
-            {
-                lock (stateSynchronizer)
-                {
-                    stampingInterval = value;
-                    
-                    if (State == RecorderState.Running)
-                        timer.Change(stampingInterval, stampingInterval);
-                }
-            }
-        }
-
         private void HandleTimerTick(object o)
         {
             StampWithEvents();
         }
 
-        #endregion
-
-        #region Start / Stamp / Stop
+        #region Start
 
         /// <summary>
         /// Starts the current instance of the RecorderService. The action is performed
@@ -186,20 +190,70 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             }
         }
 
-        private void Stamp()
+        /// <summary>
+        /// Private method that starts the current instance of the RecorderService.
+        /// This method is thread safe and raises necessary events, but does not check the
+        /// state of the service before it executes.
+        /// </summary>
+        private void StartWithEvents()
         {
-            switch (State)
+            lock (stateSynchronizer)
             {
-                case RecorderState.Stopped:
-                    StartWithEvents();
-                    StampWithEvents();
-                    break;
-
-                case RecorderState.Running:
-                    StampWithEvents();
-                    break;
+                DoStart();
             }
+
+            OnStarted(EventArgs.Empty);
         }
+
+        /// <summary>
+        /// Private method that starts the current instance of the RecorderService.
+        /// This method is not thread safe and does not raise any events.
+        /// </summary>
+        private void DoStart()
+        {
+            // Stamp
+            scribe.StampNew();
+
+            // Start timer
+            timer.Change(stampingInterval, stampingInterval);
+
+            // Change the state.
+            State = RecorderState.Running;
+        }
+
+        #endregion
+
+        #region Stamp
+
+        /// <summary>
+        /// Private method that stamps the scribe.
+        /// This method is thread safe and raises necessary events, but does not check the
+        /// state of the service before it executes.
+        /// </summary>
+        private void StampWithEvents()
+        {
+            OnStamping(EventArgs.Empty);
+
+            lock (stateSynchronizer)
+            {
+                DoStamp();
+            }
+
+            OnStamped(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Private method that stamps the scribe.
+        /// This method is not thread safe and does not raise any events.
+        /// </summary>
+        private void DoStamp()
+        {
+            scribe.Stamp();
+        }
+
+        #endregion
+
+        #region Stop
 
         /// <summary>
         /// Stops the current instance of the RecorderService. The action is performed
@@ -222,42 +276,6 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             }
         }
 
-        #endregion
-
-        #region <...>WithEvents methods
-
-        /// <summary>
-        /// Private method that starts the current instance of the RecorderService.
-        /// This method is thread safe and raises necessary events, but does not check the
-        /// state of the service before it executes.
-        /// </summary>
-        private void StartWithEvents()
-        {
-            lock (stateSynchronizer)
-            {
-                DoStart();
-            }
-
-            OnStarted(EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Private method that stamps the scribe.
-        /// This method is thread safe and raises necessary events, but does not check the
-        /// state of the service before it executes.
-        /// </summary>
-        private void StampWithEvents()
-        {
-            OnStamping(EventArgs.Empty);
-
-            lock (stateSynchronizer)
-            {
-                DoStamp();
-            }
-
-            OnStamped(EventArgs.Empty);
-        }
-
         /// <summary>
         /// Private method that stops the current instance of the RecorderService.
         /// This method is thread safe and raises necessary events, but does not check the
@@ -272,35 +290,6 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             }
 
             OnStopped(EventArgs.Empty);
-        }
-
-        #endregion
-
-        #region Do<...> methods
-
-        /// <summary>
-        /// Private method that starts the current instance of the RecorderService.
-        /// This method is not thread safe and does not raise any events.
-        /// </summary>
-        private void DoStart()
-        {
-            // Stamp
-            scribe.StampNew();
-
-            // Start timer
-            timer.Change(stampingInterval, stampingInterval);
-
-            // Change the state.
-            State = RecorderState.Running;
-        }
-
-        /// <summary>
-        /// Private method that stamps the scribe.
-        /// This method is not thread safe and does not raise any events.
-        /// </summary>
-        private void DoStamp()
-        {
-            scribe.Stamp();
         }
 
         /// <summary>
@@ -324,11 +313,8 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         #endregion
 
-        private DateTime? lastStopTime;
-
-        public TimeSpan? GetTimeFromLastStop()
+        public TimeSpan? CalculateTimeFromLastStop()
         {
-            //return State == RecorderState.Running ? null : scrib.GetTimeFromLastStamp();
             return lastStopTime == null ? null : DateTime.Now - lastStopTime;
         }
     }

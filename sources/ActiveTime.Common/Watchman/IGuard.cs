@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DustInTheWind.ActiveTime.Watchman
+namespace DustInTheWind.ActiveTime.Common.Watchman
 {
     public interface IGuard : IDisposable
     {
