@@ -25,6 +25,43 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
     /// </summary>
     class StatusInfoService : IStatusInfoService
     {
+        /// <summary>
+        /// The default Text of the status.
+        /// </summary>
+        public const string DefaultStatusText = "Ready";
+
+        /// <summary>
+        /// The default time in milliseconds after which the status text will be reset to its default value.
+        /// </summary>
+        private const int DefaultStatusTimeout = 5000;
+
+        /// <summary>
+        /// Timer used to reset the status Text.
+        /// </summary>
+        private readonly Timer timerStatus;
+        
+        #region Status Text Property
+
+        /// <summary>
+        /// The text representing the status.
+        /// </summary>
+        private string statusText;
+
+        /// <summary>
+        /// Gets or sets the text representing the status.
+        /// </summary>
+        public string StatusText
+        {
+            get { return statusText; }
+            set
+            {
+                statusText = value;
+                OnStatusTextChanged(EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
         #region Event StatusTextChanged
 
         /// <summary>
@@ -51,60 +88,18 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
         /// </summary>
         public StatusInfoService()
         {
-            statusText = DEFAULT_STATUS_TEXT;
-            timerStatus = new Timer(ResetStatusTextTh);
+            statusText = DefaultStatusText;
+            timerStatus = new Timer(HandleTimerElapsed);
         }
-        
-        #region Status Text
-
-        /// <summary>
-        /// The default Text of the status.
-        /// </summary>
-        public const string DEFAULT_STATUS_TEXT = "Ready";
-
-        /// <summary>
-        /// The text representing the status.
-        /// </summary>
-        private string statusText;
-
-        /// <summary>
-        /// Gets or sets the text representing the status.
-        /// </summary>
-        public string StatusText
-        {
-            get { return statusText; }
-            set
-            {
-                statusText = value;
-                OnStatusTextChanged(EventArgs.Empty);
-            }
-        }
-
-        #endregion
-
-
-        #region Status Reset Timer
-
-        /// <summary>
-        /// The default time in milliseconds after which the status text will be reset to its default value.
-        /// </summary>
-        private const int DEFAULT_STATUS_TIMEOUT = 5000;
-
-        /// <summary>
-        /// Timer used to reset the status Text.
-        /// </summary>
-        private readonly Timer timerStatus;
 
         /// <summary>
         /// The call-back method of the timer that resets the status to the default Text.
         /// </summary>
         /// <param name="o">Unused</param>
-        private void ResetStatusTextTh(object o)
+        private void HandleTimerElapsed(object o)
         {
-            StatusText = DEFAULT_STATUS_TEXT;
+            StatusText = DefaultStatusText;
         }
-
-        #endregion
 
         /// <summary>
         /// Sets the status of the model to the specified Text and
@@ -115,15 +110,14 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
         public void SetStatus(string text, int timeout)
         {
             StatusText = text;
+
             if (timeout > 0)
-            {
                 timerStatus.Change(timeout, -1);
-            }
         }
 
         public void SetStatus(string text)
         {
-            SetStatus(text, DEFAULT_STATUS_TIMEOUT);
+            SetStatus(text, DefaultStatusTimeout);
         }
     }
 }
