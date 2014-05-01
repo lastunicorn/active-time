@@ -26,53 +26,30 @@ namespace DustInTheWind.ActiveTime.Common.Recording
     public class DayRecord
     {
         /// <summary>
-        /// The date for which the current instance contains information.
-        /// </summary>
-        private DateTime date;
-
-        /// <summary>
         /// Gets the date for which the current instance contains information.
         /// </summary>
-        public DateTime Date
-        {
-            get { return date; }
-        }
-
-        /// <summary>
-        /// The records representing the active time.
-        /// </summary>
-        private List<DayTimeInterval> activeTimeRecords;
+        public DateTime Date { get; private set; }
 
         /// <summary>
         /// Gets or sets the records representing the active time.
         /// </summary>
-        public List<DayTimeInterval> ActiveTimeRecords
-        {
-            get { return activeTimeRecords; }
-            //set { activeTimeRecords = value; }
-        }
+        public List<DayTimeInterval> ActiveTimeRecords { get; private set; }
 
-        private string comment;
-
-        public string Comment
-        {
-            get { return comment; }
-            set { comment = value; }
-        }
+        public string Comment { get; set; }
 
         public bool IsEmpty
         {
-            get { return (activeTimeRecords == null || activeTimeRecords.Count == 0) && (comment == null || comment.Length == 0); }
+            get { return (ActiveTimeRecords == null || ActiveTimeRecords.Count == 0) && string.IsNullOrEmpty(Comment); }
         }
 
         public bool HasRecords
         {
-            get { return activeTimeRecords != null && activeTimeRecords.Count > 0; }
+            get { return ActiveTimeRecords != null && ActiveTimeRecords.Count > 0; }
         }
 
         public bool HasComment
         {
-            get { return comment != null && comment.Length > 0; }
+            get { return !string.IsNullOrEmpty(Comment); }
         }
 
         /// <summary>
@@ -91,20 +68,20 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// <param name="date">The date for which the new instance contains information.</param>
         public DayRecord(DateTime date)
         {
-            this.date = date;
-            activeTimeRecords = new List<DayTimeInterval>();
+            Date = date;
+            ActiveTimeRecords = new List<DayTimeInterval>();
         }
 
         public TimeSpan GetTotalActiveTime()
         {
+            if (ActiveTimeRecords == null)
+                return TimeSpan.Zero;
+
             TimeSpan totalTime = TimeSpan.Zero;
 
-            if (activeTimeRecords != null)
+            foreach (DayTimeInterval record in ActiveTimeRecords)
             {
-                foreach (DayTimeInterval record in activeTimeRecords)
-                {
-                    totalTime += record.EndTime - record.StartTime;
-                }
+                totalTime += record.EndTime - record.StartTime;
             }
 
             return totalTime;
@@ -112,38 +89,34 @@ namespace DustInTheWind.ActiveTime.Common.Recording
 
         public TimeSpan GetTotalTime()
         {
-            TimeSpan totalTime = TimeSpan.Zero;
+            bool existsRecords = ActiveTimeRecords != null && ActiveTimeRecords.Count > 0;
 
-            if (activeTimeRecords != null && activeTimeRecords.Count > 0)
+            if (!existsRecords)
+                return TimeSpan.Zero;
+
+            TimeSpan beginHour = ActiveTimeRecords[0].StartTime;
+            TimeSpan endHour = ActiveTimeRecords[0].EndTime;
+
+            foreach (DayTimeInterval record in ActiveTimeRecords)
             {
-                TimeSpan beginHour = activeTimeRecords[0].StartTime;
-                TimeSpan endHour = activeTimeRecords[0].EndTime;
+                if (record.StartTime < beginHour)
+                    beginHour = record.StartTime;
 
-                foreach (DayTimeInterval record in activeTimeRecords)
-                {
-                    if (record.StartTime < beginHour)
-                        beginHour = record.StartTime;
-
-                    if (record.EndTime > endHour)
-                        endHour = record.EndTime;
-                }
-
-                totalTime = endHour - beginHour;
+                if (record.EndTime > endHour)
+                    endHour = record.EndTime;
             }
 
-            return totalTime;
+            return endHour - beginHour;
         }
 
         public TimeSpan? GetBeginTime()
         {
-            if (activeTimeRecords != null && activeTimeRecords.Count > 0)
-            {
-                return activeTimeRecords[0].StartTime;
-            }
-            else
-            {
+            bool existsRecords = ActiveTimeRecords != null && ActiveTimeRecords.Count > 0;
+
+            if (!existsRecords)
                 return null;
-            }
+
+            return ActiveTimeRecords[0].StartTime;
         }
 
         //public DayTimeInterval CalculateLunchBreak(DayRecord dayRecord)
@@ -168,17 +141,17 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         public DayTimeInterval[] GetTimeRecords(bool includeBreaks)
         {
             // todo: possible a bug.
-            if (activeTimeRecords == null || activeTimeRecords.Count == 0 || !includeBreaks)
-                return activeTimeRecords.ToArray();
+            if (ActiveTimeRecords == null || ActiveTimeRecords.Count == 0 || !includeBreaks)
+                return ActiveTimeRecords.ToArray();
 
 
             List<DayTimeInterval> allRecords = new List<DayTimeInterval>();
 
-            allRecords.Add(activeTimeRecords[0]);
+            allRecords.Add(ActiveTimeRecords[0]);
 
-            DayTimeInterval previousRecord = activeTimeRecords[0];
+            DayTimeInterval previousRecord = ActiveTimeRecords[0];
 
-            foreach (DayTimeInterval record in activeTimeRecords)
+            foreach (DayTimeInterval record in ActiveTimeRecords)
             {
                 allRecords.Add(new Break(previousRecord.EndTime, record.StartTime));
                 allRecords.Add(record);

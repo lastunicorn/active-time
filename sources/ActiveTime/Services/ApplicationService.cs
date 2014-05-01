@@ -16,6 +16,7 @@
 
 using DustInTheWind.ActiveTime.Common;
 using System.Windows;
+using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Services
 {

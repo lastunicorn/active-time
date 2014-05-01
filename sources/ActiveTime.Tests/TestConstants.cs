@@ -14,14 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
-namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
+namespace DustInTheWind.ActiveTime.UnitTests
 {
-    public interface IPauseReminder
+    sealed class TestConstants
     {
-        TimeSpan PauseInterval { get; set; }
-        TimeSpan SnoozeInterval { get; set; }
-        void StartMonitoring();
+        public const int TimerDelayAccepted = 200;
+        public const int TimeErrorAccepted = 20;
     }
 }

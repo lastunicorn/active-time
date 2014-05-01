@@ -30,6 +30,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         private readonly object lockStatus = new object();
 
         /// <summary>
+        /// The internal timer.
+        /// </summary>
+        private Timer timer;
+
+        /// <summary>
         /// Gets the time when the remainder has been started last time.
         /// If the current instance has never been started, it is equal with <see cref="DateTime.MinValue"/> value.
         /// </summary>
@@ -54,9 +59,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         protected virtual void OnRing(RingEventArgs e)
         {
             if (Ring != null)
-            {
                 Ring(this, e);
-            }
         }
 
         #endregion
@@ -76,9 +79,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         protected virtual void OnStopped(EventArgs e)
         {
             if (Stopped != null)
-            {
                 Stopped(this, e);
-            }
         }
 
         #endregion
@@ -91,10 +92,8 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             Status = ReminderStatus.NotStarted;
 
             flagFinished = new ManualResetEvent(false);
-            timer = new Timer(TimerElapsed, null, Timeout.Infinite, Timeout.Infinite);
+            timer = new Timer(HandleTimerElapsed, null, Timeout.Infinite, Timeout.Infinite);
         }
-
-        #region Start
 
         /// <summary>
         /// Start the timer.
@@ -106,15 +105,15 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             if (disposed)
                 throw new ObjectDisposedException("Reminder");
 
-            if (milliseconds >= 0)
+            if (milliseconds < 0)
+                return;
+
+            lock (lockStatus)
             {
-                lock (lockStatus)
-                {
-                    flagFinished.Reset();
-                    StartTime = DateTime.Now;
-                    timer.Change(milliseconds, Timeout.Infinite);
-                    Status = ReminderStatus.Running;
-                }
+                flagFinished.Reset();
+                StartTime = DateTime.Now;
+                timer.Change(milliseconds, Timeout.Infinite);
+                Status = ReminderStatus.Running;
             }
         }
 
@@ -128,15 +127,15 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             if (disposed)
                 throw new ObjectDisposedException("Reminder");
 
-            if (milliseconds >= 0)
+            if (milliseconds < 0)
+                return;
+
+            lock (lockStatus)
             {
-                lock (lockStatus)
-                {
-                    flagFinished.Reset();
-                    StartTime = DateTime.Now;
-                    timer.Change(milliseconds, Timeout.Infinite);
-                    Status = ReminderStatus.Running;
-                }
+                flagFinished.Reset();
+                StartTime = DateTime.Now;
+                timer.Change(milliseconds, Timeout.Infinite);
+                Status = ReminderStatus.Running;
             }
         }
 
@@ -169,21 +168,17 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             if (disposed)
                 throw new ObjectDisposedException("Reminder");
 
-            if (time != TimeSpan.Zero)
+            if (time == TimeSpan.Zero)
+                return;
+
+            lock (lockStatus)
             {
-                lock (lockStatus)
-                {
-                    flagFinished.Reset();
-                    StartTime = DateTime.Now;
-                    timer.Change(time, TimeSpan.FromMilliseconds(-1));
-                    Status = ReminderStatus.Running;
-                }
+                flagFinished.Reset();
+                StartTime = DateTime.Now;
+                timer.Change(time, TimeSpan.FromMilliseconds(-1));
+                Status = ReminderStatus.Running;
             }
         }
-
-        #endregion
-
-        #region Reset
 
         /// <summary>
         /// Resets the status to "NotStarted" Value. If the timer is running, it is automatically stopped without triggering the Ring event.
@@ -207,10 +202,6 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             }
         }
 
-        #endregion
-
-        #region Stop
-
         /// <summary>
         /// Alias method for Reset(). Stops the timer without triggering the Ring event.
         /// </summary>
@@ -219,10 +210,6 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         {
             Reset();
         }
-
-        #endregion
-
-        #region Snooze
 
         /// <summary>
         /// The time used to postpone the ring.
@@ -272,20 +259,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             }
         }
 
-        #endregion
-
-        #region Timer
-
-        /// <summary>
-        /// The internal timer.
-        /// </summary>
-        private Timer timer;
-
         /// <summary>
         /// Call back function triggered when the timer elapsed.
         /// </summary>
         /// <param name="o"></param>
-        private void TimerElapsed(object o)
+        private void HandleTimerElapsed(object o)
         {
             lock (lockStatus)
             {
@@ -311,10 +289,6 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             }
         }
 
-        #endregion
-
-        #region WaitUntilRing
-
         /// <summary>
         /// A semaphore that turns green (true) when the clock rings or is stopped.
         /// That means it is red (false) only if the clock is running.
@@ -337,8 +311,6 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
 
             return Status == ReminderStatus.Finished;
         }
-
-        #endregion
 
         #region IDisposable Members
 

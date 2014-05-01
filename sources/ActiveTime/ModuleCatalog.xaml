@@ -11,13 +11,6 @@
         ModuleType="DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
-    
-    <Modularity:ModuleInfo
-        Ref="file://ActiveTime.BusinessLogicModule.dll"
-        ModuleName="BusinessLogicModule"
-        ModuleType="DustInTheWind.ActiveTime.BusinessLogicModule.ModuleDefinitions.BusinessLogicModule, ActiveTime.BusinessLogicModule, Version=1.0.0.0"
-        InitializationMode="WhenAvailable">
-    </Modularity:ModuleInfo>
 
     <Modularity:ModuleInfo
         Ref="file://ActiveTime.RecorderModule.dll"
@@ -26,7 +19,6 @@
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>PersistenceModule</sys:String>
-            <sys:String>BusinessLogicModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
 
@@ -68,7 +60,6 @@
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
-            <sys:String>BusinessLogicModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
     </Modularity:ModuleInfo>
     

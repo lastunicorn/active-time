@@ -14,14 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using System;
 
-namespace DustInTheWind.ActiveTime.Common.ShellNavigation
+namespace DustInTheWind.ActiveTime.Common.Services
 {
-    public interface IShellNavigator
+    public interface IStateService
     {
-        void RegisterShell(ShellInfo shellInfo);
-
-        void Navigate(string shellName, Dictionary<string, object> parameters = null);
+        DateTime? CurrentDate { get; set; }
+        event EventHandler CurrentDateChanged;
     }
 }

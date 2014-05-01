@@ -16,12 +16,13 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
+namespace DustInTheWind.ActiveTime.Common.Services
 {
-    public interface IPauseReminder
+    public class CurrentTimeProvider : ITimeProvider
     {
-        TimeSpan PauseInterval { get; set; }
-        TimeSpan SnoozeInterval { get; set; }
-        void StartMonitoring();
+        public DateTime GetDateTime()
+        {
+            return DateTime.Now;
+        }
     }
 }

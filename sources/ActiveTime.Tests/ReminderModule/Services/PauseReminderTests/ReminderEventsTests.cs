@@ -18,8 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
 using Moq;
@@ -67,7 +67,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
             pauseReminder.StartMonitoring();
             reminder.Raise(x => x.Ring += null, new RingEventArgs());
 
-            Thread.Sleep(120);
+            Thread.Sleep(100 + TestConstants.TimerDelayAccepted);
 
             if (!messageDisplayed)
                 Assert.Fail("The pause message was not displayed");

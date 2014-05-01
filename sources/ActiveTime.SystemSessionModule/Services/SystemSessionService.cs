@@ -17,15 +17,15 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using Microsoft.Win32;
 
 namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
 {
     /// <summary>
-    /// This service monitors the Windows session and stops the recorder when the user
-    /// locks the session or logs off. When the user unlocks the session, the recorder
+    /// This service monitors the Windows session and stops the recorderService when the user
+    /// locks the session or logs off. When the user unlocks the session, the recorderService
     /// is started only if it was previously running.
     /// </summary>
     /// <remarks>
@@ -33,8 +33,8 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
     /// </remarks>
     class SystemSessionService
     {
-        private readonly IRecorderService recorder;
-        private readonly IShellNavigator navigator;
+        private readonly IRecorderService recorderService;
+        private readonly IShellNavigator shellNavigator;
 
         /// <summary>
         /// This value is used when the user unlocks the session and specifies if the
@@ -45,19 +45,19 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         /// <summary>
         /// Initializes a new instance of <see cref="SystemSessionService"/> class.
         /// </summary>
-        /// <param name="recorder"></param>
-        /// <param name="navigator"></param>
+        /// <param name="recorderService"></param>
+        /// <param name="shellNavigator"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public SystemSessionService(IRecorderService recorder, IShellNavigator navigator)
+        public SystemSessionService(IRecorderService recorderService, IShellNavigator shellNavigator)
         {
-            if (recorder == null)
-                throw new ArgumentNullException("recorder");
+            if (recorderService == null)
+                throw new ArgumentNullException("recorderService");
 
-            if (navigator == null)
-                throw new ArgumentNullException("navigator");
+            if (shellNavigator == null)
+                throw new ArgumentNullException("shellNavigator");
 
-            this.recorder = recorder;
-            this.navigator = navigator;
+            this.recorderService = recorderService;
+            this.shellNavigator = shellNavigator;
 
             SystemEvents.SessionSwitch += HandleSessionSwitch;
         }
@@ -82,15 +82,11 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
                     break;
 
                 case SessionSwitchReason.SessionLogoff:
-                    break;
-
                 case SessionSwitchReason.SessionLock:
                     StopRecorder();
                     break;
 
                 case SessionSwitchReason.SessionLogon:
-                    break;
-
                 case SessionSwitchReason.SessionUnlock:
                     StartRecorder();
                     break;
@@ -101,10 +97,10 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         {
             // The user left the desk.
 
-            if (recorder.State == RecorderState.Running)
+            if (recorderService.State == RecorderState.Running)
             {
                 recorderWasRunning = true;
-                recorder.Stop();
+                recorderService.Stop();
             }
             else
             {
@@ -116,10 +112,10 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         {
             // The user returned to his desk.
 
-            TimeSpan? timeFromLastStop = recorderWasRunning ? recorder.CalculateTimeFromLastStop() : null;
+            TimeSpan? timeFromLastStop = recorderWasRunning ? recorderService.CalculateTimeFromLastStop() : null;
 
             if (recorderWasRunning)
-                recorder.Start();
+                recorderService.Start();
 
             if (timeFromLastStop != null && timeFromLastStop < TimeSpan.FromMinutes(1))
             {
@@ -128,7 +124,7 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
                     { "Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause." }
                 };
 
-                navigator.Navigate(ShellNames.MessageShell, parameters);
+                shellNavigator.Navigate(ShellNames.MessageShell, parameters);
             }
         }
     }

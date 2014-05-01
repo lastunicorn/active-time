@@ -118,7 +118,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                     TimeSpan actual = snoozeEndTime - snoozeStartTime;
                     TimeSpan expected = reminder.SnoozeTime;
 
-                    Assert.That(actual, Is.EqualTo(expected).Within(TimeSpan.FromMilliseconds(50)));
+                    TimeSpan acceptedError = TimeSpan.FromMilliseconds(TestConstants.TimerDelayAccepted);
+                    Assert.That(actual, Is.EqualTo(expected).Within(acceptedError));
                 }
             }
         }
@@ -166,7 +167,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                     TimeSpan actual = snoozeEndTime - snoozeStartTime;
                     TimeSpan expected = TimeSpan.FromMilliseconds(snoozeMiliseconds);
 
-                    Assert.That(actual, Is.EqualTo(expected).Within(TimeSpan.FromMilliseconds(50)));
+                    TimeSpan acceptedError = TimeSpan.FromMilliseconds(TestConstants.TimerDelayAccepted);
+                    Assert.That(actual, Is.EqualTo(expected).Within(acceptedError));
                 }
             }
         }

@@ -14,27 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
 
-namespace DustInTheWind.ActiveTime.Common.ShellNavigation
+namespace DustInTheWind.ActiveTime.Common.UI.ShellNavigation
 {
-    public class ShellInfo
+    public interface IShell
     {
-        public Type ShellType { get; private set; }
-        public string ShellName { get; private set; }
-        public string OwnerName { get; private set; }
-
-        public ShellInfo(string shellName, Type shellType, string ownerName = null)
-        {
-            if (shellName == null)
-                throw new ArgumentNullException("shellName");
-
-            if (shellType == null)
-                throw new ArgumentNullException("shellType");
-
-            ShellName = shellName;
-            ShellType = shellType;
-            OwnerName = ownerName;
-        }
+        Dictionary<string, object> NavigationParameters { get; set; }
     }
 }

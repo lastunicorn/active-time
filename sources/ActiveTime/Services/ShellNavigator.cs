@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
@@ -28,7 +28,6 @@ namespace DustInTheWind.ActiveTime.Services
     /// </summary>
     /// <remarks>
     /// Need to make this class thread safe.
-    /// the shells collection and shellInfos.
     /// </remarks>
     class ShellNavigator : IShellNavigator
     {
@@ -45,7 +44,7 @@ namespace DustInTheWind.ActiveTime.Services
         /// <summary>
         /// The list of existing shells.
         /// </summary>
-        private readonly Dictionary<string, Window> shells = new Dictionary<string, Window>();
+        private readonly Dictionary<string, Window> windows = new Dictionary<string, Window>();
 
         /// <summary>
         /// Initialize a new instance of the <see cref="ShellNavigator"/> class.
@@ -91,7 +90,7 @@ namespace DustInTheWind.ActiveTime.Services
             if (shellName == null)
                 throw new ArgumentNullException("shellName");
 
-            if (shells.ContainsKey(shellName))
+            if (windows.ContainsKey(shellName))
             {
                 NavigateInternal(shellName, parameters);
             }
@@ -108,46 +107,49 @@ namespace DustInTheWind.ActiveTime.Services
         /// <param name="shellInfo">The <see cref="ShellInfo"/> object containing the information about the shell that needs to be created.</param>
         private void CreateNewShell(ShellInfo shellInfo)
         {
-            Window shell = null;
+            Window window = null;
+
             dispatcherService.Dispatch(() =>
             {
-                shell = (Window)unityContainer.Resolve(shellInfo.ShellType);
+                window = (Window)unityContainer.Resolve(shellInfo.ShellType);
 
-                RegionManager.SetRegionManager(shell, regionManager);
+                RegionManager.SetRegionManager(window, regionManager);
                 RegionManager.UpdateRegions();
 
-                if (!string.IsNullOrEmpty(shellInfo.OwnerName) && shells.ContainsKey(shellInfo.OwnerName))
-                {
-                    shell.Owner = shells[shellInfo.OwnerName];
-                }
+                bool existsOwnerWindow = !string.IsNullOrEmpty(shellInfo.OwnerName) && windows.ContainsKey(shellInfo.OwnerName);
 
+                if (existsOwnerWindow)
+                    window.Owner = windows[shellInfo.OwnerName];
             });
 
-            shell.Closed += (s, e) =>
-                                {
-                                    shells.Remove(shellInfo.ShellName);
-                                    RegionManager.SetRegionManager(shell, null);
-                                    RegionManager.UpdateRegions();
-                                };
+            window.Closed += (s, e) =>
+                {
+                    windows.Remove(shellInfo.ShellName);
+                    RegionManager.SetRegionManager(window, null);
+                    RegionManager.UpdateRegions();
+                };
 
-            shells.Add(shellInfo.ShellName, shell);
+            windows.Add(shellInfo.ShellName, window);
         }
 
         private void NavigateInternal(string shellName, Dictionary<string, object> parameters)
         {
-            if (!shells.ContainsKey(shellName)) return;
+            bool existsWindow = windows.ContainsKey(shellName);
 
-            Window shell = shells[shellName];
+            if (!existsWindow)
+                return;
+
+            Window window = windows[shellName];
 
             dispatcherService.Dispatch(() =>
             {
-                shell.Show();
-                shell.Activate();
+                window.Show();
+                window.Activate();
 
-                if (shell is IShell)
-                    ((IShell)shell).NavigationParameters = parameters;
-                else if (shell.DataContext is IShell)
-                    ((IShell)shell.DataContext).NavigationParameters = parameters;
+                IShell shell = (window as IShell) ?? (window.DataContext as IShell);
+
+                if (shell != null)
+                    shell.NavigationParameters = parameters;
             });
         }
     }

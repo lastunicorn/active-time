@@ -16,11 +16,25 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Common
+namespace DustInTheWind.ActiveTime.Common.UI.ShellNavigation
 {
-    public interface IApplicationService
+    public class ShellInfo
     {
-        event EventHandler Exiting;
-        void Exit();
+        public Type ShellType { get; private set; }
+        public string ShellName { get; private set; }
+        public string OwnerName { get; private set; }
+
+        public ShellInfo(string shellName, Type shellType, string ownerName = null)
+        {
+            if (shellName == null)
+                throw new ArgumentNullException("shellName");
+
+            if (shellType == null)
+                throw new ArgumentNullException("shellType");
+
+            ShellName = shellName;
+            ShellType = shellType;
+            OwnerName = ownerName;
+        }
     }
 }

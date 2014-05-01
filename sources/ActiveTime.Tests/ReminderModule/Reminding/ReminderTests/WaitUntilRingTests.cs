@@ -42,7 +42,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         }
 
         [Test]
-        [Timeout(200)]
+        [Timeout(100 + TestConstants.TimerDelayAccepted)]
         public void WaitUntilRing_ReturnValue_Ring()
         {
             const int ringMiliseconds = 100;
@@ -54,7 +54,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         }
 
         [Test]
-        [Timeout(300)]
+        [Timeout(200 + TestConstants.TimerDelayAccepted)]
         public void WaitUntilRing_ReturnValue_Stop()
         {
             const int ringMiliseconds = 200;
@@ -63,7 +63,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             reminder.Start(ringMiliseconds);
 
             // Set the timer to stop the reminder.
-            new Timer(new TimerCallback(o => reminder.Stop()), null, stopMiliseconds, -1);
+            new Timer(o => reminder.Stop(), null, stopMiliseconds, -1);
 
             bool isRing = reminder.WaitUntilRing();
 
@@ -71,7 +71,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         }
 
         [Test]
-        [Timeout(200)]
+        [Timeout(100 + TestConstants.TimerDelayAccepted)]
         public void WaitUntilRing_Time_Ring()
         {
             const int ringMiliseconds = 100;
@@ -86,11 +86,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             TimeSpan actual = ringTime - startTime;
             TimeSpan expected = TimeSpan.FromMilliseconds(ringMiliseconds);
 
-            Assert.That(actual, Is.EqualTo(expected).Within(TimeSpan.FromMilliseconds(20)));
+            Assert.That(actual, Is.EqualTo(expected).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
         }
 
         [Test]
-        [Timeout(300)]
+        [Timeout(200 + TestConstants.TimerDelayAccepted)]
         public void WaitUntilRing_Time_Stop()
         {
             const int ringMiliseconds = 200;
@@ -101,7 +101,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             reminder.Start(ringMiliseconds);
 
             // Set the timer to stop the reminder.
-            new Timer(new TimerCallback(o => reminder.Stop()), null, stopMiliseconds, -1);
+            new Timer(o => reminder.Stop(), null, stopMiliseconds, -1);
 
             reminder.WaitUntilRing();
 
@@ -110,7 +110,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             TimeSpan actual = ringTime - startTime;
             TimeSpan expected = TimeSpan.FromMilliseconds(stopMiliseconds);
 
-            Assert.That(actual, Is.EqualTo(expected).Within(TimeSpan.FromMilliseconds(20)));
+            TimeSpan acceptedError = TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted);
+            Assert.That(actual, Is.EqualTo(expected).Within(acceptedError));
         }
     }
 }

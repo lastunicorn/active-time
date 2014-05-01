@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,46 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Common.UI;
 
-namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
+namespace DustInTheWind.ActiveTime.Common.Services
 {
-    public class StatusInfoViewModel : ViewModelBase
+    public class StateService : IStateService
     {
         private readonly IStatusInfoService statusInfoService;
 
-        public string StatusText
+        private DateTime? currentDate;
+        public DateTime? CurrentDate
         {
-            get { return statusInfoService.StatusText; }
-            set { statusInfoService.StatusText = value; }
+            get { return currentDate; }
+            set
+            {
+                currentDate = value;
+                statusInfoService.SetStatus("Date changed.");
+                OnCurrentDateChanged(EventArgs.Empty);
+            }
         }
 
-        public StatusInfoViewModel(IStatusInfoService statusInfoService)
+
+        public event EventHandler CurrentDateChanged;
+
+        protected virtual void OnCurrentDateChanged(EventArgs e)
+        {
+            if (CurrentDateChanged != null)
+                CurrentDateChanged(this, e);
+        }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateService"/> class.
+        /// </summary>
+        public StateService(IStatusInfoService statusInfoService)
         {
             if (statusInfoService == null)
                 throw new ArgumentNullException("statusInfoService");
 
             this.statusInfoService = statusInfoService;
-            this.statusInfoService.StatusTextChanged += (s, e) => NotifyPropertyChanged("StatusText");
+
+            currentDate = DateTime.Today;
         }
     }
 }

@@ -15,10 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Threading;
-using DustInTheWind.ActiveTime.BusinessLogicModule.Services;
+using DustInTheWind.ActiveTime.Common.Services;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.BusinessLogic.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.UnitTests.Common.Services.StatusInfoServiceTests
 {
     [TestFixture]
     public class SetStatusTests
@@ -45,7 +45,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.BusinessLogic.Services.StatusInfoSe
         {
             statusInfoService.SetStatus(Text, 100);
 
-            Thread.Sleep(120);
+            Thread.Sleep(100 + TestConstants.TimerDelayAccepted);
 
             Assert.That(statusInfoService.StatusText, Is.EqualTo(StatusInfoService.DefaultStatusText));
         }

@@ -20,6 +20,7 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;

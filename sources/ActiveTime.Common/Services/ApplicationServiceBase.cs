@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Common.Events;
 
-namespace DustInTheWind.ActiveTime.Common
+namespace DustInTheWind.ActiveTime.Common.Services
 {
     /// <summary>
     /// This service has only one method that closes the application.

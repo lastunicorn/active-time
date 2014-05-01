@@ -16,10 +16,12 @@
 
 using System.Collections.Generic;
 
-namespace DustInTheWind.ActiveTime.Common.ShellNavigation
+namespace DustInTheWind.ActiveTime.Common.UI.ShellNavigation
 {
-    public interface IShell
+    public interface IShellNavigator
     {
-        Dictionary<string, object> NavigationParameters { get; set; }
+        void RegisterShell(ShellInfo shellInfo);
+
+        void Navigate(string shellName, Dictionary<string, object> parameters = null);
     }
 }

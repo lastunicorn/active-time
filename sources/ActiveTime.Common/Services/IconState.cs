@@ -15,12 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace DustInTheWind.ActiveTime.Common
+namespace DustInTheWind.ActiveTime.MainModule.Services
 {
-    public interface IStateService
+    public enum IconState
     {
-        DateTime? CurrentDate { get; set; }
-        event EventHandler CurrentDateChanged;
+        On,
+        Off
     }
 }

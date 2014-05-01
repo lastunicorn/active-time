@@ -131,7 +131,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         #region Stop
 
         [Test]
-        public void Dispose_StopaAll()
+        public void Dispose_StopAll()
         {
             using (Reminder reminder = new Reminder())
             {

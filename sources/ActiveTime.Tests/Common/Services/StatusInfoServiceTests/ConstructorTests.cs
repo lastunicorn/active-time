@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.BusinessLogicModule.Services;
+using DustInTheWind.ActiveTime.Common.Services;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.BusinessLogic.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.UnitTests.Common.Services.StatusInfoServiceTests
 {
     [TestFixture]
     public class ConstructorTests

@@ -17,6 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
 using Microsoft.Practices.Prism.Regions;
 using Moq;
@@ -125,26 +126,16 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         }
 
         [Test]
-        public void Constructor_clears_Comment_if_retrieved_DayComment_has_wrong_date()
-        {
-            DateTime date = new DateTime(2011, 06, 13);
-            DateTime differentDate = new DateTime(2000, 03, 05);
-            DayComment dayComment = new DayComment { Id = 10, Date = differentDate, Comment = "some comment" };
-
-            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
-            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(dayComment);
-
-            CommentsViewModel viewModel = CreateNewViewModel();
-
-            Assert.That(viewModel.Comment, Is.Null);
-        }
-
-        [Test]
         public void Constructor_sets_Comment_from_retrieved_DayComment()
         {
             DateTime date = new DateTime(2011, 06, 13);
             stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
-            DayComment dayComment = new DayComment { Id = 10, Date = date, Comment = "some comment" };
+            DayComment dayComment = new DayComment
+            {
+                Id = 10,
+                Date = date,
+                Comment = "some comment"
+            };
             dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(dayComment);
 
             CommentsViewModel viewModel = CreateNewViewModel();

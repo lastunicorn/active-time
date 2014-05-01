@@ -40,24 +40,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveTimeException.cs" />
-    <Compile Include="ApplicationServiceBase.cs" />
-    <Compile Include="ITimeProvider.cs" />
+    <Compile Include="Services\ApplicationServiceBase.cs" />
+    <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Persistence\DayComment.cs" />
     <Compile Include="Persistence\EntityBase.cs" />
     <Compile Include="Persistence\TimeRecord.cs" />
     <Compile Include="Persistence\TimeRecordType.cs" />
     <Compile Include="Events\ApplicationExitEvent.cs" />
-    <Compile Include="IApplicationService.cs">
+    <Compile Include="Services\IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IStateService.cs" />
+    <Compile Include="Services\IStateService.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
-    <Compile Include="ShellNavigation\IShell.cs" />
-    <Compile Include="ShellNavigation\IShellNavigator.cs" />
+    <Compile Include="Services\CurrentTimeProvider.cs" />
+    <Compile Include="Services\StateService.cs" />
+    <Compile Include="Services\StatusInfoService.cs" />
+    <Compile Include="UI\ShellNavigation\IShell.cs" />
+    <Compile Include="UI\ShellNavigation\IShellNavigator.cs" />
     <Compile Include="Recording\IRecorderService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IStatusInfoService.cs" />
+    <Compile Include="Services\IStatusInfoService.cs" />
     <Compile Include="Persistence\ITimeRecordRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recording\Break.cs" />
@@ -66,7 +69,7 @@
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\RecorderState.cs" />
     <Compile Include="UI\RegionNames.cs" />
-    <Compile Include="ShellNavigation\ShellInfo.cs" />
+    <Compile Include="UI\ShellNavigation\ShellInfo.cs" />
     <Compile Include="UI\ShellNames.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
     <Compile Include="UI\ViewNames.cs" />

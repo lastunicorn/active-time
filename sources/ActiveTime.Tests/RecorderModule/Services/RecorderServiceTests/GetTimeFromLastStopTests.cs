@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.RecorderModule;
 using DustInTheWind.ActiveTime.RecorderModule.Services;
 using Moq;
@@ -64,7 +65,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.RecorderSer
             recorderService.Stop();
             Thread.Sleep(100);
 
-            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
+            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
         }
 
         [Test]
@@ -77,7 +78,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.RecorderSer
             recorderService.Start();
             Thread.Sleep(50);
 
-            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(20)));
+            Assert.That(recorderService.CalculateTimeFromLastStop(), Is.EqualTo(TimeSpan.FromMilliseconds(100)).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
         }
     }
 }

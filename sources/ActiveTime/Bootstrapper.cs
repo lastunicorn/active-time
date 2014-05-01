@@ -14,14 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
+using System;
+using System.Windows;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -42,6 +42,11 @@ namespace DustInTheWind.ActiveTime
             Container.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IShellNavigator, ShellNavigator>(new ContainerControlledLifetimeManager());
             Container.RegisterType<DispatcherService, DispatcherService>(new ContainerControlledLifetimeManager());
+
+            // Register passive services.
+            Container.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IStateService, StateService>(new ContainerControlledLifetimeManager());
         }
 
         protected override DependencyObject CreateShell()

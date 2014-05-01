@@ -49,7 +49,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             const int miliseconds = 1000;
             reminder.Start(miliseconds);
 
-            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(100)));
+            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             const long miliseconds = 1000;
             reminder.Start(miliseconds);
 
-            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(100)));
+            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             const uint miliseconds = 1000;
             reminder.Start(miliseconds);
 
-            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(100)));
+            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             TimeSpan time = TimeSpan.FromSeconds(1);
             reminder.Start(time);
 
-            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(100)));
+            Assert.That(reminder.StartTime, Is.EqualTo(DateTime.Now).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
         }
 
         [Test]
