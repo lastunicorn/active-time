@@ -65,16 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Exporters\ParameterNullException.cs" />
-    <Compile Include="Exporters\ParameterTypeException.cs" />
-    <Compile Include="Exporters\MandatoryParameterException.cs" />
-    <Compile Include="Exporters\ExporterException.cs" />
-    <Compile Include="Exporters\ExportersManager.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exporters\IExporter.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ShellNavigator.cs" />

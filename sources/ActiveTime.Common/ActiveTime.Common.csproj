@@ -36,10 +36,17 @@
       <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveTimeException.cs" />
+    <Compile Include="Exporters\ExporterException.cs" />
+    <Compile Include="Exporters\ExportersManager.cs" />
+    <Compile Include="Exporters\IExporter.cs" />
+    <Compile Include="Exporters\MandatoryParameterException.cs" />
+    <Compile Include="Exporters\ParameterNullException.cs" />
+    <Compile Include="Exporters\ParameterTypeException.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Persistence\DayComment.cs" />

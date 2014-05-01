@@ -17,8 +17,8 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services

@@ -18,8 +18,9 @@ using System;
 using System.Drawing;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.TrayIconModule.Views;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels

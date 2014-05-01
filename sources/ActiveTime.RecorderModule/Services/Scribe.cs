@@ -17,6 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.RecorderModule.Services
 {
