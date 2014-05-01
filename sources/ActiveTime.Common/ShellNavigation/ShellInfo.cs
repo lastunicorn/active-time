@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows;
 
 namespace DustInTheWind.ActiveTime.Common.ShellNavigation
 {
@@ -32,9 +31,6 @@ namespace DustInTheWind.ActiveTime.Common.ShellNavigation
 
             if (shellType == null)
                 throw new ArgumentNullException("shellType");
-
-            if (shellType.BaseType != typeof(Window))
-                throw new ArgumentException("A shell must be derived from System.Windows.Window base class.", "shellType");
 
             ShellName = shellName;
             ShellType = shellType;

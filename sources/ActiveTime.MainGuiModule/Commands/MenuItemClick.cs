@@ -19,7 +19,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DustInTheWind.ActiveTime.Common.Commands
+namespace DustInTheWind.ActiveTime.MainGuiModule.Commands
 {
     /// <summary>
     /// Static Class that holds all Dependency Properties and Static methods to allow 

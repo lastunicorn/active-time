@@ -34,5 +34,10 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
 
             Loaded += (s, e) => DataContext = viewModel;
         }
+
+        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
     }
 }

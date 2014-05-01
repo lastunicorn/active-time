@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording;assembly=ActiveTime.Common"
              xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
-             xmlns:customcmd="clr-namespace:DustInTheWind.ActiveTime.Common.Commands;assembly=ActiveTime.Common"
-             xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Converters" mc:Ignorable="d" 
+             xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Converters"
+             xmlns:commands="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Commands"
+             mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Loaded="MainView_OnLoaded">
 
     <Grid Margin="5">
@@ -96,8 +97,8 @@
                     <MenuItem Name="menuItemSplit" Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
                     <Separator Margin="0"/>
                     <MenuItem Name="menuItemDelete" Header="Delete"
-                              customcmd:MenuItemClick.Command="{Binding DeleteCommand}"
-                              customcmd:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, UpdateSourceTrigger=Explicit}"/>
+                              commands:MenuItemClick.Command="{Binding DeleteCommand}"
+                              commands:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, UpdateSourceTrigger=Explicit}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
 

@@ -30,23 +30,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             UnsavedData
         }
 
-        private readonly ICommand applyCommand;
-        public ICommand ApplyCommand
-        {
-            get { return applyCommand; }
-        }
+        public ICommand ApplyCommand { get; private set; }
 
-        private readonly ICommand cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return cancelCommand; }
-        }
+        public ICommand CancelCommand { get; private set; }
 
-        private readonly ICommand saveCommand;
-        public ICommand SaveCommand
-        {
-            get { return saveCommand; }
-        }
+        public ICommand SaveCommand { get; private set; }
 
         private bool isApplyButtonEnabled;
         public bool IsApplyButtonEnabled
@@ -110,6 +98,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
                 }
 
                 dataState = value;
+
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 
@@ -181,9 +171,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// </summary>
         public ButtonBarViewModel()
         {
-            applyCommand = new DelegateCommand(new Action(OnApplyCommandExecuted));
-            cancelCommand = new DelegateCommand(new Action(OnCancelCommandExecuted));
-            saveCommand = new DelegateCommand(new Action(OnSaveCommandExecuted));
+            ApplyCommand = new DelegateCommand(OnApplyCommandExecuted, () => IsApplyButtonEnabled);
+            CancelCommand = new DelegateCommand(OnCancelCommandExecuted, () => isCancelButtonEnabled);
+            SaveCommand = new DelegateCommand(OnSaveCommandExecuted, () => isSaveButtonEnabled);
 
             DataState = ButtonBarDataState.NoData;
         }

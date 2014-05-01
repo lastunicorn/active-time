@@ -19,7 +19,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 
-namespace DustInTheWind.ActiveTime.Common.Commands
+namespace DustInTheWind.ActiveTime.MainGuiModule.Commands
 {
     /// <summary>
     /// Behavior that allows <see cref="MenuItem"/>s to hook up with <see cref="ICommand"/> objects.

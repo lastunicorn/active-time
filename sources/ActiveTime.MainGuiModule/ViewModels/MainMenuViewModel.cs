@@ -30,41 +30,17 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         private readonly IShellNavigator shellNavigator;
         private readonly IRecorderService recorder;
 
-        private readonly ICommand exportCommand;
-        public ICommand ExportCommand
-        {
-            get { return exportCommand; }
-        }
+        public ICommand ExportCommand { get; private set; }
 
-        private readonly ICommand statisticsCommand;
-        public ICommand StatisticsCommand
-        {
-            get { return statisticsCommand; }
-        }
+        public ICommand StatisticsCommand { get; private set; }
 
-        private readonly ICommand exitCommand;
-        public ICommand ExitCommand
-        {
-            get { return exitCommand; }
-        }
+        public ICommand ExitCommand { get; private set; }
 
-        private readonly ICommand aboutCommand;
-        public ICommand AboutCommand
-        {
-            get { return aboutCommand; }
-        }
+        public ICommand AboutCommand { get; private set; }
 
-        private readonly ICommand startCommand;
-        public ICommand StartCommand
-        {
-            get { return startCommand; }
-        }
+        public ICommand StartCommand { get; private set; }
 
-        private readonly ICommand stopCommand;
-        public ICommand StopCommand
-        {
-            get { return stopCommand; }
-        }
+        public ICommand StopCommand { get; private set; }
 
         public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder)
         {
@@ -81,12 +57,12 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             this.shellNavigator = shellNavigator;
             this.recorder = recorder;
 
-            exportCommand = new DelegateCommand(OnExportCommandExecuted);
-            statisticsCommand = new DelegateCommand(OnStatisticsCommandExecuted);
-            exitCommand = new DelegateCommand(OnExitCommandExecuted);
-            aboutCommand = new DelegateCommand(OnAboutCommandExecuted);
-            startCommand = new DelegateCommand(OnStartCommandExecuted);
-            stopCommand = new DelegateCommand(OnStopCommandExecuted);
+            ExportCommand = new DelegateCommand(OnExportCommandExecuted);
+            StatisticsCommand = new DelegateCommand(OnStatisticsCommandExecuted);
+            ExitCommand = new DelegateCommand(OnExitCommandExecuted);
+            AboutCommand = new DelegateCommand(OnAboutCommandExecuted);
+            StartCommand = new DelegateCommand(OnStartCommandExecuted);
+            StopCommand = new DelegateCommand(OnStopCommandExecuted);
         }
 
         private void OnExportCommandExecuted()
