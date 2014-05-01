@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using System.Reflection;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using NHibernate;
 using NHibernate.Cfg;
@@ -28,19 +29,25 @@ namespace DustInTheWind.ActiveTime.PersistenceModule
     {
         private const string databaseFileName = "db.s3db";
 
-        private static ISessionFactory _sessionFactory;
+        private static ISessionFactory sessionFactory;
 
         private static ISessionFactory SessionFactory
         {
             get
             {
-                if (_sessionFactory == null)
-                {
+                if (sessionFactory == null)
                     CreateSessionFactory();
-                }
 
-                return _sessionFactory;
+                return sessionFactory;
             }
+        }
+
+        private static void CreateSessionFactory()
+        {
+            Configuration configuration = CreateConfiguration();
+            configuration.AddAssembly(Assembly.GetExecutingAssembly());
+
+            sessionFactory = configuration.BuildSessionFactory();
         }
 
         private static Configuration CreateConfiguration()
@@ -61,14 +68,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule
                                        { Environment.QuerySubstitutions, "true=1;false=0" },
                                        { Environment.ShowSql, "true" }
                                    });
-        }
-
-        private static void CreateSessionFactory()
-        {
-            var configuration = CreateConfiguration();
-            configuration.AddAssembly(typeof(TimeRecord).Assembly);
-
-            _sessionFactory = configuration.BuildSessionFactory();
         }
 
         public static ISession OpenSession()

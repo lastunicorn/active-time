@@ -21,7 +21,7 @@ using System.Windows.Data;
 namespace DustInTheWind.ActiveTime.MainGuiModule.Converters
 {
     /// <summary>
-    /// Converts the <see cref="TextWrapping"/> value into <see cref="Boolean"/> value and viceversa.
+    /// Converts the <see cref="TextWrapping"/> value into <see cref="bool"/> value and viceversa.
     /// </summary>
     public class BooleanConverter : IValueConverter
     {
@@ -33,14 +33,10 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Converters
             if (value.GetType() == targetType)
                 return value;
 
-            if (targetType == typeof(TextWrapping))
-            {
-                return (bool)value ? TextWrapping.Wrap : TextWrapping.NoWrap;
-            }
-            else
-            {
-                return null;
-            }
+            if (targetType == typeof (TextWrapping))
+                return (bool) value ? TextWrapping.Wrap : TextWrapping.NoWrap;
+            
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -54,10 +50,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Converters
 
                 return textWrapping != TextWrapping.NoWrap;
             }
-            else
-            {
-                return null;
-            }
+            
+            return null;
         }
     }
 }

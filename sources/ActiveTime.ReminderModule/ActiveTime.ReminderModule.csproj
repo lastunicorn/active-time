@@ -49,6 +49,11 @@
   <ItemGroup>
     <Compile Include="ModuleDefinitions\ReminderModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reminding\IPauseReminder.cs" />
+    <Compile Include="Reminding\IReminder.cs" />
+    <Compile Include="Reminding\Reminder.cs" />
+    <Compile Include="Reminding\ReminderStatus.cs" />
+    <Compile Include="Reminding\RingEventArgs.cs" />
     <Compile Include="Services\PauseReminder.cs" />
   </ItemGroup>
   <ItemGroup>

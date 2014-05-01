@@ -31,11 +31,13 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
 
         /// <summary>
         /// Gets or sets the time of day representing the start time.
+        /// This value should be greater or equal to 0 and less then one day.
         /// </summary>
         public virtual TimeSpan StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time of day representing the end time.
+        /// This value should be greater or equal to 0 and less then one day.
         /// </summary>
         public virtual TimeSpan EndTime { get; set; }
 

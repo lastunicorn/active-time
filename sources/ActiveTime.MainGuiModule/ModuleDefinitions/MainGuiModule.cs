@@ -16,6 +16,7 @@
 
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.MainGuiModule.Services;
 using DustInTheWind.ActiveTime.MainGuiModule.Views;
 using Microsoft.Practices.Prism.Modularity;

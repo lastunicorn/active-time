@@ -17,10 +17,10 @@
 using System;
 using System.Drawing;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Events;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
-using Microsoft.Practices.Prism.Events;
+using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.TrayIconModule.Views;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
 {

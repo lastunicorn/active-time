@@ -34,7 +34,6 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         public RecorderState State { get; private set; }
         private readonly object stateSynchronizer = new object();
 
-
         #region Event Started
 
         /// <summary>
@@ -77,6 +76,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         /// <summary>
         /// Event raised when ... Well, is raised when it should be raised. Ok?
+        /// todo: write meaningful comment
         /// </summary>
         public event EventHandler Stamping;
         /// <summary>
@@ -95,6 +95,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         /// <summary>
         /// Event raised when ... Well, is raised when it should be raised. Ok?
+        /// todo: write meaningful comment
         /// </summary>
         public event EventHandler Stamped;
 
@@ -109,9 +110,6 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         }
 
         #endregion
-
-
-        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecorderService"/> class.
@@ -128,18 +126,15 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
                 throw new ArgumentNullException("applicationService");
 
             this.scribe = scribe;
-            timer = new Timer(timer_tick);
+            timer = new Timer(HandleTimerTick);
             stampingInterval = TimeSpan.FromMinutes(1);
 
-            applicationService.Exiting += new EventHandler(applicationService_Exiting);
+            applicationService.Exiting += HandleApplicationExiting;
         }
 
-        #endregion
-
-        private void applicationService_Exiting(object sender, EventArgs e)
+        private void HandleApplicationExiting(object sender, EventArgs e)
         {
             DoStop(false);
-            //StopWithEvents(false);
         }
 
         #region Internal Timer
@@ -162,7 +157,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             }
         }
 
-        private void timer_tick(object o)
+        private void HandleTimerTick(object o)
         {
             StampWithEvents();
         }
@@ -188,9 +183,6 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
                 case RecorderState.Running:
                     break;
-
-                default:
-                    break;
             }
         }
 
@@ -205,9 +197,6 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
                 case RecorderState.Running:
                     StampWithEvents();
-                    break;
-
-                default:
                     break;
             }
         }
@@ -229,9 +218,6 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
                 case RecorderState.Running:
                     StopWithEvents(deleteLastRecord);
-                    break;
-
-                default:
                     break;
             }
         }
@@ -256,7 +242,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         }
 
         /// <summary>
-        /// Private method that stamps the scrib.
+        /// Private method that stamps the scribe.
         /// This method is thread safe and raises necessary events, but does not check the
         /// state of the service before it executes.
         /// </summary>
@@ -277,7 +263,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// This method is thread safe and raises necessary events, but does not check the
         /// state of the service before it executes.
         /// </summary>
-        /// <param name="deleteLastRecord">If <c>true</c>, the current record is deleted from the scrib, after the service is stopped.</param>
+        /// <param name="deleteLastRecord">If <c>true</c>, the current record is deleted from the scribe, after the service is stopped.</param>
         private void StopWithEvents(bool deleteLastRecord)
         {
             lock (stateSynchronizer)
@@ -309,7 +295,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         }
 
         /// <summary>
-        /// Private method that stamps the scrib.
+        /// Private method that stamps the scribe.
         /// This method is not thread safe and does not raise any events.
         /// </summary>
         private void DoStamp()
@@ -321,25 +307,18 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// Private method that stops the current instance of the RecorderService.
         /// This method is not thread safe and does not raise any events.
         /// </summary>
-        /// <param name="deleteLastRecord">If <c>true</c>, the current record is deleted from the scrib, after the service is stopped.</param>
+        /// <param name="deleteLastRecord">If <c>true</c>, the current record is deleted from the scribe, after the service is stopped.</param>
         private void DoStop(bool deleteLastRecord)
         {
             // Stop timer
             timer.Change(-1, -1);
 
             if (deleteLastRecord)
-            {
-                // Delete database record from the db.
-                scribe.DeleteDatabaseRecord();
-            }
+                scribe.DeleteCurrentTimeRecord();
             else
-            {
                 DoStamp();
-            }
 
             lastStopTime = DateTime.Now;
-
-            // Change the state.
             State = RecorderState.Stopped;
         }
 

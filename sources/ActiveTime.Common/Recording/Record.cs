@@ -24,31 +24,15 @@ namespace DustInTheWind.ActiveTime.Common.Recording
     public class Record
     {
         /// <summary>
-        /// The date for which this record is created.
-        /// </summary>
-        private DateTime date;
-
-        /// <summary>
         /// Gets the date for which this record is created.
         /// </summary>
-        public DateTime Date
-        {
-            get { return date; }
-        }
+        public DateTime Date { get; private set; }
 
-
-        /// <summary>
-        /// The time of day representing the start time.
-        /// </summary>
-        private DayTimeInterval timeInterval;
 
         /// <summary>
         /// Gets the time of day representing the start time.
         /// </summary>
-        public DayTimeInterval TimeInterval
-        {
-            get { return timeInterval; }
-        }
+        public DayTimeInterval TimeInterval { get; private set; }
 
 
         /// <summary>
@@ -56,8 +40,8 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// </summary>
         public TimeSpan StartTime
         {
-            get { return timeInterval.StartTime; }
-            set { timeInterval.StartTime = value; }
+            get { return TimeInterval.StartTime; }
+            set { TimeInterval.StartTime = value; }
         }
 
 
@@ -66,11 +50,9 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// </summary>
         public TimeSpan EndTime
         {
-            get { return timeInterval.EndTime; }
-            set { timeInterval.EndTime = value; }
+            get { return TimeInterval.EndTime; }
+            set { TimeInterval.EndTime = value; }
         }
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Record"/> class.
@@ -80,7 +62,6 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         public Record(DateTime date, TimeSpan startTime)
             : this(date, startTime, startTime)
         {
-
         }
 
         /// <summary>
@@ -91,11 +72,9 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// <param name="endTime">The time of day representing the end time.</param>
         public Record(DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
-            this.date = date;
-            timeInterval = new DayTimeInterval(startTime, endTime);
+            Date = date;
+            TimeInterval = new DayTimeInterval(startTime, endTime);
         }
-
-        #endregion
 
         public DateTime GetStartDateTime()
         {

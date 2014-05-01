@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Win32;
 
 namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
@@ -40,7 +41,7 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         /// This value is used when the user unlocks the session and specifies if the
         /// Recorder was running when the session was locked.
         /// </summary>
-        private bool recorderWasRunning = false;
+        private bool recorderWasRunning;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SystemSessionService"/> class.
@@ -59,10 +60,10 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
             this.recorder = recorder;
             this.navigator = navigator;
 
-            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            SystemEvents.SessionSwitch += HandleSessionSwitch;
         }
 
-        private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        private void HandleSessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             switch (e.Reason)
             {

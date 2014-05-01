@@ -7,7 +7,7 @@
              xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:customcmd="clr-namespace:DustInTheWind.ActiveTime.Common.Commands;assembly=ActiveTime.Common"
              xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Converters" mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="MainView_OnLoaded">
 
     <Grid Margin="5">
         <Grid.Resources>
@@ -69,7 +69,7 @@
                     Text="{Binding Path=BeginTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
 
-        <Label Grid.Row="2" Grid.Column="2" Content="Estimated End:" Name="label6" Margin="3"></Label>
+        <Label Grid.Row="2" Grid.Column="2" Content="Estimated End:" Name="label6" Margin="3" />
 
         <TextBox Grid.Row="2" Grid.Column="3" Margin="3" Name="textBoxEstimatedEndTime"
                      VerticalAlignment="Center"

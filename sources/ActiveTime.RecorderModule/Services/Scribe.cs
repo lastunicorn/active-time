@@ -24,29 +24,29 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
     /// Keeps track of a current record and updates it in the database when requested.
     /// </summary>
     /// <remarks>
-    /// The current record can be obtained in two ways: 1) from the database or 2) created new.
+    /// The current record can be obtained in two ways: 1) from the database or 2) by creating a new one.
     /// </remarks>
     class Scribe : IScribe
     {
-        private readonly ITimeRecordRepository repository;
+        private readonly ITimeRecordRepository timeRecordRepository;
         private readonly ITimeProvider timeProvider;
-        private TimeRecord record;
+        private TimeRecord timeRecord;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scribe"/> class.
         /// </summary>
-        /// <param name="repository"></param>
+        /// <param name="timeRecordRepository"></param>
         /// <param name="timeProvider"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Scribe(ITimeRecordRepository repository, ITimeProvider timeProvider)
+        public Scribe(ITimeRecordRepository timeRecordRepository, ITimeProvider timeProvider)
         {
-            if (repository == null)
-                throw new ArgumentNullException("repository");
+            if (timeRecordRepository == null)
+                throw new ArgumentNullException("timeRecordRepository");
 
             if (timeProvider == null)
                 throw new ArgumentNullException("timeProvider");
 
-            this.repository = repository;
+            this.timeRecordRepository = timeRecordRepository;
             this.timeProvider = timeProvider;
         }
 
@@ -55,7 +55,21 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         public void StampNew()
         {
-            CreateNewRecordInternal();
+            CreateNewTimeRecordAndSave();
+        }
+
+        private void CreateNewTimeRecordAndSave()
+        {
+            DateTime now = timeProvider.GetDateTime();
+            TimeRecord newTimeRecord = new TimeRecord
+                                    {
+                                        RecordType = TimeRecordType.Normal,
+                                        Date = now.Date,
+                                        StartTime = now.TimeOfDay,
+                                        EndTime = now.TimeOfDay
+                                    };
+            timeRecordRepository.Add(newTimeRecord);
+            timeRecord = newTimeRecord;
         }
 
         /// <summary>
@@ -64,67 +78,57 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         public void Stamp()
         {
-            if (record == null)
-                CreateNewRecordInternal();
+            if (timeRecord == null)
+                CreateNewTimeRecordAndSave();
             else
-            {
-                DateTime now = timeProvider.GetDateTime();
-                record.EndTime = now.TimeOfDay;
-                repository.Update(record);
-            }
+                UpdateTimeRecordAndSave();
+        }
+
+        private void UpdateTimeRecordAndSave()
+        {
+            DateTime now = timeProvider.GetDateTime();
+            timeRecord.EndTime = now.TimeOfDay;
+            timeRecordRepository.Update(timeRecord);
         }
 
         /// <summary>
-        /// Creates a new record with default values and saves it into the repository.
+        /// Deletes from the database the current time record.
+        /// If no time record was created, nothing happens.
         /// </summary>
-        private void CreateNewRecordInternal()
+        public void DeleteCurrentTimeRecord()
         {
-            DateTime now = timeProvider.GetDateTime();
-            TimeRecord newRecord = new TimeRecord
-                                    {
-                                        RecordType = TimeRecordType.Normal,
-                                        Date = now.Date,
-                                        StartTime = now.TimeOfDay,
-                                        EndTime = now.TimeOfDay
-                                    };
-            repository.Add(newRecord);
-            record = newRecord;
-        }
-
-        private bool IsNewDay()
-        {
-            DateTime now = timeProvider.GetDateTime();
-            return record != null && record.Date != now.Date;
-        }
-
-
-        public void DeleteDatabaseRecord()
-        {
-            if (record == null)
+            if (timeRecord == null)
                 return;
 
-            repository.Delete(record);
-            record = null;
+            timeRecordRepository.Delete(timeRecord);
+            timeRecord = null;
         }
 
+        /// <summary>
+        /// Returns the time passed from the last time the current TimeRecord was stamped.
+        /// </summary>
+        /// <returns>A <see cref="TimeSpan"/> object representing the time passed from the last time the
+        /// current TimeRecord was stamped.</returns>
         public TimeSpan? GetTimeFromLastStamp()
         {
-            if (record == null) return null;
+            if (timeRecord == null)
+                return null;
 
             DateTime now = timeProvider.GetDateTime();
 
-            if (record.Date < now.Date)
-            {
-                TimeSpan a = TimeSpan.FromDays(1) - record.EndTime;
-                TimeSpan b = now.Date - record.Date + TimeSpan.FromDays(1);
-                TimeSpan c = now.TimeOfDay;
+            bool isSameDay = timeRecord.Date == now.Date;
 
-                return a + b + c;
-            }
-            else
+            if (isSameDay)
             {
-                return now - now.Date.Add(record.EndTime);
+                DateTime endDateTime = now.Date.Add(timeRecord.EndTime);
+                return now - endDateTime;
             }
+
+            TimeSpan timeInLastDayAfterEndTime = TimeSpan.FromDays(1) - timeRecord.EndTime;
+            TimeSpan b = now.Date - timeRecord.Date + TimeSpan.FromDays(1); // what is b?
+            TimeSpan timeInCurrentDay = now.TimeOfDay;
+
+            return timeInLastDayAfterEndTime + b + timeInCurrentDay;
         }
     }
 }

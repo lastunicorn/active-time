@@ -34,10 +34,10 @@ namespace DustInTheWind.ActiveTime.Common.Commands
         public MenuItemClickCommandBehavior(MenuItem menuItem)
             : base(menuItem)
         {
-            menuItem.Click += new RoutedEventHandler(menuItem_Click);
+            menuItem.Click += HandleMenuItemClick;
         }
 
-        void menuItem_Click(object sender, RoutedEventArgs e)
+        private void HandleMenuItemClick(object sender, RoutedEventArgs e)
         {
             ExecuteCommand();
         }

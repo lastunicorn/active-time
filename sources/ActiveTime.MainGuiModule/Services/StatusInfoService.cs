@@ -45,10 +45,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
         }
 
         #endregion
-
-
-        #region Constructor
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusInfoService"/> class.
         /// </summary>
@@ -57,10 +54,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
             statusText = DEFAULT_STATUS_TEXT;
             timerStatus = new Timer(ResetStatusTextTh);
         }
-
-        #endregion
-
-
+        
         #region Status Text
 
         /// <summary>
@@ -92,7 +86,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
         #region Status Reset Timer
 
         /// <summary>
-        /// The default time in miliseconds after which the status text will be reset to its default value.
+        /// The default time in milliseconds after which the status text will be reset to its default value.
         /// </summary>
         private const int DEFAULT_STATUS_TIMEOUT = 5000;
 
@@ -117,7 +111,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Services
         /// starts the timer that will reset it back to the default one.
         /// </summary>
         /// <param name="text">The Text to be set as status.</param>
-        /// <param name="timeout">The Time in miliseconds after which the status will be reset to the default Text. If this Value is 0, the status will never be reset.</param>
+        /// <param name="timeout">The Time in milliseconds after which the status will be reset to the default Text. If this Value is 0, the status will never be reset.</param>
         public void SetStatus(string text, int timeout)
         {
             StatusText = text;

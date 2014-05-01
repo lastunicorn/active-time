@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.Common.Commands
         public static ICommand GetCommand(MenuItem menuItem)
         {
             if (menuItem == null)
-                throw new System.ArgumentNullException("menuItem");
+                throw new ArgumentNullException("menuItem");
 
             return menuItem.GetValue(CommandProperty) as ICommand;
         }
@@ -54,7 +54,7 @@ namespace DustInTheWind.ActiveTime.Common.Commands
         public static void SetCommand(MenuItem menuItem, ICommand command)
         {
             if (menuItem == null)
-                throw new System.ArgumentNullException("menuItem");
+                throw new ArgumentNullException("menuItem");
 
             menuItem.SetValue(CommandProperty, command);
         }
@@ -80,7 +80,7 @@ namespace DustInTheWind.ActiveTime.Common.Commands
         public static object GetCommandParameter(MenuItem menuItem)
         {
             if (menuItem == null)
-                throw new System.ArgumentNullException("menuItem");
+                throw new ArgumentNullException("menuItem");
 
             return menuItem.GetValue(CommandParameterProperty);
         }
@@ -88,7 +88,7 @@ namespace DustInTheWind.ActiveTime.Common.Commands
         public static void SetCommandParameter(MenuItem menuItem, object parameter)
         {
             if (menuItem == null)
-                throw new System.ArgumentNullException("menuItem");
+                throw new ArgumentNullException("menuItem");
 
             menuItem.SetValue(CommandParameterProperty, parameter);
         }

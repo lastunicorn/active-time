@@ -5,7 +5,8 @@
         
     xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
     xmlns:common="clr-namespace:DustInTheWind.ActiveTime.Common;assembly=ActiveTime.Common"
-        
+    xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.Common.UI;assembly=ActiveTime.Common"
+
     Title="{Binding Path=WindowTitle}"
     Height="400" Width="400"
     ResizeMode="CanResizeWithGrip"
@@ -15,11 +16,11 @@
 
     <DockPanel>
 
-        <ContentControl DockPanel.Dock="Top" regions:RegionManager.RegionName="{x:Static common:RegionNames.MainMenuRegion}"/>
+        <ContentControl DockPanel.Dock="Top" regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainMenuRegion}"/>
 
-        <ContentControl DockPanel.Dock="Bottom" regions:RegionManager.RegionName="{x:Static common:RegionNames.StatusInfoRegion}"/>
+        <ContentControl DockPanel.Dock="Bottom" regions:RegionManager.RegionName="{x:Static ui:RegionNames.StatusInfoRegion}"/>
 
-        <ContentControl regions:RegionManager.RegionName="{x:Static common:RegionNames.MainContentRegion}"/>
+        <ContentControl regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainContentRegion}"/>
 
     </DockPanel>
 

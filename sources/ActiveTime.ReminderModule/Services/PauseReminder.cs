@@ -18,8 +18,9 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Reminding;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services
 {
@@ -71,25 +72,27 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
             if (isMonitoring)
                 return;
 
-            recorderService.Started += recorderService_Started;
-            recorderService.Stopped += recorderService_Stopped;
-            reminder.Ring += reminder_Ring;
+            recorderService.Started += HandleRecorderServiceStarted;
+            recorderService.Stopped += HandleRecorderServiceStopped;
+            reminder.Ring += HandleReminderRing;
 
             if (recorderService.State == RecorderState.Running)
                 reminder.Start(PauseInterval);
+
+            isMonitoring = true;
         }
 
-        private void recorderService_Started(object sender, EventArgs e)
+        private void HandleRecorderServiceStarted(object sender, EventArgs e)
         {
             reminder.Start(PauseInterval);
         }
 
-        private void recorderService_Stopped(object sender, EventArgs e)
+        private void HandleRecorderServiceStopped(object sender, EventArgs e)
         {
             reminder.Stop();
         }
 
-        private void reminder_Ring(object sender, RingEventArgs e)
+        private void HandleReminderRing(object sender, RingEventArgs e)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {

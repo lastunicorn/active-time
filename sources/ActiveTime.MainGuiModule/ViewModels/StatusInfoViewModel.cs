@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 {

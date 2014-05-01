@@ -23,8 +23,6 @@ namespace DustInTheWind.ActiveTime.Common.Recording
     /// </summary>
     public class Break : DayTimeInterval
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Break"/> class.
         /// </summary>
@@ -43,7 +41,5 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             : base(startTime, endTime)
         {
         }
-
-        #endregion
     }
 }

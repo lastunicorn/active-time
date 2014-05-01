@@ -41,7 +41,7 @@ namespace DustInTheWind.ActiveTime.Exporters
         string Description { get; }
 
         /// <summary>
-        /// When implemented by a derrived class, it initializes the exporter.
+        /// When implemented by a derived class, it initializes the exporter.
         /// </summary>
         /// <param name="parameters">A list of parameters needed to initialize the exporter.</param>
         void Initialize(Dictionary<string, object> parameters);

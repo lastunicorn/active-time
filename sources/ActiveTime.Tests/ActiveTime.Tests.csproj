@@ -41,10 +41,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLibraries\Moq\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalLibraries\NHibernate\NHibernate.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -60,31 +56,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Persistence\EntitiesTests\DayCommentPropertyTests.cs" />
-    <Compile Include="Persistence\EntitiesTests\TimeRecordPropertyTests.cs" />
-    <Compile Include="Persistence\RepositoriesTests\DayCommentRepositoryTests\DayCommentAssertUtil.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordAssertUtil.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryGetByDateTests.cs" />
-    <Compile Include="Recording\RecorderServiceTests.cs" />
-    <Compile Include="Recording\RecordTests.cs" />
-    <Compile Include="Persistence\EntitiesTests\TimeRecordTypeTests.cs" />
-    <Compile Include="Persistence\EntitiesTests\TimeRecordEqualsTests.cs" />
-    <Compile Include="Persistence\EntitiesTests\DayCommentEqualsTests.cs" />
-    <Compile Include="Persistence\RepositoriesTests\RepositoryCrudTestsBase.cs" />
-    <Compile Include="Persistence\RepositoriesTests\DayCommentRepositoryTests\DayCommentRepositoryCrudTests.cs" />
-    <Compile Include="Persistence\RepositoriesTests\DayCommentRepositoryTests\DayCommentRepositoryGetByDateTests.cs" />
-    <Compile Include="Persistence\RepositoriesTests\RepositoryTestsBase.cs" />
-    <Compile Include="Persistence\RepositoriesTests\TimeRecordRepositoryTests\TimeRecordRepositoryCrudTests.cs" />
-    <Compile Include="Recording\ScribTests.cs" />
-    <Compile Include="Reminding\PauseReminderTests.cs" />
-    <Compile Include="Reminding\ReminderTests.cs" />
+    <Compile Include="Common\Persistence\DayCommentPropertyTests.cs" />
+    <Compile Include="Common\Persistence\TimeRecordPropertyTests.cs" />
+    <Compile Include="PersistenceModule\AdoRepositories\DbAssert.cs" />
+    <Compile Include="PersistenceModule\AdoRepositories\TimeRecordRepositoryTests\AddTests.cs" />
+    <Compile Include="PersistenceModule\AdoRepositories\DbTestHelper.cs" />
+    <Compile Include="PersistenceModule\AdoRepositories\UnitOfWorkTests.cs" />
+    <Compile Include="RecorderModule\Services\RecorderServiceTests\ConstructorTests.cs" />
+    <Compile Include="RecorderModule\Services\RecorderServiceTests\InternalTimerTests.cs" />
+    <Compile Include="RecorderModule\Services\RecorderServiceTests\GetTimeFromLastStopTests.cs" />
+    <Compile Include="RecorderModule\Services\RecorderServiceTests\StopTests.cs" />
+    <Compile Include="RecorderModule\Services\RecorderServiceTests\StartTests.cs" />
+    <Compile Include="Common\Recording\RecordTests.cs" />
+    <Compile Include="Common\Persistence\TimeRecordTypeTests.cs" />
+    <Compile Include="Common\Persistence\TimeRecordEqualsTests.cs" />
+    <Compile Include="Common\Persistence\DayCommentEqualsTests.cs" />
+    <Compile Include="RecorderModule\Services\ScribeTests\ConstructorTests.cs" />
+    <Compile Include="RecorderModule\Services\ScribeTests\StampTests.cs" />
+    <Compile Include="RecorderModule\Services\ScribeTests\StampNewTests.cs" />
+    <Compile Include="ReminderModule\Reminding\ReminderTests\ConstructorTests.cs" />
+    <Compile Include="ReminderModule\Reminding\ReminderTests\DisposeTests.cs" />
+    <Compile Include="ReminderModule\Reminding\ReminderTests\WaitUntilRingTests.cs" />
+    <Compile Include="ReminderModule\Reminding\ReminderTests\SnoozeTests.cs" />
+    <Compile Include="ReminderModule\Reminding\ReminderTests\StopTests.cs" />
+    <Compile Include="ReminderModule\Reminding\ReminderTests\RingTests.cs" />
+    <Compile Include="ReminderModule\Reminding\ReminderTests\StartTests.cs" />
+    <Compile Include="ReminderModule\Services\PauseReminderTests\ConstructorTests.cs" />
+    <Compile Include="ReminderModule\Services\PauseReminderTests\StartMonitoringTests.cs" />
+    <Compile Include="ReminderModule\Services\PauseReminderTests\RecorderServiceEventsTests.cs" />
+    <Compile Include="ReminderModule\Services\PauseReminderTests\ReminderEventsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIServices\StatusInfoServiceTests.cs" />
-    <Compile Include="UI\CommentsViewModelTests.cs" />
+    <Compile Include="MainGuiModule\Services\StatusInfoServiceTests.cs" />
+    <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
@@ -117,7 +120,7 @@
       <Link>SQLite.Interop.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Reminding\TestCases.txt" />
+    <Content Include="ReminderModule\Reminding\ReminderTests\TestCases.txt" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

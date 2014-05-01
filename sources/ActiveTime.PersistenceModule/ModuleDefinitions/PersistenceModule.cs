@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.PersistenceModule.Repositories;
+using DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
@@ -36,8 +36,10 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions
 
         public void Initialize()
         {
-            unityContainer.RegisterInstance<ITimeRecordRepository>(new TimeRecordRepository(), new ContainerControlledLifetimeManager());
-            unityContainer.RegisterInstance<IDayCommentRepository>(new DayCommentRepository(), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IUnitOfWork, UnitOfWork>(new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType<ITimeRecordRepository, TimeRecordRepository>();
+            unityContainer.RegisterType<IDayCommentRepository, DayCommentRepository>();
         }
     }
 }

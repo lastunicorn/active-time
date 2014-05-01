@@ -17,6 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
@@ -27,7 +28,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         private readonly IRegionManager regionManager;
         private readonly IDayCommentRepository dayCommentRepository;
 
-        private DayComment record;
+        private DayComment currentDayComment;
 
         private readonly ButtonBarViewModel buttonBarViewModel;
         public ButtonBarViewModel ButtonBarViewModel
@@ -84,17 +85,17 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             this.dayCommentRepository = dayCommentRepository;
 
             buttonBarViewModel = new ButtonBarViewModel();
-            buttonBarViewModel.ApplyButtonClicked += new EventHandler(buttonBarViewModel_ApplyButtonClicked);
-            buttonBarViewModel.CancelButtonClicked += new EventHandler(buttonBarViewModel_CancelButtonClicked);
-            buttonBarViewModel.SaveButtonClicked += new EventHandler(buttonBarViewModel_SaveButtonClicked);
+            buttonBarViewModel.ApplyButtonClicked += HandleButtonBarApplyButtonClicked;
+            buttonBarViewModel.CancelButtonClicked += HandleButtonBarCancelButtonClicked;
+            buttonBarViewModel.SaveButtonClicked += HandleButtonBarSaveButtonClicked;
 
-            stateService.CurrentDateChanged += new EventHandler(commentsService_CurrentDateChanged);
+            stateService.CurrentDateChanged += HandleCommentsServiceCurrentDateChanged;
 
             RetrieveRecord();
             RefreshDisplayedData();
         }
 
-        void commentsService_CurrentDateChanged(object sender, EventArgs e)
+        private void HandleCommentsServiceCurrentDateChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("Date");
 
@@ -104,14 +105,14 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private void RefreshDisplayedData()
         {
-            if (record == null)
+            if (currentDayComment == null)
             {
                 Comment = null;
                 buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.NoData;
             }
             else
             {
-                Comment = record.Comment;
+                Comment = currentDayComment.Comment;
                 buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
             }
         }
@@ -122,29 +123,29 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
             if (date == null)
             {
-                record = null;
+                currentDayComment = null;
             }
             else
             {
-                record = dayCommentRepository.GetByDate(date.Value);
-                if (record != null && record.Date != date)
-                    record = null;
+                currentDayComment = dayCommentRepository.GetByDate(date.Value);
+                if (currentDayComment != null && currentDayComment.Date != date)
+                    currentDayComment = null;
             }
         }
 
         #region Apply / Cancel / Save Buttons
 
-        void buttonBarViewModel_ApplyButtonClicked(object sender, EventArgs e)
+        private void HandleButtonBarApplyButtonClicked(object sender, EventArgs e)
         {
             SaveInternal();
         }
 
-        void buttonBarViewModel_CancelButtonClicked(object sender, EventArgs e)
+        private void HandleButtonBarCancelButtonClicked(object sender, EventArgs e)
         {
             NavigateToMainView();
         }
 
-        void buttonBarViewModel_SaveButtonClicked(object sender, EventArgs e)
+        private void HandleButtonBarSaveButtonClicked(object sender, EventArgs e)
         {
             SaveInternal();
             NavigateToMainView();
@@ -161,13 +162,16 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         {
             DateTime? date = stateService.CurrentDate;
 
-            if (record == null)
+            if (currentDayComment == null)
             {
-                if (date == null) return;
-                record = new DayComment { Date = date.Value };
+                if (date == null)
+                    return;
+
+                currentDayComment = new DayComment { Date = date.Value };
             }
-            record.Comment = Comment;
-            dayCommentRepository.AddOrUpdate(record);
+
+            currentDayComment.Comment = Comment;
+            dayCommentRepository.AddOrUpdate(currentDayComment);
             buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
         }
 
@@ -190,9 +194,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             long dateTicks;
 
             if (long.TryParse(dateTicksAsString, out dateTicks))
-            {
                 Date = new DateTime(dateTicks);
-            }
         }
 
         #endregion

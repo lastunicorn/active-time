@@ -21,6 +21,7 @@ using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 
@@ -30,7 +31,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
     {
         private readonly IRecorderService recorder;
         private readonly IStatusInfoService statusInfoService;
-        private readonly ITimeRecordRepository recordRepository;
+        private readonly ITimeRecordRepository timeRecordRepository;
         private readonly IRegionManager regionManager;
         private readonly IShellNavigator navigator;
         private readonly IStateService stateService;
@@ -137,11 +138,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// </summary>
         /// <param name="recorder"></param>
         /// <param name="statusInfoService"></param>
-        /// <param name="recordRepository"></param>
+        /// <param name="timeRecordRepository"></param>
         /// <param name="regionManager"></param>
         /// <param name="navigator"></param>
         public MainViewModel(IRecorderService recorder, IStatusInfoService statusInfoService,
-            ITimeRecordRepository recordRepository, IRegionManager regionManager, IShellNavigator navigator,
+            ITimeRecordRepository timeRecordRepository, IRegionManager regionManager, IShellNavigator navigator,
             IStateService stateService)
         {
             if (recorder == null)
@@ -150,8 +151,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             if (statusInfoService == null)
                 throw new ArgumentNullException("statusInfoService");
 
-            if (recordRepository == null)
-                throw new ArgumentNullException("recordRepository");
+            if (timeRecordRepository == null)
+                throw new ArgumentNullException("timeRecordRepository");
 
             if (regionManager == null)
                 throw new ArgumentNullException("regionManager");
@@ -164,7 +165,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
             this.recorder = recorder;
             this.statusInfoService = statusInfoService;
-            this.recordRepository = recordRepository;
+            this.timeRecordRepository = timeRecordRepository;
             this.regionManager = regionManager;
             this.navigator = navigator;
             this.stateService = stateService;
@@ -173,12 +174,12 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             refreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
             deleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
 
-            recorder.Started += new EventHandler(recorder_Started);
-            recorder.Stopped += new EventHandler(recorder_Stopped);
-            recorder.Stamping += new EventHandler(recorder_Stamping);
-            recorder.Stamped += new EventHandler(recorder_Stamped);
+            recorder.Started += HandleRecorderStarted;
+            recorder.Stopped += HandleRecorderStopped;
+            recorder.Stamping += HandleRecorderStamping;
+            recorder.Stamped += HandleRecorderStamped;
 
-            stateService.CurrentDateChanged += new EventHandler(stateService_CurrentDateChanged);
+            stateService.CurrentDateChanged += stateService_CurrentDateChanged;
 
             //UpdateDisplayedData();
         }
@@ -201,31 +202,31 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private void OnCommentsCommandExecuted()
         {
-            if (Date != null)
-            {
-                // todo: send the Date value.
-                regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
-            }
+            if (Date == null)
+                return;
+
+            // todo: send the Date value.
+            regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
         }
 
-        private void recorder_Started(object sender, EventArgs e)
+        private void HandleRecorderStarted(object sender, EventArgs e)
         {
             UpdateDisplayedData();
             statusInfoService.SetStatus("Recorder started.");
         }
 
-        private void recorder_Stopped(object sender, EventArgs e)
+        private void HandleRecorderStopped(object sender, EventArgs e)
         {
             UpdateDisplayedData();
             statusInfoService.SetStatus("Recorder stopped.");
         }
 
-        private void recorder_Stamping(object sender, EventArgs e)
+        private void HandleRecorderStamping(object sender, EventArgs e)
         {
             statusInfoService.SetStatus("Updating the current record's time.");
         }
 
-        private void recorder_Stamped(object sender, EventArgs e)
+        private void HandleRecorderStamped(object sender, EventArgs e)
         {
             statusInfoService.SetStatus("Current record's time has been updated.");
             UpdateDisplayedData();
@@ -235,7 +236,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         {
             if (Date != null)
             {
-                IList<TimeRecord> timeRecords = recordRepository.GetByDate(Date.Value);
+                IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(Date.Value);
                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
                 DayRecord = dayRecord ?? new DayRecord(Date.Value);
             }
@@ -252,12 +253,16 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private void UpdateActiveTime()
         {
-            ActiveTime = dayRecord != null ? dayRecord.GetTotalActiveTime() : TimeSpan.Zero;
+            ActiveTime = dayRecord != null
+                ? dayRecord.GetTotalActiveTime()
+                : TimeSpan.Zero;
         }
 
         private void UpdateTotalTime()
         {
-            TotalTime = dayRecord != null ? dayRecord.GetTotalTime() : TimeSpan.Zero;
+            TotalTime = dayRecord != null
+                ? dayRecord.GetTotalTime()
+                : TimeSpan.Zero;
         }
 
         private void UpdateBeginTime()

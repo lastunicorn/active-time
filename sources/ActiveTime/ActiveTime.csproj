@@ -79,10 +79,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Watchman\ApplicationLevelGuard.cs" />
     <Compile Include="Watchman\Guard.cs" />
     <Compile Include="Watchman\GuardLevel.cs" />
     <Compile Include="Exporters\IExporter.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Watchman\IGuard.cs" />
+    <Compile Include="Watchman\MachineLevelGuard.cs" />
     <Resource Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
     </Resource>

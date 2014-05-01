@@ -57,6 +57,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\TrayIconPresenter.cs" />
+    <Compile Include="Views\ITrayIconView.cs" />
     <Compile Include="Views\TrayIconView.cs">
       <SubType>Component</SubType>
     </Compile>

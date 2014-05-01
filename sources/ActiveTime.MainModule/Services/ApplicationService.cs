@@ -32,6 +32,7 @@ namespace DustInTheWind.ActiveTime.MainModule.Services
 
         /// <summary>
         /// Event raised when ... Well, is raised when it should be raised. Ok?
+        /// todo: write meaningful comment
         /// </summary>
         public event EventHandler Exiting;
 

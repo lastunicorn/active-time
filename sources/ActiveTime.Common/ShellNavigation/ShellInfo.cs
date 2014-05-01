@@ -36,9 +36,9 @@ namespace DustInTheWind.ActiveTime.Common.ShellNavigation
             if (shellType.BaseType != typeof(Window))
                 throw new ArgumentException("A shell must be derived from System.Windows.Window base class.", "shellType");
 
-            this.ShellName = shellName;
-            this.ShellType = shellType;
-            this.OwnerName = ownerName;
+            ShellName = shellName;
+            ShellType = shellType;
+            OwnerName = ownerName;
         }
     }
 }

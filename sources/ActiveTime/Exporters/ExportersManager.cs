@@ -28,18 +28,24 @@ namespace DustInTheWind.ActiveTime.Exporters
         /// <summary>
         /// The name of the directory where the exporter plug-ins are stored.
         /// </summary>
-        private const string EXPORTERS_DIRECTORY_NAME = "Exporters";
+        private const string ExportersDirectoryName = "Exporters";
 
         /// <summary>
         /// The list of exporters.
         /// </summary>
         [ImportMany]
-        private List<IExporter> exporters = new List<IExporter>();
+        private readonly List<IExporter> exporters;
 
         /// <summary>
         /// The exporters indexed by name.
         /// </summary>
-        private Dictionary<string, IExporter> exportersByName = new Dictionary<string, IExporter>();
+        private readonly Dictionary<string, IExporter> exportersByName;
+
+        public ExportersManager()
+        {
+            exporters = new List<IExporter>();
+            exportersByName = new Dictionary<string, IExporter>();
+        }
 
         /// <summary>
         /// Gets the exporter with the specified name.
@@ -59,9 +65,9 @@ namespace DustInTheWind.ActiveTime.Exporters
             // Clear the existing exporters.
             exporters.Clear();
             exportersByName.Clear();
-            
+
             // Prepare the catalog from which to load the exporters.
-            DirectoryCatalog catalog = new DirectoryCatalog(EXPORTERS_DIRECTORY_NAME, "*.dll");
+            DirectoryCatalog catalog = new DirectoryCatalog(ExportersDirectoryName, "*.dll");
 
             // Load the exporters.
             CompositionContainer container = new CompositionContainer(catalog);

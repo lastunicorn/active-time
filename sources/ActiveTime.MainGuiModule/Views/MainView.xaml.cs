@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
 
@@ -25,6 +26,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
     /// </summary>
     public partial class MainView : UserControl
     {
+        private readonly MainViewModel viewModel;
+
         public MainView(MainViewModel viewModel)
         {
             if (viewModel == null)
@@ -32,7 +35,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
 
             InitializeComponent();
 
-            Loaded += (s, e) => DataContext = viewModel;
+            this.viewModel = viewModel;
         }
 
         private void menuItemNew_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -49,14 +52,15 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
         {
         }
 
-        private void menuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
-
         private void contextMenuRecords_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
             //menuItemDelete.upDate
+        }
+
+        private void MainView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = viewModel;
+            viewModel.RefreshCommand.Execute(null);
         }
     }
 }

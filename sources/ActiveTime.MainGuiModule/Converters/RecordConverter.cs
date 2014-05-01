@@ -37,10 +37,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Converters
                 TimeSpan timeDiff = record.EndTime - record.StartTime;
                 return record.StartTime.ToString() + " - " + record.EndTime.ToString() + " = " + timeDiff.ToString();
             }
-            else
-            {
-                return null;
-            }
+            
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

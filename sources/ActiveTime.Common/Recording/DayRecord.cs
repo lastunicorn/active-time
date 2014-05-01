@@ -75,8 +75,6 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             get { return comment != null && comment.Length > 0; }
         }
 
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DayRecord"/> class with
         /// the current date.
@@ -96,8 +94,6 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             this.date = date;
             activeTimeRecords = new List<DayTimeInterval>();
         }
-
-        #endregion
 
         public TimeSpan GetTotalActiveTime()
         {
