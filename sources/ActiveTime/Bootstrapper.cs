@@ -27,13 +27,8 @@ namespace DustInTheWind.ActiveTime
         {
             Uri uri = new Uri("/ActiveTime;component/ModuleCatalog.xaml", UriKind.Relative);
             ModuleCatalog moduleCatalog = Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(uri);
-
+            
             return moduleCatalog;
-
-
-            //var catalog = new DirectoryModuleCatalog();
-            //catalog.ModulePath = @".\Modules";
-            //return catalog;
         }
 
         protected override DependencyObject CreateShell()

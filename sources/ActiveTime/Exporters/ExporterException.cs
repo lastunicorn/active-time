@@ -25,13 +25,13 @@ namespace DustInTheWind.ActiveTime.Exporters
     [Serializable]
     public class ExporterException : ApplicationException
     {
-        private const string MESSAGE = "Internal error in an exporter plug-in.";
+        private const string DefaultMessage = "Internal error in an exporter plug-in.";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExporterException"/> class.
         /// </summary>
         public ExporterException()
-            : base(MESSAGE)
+            : base(DefaultMessage)
         {
         }
 
@@ -49,7 +49,7 @@ namespace DustInTheWind.ActiveTime.Exporters
         /// </summary>
         /// <param name="innerException">The exception that is the cause of the current exception.</param>
         public ExporterException(Exception innerException)
-            : base(MESSAGE, innerException)
+            : base(DefaultMessage, innerException)
         {
         }
 

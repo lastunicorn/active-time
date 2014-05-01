@@ -25,13 +25,13 @@ namespace DustInTheWind.ActiveTime
     [Serializable]
     public class ActiveTimeException : ApplicationException
     {
-        private const string MESSAGE = "Internal error in AutomaticOrderSystemException.";
+        private const string DefaultMessage = "Internal error in AutomaticOrderSystemException.";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActiveTimeException"/> class.
         /// </summary>
         public ActiveTimeException()
-            : base(MESSAGE)
+            : base(DefaultMessage)
         {
         }
 
@@ -49,7 +49,7 @@ namespace DustInTheWind.ActiveTime
         /// </summary>
         /// <param name="innerException">The exception that is the cause of the current exception.</param>
         public ActiveTimeException(Exception innerException)
-            : base(MESSAGE, innerException)
+            : base(DefaultMessage, innerException)
         {
         }
 

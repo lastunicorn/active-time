@@ -40,22 +40,31 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories
                 record.StartTime.ToString(@"hh\:mm\:ss"),
                 record.EndTime.ToString(@"hh\:mm\:ss"));
 
+            ExecuteNonQuery(sql);
+
+            long lastId = RetrieveLastInsertedId();
+            record.Id = Convert.ToInt32(lastId);
+
+            unitOfWork.Commit();
+        }
+
+        private void ExecuteNonQuery(string sql)
+        {
             using (DbCommand command = unitOfWork.Connection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.ExecuteNonQuery();
             }
+        }
 
+        private long RetrieveLastInsertedId()
+        {
             using (DbCommand command = unitOfWork.Connection.CreateCommand())
             {
                 command.CommandText = "select last_insert_rowid()";
                 object lastIdAsObject = command.ExecuteScalar();
-                int lastId = Convert.ToInt32(lastIdAsObject);
-
-                record.Id = lastId;
+                return Convert.ToInt64(lastIdAsObject);
             }
-
-            unitOfWork.Commit();
         }
 
         public void Update(TimeRecord record)
@@ -65,11 +74,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories
                 record.Date.ToString("yyyy-MM-dd"),
                 record.StartTime.ToString(@"hh\:mm\:ss"));
 
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
-            {
-                command.CommandText = sql;
-                command.ExecuteNonQuery();
-            }
+            ExecuteNonQuery(sql);
 
             unitOfWork.Commit();
         }
@@ -81,11 +86,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories
                 record.StartTime.ToString(@"hh\:mm\:ss"),
                 record.EndTime.ToString(@"hh\:mm\:ss"));
 
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
-            {
-                command.CommandText = sql;
-                command.ExecuteNonQuery();
-            }
+            ExecuteNonQuery(sql);
 
             unitOfWork.Commit();
         }

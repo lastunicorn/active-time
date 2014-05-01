@@ -26,14 +26,14 @@ namespace DustInTheWind.ActiveTime.Exporters
     [Serializable]
     public class ParameterNullException : ApplicationException
     {
-        private const string MESSAGE = "The parameter '{0}' is null. A value of type '{1}' is required.";
+        private const string TemplateMessage = "The parameter '{0}' is null. A value of type '{1}' is required.";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterNullException"/> class with a specified error message.
         /// </summary>
         /// <param name="parameterName">The name of the parameter whose Value is not of the right type.</param>
         public ParameterNullException(string parameterName, Type requestedType)
-            : base(string.Format(MESSAGE, parameterName, requestedType))
+            : base(string.Format(TemplateMessage, parameterName, requestedType))
         {
         }
 

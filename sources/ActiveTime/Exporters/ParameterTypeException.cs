@@ -26,14 +26,14 @@ namespace DustInTheWind.ActiveTime.Exporters
     [Serializable]
     public class ParameterTypeException : ApplicationException
     {
-        private const string MESSAGE = "The parameter '{0}' is required to be of type '{1}'. Type '{2}' was provided.";
+        private const string TemplateMessage = "The parameter '{0}' is required to be of type '{1}'. Type '{2}' was provided.";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterTypeException"/> class with a specified error message.
         /// </summary>
         /// <param name="parameterName">The name of the parameter whose Value is not of the right type.</param>
         public ParameterTypeException(string parameterName, Type requestedType, Type actualType)
-            : base(string.Format(MESSAGE, parameterName, requestedType, actualType))
+            : base(string.Format(TemplateMessage, parameterName, requestedType, actualType))
         {
         }
 
