@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.RecorderModule
+namespace DustInTheWind.ActiveTime.RecorderModule.Services
 {
     public interface IScribe
     {

@@ -40,6 +40,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions
 
             RecorderService recorder = unityContainer.Resolve<RecorderService>();
             recorder.Start();
+
             unityContainer.RegisterInstance<IRecorderService>(recorder, new ContainerControlledLifetimeManager());
         }
     }

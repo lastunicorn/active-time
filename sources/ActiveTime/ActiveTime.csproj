@@ -72,7 +72,7 @@
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Properties\Settings.cs" />
     <Resource Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
     </Resource>

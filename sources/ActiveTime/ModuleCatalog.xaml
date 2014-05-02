@@ -6,9 +6,9 @@
     xmlns:Modularity="clr-namespace:Microsoft.Practices.Prism.Modularity;assembly=Microsoft.Practices.Prism">
     
     <Modularity:ModuleInfo
-        Ref="file://ActiveTime.PersistenceModule.dll"
+        Ref="file://ActiveTime.PersistenceModule.AdoNet.dll"
         ModuleName="PersistenceModule"
-        ModuleType="DustInTheWind.ActiveTime.PersistenceModule.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule, Version=1.0.0.0"
+        ModuleType="DustInTheWind.ActiveTime.PersistenceModule.AdoNet.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule.AdoNet, Version=1.0.0.0"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
 
