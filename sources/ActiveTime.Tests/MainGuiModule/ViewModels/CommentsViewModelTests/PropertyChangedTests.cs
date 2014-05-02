@@ -16,7 +16,6 @@
 
 using System;
 using System.Linq.Expressions;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;

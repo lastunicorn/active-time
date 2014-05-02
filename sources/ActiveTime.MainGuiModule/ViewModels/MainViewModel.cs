@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;

@@ -16,9 +16,7 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.RecorderModule;
 using DustInTheWind.ActiveTime.RecorderModule.Services;
 using Moq;
 using NUnit.Framework;
