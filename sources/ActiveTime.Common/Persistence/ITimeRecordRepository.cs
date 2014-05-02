@@ -21,9 +21,9 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
 {
     public interface ITimeRecordRepository
     {
-        void Add(TimeRecord record);
-        void Update(TimeRecord record);
-        void Delete(TimeRecord record);
+        void Add(TimeRecord timeRecord);
+        void Update(TimeRecord timeRecord);
+        void Delete(TimeRecord timeRecord);
         TimeRecord GetById(int id);
         IList<TimeRecord> GetByDate(DateTime date);
 

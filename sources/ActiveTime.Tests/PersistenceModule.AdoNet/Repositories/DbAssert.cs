@@ -14,13 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SQLite;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories
 {
     public class DbAssert
     {
+        private const string ConnectionString = "Data Source=db.s3db";
+
         public static void AssertExistsTimeRecord(int id)
         {
             long recordCount = ReadTimeRecordCount(string.Format("select count(*) from records where id = {0}", id));
@@ -63,7 +69,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
 
         private static long ReadTimeRecordCount(string sql)
         {
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source=db.s3db"))
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             {
                 connection.Open();
 
@@ -75,6 +81,60 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
                     long recordCount = (long)command.ExecuteScalar();
 
                     return recordCount;
+                }
+            }
+        }
+
+        public static void AssertExistsTimeRecordEqualTo(TimeRecord expectedTimeRecord)
+        {
+            TimeRecord actualTimeRecord = GetTimeRecordById(expectedTimeRecord.Id);
+
+            if (actualTimeRecord == null)
+            {
+                string errorMessage = string.Format("There is no TimeRecord in the database with the id {0}", expectedTimeRecord.Id);
+                throw new AssertionException(errorMessage);
+            }
+
+            if (!actualTimeRecord.Equals(expectedTimeRecord))
+            {
+                string errorMessage = string.Format("The TimeRecord from the database is different from the expected one.\r\n  Actual TimeRecord: {0}\r\n  Expected TimeRecord: {1}", actualTimeRecord, expectedTimeRecord);
+                throw new AssertionException(errorMessage);
+            }
+        }
+
+        private static TimeRecord GetTimeRecordById(int id)
+        {
+            string sql = string.Format("select * from records where id='{0}'", id);
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (SQLiteCommand command = new SQLiteCommand(connection))
+                {
+                    command.CommandText = string.Format("select * from records where id={0}", id);
+                    command.Connection = connection;
+
+                    using (SQLiteDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (!dataReader.Read())
+                            return null;
+
+                        object idAsObject = dataReader["id"];
+                        object dateAsObject = dataReader["date"];
+                        object startTimeAsObject = dataReader["start_time"];
+                        object endTimeAsObject = dataReader["end_time"];
+                        object recordTypeAsObject = dataReader["type"];
+
+                        return new TimeRecord
+                        {
+                            Id = int.Parse(idAsObject.ToString()),
+                            Date = DateTime.Parse(dateAsObject.ToString()),
+                            StartTime = DateTime.Parse(startTimeAsObject.ToString()).TimeOfDay,
+                            EndTime = DateTime.Parse(endTimeAsObject.ToString()).TimeOfDay,
+                            RecordType = (TimeRecordType)Enum.Parse(typeof(TimeRecordType), recordTypeAsObject.ToString())
+                        };
+                    }
                 }
             }
         }

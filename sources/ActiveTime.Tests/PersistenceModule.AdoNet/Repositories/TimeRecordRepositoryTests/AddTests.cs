@@ -81,7 +81,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
         }
 
         [Test]
-        [ExpectedException(typeof(SQLiteException))]
+        [ExpectedException(typeof(PersistenceException))]
         public void throws_if_two_identical_timeRecords_are_saved()
         {
             TimeRecord timeRecord1 = CreateTimeRecordEntity();
@@ -89,6 +89,16 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
 
             timeRecordRepository.Add(timeRecord1);
             timeRecordRepository.Add(timeRecord2);
+        }
+
+        [Test]
+        public void correctly_adds_all_the_fields()
+        {
+            TimeRecord timeRecord = CreateTimeRecordEntity();
+
+            timeRecordRepository.Add(timeRecord);
+
+            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
         }
 
         private static TimeRecord CreateTimeRecordEntity()
@@ -99,7 +109,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
                 Date = new DateTime(2014, 04, 30),
                 StartTime = new TimeSpan(1, 1, 1),
                 EndTime = new TimeSpan(2, 2, 2),
-                RecordType = TimeRecordType.Normal
+                RecordType = TimeRecordType.Fake
             };
         }
     }

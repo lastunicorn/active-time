@@ -14,15 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Data.Common;
 using System.Data.SQLite;
+using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories
 {
     public class DbTestHelper
     {
+        private const string ConnectionString = "Data Source=db.s3db";
+
         public static void ClearDatabase()
         {
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source=db.s3db"))
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             {
                 connection.Open();
 

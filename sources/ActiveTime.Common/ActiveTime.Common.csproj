@@ -47,6 +47,7 @@
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ParameterNullException.cs" />
     <Compile Include="Exporters\ParameterTypeException.cs" />
+    <Compile Include="Persistence\PersistenceException.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Persistence\DayComment.cs" />

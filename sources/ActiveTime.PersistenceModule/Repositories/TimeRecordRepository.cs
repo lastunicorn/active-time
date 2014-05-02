@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
@@ -33,27 +34,43 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
             this.unitOfWork = unitOfWork;
         }
 
-        public void Add(TimeRecord record)
+        public void Add(TimeRecord timeRecord)
         {
-            string sql = string.Format("insert into records(date,start_time,end_time) values('{0}', '{1}', '{2}')",
-                record.Date.ToString("yyyy-MM-dd"),
-                record.StartTime.ToString(@"hh\:mm\:ss"),
-                record.EndTime.ToString(@"hh\:mm\:ss"));
+            string sql = string.Format("insert into records(date,start_time,end_time,type) values('{0}', '{1}', '{2}', {3})",
+                timeRecord.Date.ToString("yyyy-MM-dd"),
+                timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
+                timeRecord.EndTime.ToString(@"hh\:mm\:ss"),
+                (int)timeRecord.RecordType);
 
-            ExecuteNonQuery(sql);
+            try
+            {
+                ExecuteNonQuery(sql);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = string.Format("Error adding the time record '{0}' into the database.", timeRecord);
+                throw new PersistenceException(errorMessage, ex);
+            }
 
-            long lastId = RetrieveLastInsertedId();
-            record.Id = Convert.ToInt32(lastId);
+            try
+            {
+                long lastId = RetrieveLastInsertedId();
+                timeRecord.Id = Convert.ToInt32(lastId);
+            }
+            catch (Exception ex)
+            {
+                throw new PersistenceException("Error retrieving the last inserted id.", ex);
+            }
 
             unitOfWork.Commit();
         }
 
-        private void ExecuteNonQuery(string sql)
+        private int ExecuteNonQuery(string sql)
         {
             using (DbCommand command = unitOfWork.Connection.CreateCommand())
             {
                 command.CommandText = sql;
-                command.ExecuteNonQuery();
+                return command.ExecuteNonQuery();
             }
         }
 
@@ -67,24 +84,40 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
             }
         }
 
-        public void Update(TimeRecord record)
+        public void Update(TimeRecord timeRecord)
         {
-            string sql = string.Format("update records set end_time='{0}' where date='{1}' and start_time='{2}'",
-                record.EndTime.ToString(@"hh\:mm\:ss"),
-                record.Date.ToString("yyyy-MM-dd"),
-                record.StartTime.ToString(@"hh\:mm\:ss"));
+            if (timeRecord == null)
+                throw new ArgumentNullException("timeRecord");
 
-            ExecuteNonQuery(sql);
+            if (timeRecord.Id <= 0)
+                throw new PersistenceException("The id of the time record should be a positive integer.");
+
+            //string sql = string.Format("update records set end_time='{0}' where date='{1}' and start_time='{2}'",
+            //    record.EndTime.ToString(@"hh\:mm\:ss"),
+            //    record.Date.ToString("yyyy-MM-dd"),
+            //    record.StartTime.ToString(@"hh\:mm\:ss"));
+
+            string sql = string.Format("update records set date='{1}', start_time='{2}', end_time='{3}', type='{4}' where id ={0}",
+                timeRecord.Id,
+                timeRecord.Date.ToString("yyyy-MM-dd"),
+                timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
+                timeRecord.EndTime.ToString(@"hh\:mm\:ss"),
+                (int)timeRecord.RecordType);
+
+            int recordCount = ExecuteNonQuery(sql);
+
+            if (recordCount == 0)
+                throw new PersistenceException("There is no record with the specified id to update.");
 
             unitOfWork.Commit();
         }
 
-        public void Delete(TimeRecord record)
+        public void Delete(TimeRecord timeRecord)
         {
             string sql = string.Format("delete from records where date='{0}' and start_time='{1}' and end_time='{2}'",
-                record.Date.ToString("yyyy-MM-dd"),
-                record.StartTime.ToString(@"hh\:mm\:ss"),
-                record.EndTime.ToString(@"hh\:mm\:ss"));
+                timeRecord.Date.ToString("yyyy-MM-dd"),
+                timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
+                timeRecord.EndTime.ToString(@"hh\:mm\:ss"));
 
             ExecuteNonQuery(sql);
 
@@ -103,28 +136,29 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
             using (DbCommand command = unitOfWork.Connection.CreateCommand())
             {
                 command.CommandText = sql;
-                DbDataReader reader = command.ExecuteReader();
-
-                List<TimeRecord> records = new List<TimeRecord>();
-
-                while (reader.Read())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
-                    object idAsObject = reader["id"];
-                    object startTimeAsObject = reader["start_time"];
-                    object endTimeAsObject = reader["end_time"];
+                    List<TimeRecord> records = new List<TimeRecord>();
 
-                    TimeRecord timeRecord = new TimeRecord
+                    while (reader.Read())
                     {
-                        Id = int.Parse(idAsObject.ToString()),
-                        Date = date,
-                        StartTime = DateTime.Parse(startTimeAsObject.ToString()).TimeOfDay,
-                        EndTime = DateTime.Parse(endTimeAsObject.ToString()).TimeOfDay,
-                    };
+                        object idAsObject = reader["id"];
+                        object startTimeAsObject = reader["start_time"];
+                        object endTimeAsObject = reader["end_time"];
 
-                    records.Add(timeRecord);
+                        TimeRecord timeRecord = new TimeRecord
+                        {
+                            Id = int.Parse(idAsObject.ToString()),
+                            Date = date,
+                            StartTime = DateTime.Parse(startTimeAsObject.ToString()).TimeOfDay,
+                            EndTime = DateTime.Parse(endTimeAsObject.ToString()).TimeOfDay,
+                        };
+
+                        records.Add(timeRecord);
+                    }
+
+                    return records.ToArray();
                 }
-
-                return records.ToArray();
             }
         }
     }

@@ -45,7 +45,7 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         /// Gets or sets the type of the time record. This type specifies if the record was normally created or was created manually.
         /// </summary>
         public virtual TimeRecordType RecordType { get; set; }
-        
+
         /// <summary>
         /// Compares the business keys.
         /// </summary>
@@ -57,7 +57,11 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
 
             TimeRecord timeRecord = obj as TimeRecord;
 
-            return timeRecord != null && Date == timeRecord.Date && StartTime == timeRecord.StartTime && EndTime == timeRecord.EndTime;
+            return timeRecord != null &&
+                Date == timeRecord.Date &&
+                StartTime == timeRecord.StartTime &&
+                EndTime == timeRecord.EndTime &&
+                RecordType == timeRecord.RecordType;
         }
 
         public override string ToString()
@@ -70,6 +74,8 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
             sb.Append(" - ");
             sb.Append(EndTime.ToString());
             sb.Append("]");
+            sb.Append(" ");
+            sb.Append(RecordType);
 
             return sb.ToString();
         }
