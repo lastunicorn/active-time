@@ -18,7 +18,7 @@ using System;
 using System.Data.Common;
 using System.Data.SQLite;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {

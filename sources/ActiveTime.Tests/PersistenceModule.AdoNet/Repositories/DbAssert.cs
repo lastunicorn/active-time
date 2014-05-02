@@ -17,7 +17,7 @@
 using System.Data.SQLite;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoRepositories
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories
 {
     public class DbAssert
     {

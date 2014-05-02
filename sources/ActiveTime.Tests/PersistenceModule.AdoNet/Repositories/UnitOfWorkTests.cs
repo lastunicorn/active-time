@@ -16,10 +16,10 @@
 
 using System;
 using System.Data.Common;
-using DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories;
+using DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoRepositories
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories
 {
     [TestFixture]
     public class UnitOfWorkTests

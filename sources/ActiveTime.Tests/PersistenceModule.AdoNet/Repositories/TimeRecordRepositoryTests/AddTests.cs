@@ -17,10 +17,10 @@
 using System;
 using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories;
+using DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoRepositories.TimeRecordRepositoryTests
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories.TimeRecordRepositoryTests
 {
     [TestFixture]
     public class AddTests

@@ -39,11 +39,12 @@ namespace DustInTheWind.ActiveTime
         {
             base.ConfigureContainer();
 
+            // Register WPF related services.
             Container.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IShellNavigator, ShellNavigator>(new ContainerControlledLifetimeManager());
             Container.RegisterType<DispatcherService, DispatcherService>(new ContainerControlledLifetimeManager());
 
-            // Register passive services.
+            // Register business services.
             Container.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStateService, StateService>(new ContainerControlledLifetimeManager());

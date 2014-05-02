@@ -16,11 +16,12 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories;
+using DustInTheWind.ActiveTime.PersistenceModule.NHibernate.Repositories;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
+using NHibernate;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.PersistenceModule.NHibernate.ModuleDefinitions
 {
     public class PersistenceModule : IModule
     {
@@ -36,7 +37,8 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.ModuleDefinitions
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IUnitOfWork, UnitOfWork>(new ContainerControlledLifetimeManager());
+            ISession session = SessionProvider.OpenSession();
+            unityContainer.RegisterInstance<ISession>(session, new ContainerControlledLifetimeManager());
 
             unityContainer.RegisterType<ITimeRecordRepository, TimeRecordRepository>();
             unityContainer.RegisterType<IDayCommentRepository, DayCommentRepository>();

@@ -14,17 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Data.Common;
-
-namespace DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.NHibernate.Entities
 {
-    public interface IUnitOfWork : IDisposable
+    public class EntityBase
     {
-        DbConnection Connection { get; }
-
-        void Commit();
-
-        void Rollback();
+        /// <summary>
+        /// Gets or sets an integer value that uniquely identifies the comment.
+        /// </summary>
+        public virtual int Id { get; set; }
     }
 }

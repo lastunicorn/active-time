@@ -41,6 +41,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLibraries\Moq\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\ExternalLibraries\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -58,10 +61,18 @@
     <Compile Include="Common\Services\StatusInfoServiceTests\StatusTextTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\ConstructorTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\PropertyChangedTests.cs" />
-    <Compile Include="PersistenceModule\AdoRepositories\DbAssert.cs" />
-    <Compile Include="PersistenceModule\AdoRepositories\TimeRecordRepositoryTests\AddTests.cs" />
-    <Compile Include="PersistenceModule\AdoRepositories\DbTestHelper.cs" />
-    <Compile Include="PersistenceModule\AdoRepositories\UnitOfWorkTests.cs" />
+    <Compile Include="PersistenceModule.AdoNet\Repositories\DbAssert.cs" />
+    <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\AddTests.cs" />
+    <Compile Include="PersistenceModule.AdoNet\Repositories\DbTestHelper.cs" />
+    <Compile Include="PersistenceModule.AdoNet\Repositories\UnitOfWorkTests.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\DayCommentRepositoryTests\DayCommentAssertUtil.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\DayCommentRepositoryTests\DayCommentRepositoryCrudTests.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\DayCommentRepositoryTests\DayCommentRepositoryGetByDateTests.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\RepositoryCrudTestsBase.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\RepositoryTestsBase.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\TimeRecordRepositoryTests\TimeRecordAssertUtil.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\TimeRecordRepositoryTests\TimeRecordRepositoryCrudTests.cs" />
+    <Compile Include="PersistenceModule.NHibernate\Repositories\TimeRecordRepositoryTests\TimeRecordRepositoryGetByDateTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\ConstructorTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\InternalTimerTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\GetTimeFromLastStopTests.cs" />
@@ -99,9 +110,13 @@
       <Project>{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}</Project>
       <Name>ActiveTime.MainGuiModule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.csproj">
+    <ProjectReference Include="..\ActiveTime.PersistenceModule.NHibernate\ActiveTime.PersistenceModule.NHibernate.csproj">
+      <Project>{B311ECBA-97DA-4BAA-9321-383EBF65F030}</Project>
+      <Name>ActiveTime.PersistenceModule.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.AdoNet.csproj">
       <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>
-      <Name>ActiveTime.PersistenceModule</Name>
+      <Name>ActiveTime.PersistenceModule.AdoNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.RecorderModule\ActiveTime.RecorderModule.csproj">
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>

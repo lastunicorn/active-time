@@ -16,7 +16,7 @@
 
 using System.Data.SQLite;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoRepositories
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories
 {
     public class DbTestHelper
     {

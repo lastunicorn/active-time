@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime", "ActiveTime\ActiveTime.csproj", "{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Tests", "ActiveTime.Tests\ActiveTime.Tests.csproj", "{7F9750D1-19F4-4F69-9552-A38C4DB3F15B}"
@@ -11,13 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.TrayIconModule",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.RecorderModule", "ActiveTime.RecorderModule\ActiveTime.RecorderModule.csproj", "{CC12E02C-99C8-4DDA-9F68-3CF670D13958}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule", "ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.AdoNet", "ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.AdoNet.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule", "ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.SystemSessionModule", "ActiveTime.SystemSessionModule\ActiveTime.SystemSessionModule.csproj", "{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.MainGuiModule", "ActiveTime.MainGuiModule\ActiveTime.MainGuiModule.csproj", "{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.NHibernate", "ActiveTime.PersistenceModule.NHibernate\ActiveTime.PersistenceModule.NHibernate.csproj", "{B311ECBA-97DA-4BAA-9321-383EBF65F030}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,6 +121,16 @@ Global
 		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|x86.ActiveCfg = Release|x86
 		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|x86.Build.0 = Release|x86
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
