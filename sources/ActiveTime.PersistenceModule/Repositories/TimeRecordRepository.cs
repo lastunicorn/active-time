@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
@@ -127,40 +126,57 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public TimeRecord GetById(int id)
         {
-            throw new NotImplementedException();
+            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            {
+                command.CommandText = string.Format("select * from records where id={0}", id);
+
+                using (DbDataReader dataReader = command.ExecuteReader())
+                {
+                    if (!dataReader.Read())
+                        return null;
+
+                    return ReadCurrentTimeRecord(dataReader);
+                }
+            }
         }
 
         public IList<TimeRecord> GetByDate(DateTime date)
         {
-            string sql = string.Format("select id, start_time, end_time from records where date='{0}'", date.ToString("yyyy-MM-dd"));
-
             using (DbCommand command = unitOfWork.Connection.CreateCommand())
             {
-                command.CommandText = sql;
-                using (DbDataReader reader = command.ExecuteReader())
+                command.CommandText = string.Format("select * from records where date='{0}'", date.ToString("yyyy-MM-dd"));
+
+                using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    List<TimeRecord> records = new List<TimeRecord>();
+                    List<TimeRecord> timeRecords = new List<TimeRecord>();
 
-                    while (reader.Read())
+                    while (dataReader.Read())
                     {
-                        object idAsObject = reader["id"];
-                        object startTimeAsObject = reader["start_time"];
-                        object endTimeAsObject = reader["end_time"];
-
-                        TimeRecord timeRecord = new TimeRecord
-                        {
-                            Id = int.Parse(idAsObject.ToString()),
-                            Date = date,
-                            StartTime = DateTime.Parse(startTimeAsObject.ToString()).TimeOfDay,
-                            EndTime = DateTime.Parse(endTimeAsObject.ToString()).TimeOfDay,
-                        };
-
-                        records.Add(timeRecord);
+                        TimeRecord timeRecord = ReadCurrentTimeRecord(dataReader);
+                        timeRecords.Add(timeRecord);
                     }
 
-                    return records.ToArray();
+                    return timeRecords;
                 }
             }
+        }
+
+        private static TimeRecord ReadCurrentTimeRecord(DbDataReader dataReader)
+        {
+            object idAsObject = dataReader["id"];
+            object dateAsObject = dataReader["date"];
+            object startTimeAsObject = dataReader["start_time"];
+            object endTimeAsObject = dataReader["end_time"];
+            object recordTypeAsObject = dataReader["type"];
+
+            return new TimeRecord
+            {
+                Id = int.Parse(idAsObject.ToString()),
+                Date = DateTime.Parse(dateAsObject.ToString()),
+                StartTime = DateTime.Parse(startTimeAsObject.ToString()).TimeOfDay,
+                EndTime = DateTime.Parse(endTimeAsObject.ToString()).TimeOfDay,
+                RecordType = (TimeRecordType)Enum.Parse(typeof(TimeRecordType), recordTypeAsObject.ToString())
+            };
         }
     }
 }
