@@ -1,17 +1,27 @@
-Main Module
+ActiveTime - the wpf application. it is the entry point of the application.
+
 	Application Service - used to close the application.
+	Dispatcher Service - used to dispatch methods to be run on the ui thread.
+	Shell Navigator - displays new windows.
+	
+	(From Common)
 	Current Time Provider - Provides the date and time of the system.
+	Status Info Service - (single instance)
+	State Service
+
+Main Gui Module
+	Views 
+
+Tray Icon Module - displays the tray icon in next to the system's clock.
 
 -------------------------------------------------
 
-Persistence Module - writes into the database
-
 Recorder Module
 	Scrib
-	Recorder Service (Active)
+	Recorder Service (Active) - 
 
 Reminder Module
-	Reminder 
+	Reminder
 	Pause Reminder (Active) - used for the pause remainder.
 
 System Session Module
@@ -19,12 +29,7 @@ System Session Module
 
 -------------------------------------------------
 
-Main Gui Module
-	Status Info Service - (single instance)
-	Views 
-
-Shell Navigation Module
-	Shell Navigator
-	Dispatcher Service
-
-Tray Icon Module
+Persistence Module - writes into the database
+	UnitOfWork
+	TimeRecordRepository
+	DayCommentRepository

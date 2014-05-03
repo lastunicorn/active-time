@@ -22,7 +22,7 @@ using NUnit.Framework;
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories.TimeRecordRepositoryTests
 {
     [TestFixture]
-    public class AddTests
+    public class DeleteTests
     {
         private UnitOfWork unitOfWork;
         private TimeRecordRepository timeRecordRepository;
@@ -43,61 +43,81 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
         }
 
         [Test]
-        public void sets_the_id_of_the_timeRecord_entity()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void throws_if_timeRecord_is_null()
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
-
-            timeRecordRepository.Add(timeRecord);
-
-            Assert.That(timeRecord.Id, Is.Not.EqualTo(0));
-        }
-
-        [Test]
-        public void saves_the_timeRecord_in_the_database()
-        {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
-
-            timeRecordRepository.Add(timeRecord);
-            unitOfWork.Commit();
-
-            DbAssert.AssertExistsTimeRecord(timeRecord.Id);
-        }
-
-        [Test]
-        public void saves_two_timeRecords_in_the_database()
-        {
-            TimeRecord timeRecord1 = CreateTimeRecordEntity();
-            timeRecord1.Date = new DateTime(2014, 06, 13);
-            TimeRecord timeRecord2 = CreateTimeRecordEntity();
-            timeRecord2.Date = new DateTime(2014, 03, 05);
-
-            timeRecordRepository.Add(timeRecord1);
-            timeRecordRepository.Add(timeRecord2);
-            unitOfWork.Commit();
-
-            DbAssert.AssertExistsTimeRecord(timeRecord1.Id);
-            DbAssert.AssertExistsTimeRecord(timeRecord2.Id);
+            timeRecordRepository.Delete(null);
         }
 
         [Test]
         [ExpectedException(typeof(PersistenceException))]
-        public void throws_if_two_identical_timeRecords_are_saved()
+        public void throws_if_id_is_zero()
         {
-            TimeRecord timeRecord1 = CreateTimeRecordEntity();
-            TimeRecord timeRecord2 = CreateTimeRecordEntity();
+            TimeRecord timeRecord = CreateTimeRecordEntity();
+            timeRecord.Id = 0;
 
-            timeRecordRepository.Add(timeRecord1);
-            timeRecordRepository.Add(timeRecord2);
+            timeRecordRepository.Delete(timeRecord);
         }
 
         [Test]
-        public void correctly_adds_all_the_fields()
+        [ExpectedException(typeof(PersistenceException))]
+        public void throws_if_id_is_less_then_zero()
         {
             TimeRecord timeRecord = CreateTimeRecordEntity();
+            timeRecord.Id = -1;
 
+            timeRecordRepository.Delete(timeRecord);
+        }
+
+        [Test]
+        public void deletes_the_sigle_record_from_database()
+        {
+            TimeRecord timeRecord = CreateTimeRecordEntity();
             timeRecordRepository.Add(timeRecord);
 
-            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
+            timeRecordRepository.Delete(timeRecord);
+
+            DbAssert.AssertDoesNotExistAnyTimeRecord();
+        }
+
+        [Test]
+        public void if_two_records_in_db_the_deleted_one_does_not_exist()
+        {
+            TimeRecord timeRecord1 = CreateTimeRecordEntity();
+            timeRecord1.Date = new DateTime(2011, 06, 13);
+            TimeRecord timeRecord2 = CreateTimeRecordEntity();
+            timeRecord2.Date = new DateTime(2013, 06, 13);
+            timeRecordRepository.Add(timeRecord1);
+            timeRecordRepository.Add(timeRecord2);
+
+            timeRecordRepository.Delete(timeRecord1);
+
+            DbAssert.AssertDoesNotExistTimeRecord(timeRecord1.Id);
+        }
+
+        [Test]
+        public void if_two_records_in_db_the_not_deleted_one_remains()
+        {
+            TimeRecord timeRecord1 = CreateTimeRecordEntity();
+            timeRecord1.Date = new DateTime(2011, 06, 13);
+            TimeRecord timeRecord2 = CreateTimeRecordEntity();
+            timeRecord2.Date = new DateTime(2013, 06, 13);
+            timeRecordRepository.Add(timeRecord1);
+            timeRecordRepository.Add(timeRecord2);
+
+            timeRecordRepository.Delete(timeRecord1);
+
+            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord2);
+        }
+
+        [Test]
+        [ExpectedException(typeof(PersistenceException))]
+        public void throws_if_id_does_not_exist()
+        {
+            TimeRecord timeRecord = CreateTimeRecordEntity();
+            timeRecord.Id = 10000;
+
+            timeRecordRepository.Delete(timeRecord);
         }
 
         private static TimeRecord CreateTimeRecordEntity()

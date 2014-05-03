@@ -15,8 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
 using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using NUnit.Framework;
@@ -98,6 +96,19 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
             if (!actualTimeRecord.Equals(expectedTimeRecord))
             {
                 string errorMessage = string.Format("The TimeRecord from the database is different from the expected one.\r\n  Actual TimeRecord: {0}\r\n  Expected TimeRecord: {1}", actualTimeRecord, expectedTimeRecord);
+                throw new AssertionException(errorMessage);
+            }
+        }
+
+        public static void AssertDoesNotExistTimeRecord(int id)
+        {
+            string sql = string.Format("select count(*) from records where id={0}", id);
+
+            long recordCount = ReadTimeRecordCount(sql);
+
+            if (recordCount != 0)
+            {
+                string errorMessage = string.Format("  Expected to not find record {0} in the database.", id);
                 throw new AssertionException(errorMessage);
             }
         }

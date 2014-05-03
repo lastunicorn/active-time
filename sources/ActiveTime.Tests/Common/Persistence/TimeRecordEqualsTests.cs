@@ -23,10 +23,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
     [TestFixture]
     public class TimeRecordEqualsTests
     {
-        #region Equals
-
         [Test]
-        public void TestEqualsOk()
+        public void two_different_records_with_same_data_are_equal()
         {
             TimeRecord record1 = BuildNewTimeRecord();
             TimeRecord record2 = BuildNewTimeRecord();
@@ -37,10 +35,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
         }
 
         [Test]
-        public void TestEquals_SameInstance()
+        public void a_record_is_equal_to_itself()
         {
             TimeRecord record1 = BuildNewTimeRecord();
-            TimeRecord record2 = BuildNewTimeRecord();
 
             bool actualValue = record1.Equals(record1);
 
@@ -48,7 +45,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
         }
 
         [Test]
-        public void TestEquals_DifferentId()
+        public void if_Id_is_different_records_are_still_equal()
         {
             TimeRecord record1 = BuildNewTimeRecord();
             TimeRecord record2 = BuildNewTimeRecord();
@@ -60,7 +57,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
         }
 
         [Test]
-        public void TestEquals_DifferentDate()
+        public void if_Date_is_different_records_are_different()
         {
             TimeRecord record1 = BuildNewTimeRecord();
             TimeRecord record2 = BuildNewTimeRecord();
@@ -72,7 +69,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
         }
 
         [Test]
-        public void TestEquals_DifferentRecordType()
+        public void if_RecordType_is_different_records_are_different()
         {
             TimeRecord record1 = BuildNewTimeRecord();
             TimeRecord record2 = BuildNewTimeRecord();
@@ -80,11 +77,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
 
             bool actualValue = record1.Equals(record2);
 
-            Assert.That(actualValue, Is.True);
+            Assert.That(actualValue, Is.False);
         }
 
         [Test]
-        public void TestEquals_DifferentStartTime()
+        public void if_StartTime_is_different_records_are_different()
         {
             TimeRecord record1 = BuildNewTimeRecord();
             TimeRecord record2 = BuildNewTimeRecord();
@@ -96,7 +93,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
         }
 
         [Test]
-        public void TestEquals_DifferentEndTime()
+        public void if_EndTime_is_different_records_are_different()
         {
             TimeRecord record1 = BuildNewTimeRecord();
             TimeRecord record2 = BuildNewTimeRecord();
@@ -108,7 +105,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
         }
 
         [Test]
-        public void TestEquals_AllDifferent()
+        public void if_all_properties_are_different_records_are_different()
         {
             TimeRecord record1 = BuildNewTimeRecord();
             TimeRecord record2 = BuildNewTimeRecord();
@@ -123,23 +120,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
             Assert.That(actualValue, Is.False);
         }
 
-        [Test]
-        public void TestEquals_AllDifferentButBusinessKey()
-        {
-            TimeRecord record1 = BuildNewTimeRecord();
-            TimeRecord record2 = BuildNewTimeRecord();
-            record2.Id = 10;
-            record2.RecordType = TimeRecordType.Fake;
-
-            bool actualValue = record1.Equals(record2);
-
-            Assert.That(actualValue, Is.True);
-        }
-
-        #endregion
-
-        #region Utils
-
         private TimeRecord BuildNewTimeRecord()
         {
             return new TimeRecord
@@ -151,7 +131,5 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
                 EndTime = new TimeSpan(12, 15, 30)
             };
         }
-
-        #endregion
     }
 }

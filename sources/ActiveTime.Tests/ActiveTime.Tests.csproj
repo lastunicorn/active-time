@@ -64,6 +64,7 @@
     <Compile Include="PersistenceModule.AdoNet\Repositories\DbAssert.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\AddTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\DbTestHelper.cs" />
+    <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\UpdateTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\UnitOfWorkTests.cs" />
     <Compile Include="PersistenceModule.NHibernate\Repositories\DayCommentRepositoryTests\DayCommentAssertUtil.cs" />

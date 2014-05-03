@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
 using Microsoft.Practices.Prism.Modularity;
@@ -35,7 +36,9 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
             unityContainer.RegisterType<IReminder, Reminder>();
 
             PauseReminder pauseReminder = unityContainer.Resolve<PauseReminder>();
+            pauseReminder.PauseInterval = TimeSpan.FromMinutes(1);
             pauseReminder.StartMonitoring();
+
             unityContainer.RegisterInstance<IPauseReminder>(pauseReminder, new ContainerControlledLifetimeManager());
         }
     }

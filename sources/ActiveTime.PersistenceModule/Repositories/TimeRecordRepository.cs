@@ -92,11 +92,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            //string sql = string.Format("update records set end_time='{0}' where date='{1}' and start_time='{2}'",
-            //    record.EndTime.ToString(@"hh\:mm\:ss"),
-            //    record.Date.ToString("yyyy-MM-dd"),
-            //    record.StartTime.ToString(@"hh\:mm\:ss"));
-
             string sql = string.Format("update records set date='{1}', start_time='{2}', end_time='{3}', type='{4}' where id ={0}",
                 timeRecord.Id,
                 timeRecord.Date.ToString("yyyy-MM-dd"),
@@ -114,12 +109,18 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public void Delete(TimeRecord timeRecord)
         {
-            string sql = string.Format("delete from records where date='{0}' and start_time='{1}' and end_time='{2}'",
-                timeRecord.Date.ToString("yyyy-MM-dd"),
-                timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
-                timeRecord.EndTime.ToString(@"hh\:mm\:ss"));
+            if (timeRecord == null)
+                throw new ArgumentNullException("timeRecord");
 
-            ExecuteNonQuery(sql);
+            if (timeRecord.Id <= 0)
+                throw new PersistenceException("The id of the time record should be a positive integer.");
+
+            string sql = string.Format("delete from records where id='{0}'", timeRecord.Id);
+
+            int recordCount = ExecuteNonQuery(sql);
+
+            if (recordCount == 0)
+                throw new PersistenceException("There is no record with the specified id to update.");
 
             unitOfWork.Commit();
         }
