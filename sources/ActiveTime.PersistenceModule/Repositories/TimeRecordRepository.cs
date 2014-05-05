@@ -163,19 +163,21 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         private static TimeRecord ReadCurrentTimeRecord(DbDataReader dataReader)
         {
-            object idAsObject = dataReader["id"];
-            object dateAsObject = dataReader["date"];
-            object startTimeAsObject = dataReader["start_time"];
-            object endTimeAsObject = dataReader["end_time"];
-            object recordTypeAsObject = dataReader["type"];
+            CustomDataReader customDataReader = new CustomDataReader(dataReader);
+
+            int id = customDataReader.ReadInt32FromCurrentTimeRecord("id");
+            DateTime date = customDataReader.ReadDateTimeFromCurrentTimeRecord("date");
+            TimeSpan startTime = customDataReader.ReadTimeOfDayFromCurrentTimeRecord("start_time");
+            TimeSpan endTime = customDataReader.ReadTimeOfDayFromCurrentTimeRecord("end_time");
+            TimeRecordType timeRecordType = customDataReader.ReadEnumFromCurrentTimeRecord<TimeRecordType>("type");
 
             return new TimeRecord
             {
-                Id = int.Parse(idAsObject.ToString()),
-                Date = DateTime.Parse(dateAsObject.ToString()),
-                StartTime = DateTime.Parse(startTimeAsObject.ToString()).TimeOfDay,
-                EndTime = DateTime.Parse(endTimeAsObject.ToString()).TimeOfDay,
-                RecordType = (TimeRecordType)Enum.Parse(typeof(TimeRecordType), recordTypeAsObject.ToString())
+                Id = id,
+                Date = date,
+                StartTime = startTime,
+                EndTime = endTime,
+                RecordType = timeRecordType
             };
         }
     }

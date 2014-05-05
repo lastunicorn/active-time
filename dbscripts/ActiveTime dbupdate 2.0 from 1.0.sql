@@ -35,12 +35,12 @@ CREATE TABLE [records] (
   [date] DATE NOT NULL,
   [start_time] TIME NOT NULL,
   [end_time] TIME NOT NULL,
-  [type] INTEGER,
+  [type] INTEGER NOT NULL,
   UNIQUE([date], [start_time], [end_time]));
 
 -- import data from old table
 insert into [records]([id], [date], [start_time], [end_time], [type])
-select [id], [date], [start_time], [end_time], null
+select [id], [date], [start_time], [end_time], 0
 from [records_old];
 
 -- drop old table

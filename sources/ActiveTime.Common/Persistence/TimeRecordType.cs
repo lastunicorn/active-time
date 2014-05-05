@@ -21,14 +21,16 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
     /// </summary>
     public enum TimeRecordType
     {
+        Unknown = 0,
+
         /// <summary>
         /// The TimeRecord was created normally, by the Recorder.
         /// </summary>
-        Normal = 0,
+        Normal = 1,
 
         /// <summary>
         /// The TimeRecord was created manually.
         /// </summary>
-        Fake = 1
+        Fake = 2
     }
 }
