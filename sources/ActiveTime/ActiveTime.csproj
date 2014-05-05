@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\ApplicationService.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />

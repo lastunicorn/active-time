@@ -48,6 +48,7 @@ namespace DustInTheWind.ActiveTime
             Container.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStateService, StateService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IConfigurationService, ConfigurationService>();
         }
 
         protected override DependencyObject CreateShell()

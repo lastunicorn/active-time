@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
 using Microsoft.Practices.Prism.Modularity;
@@ -25,21 +25,30 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
     public class ReminderModule : IModule
     {
         private readonly IUnityContainer unityContainer;
+        private readonly IConfigurationService configurationService;
 
-        public ReminderModule(IUnityContainer unityContainer)
+        public ReminderModule(IUnityContainer unityContainer, IConfigurationService configurationService)
         {
             this.unityContainer = unityContainer;
+            this.configurationService = configurationService;
         }
 
         public void Initialize()
         {
             unityContainer.RegisterType<IReminder, Reminder>();
 
+            PauseReminder pauseReminder = CreatePauseReminder();
+            unityContainer.RegisterInstance<IPauseReminder>(pauseReminder, new ContainerControlledLifetimeManager());
+        }
+
+        private PauseReminder CreatePauseReminder()
+        {
             PauseReminder pauseReminder = unityContainer.Resolve<PauseReminder>();
-            pauseReminder.PauseInterval = TimeSpan.FromMinutes(1);
+            pauseReminder.PauseInterval = configurationService.ReminderPauseInterval;
+            pauseReminder.SnoozeInterval = configurationService.ReminderSnoozeInterval;
             pauseReminder.StartMonitoring();
 
-            unityContainer.RegisterInstance<IPauseReminder>(pauseReminder, new ContainerControlledLifetimeManager());
+            return pauseReminder;
         }
     }
 }

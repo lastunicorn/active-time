@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DustInTheWind.ActiveTime.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="UserName" Type="System.String" Scope="User">
+    <Setting Name="General_UserName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Iuga Alexandru</Value>
     </Setting>
-    <Setting Name="ReminderInterval" Type="System.TimeSpan" Scope="User">
+    <Setting Name="Reminder_PauseInterval" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">01:00:00</Value>
     </Setting>
-    <Setting Name="SnoozeInterval" Type="System.TimeSpan" Scope="User">
+    <Setting Name="Reminder_SnoozeInterval" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:03:00</Value>
     </Setting>
-    <Setting Name="ConfirmExitApplication" Type="System.Boolean" Scope="User">
+    <Setting Name="General_ConfirmExitApplication" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
