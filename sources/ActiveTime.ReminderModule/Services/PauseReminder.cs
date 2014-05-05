@@ -109,9 +109,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
 
         private void HandleReminderRing(object sender, RingEventArgs e)
         {
+            TimeSpan timeFromLastPause = DateTime.Now - reminder.StartTime;
+
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                { "Text", "Make a pause." }
+                { "Text", string.Format("Time passed: {0:hh\\:mm\\:ss}\n\nMake a pause NOW!", timeFromLastPause) }
             };
 
             shellNavigator.Navigate(ShellNames.MessageShell, parameters);
