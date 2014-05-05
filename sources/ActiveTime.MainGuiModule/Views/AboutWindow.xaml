@@ -8,7 +8,30 @@
     WindowStartupLocation="CenterOwner">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" FontSize="20">Created by Dust in the Wind</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   FontSize="20"
+                   Margin="20">Created by Dust in the Wind</TextBlock>
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   Margin="10"
+                   Text="{Binding Version}"></TextBlock>
     </Grid>
 
 </Window>
