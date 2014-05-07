@@ -16,6 +16,7 @@
 
 using System;
 using System.Data.Common;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories;
 using NUnit.Framework;
 
@@ -133,10 +134,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
 
         private static void InsertOneTimeRecord(UnitOfWork unitOfWork)
         {
-            string sql = string.Format("insert into records(date,start_time,end_time) values('{0}', '{1}', '{2}')",
+            string sql = string.Format("insert into records(date,start_time,end_time,type) values('{0}', '{1}', '{2}', {3})",
                 new DateTime(2014, 04, 30).ToString("yyyy-MM-dd"),
                 new TimeSpan(1, 1, 1).ToString(@"hh\:mm\:ss"),
-                new TimeSpan(2, 2, 2).ToString(@"hh\:mm\:ss"));
+                new TimeSpan(2, 2, 2).ToString(@"hh\:mm\:ss"),
+                (int)TimeRecordType.Normal);
 
             using (DbCommand command = unitOfWork.Connection.CreateCommand())
             {
@@ -147,10 +149,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
 
         private static void InsertSecondTimeRecord(UnitOfWork unitOfWork)
         {
-            string sql = string.Format("insert into records(date,start_time,end_time) values('{0}', '{1}', '{2}')",
+            string sql = string.Format("insert into records(date,start_time,end_time,type) values('{0}', '{1}', '{2}', {3})",
                 new DateTime(2014, 05, 01).ToString("yyyy-MM-dd"),
                 new TimeSpan(1, 1, 1).ToString(@"hh\:mm\:ss"),
-                new TimeSpan(2, 2, 2).ToString(@"hh\:mm\:ss"));
+                new TimeSpan(2, 2, 2).ToString(@"hh\:mm\:ss"),
+                (int)TimeRecordType.Normal);
 
             using (DbCommand command = unitOfWork.Connection.CreateCommand())
             {
