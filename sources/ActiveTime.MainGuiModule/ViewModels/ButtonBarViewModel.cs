@@ -30,11 +30,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             UnsavedData
         }
 
-        public ICommand ApplyCommand { get; private set; }
+        public DelegateCommand ApplyCommand { get; private set; }
 
-        public ICommand CancelCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
 
-        public ICommand SaveCommand { get; private set; }
+        public DelegateCommand SaveCommand { get; private set; }
 
         private bool isApplyButtonEnabled;
         public bool IsApplyButtonEnabled
@@ -75,32 +75,40 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             get { return dataState; }
             set
             {
-                switch (value)
-                {
-                    default:
-                    case ButtonBarDataState.NoData:
-                        IsApplyButtonEnabled = false;
-                        IsCancelButtonEnabled = true;
-                        IsSaveButtonEnabled = false;
-                        break;
-
-                    case ButtonBarDataState.SavedData:
-                        IsApplyButtonEnabled = false;
-                        IsCancelButtonEnabled = true;
-                        IsSaveButtonEnabled = true;
-                        break;
-
-                    case ButtonBarDataState.UnsavedData:
-                        IsApplyButtonEnabled = true;
-                        IsCancelButtonEnabled = true;
-                        IsSaveButtonEnabled = true;
-                        break;
-                }
-
                 dataState = value;
-
-                CommandManager.InvalidateRequerySuggested();
+                RefreshButtons();
             }
+        }
+
+        private void RefreshButtons()
+        {
+            switch (dataState)
+            {
+                default:
+                case ButtonBarDataState.NoData:
+                    IsApplyButtonEnabled = false;
+                    IsCancelButtonEnabled = true;
+                    IsSaveButtonEnabled = false;
+                    break;
+
+                case ButtonBarDataState.SavedData:
+                    IsApplyButtonEnabled = false;
+                    IsCancelButtonEnabled = true;
+                    IsSaveButtonEnabled = true;
+                    break;
+
+                case ButtonBarDataState.UnsavedData:
+                    IsApplyButtonEnabled = true;
+                    IsCancelButtonEnabled = true;
+                    IsSaveButtonEnabled = true;
+                    break;
+            }
+
+            ApplyCommand.RaiseCanExecuteChanged();
+            CancelCommand.RaiseCanExecuteChanged();
+            SaveCommand.RaiseCanExecuteChanged();
+
+            CommandManager.InvalidateRequerySuggested();
         }
 
         #region Event ApplyButtonClicked
@@ -109,7 +117,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// Event raised when the apply button was clicked.
         /// </summary>
         public event EventHandler ApplyButtonClicked;
-        
+
         /// <summary>
         /// Raises the <see cref="ApplyButtonClicked"/> event.
         /// </summary>
@@ -130,7 +138,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// Event raised when the apply button was clicked.
         /// </summary>
         public event EventHandler CancelButtonClicked;
-        
+
         /// <summary>
         /// Raises the <see cref="CancelButtonClicked"/> event.
         /// </summary>
@@ -151,7 +159,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// Event raised when the apply button was clicked.
         /// </summary>
         public event EventHandler SaveButtonClicked;
-        
+
         /// <summary>
         /// Raises the <see cref="SaveButtonClicked"/> event.
         /// </summary>
@@ -171,9 +179,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// </summary>
         public ButtonBarViewModel()
         {
-            ApplyCommand = new DelegateCommand(OnApplyCommandExecuted, () => IsApplyButtonEnabled);
-            CancelCommand = new DelegateCommand(OnCancelCommandExecuted, () => isCancelButtonEnabled);
-            SaveCommand = new DelegateCommand(OnSaveCommandExecuted, () => isSaveButtonEnabled);
+            ApplyCommand = new DelegateCommand(OnApplyCommandExecuted, () => true);
+            CancelCommand = new DelegateCommand(OnCancelCommandExecuted, () => true);
+            SaveCommand = new DelegateCommand(OnSaveCommandExecuted, () => true);
 
             DataState = ButtonBarDataState.NoData;
         }
