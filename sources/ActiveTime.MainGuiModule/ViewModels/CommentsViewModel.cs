@@ -112,7 +112,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
                 currentDayComment = null;
                 return;
             }
-            
+
             currentDayComment = dayCommentRepository.GetByDate(date.Value);
         }
 
@@ -166,6 +166,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             currentDayComment.Comment = Comment;
             dayCommentRepository.AddOrUpdate(currentDayComment);
             buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
+        }
+
+        public void WhenTextChanged()
+        {
+            buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.UnsavedData;
         }
 
         #region INavigationAware

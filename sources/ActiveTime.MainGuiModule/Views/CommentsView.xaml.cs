@@ -15,7 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.Views
@@ -25,19 +27,26 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
     /// </summary>
     public partial class CommentsView : UserControl
     {
+        private readonly CommentsViewModel viewModel;
+
         public CommentsView(CommentsViewModel viewModel)
         {
             if (viewModel == null)
                 throw new ArgumentNullException("viewModel");
 
-            InitializeComponent();
+            this.viewModel = viewModel;
 
-            Loaded += (s, e) => DataContext = viewModel;
+            InitializeComponent();
         }
 
         private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            
+            viewModel.WhenTextChanged();
+        }
+
+        private void CommentsView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = viewModel;
         }
     }
 }

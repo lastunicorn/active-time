@@ -179,9 +179,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// </summary>
         public ButtonBarViewModel()
         {
-            ApplyCommand = new DelegateCommand(OnApplyCommandExecuted, () => true);
-            CancelCommand = new DelegateCommand(OnCancelCommandExecuted, () => true);
-            SaveCommand = new DelegateCommand(OnSaveCommandExecuted, () => true);
+            ApplyCommand = new DelegateCommand(OnApplyCommandExecuted, () => IsApplyButtonEnabled);
+            CancelCommand = new DelegateCommand(OnCancelCommandExecuted, () => isCancelButtonEnabled);
+            SaveCommand = new DelegateCommand(OnSaveCommandExecuted, () => isSaveButtonEnabled);
 
             DataState = ButtonBarDataState.NoData;
         }

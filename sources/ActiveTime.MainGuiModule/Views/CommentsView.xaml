@@ -5,20 +5,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     
-    xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
-    xmlns:common="clr-namespace:DustInTheWind.ActiveTime.Common;assembly=ActiveTime.Common"
-    xmlns:Views="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Views"
-    xmlns:Converters="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Converters"
+    xmlns:views="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Views"
+    xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Converters"
     mc:Ignorable="d" 
-    d:DesignHeight="300" d:DesignWidth="300">
+    d:DesignHeight="300" d:DesignWidth="300"
+    Loaded="CommentsView_OnLoaded">
 
     <UserControl.Resources>
-        <Converters:BooleanConverter x:Key="BooleanConverter" />
+        <converters:BooleanConverter x:Key="BooleanConverter" />
     </UserControl.Resources>
     
     <DockPanel Margin="5,5,5,10">
 
-        <Views:ButtonBar DockPanel.Dock="Bottom" Margin="5,0,5,5" DataContext="{Binding ButtonBarViewModel}"/>
+        <views:ButtonBar DockPanel.Dock="Bottom" Margin="5,0,5,5" DataContext="{Binding ButtonBarViewModel}"/>
 
         <Grid Margin="5">
 
@@ -46,7 +45,8 @@
                      Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
                      AcceptsReturn="True"
                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                     TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}" />
+                     TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}"
+                     TextChanged="TextBoxBase_OnTextChanged"/>
                      
             <CheckBox Grid.Row="2" Grid.Column="1" Content="Wrap" Margin="3" IsChecked="{Binding Path=CommentTextWrap}" />
 
