@@ -20,6 +20,9 @@ using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 {
+    /// <summary>
+    /// Contains the UI logic of the status bar displayed at the bottom of the main window.
+    /// </summary>
     public class StatusInfoViewModel : ViewModelBase
     {
         private readonly IStatusInfoService statusInfoService;
@@ -36,7 +39,12 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
                 throw new ArgumentNullException("statusInfoService");
 
             this.statusInfoService = statusInfoService;
-            this.statusInfoService.StatusTextChanged += (s, e) => NotifyPropertyChanged("StatusText");
+            this.statusInfoService.StatusTextChanged += HandleStatusTextChanged;
+        }
+
+        private void HandleStatusTextChanged(object s, EventArgs e)
+        {
+            NotifyPropertyChanged("StatusText");
         }
     }
 }

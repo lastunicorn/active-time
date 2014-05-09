@@ -35,6 +35,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         }
 
         private Dictionary<string, object> navigationParameters;
+
         public Dictionary<string, object> NavigationParameters
         {
             get { return navigationParameters; }
@@ -55,10 +56,13 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private void UpdateTextFromNavigationParameters()
         {
-            if (navigationParameters != null && navigationParameters.ContainsKey("Text") && navigationParameters["Text"] is string)
-            {
+            if (navigationParameters == null)
+                return;
+
+            bool containsTextKey = navigationParameters.ContainsKey("Text") && navigationParameters["Text"] is string;
+
+            if (containsTextKey)
                 Message = navigationParameters["Text"] as string;
-            }
         }
     }
 }
