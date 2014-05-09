@@ -25,9 +25,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
     /// </summary>
     public partial class AboutWindow : Window
     {
-        private readonly AboutViewModel viewModel;
+        private readonly AboutWindowViewModel viewModel;
 
-        public AboutWindow(AboutViewModel viewModel)
+        public AboutWindow(AboutWindowViewModel viewModel)
         {
             if (viewModel == null)
                 throw new ArgumentNullException("viewModel");
@@ -35,11 +35,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
             this.viewModel = viewModel;
 
             InitializeComponent();
-
-            Loaded += OnLoaded;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void AboutWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             DataContext = viewModel;
         }

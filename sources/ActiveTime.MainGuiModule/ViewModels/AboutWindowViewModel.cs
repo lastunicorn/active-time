@@ -19,14 +19,16 @@ using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 {
-    public class AboutViewModel : ViewModelBase
+    public class AboutWindowViewModel : ViewModelBase
     {
         public string Version { get; set; }
 
-        public AboutViewModel()
+        public AboutWindowViewModel()
         {
             Assembly assembly = Assembly.GetEntryAssembly();
-            Version = "Version " + assembly.GetName().Version.ToString();
+            AssemblyName assemblyName = assembly.GetName();
+
+            Version = string.Format("Version {0}", assemblyName.Version);
         }
     }
 }

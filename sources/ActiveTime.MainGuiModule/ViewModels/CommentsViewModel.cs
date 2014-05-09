@@ -18,6 +18,7 @@ using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.MainGuiModule.Commands;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
@@ -28,18 +29,22 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         private readonly IRegionManager regionManager;
         private readonly IDayCommentRepository dayCommentRepository;
 
-        private DayComment currentDayComment;
+        private DayComment currentCommentRecord;
 
-        private readonly ButtonBarViewModel buttonBarViewModel;
-        public ButtonBarViewModel ButtonBarViewModel
-        {
-            get { return buttonBarViewModel; }
-        }
+        public CustomDelegateCommand ApplyCommand { get; private set; }
+        public CustomDelegateCommand CancelCommand { get; private set; }
+        public CustomDelegateCommand SaveCommand { get; private set; }
+
+        private DateTime? date;
 
         public DateTime? Date
         {
-            get { return stateService.CurrentDate; }
-            set { stateService.CurrentDate = value; }
+            get { return date; }
+            set
+            {
+                SetDateInternal(value);
+                stateService.CurrentDate = value;
+            }
         }
 
         private string comment;
@@ -48,8 +53,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             get { return comment; }
             set
             {
-                comment = value;
-                NotifyPropertyChanged("Comment");
+                SetCommentInternal(value);
+                RefreshButtonsState();
             }
         }
 
@@ -67,8 +72,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="CommentsViewModel"/> class.
         /// </summary>
-        /// <param name="stateService"></param>
-        /// <param name="regionManager"></param>
         public CommentsViewModel(IStateService stateService, IRegionManager regionManager, IDayCommentRepository dayCommentRepository)
         {
             if (stateService == null)
@@ -84,66 +87,82 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             this.regionManager = regionManager;
             this.dayCommentRepository = dayCommentRepository;
 
-            buttonBarViewModel = new ButtonBarViewModel();
-            buttonBarViewModel.ApplyButtonClicked += HandleButtonBarApplyButtonClicked;
-            buttonBarViewModel.CancelButtonClicked += HandleButtonBarCancelButtonClicked;
-            buttonBarViewModel.SaveButtonClicked += HandleButtonBarSaveButtonClicked;
+            ApplyCommand = new CustomDelegateCommand(HandleApplyButtonClicked);
+            CancelCommand = new CustomDelegateCommand(HandleCancelButtonClicked);
+            SaveCommand = new CustomDelegateCommand(HandleSaveButtonClicked);
 
+            Enable();
+        }
+
+        private void Enable()
+        {
             stateService.CurrentDateChanged += HandleStateServiceCurrentDateChanged;
+            PopulateView();
+        }
 
-            RetrieveRecord();
-            RefreshDisplayedData();
+        private void Disable()
+        {
+            stateService.CurrentDateChanged -= HandleStateServiceCurrentDateChanged;
         }
 
         private void HandleStateServiceCurrentDateChanged(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("Date");
-
-            RetrieveRecord();
-            RefreshDisplayedData();
+            PopulateView();
         }
 
-        private void RetrieveRecord()
+        private void PopulateView()
         {
-            DateTime? date = stateService.CurrentDate;
+            SetDateInternal(stateService.CurrentDate);
 
             if (date == null)
             {
-                currentDayComment = null;
-                return;
-            }
-
-            currentDayComment = dayCommentRepository.GetByDate(date.Value);
-        }
-
-        private void RefreshDisplayedData()
-        {
-            if (currentDayComment == null)
-            {
-                Comment = null;
-                buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.NoData;
+                currentCommentRecord = null;
+                SetCommentInternal(null);
             }
             else
             {
-                Comment = currentDayComment.Comment;
-                buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
+                currentCommentRecord = dayCommentRepository.GetByDate(date.Value) ?? new DayComment { Date = date.Value };
+                SetCommentInternal(currentCommentRecord.Comment);
             }
+
+            RefreshButtonsState();
         }
 
-        private void HandleButtonBarApplyButtonClicked(object sender, EventArgs e)
+        private void RefreshButtonsState()
+        {
+            bool isDataUnsaved = (currentCommentRecord != null && currentCommentRecord.Comment != comment) ||
+                (currentCommentRecord == null && !string.IsNullOrEmpty(comment));
+
+            ApplyCommand.IsEnabled = isDataUnsaved;
+            SaveCommand.IsEnabled = isDataUnsaved;
+        }
+
+        private void HandleApplyButtonClicked(object parameter)
         {
             SaveInternal();
         }
 
-        private void HandleButtonBarCancelButtonClicked(object sender, EventArgs e)
+        private void HandleCancelButtonClicked(object parameter)
         {
             NavigateToMainView();
         }
 
-        private void HandleButtonBarSaveButtonClicked(object sender, EventArgs e)
+        private void HandleSaveButtonClicked(object parameter)
         {
             SaveInternal();
             NavigateToMainView();
+        }
+
+        private void SetDateInternal(DateTime? value)
+        {
+            date = value;
+            NotifyPropertyChanged("Date");
+        }
+
+        private void SetCommentInternal(string value)
+        {
+            comment = value;
+            NotifyPropertyChanged("Comment");
         }
 
         private void NavigateToMainView()
@@ -153,27 +172,19 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private void SaveInternal()
         {
-            DateTime? date = stateService.CurrentDate;
+            if (currentCommentRecord == null)
+                return;
 
-            if (currentDayComment == null)
-            {
-                if (date == null)
-                    return;
+            currentCommentRecord.Comment = Comment;
+            dayCommentRepository.AddOrUpdate(currentCommentRecord);
 
-                currentDayComment = new DayComment { Date = date.Value };
-            }
-
-            currentDayComment.Comment = Comment;
-            dayCommentRepository.AddOrUpdate(currentDayComment);
-            buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.SavedData;
+            RefreshButtonsState();
         }
 
-        public void WhenTextChanged()
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            buttonBarViewModel.DataState = ButtonBarViewModel.ButtonBarDataState.UnsavedData;
+            Enable();
         }
-
-        #region INavigationAware
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
@@ -182,18 +193,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            Disable();
         }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            string dateTicksAsString = navigationContext.Parameters["Date"];
-
-            long dateTicks;
-
-            if (long.TryParse(dateTicksAsString, out dateTicks))
-                Date = new DateTime(dateTicks);
-        }
-
-        #endregion
     }
 }

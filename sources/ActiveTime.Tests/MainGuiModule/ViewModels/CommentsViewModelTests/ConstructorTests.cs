@@ -41,33 +41,33 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_throws_if_stateService_is_null()
+        public void throws_if_stateService_is_null()
         {
             new CommentsViewModel(null, regionManagerMock.Object, dayCommentRepositoryMock.Object);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_throws_if_regionManager_is_null()
+        public void throws_if_regionManager_is_null()
         {
             new CommentsViewModel(stateServiceMock.Object, null, dayCommentRepositoryMock.Object);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_throws_if_repository_is_null()
+        public void throws_if_repository_is_null()
         {
             new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, null);
         }
 
         [Test]
-        public void Constructor_Ok()
+        public void successfully_instantiated()
         {
             new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, dayCommentRepositoryMock.Object);
         }
 
         [Test]
-        public void Constructor_reads_Date_from_stateService()
+        public void sets_initial_Date_value_from_stateService()
         {
             DateTime date = new DateTime(2011, 06, 13);
             stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
@@ -79,7 +79,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         }
 
         [Test]
-        public void Constructor_clears_Date_if_Date_from_stateService_is_null()
+        public void clears_Date_if_Date_from_stateService_is_null()
         {
             stateServiceMock.Setup(x => x.CurrentDate).Returns(null as DateTime?);
 

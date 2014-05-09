@@ -12,7 +12,8 @@
     ResizeMode="CanResizeWithGrip"
     MinWidth="350" MinHeight="350"
     UseLayoutRounding="True" VisualClearTypeHint="Enabled" VisualTextRenderingMode="Auto"
-    WindowStartupLocation="CenterScreen">
+    WindowStartupLocation="CenterScreen"
+    Loaded="MainWindow_OnLoaded">
 
     <DockPanel>
 

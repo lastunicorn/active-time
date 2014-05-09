@@ -7,6 +7,7 @@
     
     xmlns:views="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Views"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.MainGuiModule.Converters"
+    xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="300"
     Loaded="CommentsView_OnLoaded">
@@ -14,10 +15,26 @@
     <UserControl.Resources>
         <converters:BooleanConverter x:Key="BooleanConverter" />
     </UserControl.Resources>
-    
+
     <DockPanel Margin="5,5,5,10">
 
-        <views:ButtonBar DockPanel.Dock="Bottom" Margin="5,0,5,5" DataContext="{Binding ButtonBarViewModel}"/>
+        <StackPanel DockPanel.Dock="Bottom" Margin="5,0,5,5" Orientation="Horizontal" FlowDirection="RightToLeft">
+
+            <Button Content="Apply" Margin="5,0,0,0" MinWidth="75"
+                cmd:Click.Command="{Binding ApplyCommand}"
+                TabIndex="2" />
+
+            <Button Content="Cancel" Margin="5,0,0,0" MinWidth="75"
+                cmd:Click.Command="{Binding CancelCommand}"
+                IsCancel="True"
+                TabIndex="1" />
+
+            <Button Content="Save" Margin="5,0,0,0" MinWidth="75"
+                cmd:Click.Command="{Binding SaveCommand}"
+                IsDefault="True"
+                TabIndex="0" />
+
+        </StackPanel>
 
         <Grid Margin="5">
 
@@ -45,9 +62,8 @@
                      Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
                      AcceptsReturn="True"
                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                     TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}"
-                     TextChanged="TextBoxBase_OnTextChanged"/>
-                     
+                     TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}"/>
+
             <CheckBox Grid.Row="2" Grid.Column="1" Content="Wrap" Margin="3" IsChecked="{Binding Path=CommentTextWrap}" />
 
         </Grid>

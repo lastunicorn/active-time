@@ -39,11 +39,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
             InitializeComponent();
         }
 
-        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            viewModel.WhenTextChanged();
-        }
-
         private void CommentsView_OnLoaded(object sender, RoutedEventArgs e)
         {
             DataContext = viewModel;

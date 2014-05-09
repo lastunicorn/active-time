@@ -6,7 +6,8 @@
         Height="300" Width="300"
         Topmost="True"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Loaded="MessageWindow_OnLoaded">
 
     <DockPanel>
         

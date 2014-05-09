@@ -25,22 +25,29 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
     /// </summary>
     public partial class MessageWindow : Window
     {
+        private readonly MessageWindowViewModel viewModel;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageWindow"/> class.
         /// </summary>
-        public MessageWindow(MessageViewModel viewModel)
+        public MessageWindow(MessageWindowViewModel viewModel)
         {
             if (viewModel == null)
                 throw new ArgumentNullException("viewModel");
 
-            InitializeComponent();
+            this.viewModel = viewModel;
 
-            Loaded += (s, e) => DataContext = viewModel;
+            InitializeComponent();
         }
 
         private void buttonSnooze_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void MessageWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = viewModel;
         }
     }
 }
