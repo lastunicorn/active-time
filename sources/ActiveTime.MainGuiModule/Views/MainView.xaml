@@ -27,6 +27,13 @@
 
         </Grid.Resources>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="90" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -35,37 +42,30 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Date:" Margin="3" />
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Date:" Height="25" Name="label2" Margin="3" />
-
-        <DatePicker Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"  Height="25" Margin="3" Name="datePicker1" VerticalAlignment="Top"
-                    SelectedDateFormat="Long"
+        <DatePicker Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                    Margin="3" HorizontalAlignment="Left" MinWidth="150"
                     SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                    HorizontalAlignment="Left" MinWidth="150"/>
+                    SelectedDateFormat="Long"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Active Time:" Name="label1" Margin="3" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Active Time:" Margin="3" />
 
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Name="textBoxActiveTime"
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="3"
                      VerticalAlignment="Center"
                     Text="{Binding Path=ActiveTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Total Time:" Name="label4" Margin="3" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Total Time:" Margin="3" />
 
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Name="textBoxTotalTime"
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="3"
                      VerticalAlignment="Center"
                     Text="{Binding Path=TotalTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
 
-        <Label Grid.Row="1" Grid.Column="2" Content="Begin:" Name="label5" Margin="3" />
+        <Label Grid.Row="1" Grid.Column="2" Content="Begin:" Margin="3" />
 
-        <TextBox Grid.Row="1" Grid.Column="3" Margin="3" Name="textBoxBeginTime"
+        <TextBox Grid.Row="1" Grid.Column="3" Margin="3"
                      VerticalAlignment="Center"
                     Text="{Binding Path=BeginTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                     IsReadOnly="True" />
@@ -108,11 +108,11 @@
 
             <Button Content="Comments" MinWidth="75" Name="buttonComments" Margin="0,0,5,0" cmd:Click.Command="{Binding CommentsCommand}"/>
             <Button Content="Refresh" Margin="0,0,5,0" Name="buttonRefresh" cmd:Click.Command="{Binding RefreshCommand}" MinWidth="75" />
-            
+
             <!--<MenuItem Header="Delete2"
                               customcmd:MenuItemClick.Command="{Binding DeleteCommand}"
                               customcmd:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, Mode=TwoWay}"/>-->
-            
+
             <!--<Button Content="click"
                     cmd:Click.Command="{Binding DeleteCommand}"
                     cmd:Click.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem}"/>-->

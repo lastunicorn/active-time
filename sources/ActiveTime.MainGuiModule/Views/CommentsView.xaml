@@ -16,7 +16,7 @@
         <converters:BooleanConverter x:Key="BooleanConverter" />
     </UserControl.Resources>
 
-    <DockPanel Margin="5,5,5,10">
+    <DockPanel Margin="5">
 
         <StackPanel DockPanel.Dock="Bottom" Margin="5,0,5,5" Orientation="Horizontal" FlowDirection="RightToLeft">
 
@@ -36,10 +36,10 @@
 
         </StackPanel>
 
-        <Grid Margin="5">
+        <Grid Margin="0,0,0,5">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="90" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
@@ -49,16 +49,16 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Date" Margin="5" />
+            <Label Grid.Row="0" Grid.Column="0" Content="Date:" Margin="3" />
 
-            <DatePicker Grid.Row="0" Grid.Column="1" Width="200" HorizontalAlignment="Left"
-                    Margin="5"
-                    SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedDateFormat="Long" IsEnabled="True" />
+            <DatePicker Grid.Row="0" Grid.Column="1"
+                        MinWidth="150" HorizontalAlignment="Left" Margin="3"
+                        SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        SelectedDateFormat="Long" />
 
-            <Label Grid.Row="1" Grid.Column="0" Content="Comment" Margin="5" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Comment:" Margin="3" />
 
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="5"
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="3"
                      Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
                      AcceptsReturn="True"
                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
