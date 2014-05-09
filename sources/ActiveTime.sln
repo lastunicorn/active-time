@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.TrayIconModule",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.RecorderModule", "ActiveTime.RecorderModule\ActiveTime.RecorderModule.csproj", "{CC12E02C-99C8-4DDA-9F68-3CF670D13958}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.AdoNet", "ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.AdoNet.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.AdoNet", "ActiveTime.PersistenceModule.AdoNet\ActiveTime.PersistenceModule.AdoNet.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule", "ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
 EndProject

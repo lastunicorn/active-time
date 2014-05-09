@@ -116,7 +116,7 @@
       <Project>{B311ECBA-97DA-4BAA-9321-383EBF65F030}</Project>
       <Name>ActiveTime.PersistenceModule.NHibernate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.PersistenceModule\ActiveTime.PersistenceModule.AdoNet.csproj">
+    <ProjectReference Include="..\ActiveTime.PersistenceModule.AdoNet\ActiveTime.PersistenceModule.AdoNet.csproj">
       <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>
       <Name>ActiveTime.PersistenceModule.AdoNet</Name>
     </ProjectReference>
