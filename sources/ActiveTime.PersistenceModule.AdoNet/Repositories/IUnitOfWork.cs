@@ -23,6 +23,16 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
     {
         DbConnection Connection { get; }
 
+        void ExecuteCommand(Action<DbCommand> action);
+
+        T ExecuteCommand<T>(Func<DbCommand, T> action);
+
+        void ExecuteAndCommit(Action action);
+
+        void ExecuteCommandAndCommit(Action<DbCommand> action);
+
+        T ExecuteCommandAndCommit<T>(Func<DbCommand, T> action);
+
         void Commit();
 
         void Rollback();

@@ -35,66 +35,71 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public void Add(DayComment comment)
         {
-            AddInternal(comment);
-
-            unitOfWork.Commit();
+            unitOfWork.ExecuteAndCommit(() => AddInternal(comment));
         }
 
         private void AddInternal(DayComment comment)
         {
-            string sql = string.Format("insert into comments(date,comment) values('{0}', '{1}')",
-                comment.Date.ToString("yyyy-MM-dd"),
-                SqlTextEncode(comment.Comment));
-
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            unitOfWork.ExecuteCommand((command) =>
             {
+                string sql = string.Format("insert into comments(date,comment) values('{0}', '{1}')",
+                    comment.Date.ToString("yyyy-MM-dd"),
+                    SqlTextEncode(comment.Comment));
+
                 command.CommandText = sql;
 
                 if (command.ExecuteNonQuery() == 0)
                     throw new Exception();
-            }
+            });
         }
 
         public void Update(DayComment comment)
         {
-            UpdateInternal(comment);
-
-            unitOfWork.Commit();
+            unitOfWork.ExecuteAndCommit(() => UpdateInternal(comment));
         }
 
         private void UpdateInternal(DayComment comment)
         {
-            string sql = string.Format("update comments set comment='{0}' where date='{1}'",
-                SqlTextEncode(comment.Comment),
-                comment.Date.ToString("yyyy-MM-dd"));
-
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            unitOfWork.ExecuteCommand((command) =>
             {
+                string sql = string.Format("update comments set comment='{0}' where date='{1}'",
+                    SqlTextEncode(comment.Comment),
+                    comment.Date.ToString("yyyy-MM-dd"));
+
                 command.CommandText = sql;
 
                 if (command.ExecuteNonQuery() == 0)
                     throw new Exception();
-            }
+            });
         }
 
         public void AddOrUpdate(DayComment comment)
         {
-            string sql = string.Format("select date from comments where date='{0}'",
-                comment.Date.ToString("yyyy-MM-dd"));
-
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            unitOfWork.ExecuteAndCommit(() =>
             {
-                command.CommandText = sql;
+                bool existsRecord = ExistsRecord(comment);
 
-                DbDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
+                if (existsRecord)
                     UpdateInternal(comment);
                 else
                     AddInternal(comment);
-            }
+            });
+        }
 
-            unitOfWork.Commit();
+        public bool ExistsRecord(DayComment comment)
+        {
+            return unitOfWork.ExecuteCommand((command) =>
+            {
+                string sql = string.Format("select count(*) from comments where date='{0}'",
+                    comment.Date.ToString("yyyy-MM-dd"));
+
+                command.CommandText = sql;
+
+                object countAsObject = command.ExecuteScalar();
+                int count = int.Parse(countAsObject.ToString());
+
+                return count > 0;
+            });
         }
 
         public void Delete(DayComment comment)
@@ -109,10 +114,10 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public DayComment GetByDate(DateTime date)
         {
-            string sql = string.Format("select comment from comments where date='{0}'", date.ToString("yyyy-MM-dd"));
-
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            return unitOfWork.ExecuteCommandAndCommit((command) =>
             {
+                string sql = string.Format("select comment from comments where date='{0}'", date.ToString("yyyy-MM-dd"));
+
                 command.CommandText = sql;
 
                 DbDataReader reader = command.ExecuteReader();
@@ -127,7 +132,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
                     Date = date,
                     Comment = (string)reader["comment"]
                 };
-            }
+            });
         }
 
         public IList<DayComment> GetAll()

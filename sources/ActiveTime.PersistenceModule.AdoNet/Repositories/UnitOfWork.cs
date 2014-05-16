@@ -37,7 +37,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
                 if (connection == null)
                 {
                     connection = new SQLiteConnection(ConnectionString);
-
                     connection.Open();
                 }
 
@@ -57,6 +56,8 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
                 return;
 
             transaction.Commit();
+
+            transaction.Dispose();
             transaction = null;
         }
 
@@ -69,7 +70,79 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
                 return;
 
             transaction.Rollback();
+
+            transaction.Dispose();
             transaction = null;
+        }
+
+        public void ExecuteCommand(Action<DbCommand> action)
+        {
+            using (DbCommand command = Connection.CreateCommand())
+            {
+                action(command);
+            }
+        }
+
+        public T ExecuteCommand<T>(Func<DbCommand, T> action)
+        {
+            using (DbCommand command = Connection.CreateCommand())
+            {
+                return action(command);
+            }
+        }
+
+        public void ExecuteAndCommit(Action action)
+        {
+            try
+            {
+                action();
+                Commit();
+            }
+            catch
+            {
+                Rollback();
+                throw;
+            }
+        }
+
+        public void ExecuteCommandAndCommit(Action<DbCommand> action)
+        {
+            try
+            {
+                using (DbCommand command = Connection.CreateCommand())
+                {
+                    action(command);
+                }
+
+                Commit();
+            }
+            catch
+            {
+                Rollback();
+                throw;
+            }
+        }
+
+        public T ExecuteCommandAndCommit<T>(Func<DbCommand, T> action)
+        {
+            try
+            {
+                T returnValue;
+
+                using (DbCommand command = Connection.CreateCommand())
+                {
+                    returnValue = action(command);
+                }
+
+                Commit();
+
+                return returnValue;
+            }
+            catch
+            {
+                Rollback();
+                throw;
+            }
         }
 
         private bool disposed;

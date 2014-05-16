@@ -35,42 +35,39 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public void Add(TimeRecord timeRecord)
         {
-            string sql = string.Format("insert into records(date,start_time,end_time,type) values('{0}', '{1}', '{2}', {3})",
-                timeRecord.Date.ToString("yyyy-MM-dd"),
-                timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
-                timeRecord.EndTime.ToString(@"hh\:mm\:ss"),
-                (int)timeRecord.RecordType);
+            if (timeRecord == null)
+                throw new ArgumentNullException("timeRecord");
 
-            try
+            unitOfWork.ExecuteCommandAndCommit((command) =>
             {
-                ExecuteNonQuery(sql);
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = string.Format("Error adding the time record '{0}' into the database.", timeRecord);
-                throw new PersistenceException(errorMessage, ex);
-            }
+                try
+                {
+                    string sql = string.Format("insert into records(date,start_time,end_time,type) values('{0}', '{1}', '{2}', {3})",
+                        timeRecord.Date.ToString("yyyy-MM-dd"),
+                        timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
+                        timeRecord.EndTime.ToString(@"hh\:mm\:ss"),
+                        (int)timeRecord.RecordType);
 
-            try
-            {
-                long lastId = RetrieveLastInsertedId();
-                timeRecord.Id = Convert.ToInt32(lastId);
-            }
-            catch (Exception ex)
-            {
-                throw new PersistenceException("Error retrieving the last inserted id.", ex);
-            }
+                    command.CommandText = sql;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = string.Format("Error adding the time record '{0}' into the database.", timeRecord);
+                    throw new PersistenceException(errorMessage, ex);
+                }
 
-            unitOfWork.Commit();
-        }
+                try
+                {
+                    long lastId = RetrieveLastInsertedId();
+                    timeRecord.Id = Convert.ToInt32(lastId);
+                }
+                catch (Exception ex)
+                {
+                    throw new PersistenceException("Error retrieving the last inserted id.", ex);
+                }
 
-        private int ExecuteNonQuery(string sql)
-        {
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
-            {
-                command.CommandText = sql;
-                return command.ExecuteNonQuery();
-            }
+            });
         }
 
         private long RetrieveLastInsertedId()
@@ -91,19 +88,31 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            string sql = string.Format("update records set date='{1}', start_time='{2}', end_time='{3}', type='{4}' where id ={0}",
-                timeRecord.Id,
-                timeRecord.Date.ToString("yyyy-MM-dd"),
-                timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
-                timeRecord.EndTime.ToString(@"hh\:mm\:ss"),
-                (int)timeRecord.RecordType);
+            unitOfWork.ExecuteCommandAndCommit((command) =>
+            {
+                int recordCount;
 
-            int recordCount = ExecuteNonQuery(sql);
+                try
+                {
+                    string sql = string.Format("update records set date='{1}', start_time='{2}', end_time='{3}', type='{4}' where id ={0}",
+                        timeRecord.Id,
+                        timeRecord.Date.ToString("yyyy-MM-dd"),
+                        timeRecord.StartTime.ToString(@"hh\:mm\:ss"),
+                        timeRecord.EndTime.ToString(@"hh\:mm\:ss"),
+                        (int)timeRecord.RecordType);
 
-            if (recordCount == 0)
-                throw new PersistenceException("There is no record with the specified id to update.");
+                    command.CommandText = sql;
+                    recordCount = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = string.Format("Error updating the time record '{0}' into the database.", timeRecord);
+                    throw new PersistenceException(errorMessage, ex);
+                }
 
-            unitOfWork.Commit();
+                if (recordCount == 0)
+                    throw new PersistenceException("There is no record with the specified id to update.");
+            });
         }
 
         public void Delete(TimeRecord timeRecord)
@@ -114,37 +123,49 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            string sql = string.Format("delete from records where id='{0}'", timeRecord.Id);
+            unitOfWork.ExecuteCommandAndCommit((command) =>
+            {
+                int recordCount;
 
-            int recordCount = ExecuteNonQuery(sql);
+                try
+                {
+                    string sql = string.Format("delete from records where id='{0}'", timeRecord.Id);
 
-            if (recordCount == 0)
-                throw new PersistenceException("There is no record with the specified id to update.");
+                    command.CommandText = sql;
+                    recordCount = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = string.Format("Error deleting the time record '{0}' from the database.", timeRecord);
+                    throw new PersistenceException(errorMessage, ex);
+                }
 
-            unitOfWork.Commit();
+                if (recordCount == 0)
+                    throw new PersistenceException("There is no record with the specified id to update.");
+            });
         }
 
         public TimeRecord GetById(int id)
         {
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            return unitOfWork.ExecuteCommandAndCommit((command) =>
             {
                 command.CommandText = string.Format("select * from records where id={0}", id);
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    if (!dataReader.Read())
-                        return null;
-
-                    return ReadCurrentTimeRecord(dataReader);
+                    return dataReader.Read()
+                        ? ReadCurrentTimeRecord(dataReader)
+                        : null;
                 }
-            }
+            });
         }
 
         public IList<TimeRecord> GetByDate(DateTime date)
         {
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            return unitOfWork.ExecuteCommandAndCommit((command) =>
             {
-                command.CommandText = string.Format("select * from records where date='{0}'", date.ToString("yyyy-MM-dd"));
+                command.CommandText = string.Format("select * from records where date='{0}'",
+                    date.ToString("yyyy-MM-dd"));
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
@@ -158,7 +179,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
                     return timeRecords;
                 }
-            }
+            });
         }
 
         private static TimeRecord ReadCurrentTimeRecord(DbDataReader dataReader)
