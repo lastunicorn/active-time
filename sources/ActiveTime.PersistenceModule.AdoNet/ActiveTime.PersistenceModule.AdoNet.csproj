@@ -47,6 +47,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Shared.cs">
+      <Link>Properties\AssemblyInfo.Shared.cs</Link>
+    </Compile>
     <Compile Include="Repositories\CustomDataReader.cs" />
     <Compile Include="Repositories\DayCommentRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
@@ -76,7 +79,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y "$(TargetDir)*.dll" "$(SolutionDir)ActiveTime\bin\$(ConfigurationName)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y "$(TargetDir)*.dll" "$(SolutionDir)ActiveTime\bin\$(ConfigurationName)"
+xcopy /y "$(TargetDir)x86" "$(SolutionDir)ActiveTime\bin\$(ConfigurationName)\x86\"
+xcopy /y "$(TargetDir)x64" "$(SolutionDir)ActiveTime\bin\$(ConfigurationName)\x64\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

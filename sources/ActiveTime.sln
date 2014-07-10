@@ -30,6 +30,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.MainGuiModule", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.NHibernate", "ActiveTime.PersistenceModule.NHibernate\ActiveTime.PersistenceModule.NHibernate.csproj", "{B311ECBA-97DA-4BAA-9321-383EBF65F030}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7679C591-8D74-4077-8E00-811810432C0F}"
+	ProjectSection(SolutionItems) = preProject
+		AssemblyInfo.Shared.cs = AssemblyInfo.Shared.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

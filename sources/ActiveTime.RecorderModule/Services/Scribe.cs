@@ -30,7 +30,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
     {
         private readonly ITimeRecordRepository timeRecordRepository;
         private readonly ITimeProvider timeProvider;
-        private TimeRecord timeRecord;
+        private TimeRecord currentTimeRecord;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scribe"/> class.
@@ -55,12 +55,12 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         public void StampNew()
         {
-            CreateNewTimeRecordAndSave();
+            DateTime now = timeProvider.GetDateTime();
+            CreateNewTimeRecordAndSave(now);
         }
 
-        private void CreateNewTimeRecordAndSave()
+        private void CreateNewTimeRecordAndSave(DateTime now)
         {
-            DateTime now = timeProvider.GetDateTime();
             TimeRecord newTimeRecord = new TimeRecord
                                     {
                                         RecordType = TimeRecordType.Normal,
@@ -68,8 +68,9 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
                                         StartTime = now.TimeOfDay,
                                         EndTime = now.TimeOfDay
                                     };
+
             timeRecordRepository.Add(newTimeRecord);
-            timeRecord = newTimeRecord;
+            currentTimeRecord = newTimeRecord;
         }
 
         /// <summary>
@@ -78,17 +79,33 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         public void Stamp()
         {
-            if (timeRecord == null)
-                CreateNewTimeRecordAndSave();
+            DateTime now = timeProvider.GetDateTime();
+
+            if (currentTimeRecord == null)
+            {
+                CreateNewTimeRecordAndSave(now);
+            }
             else
-                UpdateTimeRecordAndSave();
+            {
+                bool isSameDay = currentTimeRecord.Date == now.Date;
+
+                if (isSameDay)
+                {
+                    UpdateCurrentTimeRecordAndSave(now.TimeOfDay);
+                }
+                else
+                {
+                    UpdateCurrentTimeRecordAndSave(new TimeSpan(0, 23, 59, 59, 999));
+                    CreateNewTimeRecordAndSave(now.Date);
+                    UpdateCurrentTimeRecordAndSave(now.TimeOfDay);
+                }
+            }
         }
 
-        private void UpdateTimeRecordAndSave()
+        private void UpdateCurrentTimeRecordAndSave(TimeSpan timeOfDay)
         {
-            DateTime now = timeProvider.GetDateTime();
-            timeRecord.EndTime = now.TimeOfDay;
-            timeRecordRepository.Update(timeRecord);
+            currentTimeRecord.EndTime = timeOfDay;
+            timeRecordRepository.Update(currentTimeRecord);
         }
 
         /// <summary>
@@ -97,11 +114,11 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         public void DeleteCurrentTimeRecord()
         {
-            if (timeRecord == null)
+            if (currentTimeRecord == null)
                 return;
 
-            timeRecordRepository.Delete(timeRecord);
-            timeRecord = null;
+            timeRecordRepository.Delete(currentTimeRecord);
+            currentTimeRecord = null;
         }
 
         /// <summary>
@@ -109,23 +126,23 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// </summary>
         /// <returns>A <see cref="TimeSpan"/> object representing the time passed from the last time the
         /// current TimeRecord was stamped.</returns>
-        public TimeSpan? GetTimeFromLastStamp()
+        public TimeSpan? CalculateTimeFromLastStamp()
         {
-            if (timeRecord == null)
+            if (currentTimeRecord == null)
                 return null;
 
             DateTime now = timeProvider.GetDateTime();
 
-            bool isSameDay = timeRecord.Date == now.Date;
+            bool isSameDay = currentTimeRecord.Date == now.Date;
 
             if (isSameDay)
             {
-                DateTime endDateTime = now.Date.Add(timeRecord.EndTime);
+                DateTime endDateTime = now.Date.Add(currentTimeRecord.EndTime);
                 return now - endDateTime;
             }
 
-            TimeSpan timeInLastDayAfterEndTime = TimeSpan.FromDays(1) - timeRecord.EndTime;
-            TimeSpan b = now.Date - timeRecord.Date + TimeSpan.FromDays(1); // what is b?
+            TimeSpan timeInLastDayAfterEndTime = TimeSpan.FromDays(1) - currentTimeRecord.EndTime;
+            TimeSpan b = now.Date - currentTimeRecord.Date + TimeSpan.FromDays(1); // what is b?
             TimeSpan timeInCurrentDay = now.TimeOfDay;
 
             return timeInLastDayAfterEndTime + b + timeInCurrentDay;

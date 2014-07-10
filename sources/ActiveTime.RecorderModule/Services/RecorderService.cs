@@ -73,8 +73,10 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStarted(EventArgs e)
         {
-            if (Started != null)
-                Started(this, e);
+            EventHandler handler = Started;
+
+            if (handler != null)
+                handler(this, e);
         }
 
         #endregion
@@ -92,8 +94,10 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStopped(EventArgs e)
         {
-            if (Stopped != null)
-                Stopped(this, e);
+            EventHandler handler = Stopped;
+
+            if (handler != null)
+                handler(this, e);
         }
 
         #endregion
@@ -101,18 +105,20 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         #region Event Stamping
 
         /// <summary>
-        /// Event raised when ... Well, is raised when it should be raised. Ok?
-        /// todo: write meaningful comment
+        /// Event raised immediately before a new stamping is initiated.
         /// </summary>
         public event EventHandler Stamping;
+
         /// <summary>
         /// Raises the <see cref="Stamping"/> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStamping(EventArgs e)
         {
-            if (Stamping != null)
-                Stamping(this, e);
+            EventHandler handler = Stamping;
+
+            if (handler != null)
+                handler(this, e);
         }
 
         #endregion
@@ -120,8 +126,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         #region Event Stamped
 
         /// <summary>
-        /// Event raised when ... Well, is raised when it should be raised. Ok?
-        /// todo: write meaningful comment
+        /// Event raised after a stamping was finished.
         /// </summary>
         public event EventHandler Stamped;
 
@@ -131,8 +136,10 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStamped(EventArgs e)
         {
-            if (Stamped != null)
-                Stamped(this, e);
+            EventHandler handler = Stamped;
+
+            if (handler != null)
+                handler(this, e);
         }
 
         #endregion
@@ -315,7 +322,9 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         public TimeSpan? CalculateTimeFromLastStop()
         {
-            return lastStopTime == null ? null : DateTime.Now - lastStopTime;
+            return lastStopTime == null
+                ? null
+                : DateTime.Now - lastStopTime;
         }
     }
 }

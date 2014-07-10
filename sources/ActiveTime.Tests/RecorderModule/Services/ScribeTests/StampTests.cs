@@ -40,33 +40,98 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         }
 
         [Test]
-        public void creates_new_record_if_not_exist()
+        public void saves_new_record_in_persistence_if_stamping_for_the_first_time()
         {
-            repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()));
+            TimeRecord actualTimeRecord = null;
+            DateTime currentTime = new DateTime(1980, 05, 13, 12, 59, 00);
+            timeProviderMock.Setup(x => x.GetDateTime())
+                .Returns(currentTime);
+            repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()))
+                .Callback<TimeRecord>(timeRecord => actualTimeRecord = timeRecord);
 
             scribe.Stamp();
 
             repositoryMock.VerifyAll();
+            Assert.That(actualTimeRecord.RecordType, Is.EqualTo(TimeRecordType.Normal));
+            Assert.That(actualTimeRecord.Date, Is.EqualTo(currentTime.Date));
+            Assert.That(actualTimeRecord.StartTime, Is.EqualTo(currentTime.TimeOfDay));
+            Assert.That(actualTimeRecord.EndTime, Is.EqualTo(currentTime.TimeOfDay));
         }
 
         [Test]
-        public void updates_an_existing_record()
+        public void updates_an_existing_record_in_pesistence_if_second_stemp_in_same_day()
         {
             DateTime firstDateTime = new DateTime(1980, 06, 13, 10, 13, 50);
             DateTime secondDateTime = new DateTime(1980, 06, 13, 12, 30, 10);
-            TimeRecord record = null;
-
-            timeProviderMock.Setup(x => x.GetDateTime()).Returns(firstDateTime);
-            scribe.StampNew();
-            repositoryMock.Setup(x => x.Update(It.IsAny<TimeRecord>())).Callback((TimeRecord a) => record = a);
-            timeProviderMock.Setup(x => x.GetDateTime()).Returns(secondDateTime);
+            TimeRecord actualTimeRecord = null;
+            StampNew(firstDateTime);
+            timeProviderMock.Setup(x => x.GetDateTime())
+                .Returns(secondDateTime);
+            repositoryMock.Setup(x => x.Update(It.IsAny<TimeRecord>()))
+                .Callback<TimeRecord>(a => actualTimeRecord = a);
 
             scribe.Stamp();
 
-            Assert.That(record.Date, Is.EqualTo(firstDateTime.Date));
-            Assert.That(record.StartTime, Is.EqualTo(new TimeSpan(10, 13, 50)));
-            Assert.That(record.EndTime, Is.EqualTo(new TimeSpan(12, 30, 10)));
             repositoryMock.VerifyAll();
+            Assert.That(actualTimeRecord.Date, Is.EqualTo(firstDateTime.Date));
+            Assert.That(actualTimeRecord.StartTime, Is.EqualTo(firstDateTime.TimeOfDay));
+            Assert.That(actualTimeRecord.EndTime, Is.EqualTo(secondDateTime.TimeOfDay));
+        }
+
+        [Test]
+        public void saves_current_record_in_persistence_if_second_stamp_is_in_next_day()
+        {
+            DateTime firstDateTime = new DateTime(1980, 06, 13, 10, 13, 50);
+            DateTime secondDateTime = new DateTime(1980, 06, 14, 02, 30, 10);
+            TimeRecord actualTimeRecord = null;
+            StampNew(firstDateTime);
+            timeProviderMock.Setup(x => x.GetDateTime())
+                .Returns(secondDateTime);
+            int callsCount = 0;
+            repositoryMock.Setup(x => x.Update(It.IsAny<TimeRecord>()))
+                .Callback<TimeRecord>(timeRecord =>
+                {
+                    callsCount++;
+                    if (callsCount == 1)
+                        actualTimeRecord = timeRecord;
+                });
+
+            scribe.Stamp();
+
+            repositoryMock.VerifyAll();
+            Assert.That(actualTimeRecord.Date, Is.EqualTo(firstDateTime.Date));
+            Assert.That(actualTimeRecord.StartTime, Is.EqualTo(firstDateTime.TimeOfDay));
+            Assert.That(actualTimeRecord.EndTime, Is.EqualTo(new TimeSpan(0, 23, 59, 59, 999)));
+        }
+
+        [Test]
+        public void creates_new_record_in_persistence_if_second_stamp_is_in_next_day()
+        {
+            DateTime firstDateTime = new DateTime(1980, 06, 13, 10, 13, 50);
+            DateTime secondDateTime = new DateTime(1980, 06, 14, 02, 30, 10);
+            TimeRecord actualTimeRecord = null;
+            StampNew(firstDateTime);
+            timeProviderMock.Setup(x => x.GetDateTime())
+                .Returns(secondDateTime);
+            repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()))
+                .Callback<TimeRecord>(timeRecord => actualTimeRecord = timeRecord);
+
+            scribe.Stamp();
+
+            repositoryMock.VerifyAll();
+            Assert.That(actualTimeRecord.Date, Is.EqualTo(secondDateTime.Date));
+            Assert.That(actualTimeRecord.StartTime, Is.EqualTo(TimeSpan.Zero));
+            Assert.That(actualTimeRecord.EndTime, Is.EqualTo(secondDateTime.TimeOfDay));
+        }
+
+        // todo: What happens if second stamp is after two days?
+
+        private void StampNew(DateTime dateTime)
+        {
+            timeProviderMock.Setup(x => x.GetDateTime())
+                .Returns(dateTime);
+
+            scribe.StampNew();
         }
     }
 }

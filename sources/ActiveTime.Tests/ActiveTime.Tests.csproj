@@ -62,6 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Shared.cs">
+      <Link>Properties\AssemblyInfo.Shared.cs</Link>
+    </Compile>
     <Compile Include="Common\Persistence\DayCommentPropertyTests.cs" />
     <Compile Include="Common\Persistence\TimeRecordPropertyTests.cs" />
     <Compile Include="Common\Services\StatusInfoServiceTests\ConstructorTests.cs" />
