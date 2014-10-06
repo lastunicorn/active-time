@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Reflection;
 using DustInTheWind.ActiveTime.Common.Events;
 
 namespace DustInTheWind.ActiveTime.Common.Services
@@ -40,8 +41,10 @@ namespace DustInTheWind.ActiveTime.Common.Services
         /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnExiting(EventArgs e)
         {
-            if (Exiting != null)
-                Exiting(this, e);
+            EventHandler eventHandler = Exiting;
+
+            if (eventHandler != null)
+                eventHandler(this, e);
         }
 
         #endregion
@@ -58,5 +61,12 @@ namespace DustInTheWind.ActiveTime.Common.Services
         }
 
         protected abstract void PerformExit();
+
+        public Version GetVersion()
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            AssemblyName assemblyName = assembly.GetName();
+            return assemblyName.Version;
+        }
     }
 }

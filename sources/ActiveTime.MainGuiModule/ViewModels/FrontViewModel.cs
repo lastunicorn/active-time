@@ -66,17 +66,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private DayRecord dayRecord;
 
-        public DayRecord DayRecord
-        {
-            get { return dayRecord; }
-            set
-            {
-                dayRecord = value;
-                NotifyPropertyChanged("DayRecord");
-                NotifyPropertyChanged("Records");
-            }
-        }
-
         public DayTimeInterval[] Records
         {
             get { return dayRecord == null ? null : dayRecord.GetTimeRecords(false); }
@@ -209,12 +198,14 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             {
                 IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(Date.Value);
                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
-                DayRecord = dayRecord ?? new DayRecord(Date.Value);
+                this.dayRecord = dayRecord ?? new DayRecord(Date.Value);
             }
             else
             {
-                DayRecord = null;
+                this.dayRecord = null;
             }
+
+            NotifyPropertyChanged("Records");
 
             UpdateActiveTime();
             UpdateTotalTime();

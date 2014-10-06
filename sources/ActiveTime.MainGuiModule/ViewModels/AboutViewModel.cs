@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Reflection;
+using System;
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
@@ -23,12 +24,13 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
     {
         public string Version { get; set; }
 
-        public AboutViewModel()
+        public AboutViewModel(IApplicationService applicationService)
         {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            AssemblyName assemblyName = assembly.GetName();
+            if (applicationService == null)
+                throw new ArgumentNullException("applicationService");
 
-            Version = string.Format("Version {0}", assemblyName.Version);
+            Version version = applicationService.GetVersion();
+            Version = string.Format("Version {0}", version);
         }
     }
 }

@@ -69,9 +69,6 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommentsViewModel"/> class.
-        /// </summary>
         public CommentsViewModel(IStateService stateService, IRegionManager regionManager, IDayCommentRepository dayCommentRepository)
         {
             if (stateService == null)
@@ -87,9 +84,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             this.regionManager = regionManager;
             this.dayCommentRepository = dayCommentRepository;
 
-            ApplyCommand = new CustomDelegateCommand(HandleApplyButtonClicked);
-            CancelCommand = new CustomDelegateCommand(HandleCancelButtonClicked);
-            SaveCommand = new CustomDelegateCommand(HandleSaveButtonClicked);
+            ApplyCommand = new CustomDelegateCommand(OnApplyCommandExecute);
+            CancelCommand = new CustomDelegateCommand(OnCancelCommandExecute);
+            SaveCommand = new CustomDelegateCommand(OnSaveCommandExecute);
 
             Enable();
         }
@@ -137,17 +134,17 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             SaveCommand.IsEnabled = isDataUnsaved;
         }
 
-        private void HandleApplyButtonClicked(object parameter)
+        private void OnApplyCommandExecute(object parameter)
         {
             SaveInternal();
         }
 
-        private void HandleCancelButtonClicked(object parameter)
+        private void OnCancelCommandExecute(object parameter)
         {
             NavigateToMainView();
         }
 
-        private void HandleSaveButtonClicked(object parameter)
+        private void OnSaveCommandExecute(object parameter)
         {
             SaveInternal();
             NavigateToMainView();
@@ -196,4 +193,53 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             Disable();
         }
     }
+
+    //public class CurrentDayComment
+    //{
+    //    private readonly IDayCommentRepository dayCommentRepository;
+
+    //    public DayComment CurrentCommentRecord { get; private set; }
+
+    //    public CurrentDayComment(IDayCommentRepository dayCommentRepository)
+    //    {
+    //        if (dayCommentRepository == null)
+    //            throw new ArgumentNullException("dayCommentRepository");
+
+    //        this.dayCommentRepository = dayCommentRepository;
+    //    }
+
+    //    public void Initialize(DateTime? date)
+    //    {
+    //        if (date == null)
+    //            CurrentCommentRecord = null;
+    //        else
+    //            CurrentCommentRecord = GetCommentRecordFromRepository(date.Value) ?? CreateNewCommentRecord(date.Value);
+    //    }
+
+    //    private DayComment GetCommentRecordFromRepository(DateTime date)
+    //    {
+    //        return dayCommentRepository.GetByDate(date);
+    //    }
+
+    //    private static DayComment CreateNewCommentRecord(DateTime date)
+    //    {
+    //        return new DayComment
+    //        {
+    //            Date = date
+    //        };
+    //    }
+
+    //    public string GetCommentText()
+    //    {
+    //        return CurrentCommentRecord == null ? null : CurrentCommentRecord.Comment;
+    //    }
+
+    //    public void Save()
+    //    {
+    //        if (CurrentCommentRecord == null)
+    //            return;
+
+    //        dayCommentRepository.AddOrUpdate(CurrentCommentRecord);
+    //    }
+    //}
 }

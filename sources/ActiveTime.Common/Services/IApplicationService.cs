@@ -22,5 +22,6 @@ namespace DustInTheWind.ActiveTime.Common.Services
     {
         event EventHandler Exiting;
         void Exit();
+        Version GetVersion();
     }
 }
