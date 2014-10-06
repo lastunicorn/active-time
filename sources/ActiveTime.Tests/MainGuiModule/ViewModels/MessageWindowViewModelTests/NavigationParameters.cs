@@ -23,12 +23,12 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWin
     [TestFixture]
     public class NavigationParameters
     {
-        private MessageWindowViewModel messageWindowViewModel;
+        private MessageViewModel messageViewModel;
 
         [SetUp]
         public void SetUp()
         {
-            messageWindowViewModel = new MessageWindowViewModel();
+            messageViewModel = new MessageViewModel();
         }
 
         [Test]
@@ -36,21 +36,21 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWin
         {
             const string text = "something";
 
-            messageWindowViewModel.NavigationParameters = new Dictionary<string, object>
+            messageViewModel.NavigationParameters = new Dictionary<string, object>
             {
                 { "Text", text }
             };
 
-            Assert.That(messageWindowViewModel.Message, Is.EqualTo(text));
+            Assert.That(messageViewModel.Message, Is.EqualTo(text));
         }
 
         [Test]
         public void PropertyChanged_event_is_raised_after_Message_is_set_from_the_Text_parameter()
         {
             bool eventWasRaised = false;
-            messageWindowViewModel.PropertyChanged += (sender, args) => eventWasRaised = true;
+            messageViewModel.PropertyChanged += (sender, args) => eventWasRaised = true;
 
-            messageWindowViewModel.NavigationParameters = new Dictionary<string, object>
+            messageViewModel.NavigationParameters = new Dictionary<string, object>
             {
                 { "Text", "something" }
             };
@@ -62,9 +62,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWin
         public void PropertyChanged_event_contains_the_name_of_the_Message_property()
         {
             string propertyName = null;
-            messageWindowViewModel.PropertyChanged += (sender, args) => propertyName = args.PropertyName;
+            messageViewModel.PropertyChanged += (sender, args) => propertyName = args.PropertyName;
 
-            messageWindowViewModel.NavigationParameters = new Dictionary<string, object>
+            messageViewModel.NavigationParameters = new Dictionary<string, object>
             {
                 { "Text", "something" }
             };
@@ -75,13 +75,13 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWin
         [Test]
         public void Message_remians_unchanged_if_NavigationParameters_does_not_contain_Text()
         {
-            messageWindowViewModel.NavigationParameters = new Dictionary<string, object>
+            messageViewModel.NavigationParameters = new Dictionary<string, object>
             {
                 { "MyParameter", "some value here" }
             };
 
             string expectedMessage = DustInTheWind.ActiveTime.MainGuiModule.Properties.Resources.MessageWindow_DefaultText;
-            Assert.That(messageWindowViewModel.Message, Is.EqualTo(expectedMessage));
+            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
         }
     }
 }

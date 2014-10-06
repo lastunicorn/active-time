@@ -25,10 +25,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWin
         [Test]
         public void default_value_of_Message()
         {
-            MessageWindowViewModel messageWindowViewModel = new MessageWindowViewModel();
+            MessageViewModel messageViewModel = new MessageViewModel();
 
             string expectedMessage = DustInTheWind.ActiveTime.MainGuiModule.Properties.Resources.MessageWindow_DefaultText;
-            Assert.That(messageWindowViewModel.Message, Is.EqualTo(expectedMessage));
+            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
         }
     }
 }

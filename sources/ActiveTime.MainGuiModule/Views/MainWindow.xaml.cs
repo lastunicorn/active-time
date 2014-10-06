@@ -25,9 +25,9 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MainWindowViewModel viewModel;
+        private readonly MainViewModel viewModel;
 
-        public MainWindow(MainWindowViewModel viewModel)
+        public MainWindow(MainViewModel viewModel)
         {
             if (viewModel == null)
                 throw new ArgumentNullException("viewModel");

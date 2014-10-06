@@ -21,7 +21,7 @@ using DustInTheWind.ActiveTime.MainGuiModule.Properties;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 {
-    public class MessageWindowViewModel : ViewModelBase, IShell
+    public class MessageViewModel : ViewModelBase, IShell
     {
         private string message;
 
@@ -47,10 +47,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageWindowViewModel"/> class.
-        /// </summary>
-        public MessageWindowViewModel()
+        public MessageViewModel()
         {
             message = Resources.MessageWindow_DefaultText;
         }

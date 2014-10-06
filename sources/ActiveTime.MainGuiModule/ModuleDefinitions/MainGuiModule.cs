@@ -48,11 +48,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ModuleDefinitions
 
             // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
-            regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(MainView));
+            regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(FrontView));
             regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
 
             // register views in container. (Needed for view navigation.)
-            unityContainer.RegisterType<object, MainView>(ViewNames.MainView);
+            unityContainer.RegisterType<object, FrontView>(ViewNames.MainView);
             unityContainer.RegisterType<object, CommentsView>(ViewNames.CommentsView);
 
             // Register shells in the shell navigator. (Needed for shell navigation.)

@@ -20,15 +20,25 @@ using System.Text;
 using System.Windows.Documents;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 {
-    public class OverviewViewModel
+    public class OverviewViewModel : ViewModelBase
     {
         private readonly IDayCommentRepository dayCommentRepository;
         private readonly ITimeProvider timeProvider;
+        private string comments;
 
-        public string Comments { get; set; }
+        public string Comments
+        {
+            get { return comments; }
+            set
+            {
+                comments = value;
+                NotifyPropertyChanged("Comments");
+            }
+        }
 
         public OverviewViewModel(IDayCommentRepository dayCommentRepository, ITimeProvider timeProvider)
         {
@@ -41,8 +51,13 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
             this.timeProvider = timeProvider;
             this.dayCommentRepository = dayCommentRepository;
 
-            IEnumerable<DayComment> comments = RetrieveDayComments();
-            Comments = Stringify(comments);
+            PopulateComments();
+        }
+
+        private void PopulateComments()
+        {
+            IEnumerable<DayComment> dayComments = RetrieveDayComments();
+            Comments = Stringify(dayComments);
         }
 
         private IEnumerable<DayComment> RetrieveDayComments()

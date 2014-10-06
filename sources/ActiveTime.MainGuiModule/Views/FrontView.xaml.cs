@@ -24,11 +24,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.Views
     /// <summary>
     /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class FrontView : UserControl
     {
-        private readonly MainViewModel viewModel;
+        private readonly FrontViewModel viewModel;
 
-        public MainView(MainViewModel viewModel)
+        public FrontView(FrontViewModel viewModel)
         {
             if (viewModel == null)
                 throw new ArgumentNullException("viewModel");
