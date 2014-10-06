@@ -24,5 +24,10 @@ namespace DustInTheWind.ActiveTime.Common.Services
         {
             return DateTime.Now;
         }
+
+        public DateTime GetDate()
+        {
+            return DateTime.Today;
+        }
     }
 }

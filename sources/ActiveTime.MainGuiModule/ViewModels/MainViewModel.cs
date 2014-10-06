@@ -112,7 +112,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         public ICommand DeleteCommand { get; private set; }
 
-        private DayTimeInterval aaa = new DayTimeInterval(TimeSpan.Zero, TimeSpan.Zero);
+        private readonly DayTimeInterval aaa = new DayTimeInterval(TimeSpan.Zero, TimeSpan.Zero);
         public DayTimeInterval AAA
         {
             get { return aaa; }

@@ -22,5 +22,6 @@ namespace DustInTheWind.ActiveTime.Common.UI
         public const string MainShell = "MainShell";
         public const string MessageShell = "MessageShell";
         public const string AboutShell = "AboutShell";
+        public const string OverviewShell = "OverviewShell";
     }
 }

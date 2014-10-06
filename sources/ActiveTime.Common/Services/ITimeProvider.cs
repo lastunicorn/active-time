@@ -21,5 +21,6 @@ namespace DustInTheWind.ActiveTime.Common.Services
     public interface ITimeProvider
     {
         DateTime GetDateTime();
+        DateTime GetDate();
     }
 }

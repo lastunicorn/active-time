@@ -34,6 +34,8 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         public ICommand StatisticsCommand { get; private set; }
 
+        public ICommand OverviewCommand { get; private set; }
+
         public ICommand ExitCommand { get; private set; }
 
         public ICommand AboutCommand { get; private set; }
@@ -59,6 +61,7 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
             ExportCommand = new DelegateCommand(OnExportCommandExecuted);
             StatisticsCommand = new DelegateCommand(OnStatisticsCommandExecuted);
+            OverviewCommand = new DelegateCommand(OnOverviewCommandExecuted);
             ExitCommand = new DelegateCommand(OnExitCommandExecuted);
             AboutCommand = new DelegateCommand(OnAboutCommandExecuted);
             StartCommand = new DelegateCommand(OnStartCommandExecuted);
@@ -71,6 +74,11 @@ namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
 
         private void OnStatisticsCommandExecuted()
         {
+        }
+
+        private void OnOverviewCommandExecuted()
+        {
+            shellNavigator.Navigate(ShellNames.OverviewShell);
         }
 
         private void OnExitCommandExecuted()

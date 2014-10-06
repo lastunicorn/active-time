@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using NHibernate;
 
@@ -52,6 +53,11 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.NHibernate.Repositories
             return CurrentSession.QueryOver<DayComment>()
                 .Where(c => c.Date == date)
                 .SingleOrDefault();
+        }
+
+        public List<DayComment> GetByDate(DateTime startDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

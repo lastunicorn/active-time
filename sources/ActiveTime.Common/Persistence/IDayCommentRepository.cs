@@ -64,6 +64,8 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         /// <returns>An instance of <see cref="DayComment"/> containing the comment from the database.</returns>
         DayComment GetByDate(DateTime date);
 
+        List<DayComment> GetByDate(DateTime startDate, DateTime endDate);
+
         /// <summary>
         ///  When implemented in a class, returns from the database all the comments.
         /// </summary>

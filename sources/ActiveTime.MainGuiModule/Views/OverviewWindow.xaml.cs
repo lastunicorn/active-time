@@ -14,31 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Reflection;
-using DustInTheWind.ActiveTime.Common.UI;
+using System;
+using System.Windows;
+using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
 
-namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
+namespace DustInTheWind.ActiveTime.MainGuiModule.Views
 {
-    public class MainWindowViewModel : ViewModelBase
+    /// <summary>
+    /// Interaction logic for OverviewWindow.xaml
+    /// </summary>
+    public partial class OverviewWindow : Window
     {
-        private string windowTitle;
+        private readonly OverviewViewModel viewModel;
 
-        public string WindowTitle
+        public OverviewWindow(OverviewViewModel viewModel)
         {
-            get { return windowTitle; }
-            set
-            {
-                windowTitle = value;
-                NotifyPropertyChanged("WindowTitle");
-            }
+            if (viewModel == null)
+                throw new ArgumentNullException("viewModel");
+
+            this.viewModel = viewModel;
+
+            InitializeComponent();
         }
 
-        public MainWindowViewModel()
+        private void OverviewWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            AssemblyName assemblyName = assembly.GetName();
-
-            windowTitle = string.Format("ActiveTime {0}", assemblyName.Version.ToString(2));
+            DataContext = viewModel;
         }
     }
 }

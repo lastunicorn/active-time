@@ -53,6 +53,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -67,12 +68,15 @@
     </Compile>
     <Compile Include="Common\Persistence\DayCommentPropertyTests.cs" />
     <Compile Include="Common\Persistence\TimeRecordPropertyTests.cs" />
+    <Compile Include="Common\Services\CommentsServiceTests.cs" />
     <Compile Include="Common\Services\StatusInfoServiceTests\ConstructorTests.cs" />
     <Compile Include="Common\Services\StatusInfoServiceTests\StatusTextTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\ConstructorTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\PropertyChangedTests.cs" />
+    <Compile Include="MainGuiModule\ViewModels\MainMenuViewModelTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\MessageWindowViewModelTests\ConstructorTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\MessageWindowViewModelTests\NavigationParameters.cs" />
+    <Compile Include="MainGuiModule\ViewModels\OverviewViewModuleTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\StatusInfoViewModelTests\StatusTextChangedTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\DbAssert.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\AddTests.cs" />

@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
@@ -132,6 +133,45 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
                     Date = date,
                     Comment = (string)reader["comment"]
                 };
+            });
+        }
+
+        public List<DayComment> GetByDate(DateTime startDate, DateTime endDate)
+        {
+            return unitOfWork.ExecuteCommandAndCommit((command) =>
+            {
+                const string sql = "select date, comment from comments where date >= @startDate and date <= @endDate";
+
+                command.CommandText = sql;
+
+                command.Parameters.Add(new SQLiteParameter
+                {
+                    ParameterName = "@startDate",
+                    Value = startDate
+                });
+
+                command.Parameters.Add(new SQLiteParameter
+                {
+                    ParameterName = "@endDate",
+                    Value = endDate
+                });
+
+                DbDataReader reader = command.ExecuteReader();
+
+                List<DayComment> dayComments = new List<DayComment>();
+
+                while (reader.Read())
+                {
+                    DayComment dayComment = new DayComment
+                    {
+                        Date = (DateTime)reader["date"],
+                        Comment = (string)reader["comment"]
+                    };
+
+                    dayComments.Add(dayComment);
+                }
+
+                return dayComments;
             });
         }
 
