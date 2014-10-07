@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,24 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Properties;
+using System.Windows.Controls;
+using DustInTheWind.ActiveTime.ViewModels;
 
-namespace DustInTheWind.ActiveTime.Services
+namespace DustInTheWind.ActiveTime.Views
 {
-    class ConfigurationService : IConfigurationService
+    /// <summary>
+    /// Interaction logic for StatusView.xaml
+    /// </summary>
+    public partial class StatusInfoView : UserControl
     {
-        public TimeSpan ReminderPauseInterval
+        public StatusInfoView(StatusInfoViewModel viewModel)
         {
-            get { return Settings.Default.Reminder_PauseInterval; }
-            set { Settings.Default.Reminder_PauseInterval = value; }
-        }
+            if (viewModel == null)
+                throw new ArgumentNullException("viewModel");
 
-        public TimeSpan ReminderSnoozeInterval
-        {
-            get { return Settings.Default.Reminder_SnoozeInterval; }
-            set { Settings.Default.Reminder_SnoozeInterval = value; }
+            InitializeComponent();
+
+            Loaded += (s, e) => DataContext = viewModel;
         }
     }
 }

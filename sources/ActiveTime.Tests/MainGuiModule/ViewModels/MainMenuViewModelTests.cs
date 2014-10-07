@@ -18,7 +18,7 @@ using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
+using DustInTheWind.ActiveTime.ViewModels;
 using Moq;
 using NUnit.Framework;
 

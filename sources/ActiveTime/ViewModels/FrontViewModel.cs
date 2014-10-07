@@ -24,7 +24,7 @@ using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 
-namespace DustInTheWind.ActiveTime.MainGuiModule.ViewModels
+namespace DustInTheWind.ActiveTime.ViewModels
 {
     public class FrontViewModel : ViewModelBase
     {

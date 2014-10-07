@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
+using DustInTheWind.ActiveTime.ViewModels;
 using Moq;
 using NUnit.Framework;
 

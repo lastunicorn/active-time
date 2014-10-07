@@ -23,9 +23,9 @@
     </Modularity:ModuleInfo>
 
     <Modularity:ModuleInfo
-        Ref="file://ActiveTime.MainGuiModule.dll"
+        Ref="file://ActiveTime.dll"
         ModuleName="MainGuiModule"
-        ModuleType="DustInTheWind.ActiveTime.MainGuiModule.ModuleDefinitions.MainGuiModule, ActiveTime.MainGuiModule"
+        ModuleType="DustInTheWind.ActiveTime.ModuleDefinitions.MainGuiModule, ActiveTime"
         InitializationMode="WhenAvailable">
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>PersistenceModule</sys:String>

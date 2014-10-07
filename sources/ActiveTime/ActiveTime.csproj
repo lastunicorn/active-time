@@ -72,11 +72,49 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\CustomDelegateCommand.cs" />
+    <Compile Include="Commands\MenuItemClick.cs" />
+    <Compile Include="Commands\MenuItemClickCommandBehavior.cs" />
+    <Compile Include="Converters\BooleanConverter.cs" />
+    <Compile Include="Converters\RecordConverter.cs" />
+    <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\FrontViewModel.cs" />
+    <Compile Include="ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\OverviewViewModel.cs" />
+    <Compile Include="ViewModels\StatusInfoViewModel.cs" />
+    <Compile Include="Views\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CommentsView.xaml.cs">
+      <DependentUpon>CommentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrontView.xaml.cs">
+      <DependentUpon>FrontView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMenuView.xaml.cs">
+      <DependentUpon>MainMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OverviewWindow.xaml.cs">
+      <DependentUpon>OverviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusInfoView.xaml.cs">
+      <DependentUpon>StatusInfoView.xaml</DependentUpon>
+    </Compile>
     <Resource Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
     </Resource>
@@ -125,6 +163,54 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\CommentsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\FrontView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MainMenuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MessageWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\OverviewWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\StatusInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

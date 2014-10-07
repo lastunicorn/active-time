@@ -15,23 +15,31 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Properties;
+using System.Windows;
+using DustInTheWind.ActiveTime.ViewModels;
 
-namespace DustInTheWind.ActiveTime.Services
+namespace DustInTheWind.ActiveTime.Views
 {
-    class ConfigurationService : IConfigurationService
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-        public TimeSpan ReminderPauseInterval
+        private readonly MainViewModel viewModel;
+
+        public MainWindow(MainViewModel viewModel)
         {
-            get { return Settings.Default.Reminder_PauseInterval; }
-            set { Settings.Default.Reminder_PauseInterval = value; }
+            if (viewModel == null)
+                throw new ArgumentNullException("viewModel");
+
+            this.viewModel = viewModel;
+
+            InitializeComponent();
         }
 
-        public TimeSpan ReminderSnoozeInterval
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            get { return Settings.Default.Reminder_SnoozeInterval; }
-            set { Settings.Default.Reminder_SnoozeInterval = value; }
+            DataContext = viewModel;
         }
     }
 }

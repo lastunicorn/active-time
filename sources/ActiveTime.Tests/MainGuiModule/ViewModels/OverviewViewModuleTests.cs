@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
+using DustInTheWind.ActiveTime.ViewModels;
 using Moq;
 using NUnit.Framework;
 
@@ -39,27 +39,120 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
                 .Returns(new List<DayComment>());
 
             timeProvider = new Mock<ITimeProvider>();
-            timeProvider
-                .Setup(x => x.GetDate())
-                .Returns(new DateTime(1980, 06, 13));
         }
 
         [Test]
-        public void calls_GetByDate_for_the_last_30_days()
+        public void LastDay_is_initialized_with_the_current_day_from_timeProvider()
         {
-            new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(new DateTime(1980, 06, 13));
 
-            DateTime lastDate = new DateTime(1980, 06, 13);
-            DateTime firstDate = new DateTime(1980, 05, 15);
-            dayCommentRepository.Verify(x => x.GetByDate(firstDate, lastDate), Times.Once());
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+
+            Assert.AreEqual(new DateTime(1980, 06, 13), overviewViewModel.LastDay);
+        }
+
+        [Test]
+        public void FirstDay_is_initialized_with_29_days_before_the_current_day_from_timeProvider()
+        {
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(new DateTime(1980, 06, 13));
+
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+
+            Assert.AreEqual(new DateTime(1980, 05, 15), overviewViewModel.FirstDay);
+        }
+
+        [Test]
+        public void calls_GetByDate_with_FirstDay_and_LastDay_values()
+        {
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(new DateTime(1980, 06, 13));
+
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+
+            dayCommentRepository.Verify(x => x.GetByDate(overviewViewModel.FirstDay, overviewViewModel.LastDay), Times.Once());
         }
 
         [Test]
         public void populates_Comments_property()
         {
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(DateTime.Now);
+
             OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
 
             Assert.IsNotNull(overviewViewModel.Comments);
+        }
+
+        [Test]
+        public void calls_GetByDate_when_FirsDay_is_set()
+        {
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(new DateTime(1980, 06, 13));
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+            dayCommentRepository.ResetCalls();
+
+            overviewViewModel.FirstDay = new DateTime(2000, 06, 13);
+
+            dayCommentRepository.Verify(x => x.GetByDate(overviewViewModel.FirstDay, overviewViewModel.LastDay), Times.Once());
+        }
+
+        [Test]
+        public void calls_GetByDate_when_LastDay_is_set()
+        {
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(new DateTime(1980, 06, 13));
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+            dayCommentRepository.ResetCalls();
+
+            overviewViewModel.LastDay = new DateTime(2000, 06, 13);
+
+            dayCommentRepository.Verify(x => x.GetByDate(overviewViewModel.FirstDay, overviewViewModel.LastDay), Times.Once());
+        }
+
+        [Test]
+        public void when_setting_FirstDay_PropertyChanged_event_is_raised()
+        {
+            bool eventWasRaised = false;
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(DateTime.Now);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+            overviewViewModel.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "FirstDay")
+                    eventWasRaised = true;
+            };
+
+            overviewViewModel.FirstDay = new DateTime(2000, 06, 13);
+
+            Assert.IsTrue(eventWasRaised);
+        }
+
+        [Test]
+        public void when_setting_LastDay_PropertyChanged_event_is_raised()
+        {
+            bool eventWasRaised = false;
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(DateTime.Now);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+            overviewViewModel.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "LastDay")
+                    eventWasRaised = true;
+            };
+
+            overviewViewModel.LastDay = new DateTime(2000, 06, 13);
+
+            Assert.IsTrue(eventWasRaised);
         }
     }
 }

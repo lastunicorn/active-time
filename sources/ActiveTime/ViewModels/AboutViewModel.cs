@@ -16,22 +16,21 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Properties;
+using DustInTheWind.ActiveTime.Common.UI;
 
-namespace DustInTheWind.ActiveTime.Services
+namespace DustInTheWind.ActiveTime.ViewModels
 {
-    class ConfigurationService : IConfigurationService
+    public class AboutViewModel : ViewModelBase
     {
-        public TimeSpan ReminderPauseInterval
-        {
-            get { return Settings.Default.Reminder_PauseInterval; }
-            set { Settings.Default.Reminder_PauseInterval = value; }
-        }
+        public string Version { get; set; }
 
-        public TimeSpan ReminderSnoozeInterval
+        public AboutViewModel(IApplicationService applicationService)
         {
-            get { return Settings.Default.Reminder_SnoozeInterval; }
-            set { Settings.Default.Reminder_SnoozeInterval = value; }
+            if (applicationService == null)
+                throw new ArgumentNullException("applicationService");
+
+            Version version = applicationService.GetVersion();
+            Version = string.Format("Version {0}", version);
         }
     }
 }

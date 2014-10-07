@@ -14,24 +14,36 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Properties;
+using System.Reflection;
+using DustInTheWind.ActiveTime.Common.UI;
 
-namespace DustInTheWind.ActiveTime.Services
+namespace DustInTheWind.ActiveTime.ViewModels
 {
-    class ConfigurationService : IConfigurationService
+    public class MainViewModel : ViewModelBase
     {
-        public TimeSpan ReminderPauseInterval
+        private string windowTitle;
+
+        public string WindowTitle
         {
-            get { return Settings.Default.Reminder_PauseInterval; }
-            set { Settings.Default.Reminder_PauseInterval = value; }
+            get { return windowTitle; }
+            set
+            {
+                windowTitle = value;
+                NotifyPropertyChanged("WindowTitle");
+            }
         }
 
-        public TimeSpan ReminderSnoozeInterval
+        public MainViewModel()
         {
-            get { return Settings.Default.Reminder_SnoozeInterval; }
-            set { Settings.Default.Reminder_SnoozeInterval = value; }
+            windowTitle = BuildWindowTitle();
+        }
+
+        private static string BuildWindowTitle()
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            AssemblyName assemblyName = assembly.GetName();
+
+            return string.Format("ActiveTime {0}", assemblyName.Version.ToString(2));
         }
     }
 }

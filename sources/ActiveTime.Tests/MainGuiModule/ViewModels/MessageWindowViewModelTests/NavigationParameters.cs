@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.MainGuiModule.ViewModels;
+using DustInTheWind.ActiveTime.ViewModels;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
@@ -80,7 +80,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWin
                 { "MyParameter", "some value here" }
             };
 
-            string expectedMessage = DustInTheWind.ActiveTime.MainGuiModule.Properties.Resources.MessageWindow_DefaultText;
+            string expectedMessage = DustInTheWind.ActiveTime.Properties.Resources.MessageWindow_DefaultText;
             Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
         }
     }

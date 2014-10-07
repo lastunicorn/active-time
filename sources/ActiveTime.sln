@@ -9,7 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime", "ActiveTime\Ac
 		{CC12E02C-99C8-4DDA-9F68-3CF670D13958} = {CC12E02C-99C8-4DDA-9F68-3CF670D13958}
 		{B311ECBA-97DA-4BAA-9321-383EBF65F030} = {B311ECBA-97DA-4BAA-9321-383EBF65F030}
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272} = {6350A1C1-F502-4F39-9C3E-FE4E28C5F272}
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F} = {4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Tests", "ActiveTime.Tests\ActiveTime.Tests.csproj", "{7F9750D1-19F4-4F69-9552-A38C4DB3F15B}"
@@ -25,8 +24,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule", "ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.SystemSessionModule", "ActiveTime.SystemSessionModule\ActiveTime.SystemSessionModule.csproj", "{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.MainGuiModule", "ActiveTime.MainGuiModule\ActiveTime.MainGuiModule.csproj", "{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.NHibernate", "ActiveTime.PersistenceModule.NHibernate\ActiveTime.PersistenceModule.NHibernate.csproj", "{B311ECBA-97DA-4BAA-9321-383EBF65F030}"
 EndProject
@@ -125,16 +122,6 @@ Global
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}.Release|x86.ActiveCfg = Release|Any CPU
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|x86.ActiveCfg = Debug|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Debug|x86.Build.0 = Debug|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|Any CPU.ActiveCfg = Release|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|Mixed Platforms.Build.0 = Release|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|x86.ActiveCfg = Release|x86
-		{4BE9DEF5-D2D0-4DCB-9DF0-6637DF525B9F}.Release|x86.Build.0 = Release|x86
 		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B311ECBA-97DA-4BAA-9321-383EBF65F030}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

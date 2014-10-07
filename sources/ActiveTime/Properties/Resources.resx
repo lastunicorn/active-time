@@ -117,4 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MessageWindow_DefaultText" xml:space="preserve">
+    <value>No message for now.\n\nPlease go back to what you were doing.</value>
+    <comment>The text displayed in the message window if it is not specifically set.</comment>
+  </data>
 </root>
