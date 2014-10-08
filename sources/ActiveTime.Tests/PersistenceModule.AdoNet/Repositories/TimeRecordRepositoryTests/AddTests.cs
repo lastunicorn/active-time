@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories;
 using NUnit.Framework;
@@ -22,6 +23,7 @@ using NUnit.Framework;
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories.TimeRecordRepositoryTests
 {
     [TestFixture]
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class AddTests
     {
         private UnitOfWork unitOfWork;

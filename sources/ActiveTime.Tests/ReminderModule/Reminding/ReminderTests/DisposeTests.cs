@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using NUnit.Framework;
@@ -25,6 +26,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
     /// Dispose - TestCase 8: Initialize - Start - Dispose -> check if stop, check nothing starts
     /// </summary>
     [TestFixture]
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class DisposeTests
     {
         private Reminder reminder;
@@ -133,16 +135,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         [Test]
         public void Dispose_StopAll()
         {
-            using (Reminder reminder = new Reminder())
-            {
-                reminder.Start(100);
+            Reminder reminder = new Reminder();
 
-                Thread.Sleep(50);
+            reminder.Start(100);
 
-                reminder.Dispose();
+            Thread.Sleep(50);
 
-                Assert.That(reminder.Status, Is.EqualTo(ReminderStatus.NotStarted));
-            }
+            reminder.Dispose();
+
+            Assert.That(reminder.Status, Is.EqualTo(ReminderStatus.NotStarted));
         }
 
         #endregion

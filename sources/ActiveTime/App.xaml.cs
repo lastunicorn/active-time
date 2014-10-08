@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App
+    public partial class App : IDisposable
     {
         private Guard guard;
 
@@ -32,26 +32,32 @@ namespace DustInTheWind.ActiveTime
         {
             base.OnStartup(e);
 
-#if !DEBUG
-            if (CreateTheGuard())
-                new Bootstrapper().Run();
+#if DEBUG
+            const GuardLevel guardLevel = GuardLevel.None;
+#else
+            const GuardLevel guardLevel = GuardLevel.Machine;
+#endif
+
+            if (CreateTheGuard(guardLevel))
+                StartApp();
             else
                 Shutdown();
-#else
-            new Bootstrapper().Run();
-#endif
         }
 
-        private bool CreateTheGuard()
+        private static void StartApp()
+        {
+            new Bootstrapper().Run();
+        }
+
+        private bool CreateTheGuard(GuardLevel guardLevel)
         {
             try
             {
-                // Ensure that the application is started only once on the current machine.
-                guard = new Guard("DustInTheWind.ActiveTime", GuardLevel.Machine);
+                guard = new Guard("DustInTheWind.ActiveTime", guardLevel);
             }
             catch (ActiveTimeException)
             {
-                string message = "The application is already started. Current instance will not start.";
+                const string message = "The application is already started. Current instance will not start.";
                 MessageBox.Show(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 return false;
@@ -65,6 +71,32 @@ namespace DustInTheWind.ActiveTime
             }
 
             return true;
+        }
+
+        private bool disposed;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                guard.Dispose();
+            }
+
+            disposed = true;
+        }
+
+        ~App()
+        {
+            Dispose(false);
         }
     }
 }

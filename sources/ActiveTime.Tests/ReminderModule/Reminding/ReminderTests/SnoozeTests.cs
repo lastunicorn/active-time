@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using NUnit.Framework;
@@ -25,6 +26,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
     /// Snooze - TestCase 6: Initialize - Start - Snooze -> check status, check not ring, check ring after snooze
     /// </summary>
     [TestFixture]
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class SnoozeTests
     {
         private Reminder reminder;

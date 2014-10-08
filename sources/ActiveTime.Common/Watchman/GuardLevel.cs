@@ -21,6 +21,8 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
     /// </summary>
     public enum GuardLevel
     {
+        None,
+
         /// <summary>
         /// The instance of the <see cref="Guard"/> class will restrict the duplicates at the application level.
         /// That means that two instances with the same name can exists in two different applications running

@@ -1,25 +1,8 @@
-// ActiveTime
-// Copyright (C) 2011 Dust in the Wind
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 using System;
-using System.Threading;
 
 namespace DustInTheWind.ActiveTime.Common.Watchman
 {
-    public class MachineLevelGuard : IGuard
+    public class IncompetentGuard : IGuard
     {
         /// <summary>
         /// Gets the name of the current instance.
@@ -27,39 +10,16 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
         public string Name { get; private set; }
 
         /// <summary>
-        /// The <see cref="Mutex"/> object used to ensure that only one instance
-        /// of the class is created on the current machine. (Machine level)
+        /// Initializes a new instance of the <see cref="IncompetentGuard"/> class.
         /// </summary>
-        private Mutex mutex;
-
-        public MachineLevelGuard(string name)
+        public IncompetentGuard()
         {
-            if (name == null)
-                throw new ArgumentNullException("name");
-
-            Name = name;
-
-            CreateGuard();
-        }
-
-        private void CreateGuard()
-        {
-            // Create the mutex.
-            mutex = new Mutex(false, Name);
-
-            // Gain exclusive access to the mutex.
-            bool access = mutex.WaitOne(0, true);
-
-            if (!access)
-            {
-                string errorMessage = string.Format("Another instance with the name '{0}' already exists.", Name);
-                throw new ActiveTimeException(errorMessage);
-            }
+            Name = "Incompetent Guard";
         }
 
         #region IDisposable Members
 
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Releases all resources used by the current instance.
@@ -91,8 +51,6 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
                 // Dispose managed resources.
                 // ...
 
-                if (mutex != null)
-                    mutex.Close();
             }
 
             // Call the appropriate methods to clean up unmanaged resources here.
@@ -101,7 +59,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
             disposed = true;
         }
 
-        ~MachineLevelGuard()
+        ~IncompetentGuard()
         {
             Dispose(false);
         }

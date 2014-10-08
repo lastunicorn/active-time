@@ -22,7 +22,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
     /// <summary>
     /// A service that stores different status messages.
     /// </summary>
-    public class StatusInfoService : IStatusInfoService
+    public class StatusInfoService : IStatusInfoService, IDisposable
     {
         /// <summary>
         /// The default Text of the status.
@@ -38,7 +38,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
         /// Timer used to reset the status Text.
         /// </summary>
         private readonly Timer timerStatus;
-        
+
         /// <summary>
         /// The text representing the status.
         /// </summary>
@@ -77,7 +77,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
         }
 
         #endregion
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusInfoService"/> class.
         /// </summary>
@@ -113,6 +113,32 @@ namespace DustInTheWind.ActiveTime.Common.Services
         public void SetStatus(string text)
         {
             SetStatus(text, DefaultStatusTimeout);
+        }
+
+        private bool isDisposed;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (isDisposed)
+                return;
+
+            if (disposing)
+            {
+                timerStatus.Dispose();
+            }
+
+            isDisposed = true;
+        }
+
+        ~StatusInfoService()
+        {
+            Dispose(false);
         }
     }
 }

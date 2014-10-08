@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
     /// <summary>
     /// Periodically calls the scribe to update the time of the current record in the database.
     /// </summary>
-    class RecorderService : IRecorderService
+    class RecorderService : IRecorderService, IDisposable
     {
         private readonly IScribe scribe;
 
@@ -325,6 +325,32 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             return lastStopTime == null
                 ? null
                 : DateTime.Now - lastStopTime;
+        }
+
+        private bool isDisposed;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (isDisposed)
+                return;
+
+            if (disposing)
+            {
+                timer.Dispose();
+            }
+
+            isDisposed = true;
+        }
+
+        ~RecorderService()
+        {
+            Dispose(false);
         }
     }
 }

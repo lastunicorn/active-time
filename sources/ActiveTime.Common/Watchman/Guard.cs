@@ -57,6 +57,10 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
 
             switch (guardLevel)
             {
+                case GuardLevel.None:
+                    guard = new IncompetentGuard();
+                    break;
+
                 case GuardLevel.Application:
                     guard = new ApplicationLevelGuard(name);
                     break;
@@ -72,7 +76,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
 
         #region IDisposable Members
 
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Releases all resources used by the current instance.

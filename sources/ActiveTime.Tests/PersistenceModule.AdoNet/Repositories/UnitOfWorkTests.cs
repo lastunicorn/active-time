@@ -16,6 +16,7 @@
 
 using System;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories;
 using NUnit.Framework;
@@ -23,6 +24,7 @@ using NUnit.Framework;
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories
 {
     [TestFixture]
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class UnitOfWorkTests
     {
         private UnitOfWork unitOfWork;

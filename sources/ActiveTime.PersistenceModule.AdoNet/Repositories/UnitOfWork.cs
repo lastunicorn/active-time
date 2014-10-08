@@ -149,22 +149,36 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
             if (disposed)
                 return;
 
-            if (transaction != null)
+            if (disposing)
             {
-                transaction.Dispose();
-                transaction = null;
-            }
+                if (transaction != null)
+                {
+                    transaction.Dispose();
+                    transaction = null;
+                }
 
-            if (connection != null)
-            {
-                connection.Dispose();
-                connection = null;
+                if (connection != null)
+                {
+                    connection.Dispose();
+                    connection = null;
+                }
             }
 
             disposed = true;
+        }
+
+        ~UnitOfWork()
+        {
+            Dispose(false);
         }
     }
 }
