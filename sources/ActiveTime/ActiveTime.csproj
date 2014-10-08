@@ -82,11 +82,13 @@
     <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\CurrentDayRecord.cs" />
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\DayRecordsViewModel.cs" />
     <Compile Include="ViewModels\FrontViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -98,6 +100,9 @@
     </Compile>
     <Compile Include="Views\CommentsView.xaml.cs">
       <DependentUpon>CommentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DayRecordsView.xaml.cs">
+      <DependentUpon>DayRecordsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FrontView.xaml.cs">
       <DependentUpon>FrontView.xaml</DependentUpon>
@@ -170,6 +175,10 @@
     <Page Include="Views\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DayRecordsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

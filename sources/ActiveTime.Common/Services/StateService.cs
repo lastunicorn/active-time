@@ -15,9 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.Common.Services
 {
+    /// <summary>
+    /// A business service that stores state values. For example the currently selected date.
+    /// </summary>
     public class StateService : IStateService
     {
         private readonly IStatusInfoService statusInfoService;
@@ -34,15 +38,15 @@ namespace DustInTheWind.ActiveTime.Common.Services
             }
         }
 
-
         public event EventHandler CurrentDateChanged;
 
         protected virtual void OnCurrentDateChanged(EventArgs e)
         {
-            if (CurrentDateChanged != null)
-                CurrentDateChanged(this, e);
-        }
+            EventHandler handler = CurrentDateChanged;
 
+            if (handler != null)
+                handler(this, e);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StateService"/> class.
