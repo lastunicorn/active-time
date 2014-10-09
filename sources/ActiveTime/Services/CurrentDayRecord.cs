@@ -22,7 +22,7 @@ using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Services
 {
-    public class CurrentDayRecord
+    public class CurrentDayRecord : ICurrentDayRecord
     {
         private readonly IStatusInfoService statusInfoService;
         private readonly ITimeRecordRepository timeRecordRepository;

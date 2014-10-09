@@ -5,11 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:recording="clr-namespace:DustInTheWind.ActiveTime.Common.Recording;assembly=ActiveTime.Common"
              xmlns:commands="clr-namespace:DustInTheWind.ActiveTime.Commands"
+             xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="MainView_OnLoaded">
 
     <ListBox ItemsSource="{Binding Path=Records}"
                  SelectionMode="Extended">
+
+        <ListBox.Resources>
+            <converters:RecordConverter x:Key="RecordConverter" />
+        </ListBox.Resources>
 
         <ListBox.ItemTemplate>
             <DataTemplate DataType="{x:Type recording:DayTimeInterval}">

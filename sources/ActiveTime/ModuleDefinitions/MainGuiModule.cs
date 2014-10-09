@@ -16,6 +16,7 @@
 
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.Services;
 using DustInTheWind.ActiveTime.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
@@ -44,11 +45,13 @@ namespace DustInTheWind.ActiveTime.ModuleDefinitions
 
         public void Initialize()
         {
-            // Register passive services.
+            // Register services.
+            unityContainer.RegisterType<ICurrentDayRecord, CurrentDayRecord>(new ContainerControlledLifetimeManager());
 
             // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(FrontView));
+            regionManager.RegisterViewWithRegion(RegionNames.RecordsRegion, typeof(DayRecordsView));
             regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
 
             // register views in container. (Needed for view navigation.)

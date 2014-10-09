@@ -7,8 +7,11 @@
              xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
              xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Converters"
              xmlns:commands="clr-namespace:DustInTheWind.ActiveTime.Commands"
+             xmlns:regions="http://www.codeplex.com/CompositeWPF"
+             xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.Common.UI;assembly=ActiveTime.Common"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="MainView_OnLoaded">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="MainView_OnLoaded">
 
     <Grid Margin="5">
         <Grid.Resources>
@@ -98,7 +101,7 @@
                Name="label3"
                Margin="3" />
 
-        <ListBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+        <!--<ListBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
                  Margin="3"
                  x:Name="listBox1"
                  ItemsSource="{Binding Path=Records}"
@@ -123,7 +126,10 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
 
-        </ListBox>
+        </ListBox>-->
+
+        <ContentControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+            regions:RegionManager.RegionName="{x:Static ui:RegionNames.RecordsRegion}"/>
 
         <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" Name="stackPanel2" Orientation="Horizontal">
 

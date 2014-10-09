@@ -15,62 +15,54 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Services;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
     public class DayRecordsViewModel : ViewModelBase
     {
-        private readonly ITimeRecordRepository timeRecordRepository;
-        private readonly IStateService stateService;
-
-        private DayRecord dayRecord;
+        private readonly ICurrentDayRecord currentDayRecord;
+        
+        private DayTimeInterval[] records;
 
         public DayTimeInterval[] Records
         {
-            get { return dayRecord == null ? null : dayRecord.GetTimeRecords(false); }
+            get { return records; }
+            private set
+            {
+                records = value;
+                NotifyPropertyChanged("Records");
+            }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
+        /// Initializes a new instance of the <see cref="DayRecordsViewModel"/> class.
         /// </summary>
-        public DayRecordsViewModel(ITimeRecordRepository timeRecordRepository, IStateService stateService)
+        public DayRecordsViewModel(ICurrentDayRecord currentDayRecord)
         {
-            if (timeRecordRepository == null)
-                throw new ArgumentNullException("timeRecordRepository");
+            if (currentDayRecord == null)
+                throw new ArgumentNullException("currentDayRecord");
 
-            if (stateService == null)
-                throw new ArgumentNullException("stateService");
+            this.currentDayRecord = currentDayRecord;
 
-            this.timeRecordRepository = timeRecordRepository;
-            this.stateService = stateService;
+            currentDayRecord.ValueChanged += HandleCurrentDayRecordChanged;
+            currentDayRecord.Update();
         }
 
-        public void Initialize()
+        private void HandleCurrentDayRecordChanged(object sender, EventArgs eventArgs)
         {
             UpdateDisplayedData();
         }
 
         private void UpdateDisplayedData()
         {
-            DateTime? currentDate = stateService.CurrentDate;
+            DayRecord dayRecord = currentDayRecord.Value;
 
-            if (currentDate != null)
-            {
-                IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(currentDate.Value);
-                DayRecord newDayRecord = DayRecord.FromTimeRecords(timeRecords);
-                dayRecord = newDayRecord ?? new DayRecord(currentDate.Value);
-            }
-            else
-            {
-                dayRecord = null;
-            }
-
-            NotifyPropertyChanged("Records");
+            Records = dayRecord != null
+                ? dayRecord.GetTimeRecords(false)
+                : null;
         }
     }
 }

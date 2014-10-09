@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
@@ -32,7 +31,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private readonly IRegionManager regionManager;
         private readonly IStateService stateService;
 
-        private readonly CurrentDayRecord currentDayRecord;
+        private readonly ICurrentDayRecord currentDayRecord;
 
         public DateTime? Date
         {
@@ -115,7 +114,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, IStateService stateService, CurrentDayRecord currentDayRecord)
+        public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, IStateService stateService, ICurrentDayRecord currentDayRecord)
         {
             if (statusInfoService == null)
                 throw new ArgumentNullException("statusInfoService");
@@ -139,7 +138,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
             DeleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
 
             stateService.CurrentDateChanged += HandleStateService_CurrentDateChanged;
-
             currentDayRecord.ValueChanged += HandleCurrentDayRecordChanged;
         }
 
@@ -151,7 +149,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private void HandleStateService_CurrentDateChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("Date");
-            UpdateDisplayedData();
         }
 
         private void OnDeleteCommandExecuted(object item)
@@ -160,7 +157,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void OnRefreshCommandExecuted()
         {
-            UpdateDisplayedData();
+            currentDayRecord.Update();
             statusInfoService.SetStatus("Refreshed.");
         }
 
@@ -174,8 +171,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void UpdateDisplayedData()
         {
-            NotifyPropertyChanged("Records");
-
             UpdateRecords();
             UpdateActiveTime();
             UpdateTotalTime();
@@ -213,7 +208,10 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private void UpdateBeginTime()
         {
             DayRecord dayRecord = currentDayRecord.Value;
-            BeginTime = dayRecord.GetBeginTime() ?? TimeSpan.Zero;
+
+            BeginTime = dayRecord == null 
+                ? TimeSpan.Zero 
+                : (dayRecord.GetBeginTime() ?? TimeSpan.Zero);
         }
 
         private void UpdateEstimatedEndTime()
