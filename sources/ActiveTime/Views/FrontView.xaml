@@ -101,7 +101,7 @@
                Name="label3"
                Margin="3" />
 
-        <!--<ListBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+        <ListBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
                  Margin="3"
                  x:Name="listBox1"
                  ItemsSource="{Binding Path=Records}"
@@ -126,10 +126,10 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
 
-        </ListBox>-->
+        </ListBox>
 
-        <ContentControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
-            regions:RegionManager.RegionName="{x:Static ui:RegionNames.RecordsRegion}"/>
+        <!--<ContentControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+            regions:RegionManager.RegionName="{x:Static ui:RegionNames.RecordsRegion}"/>-->
 
         <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" Name="stackPanel2" Orientation="Horizontal">
 

@@ -25,7 +25,7 @@ using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
-    public class FrontViewModel : ViewModelBase
+    public class FrontViewModel : ViewModelBase, INavigationAware
     {
         private readonly IStatusInfoService statusInfoService;
         private readonly IRegionManager regionManager;
@@ -166,7 +166,22 @@ namespace DustInTheWind.ActiveTime.ViewModels
             if (stateService.CurrentDate == null)
                 return;
 
+            //ClearRegion(RegionNames.MainContentRegion);
+            //ClearRegion(RegionNames.RecordsRegion);
+            regionManager.Regions.Remove(RegionNames.RecordsRegion);
+
             regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
+        }
+
+        private void ClearRegion(string regionName)
+        {
+            IRegion mainContentRegion = regionManager.Regions[regionName];
+            IViewsCollection activeViewsInRegion = mainContentRegion.ActiveViews;
+
+            foreach (object view in activeViewsInRegion)
+            {
+                mainContentRegion.Remove(view);
+            }
         }
 
         private void UpdateDisplayedData()
@@ -217,6 +232,21 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private void UpdateEstimatedEndTime()
         {
             EstimatedEndTime = BeginTime + TimeSpan.FromHours(9);
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
         }
     }
 }

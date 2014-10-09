@@ -19,7 +19,7 @@ namespace DustInTheWind.ActiveTime.Common.UI
 {
     public static class ViewNames
     {
-        public const string MainView = "MainView";
+        public const string FrontView = "MainView";
         public const string CommentsView = "CommentsView";
     }
 }

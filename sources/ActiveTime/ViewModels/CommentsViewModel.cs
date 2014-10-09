@@ -164,7 +164,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void NavigateToMainView()
         {
-            regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.MainView);
+            regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.FrontView);
         }
 
         private void SaveInternal()
