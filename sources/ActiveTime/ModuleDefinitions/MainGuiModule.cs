@@ -47,17 +47,16 @@ namespace DustInTheWind.ActiveTime.ModuleDefinitions
         {
             // Register services.
             unityContainer.RegisterType<ICurrentDayRecord, CurrentDayRecord>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ICurrentDayComment, CurrentDayComment>(new ContainerControlledLifetimeManager());
 
             // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(FrontView));
-            regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(CommentsView));
-            //regionManager.RegisterViewWithRegion(RegionNames.RecordsRegion, typeof(DayRecordsView));
             regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
 
             // register views in container. (Needed for view navigation.)
-            unityContainer.RegisterType<object, FrontView>(ViewNames.FrontView);
             unityContainer.RegisterType<object, CommentsView>(ViewNames.CommentsView);
+            unityContainer.RegisterType<object, DayRecordsView>(ViewNames.DayRecordsView);
 
             // Register shells in the shell navigator. (Needed for shell navigation.)
             shellNavigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));

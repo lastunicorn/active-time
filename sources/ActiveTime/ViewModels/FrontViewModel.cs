@@ -20,6 +20,7 @@ using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
+using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 
@@ -101,6 +102,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public ICommand CommentsCommand { get; private set; }
 
+        public ICommand TimeRecordsCommand { get; private set; }
+
         public ICommand RefreshCommand { get; private set; }
 
         public ICommand DeleteCommand { get; private set; }
@@ -134,6 +137,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             this.currentDayRecord = currentDayRecord;
 
             CommentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
+            TimeRecordsCommand = new DelegateCommand(OnTimeRecordsCommandExecuted);
             RefreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
             DeleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
 
@@ -168,9 +172,21 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             //ClearRegion(RegionNames.MainContentRegion);
             //ClearRegion(RegionNames.RecordsRegion);
-            regionManager.Regions.Remove(RegionNames.RecordsRegion);
+            //regionManager.Regions.Remove(RegionNames.RecordsRegion);
 
-            regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.CommentsView);
+            regionManager.RequestNavigate(RegionNames.RecordsRegion, ViewNames.CommentsView);
+        }
+
+        private void OnTimeRecordsCommandExecuted()
+        {
+            if (stateService.CurrentDate == null)
+                return;
+
+            //ClearRegion(RegionNames.MainContentRegion);
+            //ClearRegion(RegionNames.RecordsRegion);
+            //regionManager.Regions.Remove(RegionNames.RecordsRegion);
+
+            regionManager.RequestNavigate(RegionNames.RecordsRegion, ViewNames.DayRecordsView);
         }
 
         private void ClearRegion(string regionName)

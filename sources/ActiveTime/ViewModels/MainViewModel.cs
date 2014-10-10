@@ -21,8 +21,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private string windowTitle;
+        public MainMenuViewModel MainMenuViewModel { get; private set; }
 
+        private string windowTitle;
         public string WindowTitle
         {
             get { return windowTitle; }
@@ -33,8 +34,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(MainMenuViewModel mainMenuViewModel)
         {
+            MainMenuViewModel = mainMenuViewModel;
             windowTitle = BuildWindowTitle();
         }
 

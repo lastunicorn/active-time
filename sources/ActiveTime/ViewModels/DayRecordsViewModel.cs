@@ -26,7 +26,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private readonly ICurrentDayRecord currentDayRecord;
         
         private DayTimeInterval[] records;
-
         public DayTimeInterval[] Records
         {
             get { return records; }

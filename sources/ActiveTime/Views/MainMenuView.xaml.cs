@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using DustInTheWind.ActiveTime.ViewModels;
 
@@ -25,14 +26,21 @@ namespace DustInTheWind.ActiveTime.Views
     /// </summary>
     public partial class MainMenuView : UserControl
     {
+        private readonly MainMenuViewModel viewModel;
+
         public MainMenuView(MainMenuViewModel viewModel)
         {
             if (viewModel == null)
                 throw new ArgumentNullException("viewModel");
 
-            InitializeComponent();
+            this.viewModel = viewModel;
 
-            Loaded += (s, e) => DataContext = viewModel;
+            InitializeComponent();
+        }
+
+        private void MainMenuView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = viewModel;
         }
     }
 }

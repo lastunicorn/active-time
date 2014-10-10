@@ -19,41 +19,26 @@ using DustInTheWind.ActiveTime.Commands;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Services;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
     public class CommentsViewModel : ViewModelBase, INavigationAware
     {
-        private readonly IStateService stateService;
-        private readonly IRegionManager regionManager;
-        private readonly IDayCommentRepository dayCommentRepository;
+        private readonly ICurrentDayComment currentDayComment;
 
-        private DayComment currentCommentRecord;
-
-        public CustomDelegateCommand ApplyCommand { get; private set; }
-        public CustomDelegateCommand CancelCommand { get; private set; }
+        public CustomDelegateCommand ResetCommand { get; private set; }
         public CustomDelegateCommand SaveCommand { get; private set; }
-
-        private DateTime? date;
-
-        public DateTime? Date
-        {
-            get { return date; }
-            set
-            {
-                SetDateInternal(value);
-                stateService.CurrentDate = value;
-            }
-        }
-
+        
         private string comment;
         public string Comment
         {
             get { return comment; }
             set
             {
-                SetCommentInternal(value);
+                comment = value;
+                NotifyPropertyChanged("Comment");
                 RefreshButtonsState();
             }
         }
@@ -69,118 +54,72 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public CommentsViewModel(IStateService stateService, IRegionManager regionManager, IDayCommentRepository dayCommentRepository)
+        public CommentsViewModel(IStateService stateService, ICurrentDayComment currentDayComment)
         {
             if (stateService == null)
                 throw new ArgumentNullException("stateService");
 
-            if (regionManager == null)
-                throw new ArgumentNullException("regionManager");
+            if (currentDayComment == null)
+                throw new ArgumentNullException("currentDayComment");
 
-            if (dayCommentRepository == null)
-                throw new ArgumentNullException("dayCommentRepository");
+            this.currentDayComment = currentDayComment;
+            currentDayComment.ValueChanged += HandleCurrentDayCommentChanged;
 
-            this.stateService = stateService;
-            this.regionManager = regionManager;
-            this.dayCommentRepository = dayCommentRepository;
-
-            ApplyCommand = new CustomDelegateCommand(OnApplyCommandExecute);
-            CancelCommand = new CustomDelegateCommand(OnCancelCommandExecute);
+            ResetCommand = new CustomDelegateCommand(OnResetCommandExecute);
             SaveCommand = new CustomDelegateCommand(OnSaveCommandExecute);
-
-            Enable();
         }
 
-        private void Enable()
+        private void HandleCurrentDayCommentChanged(object sender, EventArgs e)
         {
-            stateService.CurrentDateChanged += HandleStateServiceCurrentDateChanged;
-            PopulateView();
+            UpdateDisplayedData();
         }
 
-        private void Disable()
+        private void UpdateDisplayedData()
         {
-            stateService.CurrentDateChanged -= HandleStateServiceCurrentDateChanged;
-        }
+            DayComment dayComment = currentDayComment.Value;
 
-        private void HandleStateServiceCurrentDateChanged(object sender, EventArgs e)
-        {
-            PopulateView();
-        }
-
-        private void PopulateView()
-        {
-            SetDateInternal(stateService.CurrentDate);
-
-            if (date == null)
-            {
-                currentCommentRecord = null;
-                SetCommentInternal(null);
-            }
-            else
-            {
-                currentCommentRecord = dayCommentRepository.GetByDate(date.Value) ?? new DayComment { Date = date.Value };
-                SetCommentInternal(currentCommentRecord.Comment);
-            }
+            Comment = dayComment != null
+                ? dayComment.Comment
+                : null;
 
             RefreshButtonsState();
         }
 
         private void RefreshButtonsState()
         {
-            bool isDataUnsaved = (currentCommentRecord != null && currentCommentRecord.Comment != comment) ||
-                (currentCommentRecord == null && !string.IsNullOrEmpty(comment));
+            DayComment dayComment = currentDayComment.Value;
 
-            ApplyCommand.IsEnabled = isDataUnsaved;
+            bool isDataUnsaved = (dayComment != null && dayComment.Comment != comment) ||
+                (dayComment == null && !string.IsNullOrEmpty(comment));
+
             SaveCommand.IsEnabled = isDataUnsaved;
         }
 
-        private void OnApplyCommandExecute(object parameter)
+        private void OnResetCommandExecute(object parameter)
         {
-            SaveInternal();
-        }
-
-        private void OnCancelCommandExecute(object parameter)
-        {
-            NavigateToMainView();
+            UpdateDisplayedData();
         }
 
         private void OnSaveCommandExecute(object parameter)
         {
             SaveInternal();
-            NavigateToMainView();
-        }
-
-        private void SetDateInternal(DateTime? value)
-        {
-            date = value;
-            NotifyPropertyChanged("Date");
-        }
-
-        private void SetCommentInternal(string value)
-        {
-            comment = value;
-            NotifyPropertyChanged("Comment");
-        }
-
-        private void NavigateToMainView()
-        {
-            regionManager.RequestNavigate(RegionNames.MainContentRegion, ViewNames.FrontView);
         }
 
         private void SaveInternal()
         {
-            if (currentCommentRecord == null)
+            DayComment dayComment = currentDayComment.Value;
+
+            if (dayComment == null)
                 return;
 
-            currentCommentRecord.Comment = Comment;
-            dayCommentRepository.AddOrUpdate(currentCommentRecord);
+            dayComment.Comment = Comment;
+            currentDayComment.Save();
 
             RefreshButtonsState();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Enable();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -190,56 +129,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            Disable();
         }
     }
-
-    //public class CurrentDayComment
-    //{
-    //    private readonly IDayCommentRepository dayCommentRepository;
-
-    //    public DayComment CurrentCommentRecord { get; private set; }
-
-    //    public CurrentDayComment(IDayCommentRepository dayCommentRepository)
-    //    {
-    //        if (dayCommentRepository == null)
-    //            throw new ArgumentNullException("dayCommentRepository");
-
-    //        this.dayCommentRepository = dayCommentRepository;
-    //    }
-
-    //    public void Initialize(DateTime? date)
-    //    {
-    //        if (date == null)
-    //            CurrentCommentRecord = null;
-    //        else
-    //            CurrentCommentRecord = GetCommentRecordFromRepository(date.Value) ?? CreateNewCommentRecord(date.Value);
-    //    }
-
-    //    private DayComment GetCommentRecordFromRepository(DateTime date)
-    //    {
-    //        return dayCommentRepository.GetByDate(date);
-    //    }
-
-    //    private static DayComment CreateNewCommentRecord(DateTime date)
-    //    {
-    //        return new DayComment
-    //        {
-    //            Date = date
-    //        };
-    //    }
-
-    //    public string GetCommentText()
-    //    {
-    //        return CurrentCommentRecord == null ? null : CurrentCommentRecord.Comment;
-    //    }
-
-    //    public void Save()
-    //    {
-    //        if (CurrentCommentRecord == null)
-    //            return;
-
-    //        dayCommentRepository.AddOrUpdate(CurrentCommentRecord);
-    //    }
-    //}
 }

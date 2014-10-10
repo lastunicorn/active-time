@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,13 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using DustInTheWind.ActiveTime.Common.Persistence;
 
-namespace DustInTheWind.ActiveTime.Common.UI
+namespace DustInTheWind.ActiveTime.Services
 {
-    public static class ViewNames
+    public interface ICurrentDayComment
     {
-        public const string FrontView = "MainView";
-        public const string CommentsView = "CommentsView";
-        public const string DayRecordsView = "DayRecordsView";
+        DayComment Value { get; }
+        event EventHandler ValueChanged;
+        void Save();
     }
 }

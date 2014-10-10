@@ -18,6 +18,7 @@ using System;
 using System.Linq.Expressions;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Services;
 using DustInTheWind.ActiveTime.ViewModels;
 using Microsoft.Practices.Prism.Regions;
 using Moq;
@@ -28,19 +29,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
     [TestFixture]
     public class PropertyChangedTests
     {
-        Mock<IStateService> stateServiceMock;
-        Mock<IRegionManager> regionManagerMock;
-        Mock<IDayCommentRepository> dayCommentRepositoryMock;
         private CommentsViewModel viewModel;
 
         [SetUp]
         public void SetUp()
         {
-            stateServiceMock = new Mock<IStateService>();
-            regionManagerMock = new Mock<IRegionManager>();
-            dayCommentRepositoryMock = new Mock<IDayCommentRepository>();
+            Mock<IStateService> stateServiceMock = new Mock<IStateService>();
+            Mock<ICurrentDayComment> currentDayComment = new Mock<ICurrentDayComment>();
 
-            viewModel = new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, dayCommentRepositoryMock.Object);
+            viewModel = new CommentsViewModel(stateServiceMock.Object, currentDayComment.Object);
         }
 
         #region CommentTextWrap Property

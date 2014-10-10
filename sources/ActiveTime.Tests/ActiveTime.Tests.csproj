@@ -118,7 +118,6 @@
     <Compile Include="ReminderModule\Services\PauseReminderTests\ReminderEventsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\Services\StatusInfoServiceTests\SetStatusTests.cs" />
-    <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\DateTests.cs" />
     <Compile Include="TestConstants.cs" />
   </ItemGroup>
   <ItemGroup>

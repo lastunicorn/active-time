@@ -17,9 +17,7 @@
     <DockPanel>
 
         <ContentControl DockPanel.Dock="Top" regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainMenuRegion}"/>
-
         <ContentControl DockPanel.Dock="Bottom" regions:RegionManager.RegionName="{x:Static ui:RegionNames.StatusInfoRegion}"/>
-
         <ContentControl regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainContentRegion}"/>
 
     </DockPanel>

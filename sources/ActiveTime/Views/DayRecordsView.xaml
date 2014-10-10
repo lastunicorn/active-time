@@ -10,32 +10,50 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Loaded="MainView_OnLoaded">
 
-    <ListBox ItemsSource="{Binding Path=Records}"
+    <Grid Margin="0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="90" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0"
+               Content="Records:"
+               Name="label3"
+               Margin="3" />
+
+        <ListBox Grid.Row="0" Grid.Column="1"
+                 ItemsSource="{Binding Path=Records}"
                  SelectionMode="Extended">
 
-        <ListBox.Resources>
-            <converters:RecordConverter x:Key="RecordConverter" />
-        </ListBox.Resources>
+            <ListBox.Resources>
+                <converters:RecordConverter x:Key="RecordConverter" />
+            </ListBox.Resources>
 
-        <ListBox.ItemTemplate>
-            <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
-                <TextBlock Padding="10,1,0,1" Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
-            </DataTemplate>
-        </ListBox.ItemTemplate>
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
+                    <TextBlock Padding="10,1,0,1" Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
 
-        <ListBox.ContextMenu>
-            <ContextMenu Name="contextMenuRecords" Opened="contextMenuRecords_Opened">
-                <MenuItem Name="menuItemNew" Header="New" Click="menuItemNew_Click" IsEnabled="False"/>
-                <Separator Margin="0"/>
-                <MenuItem Name="menuItemMerge" Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
-                <MenuItem Name="menuItemSplit" Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
-                <Separator Margin="0"/>
-                <MenuItem Name="menuItemDelete" Header="Delete"
+            <ListBox.ContextMenu>
+                <ContextMenu Name="contextMenuRecords" Opened="contextMenuRecords_Opened">
+                    <MenuItem Name="menuItemNew" Header="New" Click="menuItemNew_Click" IsEnabled="False"/>
+                    <Separator Margin="0"/>
+                    <MenuItem Name="menuItemMerge" Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
+                    <MenuItem Name="menuItemSplit" Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
+                    <Separator Margin="0"/>
+                    <MenuItem Name="menuItemDelete" Header="Delete"
                                 commands:MenuItemClick.Command="{Binding DeleteCommand}"
                                 commands:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, UpdateSourceTrigger=Explicit}"/>
-            </ContextMenu>
-        </ListBox.ContextMenu>
+                </ContextMenu>
+            </ListBox.ContextMenu>
 
-    </ListBox>
+        </ListBox>
+    </Grid>
 
 </UserControl>

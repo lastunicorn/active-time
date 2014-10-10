@@ -17,6 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Services;
 using DustInTheWind.ActiveTime.ViewModels;
 using Microsoft.Practices.Prism.Regions;
 using Moq;
@@ -27,65 +28,36 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
     [TestFixture]
     public class ConstructorTests
     {
-        Mock<IStateService> stateServiceMock;
-        Mock<IRegionManager> regionManagerMock;
-        Mock<IDayCommentRepository> dayCommentRepositoryMock;
+        private Mock<IStateService> stateServiceMock;
+        private Mock<IDayCommentRepository> dayCommentRepositoryMock;
+        private Mock<ICurrentDayComment> currentDayComment;
 
         [SetUp]
         public void SetUp()
         {
             stateServiceMock = new Mock<IStateService>();
-            regionManagerMock = new Mock<IRegionManager>();
             dayCommentRepositoryMock = new Mock<IDayCommentRepository>();
+            currentDayComment = new Mock<ICurrentDayComment>();
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_stateService_is_null()
         {
-            new CommentsViewModel(null, regionManagerMock.Object, dayCommentRepositoryMock.Object);
+            new CommentsViewModel(null, currentDayComment.Object);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void throws_if_regionManager_is_null()
+        public void throws_if_currentDayComment_is_null()
         {
-            new CommentsViewModel(stateServiceMock.Object, null, dayCommentRepositoryMock.Object);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void throws_if_repository_is_null()
-        {
-            new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, null);
+            new CommentsViewModel(stateServiceMock.Object, null);
         }
 
         [Test]
         public void successfully_instantiated()
         {
-            new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, dayCommentRepositoryMock.Object);
-        }
-
-        [Test]
-        public void sets_initial_Date_value_from_stateService()
-        {
-            DateTime date = new DateTime(2011, 06, 13);
-            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
-
-            CommentsViewModel viewModel = CreateNewViewModel();
-
-            stateServiceMock.VerifyAll();
-            Assert.That(viewModel.Date, Is.EqualTo(date));
-        }
-
-        [Test]
-        public void clears_Date_if_Date_from_stateService_is_null()
-        {
-            stateServiceMock.Setup(x => x.CurrentDate).Returns(null as DateTime?);
-
-            CommentsViewModel viewModel = CreateNewViewModel();
-
-            Assert.That(viewModel.Date, Is.Null);
+            new CommentsViewModel(stateServiceMock.Object, currentDayComment.Object);
         }
 
         [Test]
@@ -144,7 +116,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
 
         private CommentsViewModel CreateNewViewModel()
         {
-            return new CommentsViewModel(stateServiceMock.Object, regionManagerMock.Object, dayCommentRepositoryMock.Object);
+            return new CommentsViewModel(stateServiceMock.Object, currentDayComment.Object);
         }
     }
 }
