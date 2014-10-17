@@ -19,7 +19,7 @@ using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Services
 {
-    class ApplicationService : ApplicationServiceBase
+    internal class ApplicationService : ApplicationServiceBase
     {
         protected override void PerformExit()
         {

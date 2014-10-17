@@ -97,15 +97,12 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         {
             // The user left the desk.
 
-            if (recorderService.State == RecorderState.Running)
-            {
-                recorderWasRunning = true;
+            bool recorderIsRunning = (recorderService.State == RecorderState.Running);
+
+            if (recorderIsRunning)
                 recorderService.Stop();
-            }
-            else
-            {
-                recorderWasRunning = false;
-            }
+
+            recorderWasRunning = recorderIsRunning;
         }
 
         private void StartRecorder()

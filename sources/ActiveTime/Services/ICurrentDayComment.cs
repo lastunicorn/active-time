@@ -24,5 +24,6 @@ namespace DustInTheWind.ActiveTime.Services
         DayComment Value { get; }
         event EventHandler ValueChanged;
         void Save();
+        void Update();
     }
 }

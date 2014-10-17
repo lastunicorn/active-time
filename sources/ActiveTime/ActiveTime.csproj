@@ -92,6 +92,7 @@
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\DayRecordsViewModel.cs" />
+    <Compile Include="Services\DayReport.cs" />
     <Compile Include="ViewModels\FrontViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

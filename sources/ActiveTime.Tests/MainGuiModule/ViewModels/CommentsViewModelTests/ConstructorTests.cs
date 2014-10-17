@@ -19,7 +19,6 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Services;
 using DustInTheWind.ActiveTime.ViewModels;
-using Microsoft.Practices.Prism.Regions;
 using Moq;
 using NUnit.Framework;
 

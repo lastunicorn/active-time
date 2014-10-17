@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
     /// The recorder is watched and a notification is displayed to the user when the
     /// <see cref="PauseInterval"/> is elapsed.
     /// </summary>
-    class PauseReminder : IPauseReminder
+    internal class PauseReminder : IPauseReminder
     {
         /// <summary>
         /// The recorder is used to check when the user is working.

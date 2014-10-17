@@ -24,6 +24,9 @@ using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
 {
+    /// <summary>
+    /// Contains unit tests for the initialization of a new <see cref="OverviewViewModuleTests"/> object.
+    /// </summary>
     [TestFixture]
     public class OverviewViewModuleTests
     {
@@ -87,6 +90,22 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
             OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
 
             Assert.IsNotNull(overviewViewModel.Comments);
+        }
+
+        [Test]
+        public void populates_Reports_property_with_data_retrieved_from_dayCommentRepository()
+        {
+            List<DayComment> dayComments = new List<DayComment> { new DayComment(), new DayComment(), new DayComment() };
+            timeProvider
+                .Setup(x => x.GetDate())
+                .Returns(DateTime.Now);
+            dayCommentRepository
+                .Setup(x => x.GetByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(dayComments);
+
+            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeProvider.Object);
+
+            Assert.AreEqual(3, overviewViewModel.Reports.Count);
         }
 
         [Test]

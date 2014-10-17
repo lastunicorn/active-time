@@ -20,7 +20,7 @@ using DustInTheWind.ActiveTime.Properties;
 
 namespace DustInTheWind.ActiveTime.Services
 {
-    class ConfigurationService : IConfigurationService
+    internal class ConfigurationService : IConfigurationService
     {
         public TimeSpan ReminderPauseInterval
         {

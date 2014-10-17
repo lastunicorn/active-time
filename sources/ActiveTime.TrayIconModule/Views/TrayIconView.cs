@@ -35,16 +35,15 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
 
             InitializeComponent();
 
-            toolStripMenuItemShow.Click += new EventHandler(toolStripMenuItemShow_Click);
-            toolStripMenuItemExit.Click += new EventHandler(toolStripMenuItemExit_Click);
-            toolStripMenuItemStart.Click += new EventHandler(toolStripMenuItemStart_Click);
-            toolStripMenuItemStop.Click += new EventHandler(toolStripMenuItemStop_Click);
-            toolStripMenuItemStopAndDelete.Click += new EventHandler(toolStripMenuItemStopAndDelete_Click);
-            toolStripMenuItemAbout.Click += new EventHandler(toolStripMenuItemAbout_Click);
+            toolStripMenuItemShow.Click += toolStripMenuItemShow_Click;
+            toolStripMenuItemExit.Click += toolStripMenuItemExit_Click;
+            toolStripMenuItemStart.Click += toolStripMenuItemStart_Click;
+            toolStripMenuItemStop.Click += toolStripMenuItemStop_Click;
+            toolStripMenuItemStopAndDelete.Click += toolStripMenuItemStopAndDelete_Click;
+            toolStripMenuItemAbout.Click += toolStripMenuItemAbout_Click;
 
             presenter.View = this;
         }
-
 
         public bool Visible
         {
@@ -123,9 +122,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-            {
                 presenter.LeftDoubleClicked();
-            }
         }
     }
 }

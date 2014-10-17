@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.ViewModels;
 
 namespace DustInTheWind.ActiveTime.Services
 {
@@ -62,6 +61,11 @@ namespace DustInTheWind.ActiveTime.Services
         }
 
         private void HandleCurrentDateChanged(object sender, EventArgs e)
+        {
+            UpdateValueFromRepository();
+        }
+
+        public void Update()
         {
             UpdateValueFromRepository();
         }

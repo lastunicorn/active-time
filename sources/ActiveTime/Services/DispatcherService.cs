@@ -19,7 +19,7 @@ using System.Windows;
 
 namespace DustInTheWind.ActiveTime.Services
 {
-    class DispatcherService
+    internal class DispatcherService
     {
         public void Dispatch(Action action)
         {

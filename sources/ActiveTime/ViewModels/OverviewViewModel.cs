@@ -20,6 +20,8 @@ using System.Text;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Services;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
@@ -37,6 +39,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
                 NotifyPropertyChanged("Comments");
             }
         }
+
+        public List<DayReport> Reports { get; set; }
 
         private DateTime firstDay;
         public DateTime FirstDay
@@ -83,6 +87,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
         {
             IEnumerable<DayComment> dayComments = dayCommentRepository.GetByDate(FirstDay, LastDay);
             Comments = Stringify(dayComments);
+
+            Reports = new List<DayReport>();
+            dayComments.ForEach(x => Reports.Add(new DayReport(x)));
         }
 
         private static string Stringify(IEnumerable<DayComment> comments)
@@ -94,6 +101,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
                 sb.Append(dayComment.Date.ToShortDateString());
                 sb.Append(" : ");
                 sb.Append(dayComment.Comment);
+                sb.AppendLine();
+                sb.AppendLine("--------------------------------------------------");
                 sb.AppendLine();
             }
 

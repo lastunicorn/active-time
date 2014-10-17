@@ -24,7 +24,7 @@ using DustInTheWind.ActiveTime.TrayIconModule.Views;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
 {
-    class TrayIconPresenter
+    internal class TrayIconPresenter
     {
         private ITrayIconView view;
         public ITrayIconView View
@@ -63,23 +63,23 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             iconOn = Properties.Resources.tray_on;
             iconOff = Properties.Resources.tray_off;
 
-            applicationService.Exiting += new EventHandler(applicationService_Exiting);
+            applicationService.Exiting += HandleApplicationServiceExiting;
 
-            recorder.Started += new EventHandler(recorder_Started);
-            recorder.Stopped += new EventHandler(recorder_Stopped);
+            recorder.Started += HandleRecorderStarted;
+            recorder.Stopped += HandleRecorderStopped;
         }
 
-        private void recorder_Stopped(object sender, EventArgs e)
+        private void HandleRecorderStarted(object sender, EventArgs e)
         {
             RefreshView();
         }
 
-        private void recorder_Started(object sender, EventArgs e)
+        private void HandleRecorderStopped(object sender, EventArgs e)
         {
             RefreshView();
         }
 
-        private void applicationService_Exiting(object sender, EventArgs e)
+        private void HandleApplicationServiceExiting(object sender, EventArgs e)
         {
             Hide();
         }

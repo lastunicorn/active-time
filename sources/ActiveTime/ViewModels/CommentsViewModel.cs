@@ -67,6 +67,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             ResetCommand = new CustomDelegateCommand(OnResetCommandExecute);
             SaveCommand = new CustomDelegateCommand(OnSaveCommandExecute);
+
+            currentDayComment.Update();
         }
 
         private void HandleCurrentDayCommentChanged(object sender, EventArgs e)

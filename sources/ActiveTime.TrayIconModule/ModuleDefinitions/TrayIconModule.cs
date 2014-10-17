@@ -24,6 +24,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions
     public class TrayIconModule : IModule
     {
         private TrayIconView trayIconView;
+
         private readonly IUnityContainer unityContainer;
 
         public TrayIconModule(IUnityContainer unityContainer)
