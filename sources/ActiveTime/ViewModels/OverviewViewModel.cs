@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
@@ -28,6 +29,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
     public class OverviewViewModel : ViewModelBase
     {
         private readonly IDayCommentRepository dayCommentRepository;
+        private readonly ITimeRecordRepository timeRecordRepository;
 
         private string comments;
         public string Comments
@@ -66,15 +68,19 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public OverviewViewModel(IDayCommentRepository dayCommentRepository, ITimeProvider timeProvider)
+        public OverviewViewModel(IDayCommentRepository dayCommentRepository, ITimeRecordRepository timeRecordRepository, ITimeProvider timeProvider)
         {
             if (dayCommentRepository == null)
                 throw new ArgumentNullException("dayCommentRepository");
+
+            if (timeRecordRepository == null)
+                throw new ArgumentNullException("timeRecordRepository");
 
             if (timeProvider == null)
                 throw new ArgumentNullException("timeProvider");
 
             this.dayCommentRepository = dayCommentRepository;
+            this.timeRecordRepository = timeRecordRepository;
 
             DateTime today = timeProvider.GetDate();
             firstDay = today.AddDays(-29);
@@ -92,14 +98,31 @@ namespace DustInTheWind.ActiveTime.ViewModels
             dayComments.ForEach(x => Reports.Add(new DayReport(x)));
         }
 
-        private static string Stringify(IEnumerable<DayComment> comments)
+        private string Stringify(IEnumerable<DayComment> comments)
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append("Average hours per day: ");
+            sb.AppendLine(CalculateHours().ToString());
 
             foreach (DayComment dayComment in comments)
             {
+                IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
+                DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
+
                 sb.Append(dayComment.Date.ToShortDateString());
-                sb.Append(" : ");
+
+                if (dayRecord != null)
+                {
+                    sb.Append(" - active: ");
+                    sb.Append(dayRecord.GetTotalActiveTime());
+                    sb.Append(" [ ");
+                    sb.Append(dayRecord.GetBeginTime());
+                    sb.Append(" - ");
+                    sb.Append(dayRecord.GetEndTime());
+                    sb.Append(" ] ");
+                }
+
+                sb.AppendLine();
                 sb.Append(dayComment.Comment);
                 sb.AppendLine();
                 sb.AppendLine("--------------------------------------------------");
@@ -107,6 +130,37 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
 
             return sb.ToString();
+        }
+
+        private TimeSpan CalculateHours()
+        {
+            DateTime date = firstDay;
+            TimeSpan totalTime = TimeSpan.Zero;
+            int dayCount = 0;
+
+            while (date <= lastDay)
+            {
+                IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
+                DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
+
+                if (dayRecord != null)
+                {
+                    TimeSpan totalDayActiveTime = dayRecord.GetTotalActiveTime();
+
+                    totalTime += totalDayActiveTime;
+
+                    double pauseTime = (totalDayActiveTime.TotalMinutes / 52.5) * 7.5;
+                    totalTime += TimeSpan.FromMinutes(pauseTime);
+
+                    dayCount++;
+                }
+
+                date = date.AddDays(1);
+            }
+
+            double average = totalTime.TotalHours / dayCount;
+
+            return TimeSpan.FromHours(average);
         }
     }
 }

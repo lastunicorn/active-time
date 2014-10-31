@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.Common.Recording
@@ -117,6 +118,16 @@ namespace DustInTheWind.ActiveTime.Common.Recording
                 return null;
 
             return ActiveTimeRecords[0].StartTime;
+        }
+
+        public TimeSpan? GetEndTime()
+        {
+            bool existsRecords = ActiveTimeRecords != null && ActiveTimeRecords.Count > 0;
+
+            if (!existsRecords)
+                return null;
+
+            return ActiveTimeRecords.Last().StartTime;
         }
 
         //public DayTimeInterval CalculateLunchBreak(DayRecord dayRecord)
