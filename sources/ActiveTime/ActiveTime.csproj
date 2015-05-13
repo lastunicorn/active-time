@@ -87,6 +87,7 @@
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ICurrentDayComment.cs" />
     <Compile Include="Services\ICurrentDayRecord.cs" />
+    <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />

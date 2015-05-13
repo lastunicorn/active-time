@@ -15,8 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows.Controls;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
+using Microsoft.Practices.Prism.Logging;
 
 namespace DustInTheWind.ActiveTime.Services
 {
@@ -89,6 +91,8 @@ namespace DustInTheWind.ActiveTime.Services
         {
             if (Value == null)
                 return;
+
+            Logger.Log(Value);
 
             dayCommentRepository.AddOrUpdate(Value);
         }
