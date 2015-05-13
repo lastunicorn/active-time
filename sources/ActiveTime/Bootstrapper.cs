@@ -25,7 +25,7 @@ using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime
 {
-    class Bootstrapper : UnityBootstrapper
+    class Bootstrapper : UnityBootstrapper, IDisposable
     {
         protected override IModuleCatalog CreateModuleCatalog()
         {
@@ -54,6 +54,11 @@ namespace DustInTheWind.ActiveTime
         protected override DependencyObject CreateShell()
         {
             return null;
+        }
+
+        public void Dispose()
+        {
+            Container.Dispose();
         }
     }
 }

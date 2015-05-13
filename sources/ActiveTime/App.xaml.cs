@@ -27,6 +27,7 @@ namespace DustInTheWind.ActiveTime
     public partial class App : IDisposable
     {
         private Guard guard;
+        private Bootstrapper bootstrapper;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -44,9 +45,16 @@ namespace DustInTheWind.ActiveTime
                 Shutdown();
         }
 
-        private static void StartApp()
+        protected override void OnExit(ExitEventArgs e)
         {
-            new Bootstrapper().Run();
+            base.OnExit(e);
+            Dispose();
+        }
+
+        private void StartApp()
+        {
+            bootstrapper = new Bootstrapper();
+            bootstrapper.Run();
         }
 
         private bool CreateTheGuard(GuardLevel guardLevel)
@@ -88,7 +96,17 @@ namespace DustInTheWind.ActiveTime
 
             if (disposing)
             {
-                guard.Dispose();
+                if (bootstrapper != null)
+                {
+                    bootstrapper.Dispose();
+                    bootstrapper = null;
+                }
+
+                if (guard != null)
+                {
+                    guard.Dispose();
+                    guard = null;
+                }
             }
 
             disposed = true;

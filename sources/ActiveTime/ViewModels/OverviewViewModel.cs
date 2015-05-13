@@ -26,7 +26,7 @@ using Microsoft.Practices.ObjectBuilder2;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
-    public class OverviewViewModel : ViewModelBase
+    public sealed class OverviewViewModel : ViewModelBase
     {
         private readonly IDayCommentRepository dayCommentRepository;
         private readonly ITimeRecordRepository timeRecordRepository;
