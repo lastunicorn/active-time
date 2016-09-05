@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
 using Microsoft.Practices.Prism.Modularity;
@@ -46,6 +47,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
             PauseReminder pauseReminder = unityContainer.Resolve<PauseReminder>();
             pauseReminder.PauseInterval = configurationService.ReminderPauseInterval;
             pauseReminder.SnoozeInterval = configurationService.ReminderSnoozeInterval;
+            pauseReminder.Inhibitors.Add(new LyncReminderInhibitor());
             pauseReminder.StartMonitoring();
 
             return pauseReminder;
