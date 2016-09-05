@@ -16,9 +16,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services
@@ -57,6 +59,8 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         /// </summary>
         public TimeSpan SnoozeInterval { get; set; }
 
+        public List<IReminderInhibitor> Inhibitors { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PauseReminder"/> class.
         /// </summary>
@@ -65,18 +69,15 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         /// <param name="reminder">It is used to calculate the time when the user should make a pause.</param>
         public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder)
         {
-            if (recorderService == null)
-                throw new ArgumentNullException("recorderService");
-
-            if (shellNavigator == null)
-                throw new ArgumentNullException("shellNavigator");
-
-            if (reminder == null)
-                throw new ArgumentNullException("reminder");
+            if (recorderService == null) throw new ArgumentNullException("recorderService");
+            if (shellNavigator == null) throw new ArgumentNullException("shellNavigator");
+            if (reminder == null) throw new ArgumentNullException("reminder");
 
             this.recorderService = recorderService;
             this.shellNavigator = shellNavigator;
             this.reminder = reminder;
+
+            Inhibitors = new List<IReminderInhibitor>();
 
             PauseInterval = TimeSpan.FromHours(1);
             SnoozeInterval = TimeSpan.FromMinutes(3);
@@ -109,17 +110,25 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
 
         private void HandleReminderRing(object sender, RingEventArgs e)
         {
+            bool allowReminder = Inhibitors == null || Inhibitors.All(x => x.Allow);
+
+            if (allowReminder)
+                RaiseReminder();
+
+            e.Snooze = true;
+            e.SnoozeTime = SnoozeInterval;
+        }
+
+        private void RaiseReminder()
+        {
             TimeSpan timeFromLastPause = DateTime.Now - reminder.StartTime;
 
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                { "Text", string.Format("Time passed: {0:hh\\:mm\\:ss}\n\nMake a pause NOW!", timeFromLastPause) }
+                {"Text", string.Format("Time passed: {0:hh\\:mm\\:ss}\n\nMake a pause NOW!", timeFromLastPause)}
             };
 
             shellNavigator.Navigate(ShellNames.MessageShell, parameters);
-
-            e.Snooze = true;
-            e.SnoozeTime = SnoozeInterval;
         }
     }
 }
