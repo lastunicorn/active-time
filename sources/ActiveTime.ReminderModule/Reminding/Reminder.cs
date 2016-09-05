@@ -35,6 +35,12 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         private Timer timer;
 
         /// <summary>
+        /// A semaphore that turns green (true) when the clock rings or is stopped.
+        /// That means it is red (false) only if the clock is running.
+        /// </summary>
+        private ManualResetEvent flagFinished;
+
+        /// <summary>
         /// Gets the time when the remainder has been started last time.
         /// If the current instance has never been started, it is equal with <see cref="DateTime.MinValue"/> value.
         /// </summary>
@@ -48,30 +54,12 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// <summary>
         /// Gets or sets the time used to postpone the ring.
         /// </summary>
-        public TimeSpan SnoozeTime { get; set; }
-
-        #region Event Ring
+        public TimeSpan DefaultSnoozeTime { get; set; }
 
         /// <summary>
         /// Event raised when the timer elapsed.
         /// </summary>
         public event EventHandler<RingEventArgs> Ring;
-
-        /// <summary>
-        /// Raises the Ring event.
-        /// </summary>
-        /// <param name="e">An <see cref="RingEventArgs"/> that contains the event data.</param>
-        protected virtual void OnRing(RingEventArgs e)
-        {
-            EventHandler<RingEventArgs> handler = Ring;
-
-            if (handler != null)
-                handler(this, e);
-        }
-
-        #endregion
-
-        #region Event Stopped
 
         /// <summary>
         /// Event raised when the current instance is stopped. After the Ring event or after
@@ -80,25 +68,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         public event EventHandler Stopped;
 
         /// <summary>
-        /// Raises the Stopped event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnStopped(EventArgs e)
-        {
-            EventHandler handler = Stopped;
-
-            if (handler != null)
-                handler(this, e);
-        }
-
-        #endregion
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Reminder"/> class.
         /// </summary>
         public Reminder()
         {
-            SnoozeTime = TimeSpan.FromMinutes(1);
+            DefaultSnoozeTime = TimeSpan.FromMinutes(1);
             Status = ReminderStatus.NotStarted;
 
             flagFinished = new ManualResetEvent(false);
@@ -202,9 +176,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             lock (lockStatus)
             {
                 if (Status == ReminderStatus.Running || Status == ReminderStatus.Snooze)
-                {
                     timer.Change(Timeout.Infinite, Timeout.Infinite);
-                }
 
                 Status = ReminderStatus.NotStarted;
                 OnStopped(EventArgs.Empty);
@@ -258,7 +230,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
 
                     if (e.Snooze)
                     {
-                        Snooze(e.SnoozeTime ?? SnoozeTime);
+                        Snooze(e.SnoozeTime ?? DefaultSnoozeTime);
                     }
                     else
                     {
@@ -270,12 +242,6 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
                 }
             }
         }
-
-        /// <summary>
-        /// A semaphore that turns green (true) when the clock rings or is stopped.
-        /// That means it is red (false) only if the clock is running.
-        /// </summary>
-        private ManualResetEvent flagFinished;
 
         /// <summary>
         /// Blocks the current thread until the clock rangs or it is stopped.
@@ -292,6 +258,30 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
             flagFinished.WaitOne();
 
             return Status == ReminderStatus.Finished;
+        }
+
+        /// <summary>
+        /// Raises the Ring event.
+        /// </summary>
+        /// <param name="e">An <see cref="RingEventArgs"/> that contains the event data.</param>
+        protected virtual void OnRing(RingEventArgs e)
+        {
+            EventHandler<RingEventArgs> handler = Ring;
+
+            if (handler != null)
+                handler(this, e);
+        }
+
+        /// <summary>
+        /// Raises the Stopped event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnStopped(EventArgs e)
+        {
+            EventHandler handler = Stopped;
+
+            if (handler != null)
+                handler(this, e);
         }
 
         #region IDisposable Members

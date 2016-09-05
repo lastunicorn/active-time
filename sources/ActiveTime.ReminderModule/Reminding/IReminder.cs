@@ -35,7 +35,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// Gets or sets the time used to postpone the ring.
         /// </summary>
         /// <exception cref="ObjectDisposedException">The current instance was disposed.</exception>
-        TimeSpan SnoozeTime { get; set; }
+        TimeSpan DefaultSnoozeTime { get; set; }
 
         /// <summary>
         /// Event raised when the timer elapsed.

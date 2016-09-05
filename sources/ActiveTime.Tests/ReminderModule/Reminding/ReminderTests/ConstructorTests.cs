@@ -62,7 +62,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         [Test]
         public void InitialState_SnoozeTime()
         {
-            Assert.That(reminder.SnoozeTime, Is.EqualTo(TimeSpan.FromMinutes(1)));
+            Assert.That(reminder.DefaultSnoozeTime, Is.EqualTo(TimeSpan.FromMinutes(1)));
         }
     }
 }

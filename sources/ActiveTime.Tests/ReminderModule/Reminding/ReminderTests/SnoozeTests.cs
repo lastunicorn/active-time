@@ -52,7 +52,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         {
             const int ringMiliseconds = 100;
 
-            reminder.SnoozeTime = TimeSpan.FromMilliseconds(200);
+            reminder.DefaultSnoozeTime = TimeSpan.FromMilliseconds(200);
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
@@ -83,7 +83,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         {
             const int ringMiliseconds = 100;
 
-            reminder.SnoozeTime = TimeSpan.FromMilliseconds(200);
+            reminder.DefaultSnoozeTime = TimeSpan.FromMilliseconds(200);
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
@@ -118,7 +118,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 if (ringEvent.WaitOne())
                 {
                     TimeSpan actual = snoozeEndTime - snoozeStartTime;
-                    TimeSpan expected = reminder.SnoozeTime;
+                    TimeSpan expected = reminder.DefaultSnoozeTime;
 
                     TimeSpan acceptedError = TimeSpan.FromMilliseconds(TestConstants.TimerDelayAccepted);
                     Assert.That(actual, Is.EqualTo(expected).Within(acceptedError));
