@@ -54,18 +54,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
 
         #endregion
 
-        #region Properties
-
-        [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
-        public void Dispose_SnoozeTime()
-        {
-            reminder.Dispose();
-            reminder.SnoozeTime = TimeSpan.FromMilliseconds(1);
-        }
-
-        #endregion
-
         #region Methods
 
         [Test]

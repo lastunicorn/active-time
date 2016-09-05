@@ -45,6 +45,11 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// </summary>
         public ReminderStatus Status { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the time used to postpone the ring.
+        /// </summary>
+        public TimeSpan SnoozeTime { get; set; }
+
         #region Event Ring
 
         /// <summary>
@@ -58,8 +63,10 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// <param name="e">An <see cref="RingEventArgs"/> that contains the event data.</param>
         protected virtual void OnRing(RingEventArgs e)
         {
-            if (Ring != null)
-                Ring(this, e);
+            EventHandler<RingEventArgs> handler = Ring;
+
+            if (handler != null)
+                handler(this, e);
         }
 
         #endregion
@@ -78,8 +85,10 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStopped(EventArgs e)
         {
-            if (Stopped != null)
-                Stopped(this, e);
+            EventHandler handler = Stopped;
+
+            if (handler != null)
+                handler(this, e);
         }
 
         #endregion
@@ -89,6 +98,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// </summary>
         public Reminder()
         {
+            SnoozeTime = TimeSpan.FromMinutes(1);
             Status = ReminderStatus.NotStarted;
 
             flagFinished = new ManualResetEvent(false);
@@ -212,31 +222,10 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         }
 
         /// <summary>
-        /// The time used to postpone the ring.
-        /// </summary>
-        private TimeSpan snoozeTime = TimeSpan.FromMinutes(1);
-
-        /// <summary>
-        /// Gets or sets the time used to postpone the ring.
-        /// </summary>
-        /// <exception cref="ObjectDisposedException">The current instance was disposed.</exception>
-        public TimeSpan SnoozeTime
-        {
-            get { return snoozeTime; }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException("Reminder");
-
-                snoozeTime = value;
-            }
-        }
-
-        /// <summary>
         /// Sets the timer to ring after the snoose time.
         /// </summary>
         /// <param name="snoozeTime">The time to postpone the <see cref="Ring"/> event.</param>
-        private void Snooze(TimeSpan? snoozeTime = null)
+        private void Snooze(TimeSpan snoozeTime)
         {
             lock (lockStatus)
             {
@@ -244,15 +233,8 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
                 {
                     flagFinished.Reset();
 
-                    if (snoozeTime != null)
-                    {
-                        if (snoozeTime.Value >= TimeSpan.Zero)
-                            timer.Change(snoozeTime.Value, TimeSpan.FromTicks(-1));
-                    }
-                    else if (this.snoozeTime >= TimeSpan.Zero)
-                    {
-                        timer.Change(this.snoozeTime, TimeSpan.FromTicks(-1));
-                    }
+                    if (snoozeTime >= TimeSpan.Zero)
+                        timer.Change(snoozeTime, TimeSpan.FromTicks(-1));
                 }
 
                 Status = ReminderStatus.Snooze;
@@ -276,7 +258,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
 
                     if (e.Snooze)
                     {
-                        Snooze(e.SnoozeTime);
+                        Snooze(e.SnoozeTime ?? SnoozeTime);
                     }
                     else
                     {
@@ -314,7 +296,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
 
         #region IDisposable Members
 
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Releases all resources used by the current instance.
