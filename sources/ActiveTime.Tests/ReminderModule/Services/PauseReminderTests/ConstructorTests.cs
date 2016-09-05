@@ -40,12 +40,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         }
 
         [Test]
-        public void successfully_initialized()
-        {
-            new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object);
-        }
-
-        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_recorderService_is_null()
         {
@@ -67,7 +61,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         }
 
         [Test]
-        public void PauseInterval_initial_value()
+        public void PauseInterval_initial_value_is_1_hour()
         {
             PauseReminder pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object);
 
@@ -75,7 +69,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         }
 
         [Test]
-        public void SnoozeInterval_initial_value()
+        public void SnoozeInterval_initial_value_is_3_minutes()
         {
             PauseReminder pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object);
 

@@ -20,6 +20,7 @@ using System.Threading;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
 using Moq;
@@ -46,31 +47,43 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         }
 
         [Test]
-        public void Message_is_displayed_when_reminder_rings()
+        public void message_is_displayed_when_reminder_rings()
         {
             pauseReminder.StartMonitoring();
-            shellNavigator.Setup(x => x.Navigate(ShellNames.MessageShell, It.IsAny<Dictionary<string, object>>()));
 
             reminder.Raise(x => x.Ring += null, new RingEventArgs());
 
-            shellNavigator.VerifyAll();
+            shellNavigator.Verify(x => x.Navigate(ShellNames.MessageShell, It.IsAny<Dictionary<string, object>>()), Times.Once());
         }
 
         [Test]
-        public void Pause_message_displayed_for_custom_PauseInterval_value()
+        public void message_is_not_displayed_if_reminder_rings_but_inhibitor_does_not_allow()
         {
-            pauseReminder.PauseInterval = TimeSpan.FromMilliseconds(100);
-            bool messageDisplayed = false;
-            shellNavigator.Setup(x => x.Navigate(ShellNames.MessageShell, It.IsAny<Dictionary<string, object>>()))
-                .Callback(() => messageDisplayed = true);
-
+            Mock<IReminderInhibitor> inhibitor = new Mock<IReminderInhibitor>();
+            inhibitor
+                .SetupGet(x => x.Allow)
+                .Returns(false);
+            pauseReminder.Inhibitors.Add(inhibitor.Object);
             pauseReminder.StartMonitoring();
+
             reminder.Raise(x => x.Ring += null, new RingEventArgs());
 
-            Thread.Sleep(100 + TestConstants.TimerDelayAccepted);
+            shellNavigator.Verify(x => x.Navigate(ShellNames.MessageShell, It.IsAny<Dictionary<string, object>>()), Times.Never());
+        }
 
-            if (!messageDisplayed)
-                Assert.Fail("The pause message was not displayed");
+        [Test]
+        public void message_is_displayed_if_reminder_rings_and_inhibitor_allows()
+        {
+            Mock<IReminderInhibitor> inhibitor = new Mock<IReminderInhibitor>();
+            inhibitor
+                .SetupGet(x => x.Allow)
+                .Returns(true);
+            pauseReminder.Inhibitors.Add(inhibitor.Object);
+            pauseReminder.StartMonitoring();
+
+            reminder.Raise(x => x.Ring += null, new RingEventArgs());
+
+            shellNavigator.Verify(x => x.Navigate(ShellNames.MessageShell, It.IsAny<Dictionary<string, object>>()), Times.Once());
         }
     }
 }
