@@ -31,7 +31,7 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
     /// <remarks>
     /// This is an active service, that initiates actions.
     /// </remarks>
-    class SystemSessionService
+    internal class SystemSessionService
     {
         private readonly IRecorderService recorderService;
         private readonly IShellNavigator shellNavigator;

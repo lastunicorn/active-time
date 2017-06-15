@@ -70,9 +70,9 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
 
             sb.Append(Date.ToShortDateString());
             sb.Append(" [");
-            sb.Append(StartTime.ToString());
+            sb.Append(StartTime);
             sb.Append(" - ");
-            sb.Append(EndTime.ToString());
+            sb.Append(EndTime);
             sb.Append("]");
             sb.Append(" ");
             sb.Append(RecordType);

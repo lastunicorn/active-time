@@ -17,9 +17,11 @@
         ModuleName="RecorderModule"
         ModuleType="DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions.RecorderModule, ActiveTime.RecorderModule"
         InitializationMode="WhenAvailable">
+        
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>PersistenceModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
+        
     </Modularity:ModuleInfo>
 
     <Modularity:ModuleInfo
@@ -27,10 +29,12 @@
         ModuleName="MainGuiModule"
         ModuleType="DustInTheWind.ActiveTime.ModuleDefinitions.MainGuiModule, ActiveTime"
         InitializationMode="WhenAvailable">
+        
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>PersistenceModule</sys:String>
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
+        
     </Modularity:ModuleInfo>
 
     <Modularity:ModuleInfo
@@ -38,9 +42,11 @@
         ModuleName="SystemSessionModule"
         ModuleType="DustInTheWind.ActiveTime.SystemSessionModule.ModuleDefinitions.SystemSessionModule, ActiveTime.SystemSessionModule"
         InitializationMode="WhenAvailable">
+        
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
+        
     </Modularity:ModuleInfo>
 
     <Modularity:ModuleInfo
@@ -48,9 +54,11 @@
         ModuleName="ReminderModule"
         ModuleType="DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions.ReminderModule, ActiveTime.ReminderModule"
         InitializationMode="WhenAvailable">
+        
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
+        
     </Modularity:ModuleInfo>
 
     <Modularity:ModuleInfo
@@ -58,9 +66,11 @@
         ModuleName="TrayIconModule"
         ModuleType="DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions.TrayIconModule, ActiveTime.TrayIconModule"
         InitializationMode="WhenAvailable">
+        
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
+        
     </Modularity:ModuleInfo>
 
 </Modularity:ModuleCatalog>
