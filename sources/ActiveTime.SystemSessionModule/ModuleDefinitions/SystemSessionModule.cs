@@ -30,8 +30,7 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.ModuleDefinitions
         /// </summary>
         public SystemSessionModule(IUnityContainer unityContainer)
         {
-            if (unityContainer == null)
-                throw new ArgumentNullException("unityContainer");
+            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
 
             this.unityContainer = unityContainer;
         }

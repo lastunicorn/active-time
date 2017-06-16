@@ -28,8 +28,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions
 
         public RecorderModule(IUnityContainer unityContainer)
         {
-            if (unityContainer == null)
-                throw new ArgumentNullException("unityContainer");
+            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
 
             this.unityContainer = unityContainer;
         }

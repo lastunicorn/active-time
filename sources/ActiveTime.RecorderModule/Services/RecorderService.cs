@@ -73,10 +73,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStarted(EventArgs e)
         {
-            EventHandler handler = Started;
-
-            if (handler != null)
-                handler(this, e);
+            Started?.Invoke(this, e);
         }
 
         #endregion
@@ -94,10 +91,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStopped(EventArgs e)
         {
-            EventHandler handler = Stopped;
-
-            if (handler != null)
-                handler(this, e);
+            Stopped?.Invoke(this, e);
         }
 
         #endregion
@@ -115,10 +109,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStamping(EventArgs e)
         {
-            EventHandler handler = Stamping;
-
-            if (handler != null)
-                handler(this, e);
+            Stamping?.Invoke(this, e);
         }
 
         #endregion
@@ -136,10 +127,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStamped(EventArgs e)
         {
-            EventHandler handler = Stamped;
-
-            if (handler != null)
-                handler(this, e);
+            Stamped?.Invoke(this, e);
         }
 
         #endregion
@@ -152,11 +140,8 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <exception cref="ArgumentNullException"></exception>
         public RecorderService(IScribe scribe, IApplicationService applicationService)
         {
-            if (scribe == null)
-                throw new ArgumentNullException("scribe");
-
-            if (applicationService == null)
-                throw new ArgumentNullException("applicationService");
+            if (scribe == null) throw new ArgumentNullException(nameof(scribe));
+            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
 
             this.scribe = scribe;
             timer = new Timer(HandleTimerTick);

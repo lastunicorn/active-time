@@ -40,11 +40,8 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         /// <exception cref="ArgumentNullException"></exception>
         public Scribe(ITimeRecordRepository timeRecordRepository, ITimeProvider timeProvider)
         {
-            if (timeRecordRepository == null)
-                throw new ArgumentNullException("timeRecordRepository");
-
-            if (timeProvider == null)
-                throw new ArgumentNullException("timeProvider");
+            if (timeRecordRepository == null) throw new ArgumentNullException(nameof(timeRecordRepository));
+            if (timeProvider == null) throw new ArgumentNullException(nameof(timeProvider));
 
             this.timeRecordRepository = timeRecordRepository;
             this.timeProvider = timeProvider;
@@ -62,12 +59,12 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
         private void CreateNewTimeRecordAndSave(DateTime now)
         {
             TimeRecord newTimeRecord = new TimeRecord
-                                    {
-                                        RecordType = TimeRecordType.Normal,
-                                        Date = now.Date,
-                                        StartTime = now.TimeOfDay,
-                                        EndTime = now.TimeOfDay
-                                    };
+            {
+                RecordType = TimeRecordType.Normal,
+                Date = now.Date,
+                StartTime = now.TimeOfDay,
+                EndTime = now.TimeOfDay
+            };
 
             timeRecordRepository.Add(newTimeRecord);
             currentTimeRecord = newTimeRecord;

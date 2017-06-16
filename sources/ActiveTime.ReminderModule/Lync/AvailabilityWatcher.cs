@@ -84,10 +84,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Lync
 
         protected virtual void OnAvailabilityChanged()
         {
-            EventHandler handler = AvailabilityChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            AvailabilityChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -50,11 +50,8 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         /// <exception cref="ArgumentNullException"></exception>
         public SystemSessionService(IRecorderService recorderService, IShellNavigator shellNavigator)
         {
-            if (recorderService == null)
-                throw new ArgumentNullException("recorderService");
-
-            if (shellNavigator == null)
-                throw new ArgumentNullException("shellNavigator");
+            if (recorderService == null) throw new ArgumentNullException(nameof(recorderService));
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
 
             this.recorderService = recorderService;
             this.shellNavigator = shellNavigator;

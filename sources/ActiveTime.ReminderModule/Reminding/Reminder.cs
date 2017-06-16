@@ -266,10 +266,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// <param name="e">An <see cref="RingEventArgs"/> that contains the event data.</param>
         protected virtual void OnRing(RingEventArgs e)
         {
-            EventHandler<RingEventArgs> handler = Ring;
-
-            if (handler != null)
-                handler(this, e);
+            Ring?.Invoke(this, e);
         }
 
         /// <summary>
@@ -278,10 +275,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStopped(EventArgs e)
         {
-            EventHandler handler = Stopped;
-
-            if (handler != null)
-                handler(this, e);
+            Stopped?.Invoke(this, e);
         }
 
         #region IDisposable Members

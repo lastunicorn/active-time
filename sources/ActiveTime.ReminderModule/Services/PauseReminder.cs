@@ -69,9 +69,9 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         /// <param name="reminder">It is used to calculate the time when the user should make a pause.</param>
         public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder)
         {
-            if (recorderService == null) throw new ArgumentNullException("recorderService");
-            if (shellNavigator == null) throw new ArgumentNullException("shellNavigator");
-            if (reminder == null) throw new ArgumentNullException("reminder");
+            if (recorderService == null) throw new ArgumentNullException(nameof(recorderService));
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
+            if (reminder == null) throw new ArgumentNullException(nameof(reminder));
 
             this.recorderService = recorderService;
             this.shellNavigator = shellNavigator;
