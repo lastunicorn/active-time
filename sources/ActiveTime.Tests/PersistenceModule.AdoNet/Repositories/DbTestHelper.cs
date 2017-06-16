@@ -15,12 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Data.SQLite;
+using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositories
 {
     public class DbTestHelper
     {
-        private const string ConnectionString = "Data Source=db.s3db";
+        private static readonly string ConnectionString = "Data Source=" + TestContext.CurrentContext.TestDirectory + "\\db.s3db";
 
         public static void ClearDatabase()
         {

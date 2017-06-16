@@ -57,63 +57,77 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
         #region Methods
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Start_int()
         {
-            reminder.Dispose();
-            const int miliseconds = 100;
-            reminder.Start(miliseconds);
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reminder.Dispose();
+                const int miliseconds = 100;
+                reminder.Start(miliseconds);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Start_long()
         {
-            reminder.Dispose();
-            const long miliseconds = 100;
-            reminder.Start(miliseconds);
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reminder.Dispose();
+                const long miliseconds = 100;
+                reminder.Start(miliseconds);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Start_uint()
         {
-            reminder.Dispose();
-            const uint miliseconds = 100;
-            reminder.Start(miliseconds);
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reminder.Dispose();
+                const uint miliseconds = 100;
+                reminder.Start(miliseconds);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Start_TimeSpan()
         {
-            reminder.Dispose();
-            TimeSpan miliseconds = TimeSpan.FromMilliseconds(100);
-            reminder.Start(miliseconds);
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reminder.Dispose();
+                TimeSpan miliseconds = TimeSpan.FromMilliseconds(100);
+                reminder.Start(miliseconds);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Stop()
         {
-            reminder.Dispose();
-            reminder.Stop();
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reminder.Dispose();
+                reminder.Stop();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_Reset()
         {
-            reminder.Dispose();
-            reminder.Reset();
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reminder.Dispose();
+                reminder.Reset();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void Dispose_WaitUntilRing()
         {
-            reminder.Dispose();
-            reminder.WaitUntilRing();
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reminder.Dispose();
+                reminder.WaitUntilRing();
+            });
         }
 
         #endregion

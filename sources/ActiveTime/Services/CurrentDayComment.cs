@@ -15,10 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Controls;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
-using Microsoft.Practices.Prism.Logging;
 
 namespace DustInTheWind.ActiveTime.Services
 {
@@ -40,21 +38,10 @@ namespace DustInTheWind.ActiveTime.Services
 
         public event EventHandler ValueChanged;
 
-        protected virtual void OnValueChanged(EventArgs e)
-        {
-            EventHandler handler = ValueChanged;
-
-            if (handler != null)
-                handler(this, e);
-        }
-
         public CurrentDayComment(IDayCommentRepository dayCommentRepository, IStateService stateService)
         {
-            if (dayCommentRepository == null)
-                throw new ArgumentNullException("dayCommentRepository");
-
-            if (stateService == null)
-                throw new ArgumentNullException("stateService");
+            if (dayCommentRepository == null) throw new ArgumentNullException(nameof(dayCommentRepository));
+            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
 
             this.dayCommentRepository = dayCommentRepository;
             this.stateService = stateService;
@@ -95,6 +82,11 @@ namespace DustInTheWind.ActiveTime.Services
             Logger.Log(Value);
 
             dayCommentRepository.AddOrUpdate(Value);
+        }
+
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+            ValueChanged?.Invoke(this, e);
         }
     }
 }

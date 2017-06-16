@@ -43,17 +43,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_with_null_repository()
         {
-            new Scribe(null, timeProviderMock.Object);
+            Assert.Throws<ArgumentNullException>(() => new Scribe(null, timeProviderMock.Object));
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_with_null_timeProvider()
         {
-            new Scribe(repositoryMock.Object, null);
+            Assert.Throws<ArgumentNullException>(() => new Scribe(repositoryMock.Object, null));
         }
     }
 }

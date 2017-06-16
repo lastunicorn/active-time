@@ -34,25 +34,12 @@ namespace DustInTheWind.ActiveTime.Commands
                 OnCanExecuteChanged();
             }
         }
-
-        #region Event CanExecuteChanged
-
+        
         public event EventHandler CanExecuteChanged;
-
-        protected virtual void OnCanExecuteChanged()
-        {
-            EventHandler handler = CanExecuteChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
-
-        #endregion
 
         public CustomDelegateCommand(Action<object> executeMethod)
         {
-            if (executeMethod == null)
-                throw new ArgumentNullException("executeMethod");
+            if (executeMethod == null) throw new ArgumentNullException(nameof(executeMethod));
 
             this.executeMethod = executeMethod;
         }
@@ -65,6 +52,11 @@ namespace DustInTheWind.ActiveTime.Commands
         public bool CanExecute(object parameter)
         {
             return isEnabled;
+        }
+
+        protected virtual void OnCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

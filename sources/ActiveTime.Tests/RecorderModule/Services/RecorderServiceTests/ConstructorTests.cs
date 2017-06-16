@@ -36,17 +36,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.RecorderSer
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_scrib_is_null()
         {
-            new RecorderService(null, applicationService.Object);
+            Assert.Throws<ArgumentNullException>(() => new RecorderService(null, applicationService.Object));
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_applicationService_is_null()
         {
-            new RecorderService(scribMock.Object, null);
+            Assert.Throws<ArgumentNullException>(() => new RecorderService(scribMock.Object, null));
         }
 
         [Test]

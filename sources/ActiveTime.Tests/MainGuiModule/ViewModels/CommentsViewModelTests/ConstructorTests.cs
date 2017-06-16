@@ -40,17 +40,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_stateService_is_null()
         {
-            new CommentsViewModel(null, currentDayComment.Object);
+            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(null, currentDayComment.Object));
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_currentDayComment_is_null()
         {
-            new CommentsViewModel(stateServiceMock.Object, null);
+            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(stateServiceMock.Object, null));
         }
 
         [Test]
@@ -70,12 +68,12 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         }
 
         [Test]
-        public void Constructor_retrieves_DayComment_from_repository_if_date_is_not_null()
+        public void Constructor_updates_CurrentDayComment()
         {
             DateTime date = new DateTime(2011, 06, 13);
 
             stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
-            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayComment);
+            currentDayComment.Setup(x => x.Update());
 
             CreateNewViewModel();
 
@@ -93,24 +91,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
             CommentsViewModel viewModel = CreateNewViewModel();
 
             Assert.That(viewModel.Comment, Is.Null);
-        }
-
-        [Test]
-        public void Constructor_sets_Comment_from_retrieved_DayComment()
-        {
-            DateTime date = new DateTime(2011, 06, 13);
-            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
-            DayComment dayComment = new DayComment
-            {
-                Id = 10,
-                Date = date,
-                Comment = "some comment"
-            };
-            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(dayComment);
-
-            CommentsViewModel viewModel = CreateNewViewModel();
-
-            Assert.That(viewModel.Comment, Is.EqualTo(dayComment.Comment));
         }
 
         private CommentsViewModel CreateNewViewModel()

@@ -96,12 +96,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void throws_if_using_connection_after_dispose()
         {
-            unitOfWork.Dispose();
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                unitOfWork.Dispose();
 
-            DbConnection connection = unitOfWork.Connection;
+                DbConnection connection = unitOfWork.Connection;
+            });
         }
 
         [Test]
@@ -117,21 +119,25 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void throws_if_Commit_is_called_after_dispose()
         {
-            unitOfWork.Dispose();
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                unitOfWork.Dispose();
 
-            unitOfWork.Commit();
+                unitOfWork.Commit();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void throws_if_Rollback_is_called_after_dispose()
         {
-            unitOfWork.Dispose();
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                unitOfWork.Dispose();
 
-            unitOfWork.Rollback();
+                unitOfWork.Rollback();
+            });
         }
 
         private static void InsertOneTimeRecord(UnitOfWork unitOfWork)

@@ -55,11 +55,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.NHibernate.Reposi
         #region Create
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestAdd_Null()
         {
-            // Execute
-            repository.Add(null);
+            Assert.Throws<ArgumentNullException>(() => repository.Add(null));
         }
 
         [Test]
@@ -81,25 +79,27 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.NHibernate.Reposi
         /// Adding an already existent entity should update it.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(GenericADOException))]
         public void TestAdd_DuplicateBusinessKey()
         {
-            if (!HasBusinessKey)
-                Assert.Inconclusive("The entity does not have a business key.");
+            Assert.Throws<GenericADOException>(() =>
+            {
+                if (!HasBusinessKey)
+                    Assert.Inconclusive("The entity does not have a business key.");
 
-            repository.Add(entity);
-            CurrentSession.Flush();
-            CurrentSession.Evict(entity);
+                repository.Add(entity);
+                CurrentSession.Flush();
+                CurrentSession.Evict(entity);
 
-            repository.Add(entity);
-            CurrentSession.Flush();
-            CurrentSession.Evict(entity);
+                repository.Add(entity);
+                CurrentSession.Flush();
+                CurrentSession.Evict(entity);
 
-            // Verify
-            Assert.That(entity.Id, Is.GreaterThan(0));
-            TEntity reloadedEntity = CurrentSession.Get<TEntity>(entity.Id);
-            Assert.IsNotNull(reloadedEntity);
-            AssertAreEqual(entity, reloadedEntity);
+                // Verify
+                Assert.That(entity.Id, Is.GreaterThan(0));
+                TEntity reloadedEntity = CurrentSession.Get<TEntity>(entity.Id);
+                Assert.IsNotNull(reloadedEntity);
+                AssertAreEqual(entity, reloadedEntity);
+            });
         }
 
         #endregion
@@ -137,11 +137,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.NHibernate.Reposi
         #region Update
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestUpdate_Null()
         {
-            // Execute
-            repository.Update(null);
+            Assert.Throws<ArgumentNullException>(() => repository.Update(null));
         }
 
         [Test]
@@ -167,48 +165,52 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.NHibernate.Reposi
         }
 
         [Test]
-        [ExpectedException(typeof(HibernateException))]
         public void TestUpdate_ModifyImmutableBusinessKey()
         {
-            if (!HasBusinessKey)
-                Assert.Inconclusive("The entity does not have a business key.");
+            Assert.Throws<HibernateException>(() =>
+            {
+                if (!HasBusinessKey)
+                    Assert.Inconclusive("The entity does not have a business key.");
 
-            if (IsBusinessKeyMutable)
-                Assert.Inconclusive("The business key of the entity is mutable.");
+                if (IsBusinessKeyMutable)
+                    Assert.Inconclusive("The business key of the entity is mutable.");
 
-            // Prepare
-            CurrentSession.Save(entity);
-            CurrentSession.Flush();
-            ModifyBusinessKey(entity);
+                // Prepare
+                CurrentSession.Save(entity);
+                CurrentSession.Flush();
+                ModifyBusinessKey(entity);
 
-            // Execute
-            repository.Update(entity);
-            CurrentSession.Flush();
-            CurrentSession.Evict(entity);
+                // Execute
+                repository.Update(entity);
+                CurrentSession.Flush();
+                CurrentSession.Evict(entity);
 
-            // Verify
-            Assert.That(entity.Id, Is.GreaterThan(0));
-            TEntity reloadedEntity = CurrentSession.Get<TEntity>(entity.Id);
-            Assert.IsNotNull(reloadedEntity);
-            AssertAreEqual(entity, reloadedEntity);
+                // Verify
+                Assert.That(entity.Id, Is.GreaterThan(0));
+                TEntity reloadedEntity = CurrentSession.Get<TEntity>(entity.Id);
+                Assert.IsNotNull(reloadedEntity);
+                AssertAreEqual(entity, reloadedEntity);
+            });
         }
 
         /// <summary>
         /// Updating an inexistent entity should add it to the database.
         /// </summary>
         [Test]
-        [ExpectedException()]
         public void TestUpdate_InexistentRecord()
         {
-            // Execute
-            repository.Update(entity);
-            CurrentSession.Flush();
-            CurrentSession.Evict(entity);
+            Assert.Catch(() =>
+            {
+                // Execute
+                repository.Update(entity);
+                CurrentSession.Flush();
+                CurrentSession.Evict(entity);
 
-            // Verify
-            TEntity reloadedEntity = CurrentSession.Get<TEntity>(entity.Id);
-            Assert.IsNotNull(reloadedEntity);
-            AssertAreEqual(entity, reloadedEntity);
+                // Verify
+                TEntity reloadedEntity = CurrentSession.Get<TEntity>(entity.Id);
+                Assert.IsNotNull(reloadedEntity);
+                AssertAreEqual(entity, reloadedEntity);
+            });
         }
 
         #endregion
@@ -216,10 +218,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.NHibernate.Reposi
         #region Delete
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestDelete_Null()
         {
-            repository.Delete(null);
+            Assert.Throws<ArgumentNullException>(() => repository.Delete(null));
         }
 
         [Test]
@@ -258,10 +259,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.NHibernate.Reposi
         #region Create Or Update
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestAddOrUpdate_Null()
         {
-            repository.AddOrUpdate(null);
+            Assert.Throws<ArgumentNullException>(() => repository.AddOrUpdate(null));
         }
 
         [Test]

@@ -183,7 +183,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         public static DayRecord FromTimeRecords(IList<TimeRecord> timeRecords)
         {
             if (timeRecords == null)
-                throw new ArgumentNullException("timeRecords");
+                return null;
 
             //if (timeRecords.Count == 0)
             //    throw new ArgumentException("The list of TimeRecords contains no items.", "timeRecords");

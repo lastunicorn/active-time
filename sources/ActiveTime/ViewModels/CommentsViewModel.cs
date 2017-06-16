@@ -29,8 +29,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private readonly ICurrentDayComment currentDayComment;
 
         public CustomDelegateCommand ResetCommand { get; private set; }
-        public CustomDelegateCommand SaveCommand { get; private set; }
-        
+        public CustomDelegateCommand SaveCommand { get; }
+
         private string comment;
         public string Comment
         {
@@ -56,11 +56,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public CommentsViewModel(IStateService stateService, ICurrentDayComment currentDayComment)
         {
-            if (stateService == null)
-                throw new ArgumentNullException("stateService");
-
-            if (currentDayComment == null)
-                throw new ArgumentNullException("currentDayComment");
+            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
+            if (currentDayComment == null) throw new ArgumentNullException(nameof(currentDayComment));
 
             this.currentDayComment = currentDayComment;
             currentDayComment.ValueChanged += HandleCurrentDayCommentChanged;
@@ -78,11 +75,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void UpdateDisplayedData()
         {
-            DayComment dayComment = currentDayComment.Value;
-
-            Comment = dayComment != null
-                ? dayComment.Comment
-                : null;
+            Comment = currentDayComment.Value?.Comment;
 
             RefreshButtonsState();
         }

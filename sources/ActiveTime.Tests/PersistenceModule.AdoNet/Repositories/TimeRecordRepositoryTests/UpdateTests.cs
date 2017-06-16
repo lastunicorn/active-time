@@ -45,40 +45,45 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_received_entity_is_null()
         {
-            timeRecordRepository.Update(null);
+            Assert.Throws<ArgumentNullException>(() => timeRecordRepository.Update(null));
         }
 
         [Test]
-        [ExpectedException(typeof(PersistenceException))]
         public void throws_if_id_is_zero()
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecord.Id = 0;
+            Assert.Throws<PersistenceException>(() =>
+            {
+                TimeRecord timeRecord = CreateTimeRecordEntity();
+                timeRecord.Id = 0;
 
-            timeRecordRepository.Update(timeRecord);
+                timeRecordRepository.Update(timeRecord);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(PersistenceException))]
         public void throws_if_id_is_less_then_zero()
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecord.Id = -1;
+            Assert.Throws<PersistenceException>(() =>
+            {
+                TimeRecord timeRecord = CreateTimeRecordEntity();
+                timeRecord.Id = -1;
 
-            timeRecordRepository.Update(timeRecord);
+                timeRecordRepository.Update(timeRecord);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(PersistenceException))]
         public void throws_if_id_does_not_exist()
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecord.Id = 10000;
+            Assert.Throws<PersistenceException>(() =>
+            {
+                TimeRecord timeRecord = CreateTimeRecordEntity();
+                timeRecord.Id = 10000;
 
-            timeRecordRepository.Update(timeRecord);
+                timeRecordRepository.Update(timeRecord);
+            });
         }
 
         [Test]

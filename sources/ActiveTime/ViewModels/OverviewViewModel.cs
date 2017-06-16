@@ -70,14 +70,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public OverviewViewModel(IDayCommentRepository dayCommentRepository, ITimeRecordRepository timeRecordRepository, ITimeProvider timeProvider)
         {
-            if (dayCommentRepository == null)
-                throw new ArgumentNullException("dayCommentRepository");
-
-            if (timeRecordRepository == null)
-                throw new ArgumentNullException("timeRecordRepository");
-
-            if (timeProvider == null)
-                throw new ArgumentNullException("timeProvider");
+            if (dayCommentRepository == null) throw new ArgumentNullException(nameof(dayCommentRepository));
+            if (timeRecordRepository == null) throw new ArgumentNullException(nameof(timeRecordRepository));
+            if (timeProvider == null) throw new ArgumentNullException(nameof(timeProvider));
 
             this.dayCommentRepository = dayCommentRepository;
             this.timeRecordRepository = timeRecordRepository;
@@ -158,7 +153,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
                 date = date.AddDays(1);
             }
 
-            double average = totalTime.TotalHours / dayCount;
+            double average = dayCount == 0
+                ? 0
+                : totalTime.TotalHours / dayCount;
 
             return TimeSpan.FromHours(average);
         }

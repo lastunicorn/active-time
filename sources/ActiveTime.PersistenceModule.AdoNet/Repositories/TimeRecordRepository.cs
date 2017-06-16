@@ -27,16 +27,14 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public TimeRecordRepository(IUnitOfWork unitOfWork)
         {
-            if (unitOfWork == null)
-                throw new ArgumentNullException("unitOfWork");
+            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
 
             this.unitOfWork = unitOfWork;
         }
 
         public void Add(TimeRecord timeRecord)
         {
-            if (timeRecord == null)
-                throw new ArgumentNullException("timeRecord");
+            if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
 
             unitOfWork.ExecuteCommandAndCommit((command) =>
             {
@@ -66,7 +64,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
                 {
                     throw new PersistenceException("Error retrieving the last inserted id.", ex);
                 }
-
             });
         }
 

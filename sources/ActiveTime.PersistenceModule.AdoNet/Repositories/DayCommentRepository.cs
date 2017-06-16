@@ -28,8 +28,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public DayCommentRepository(IUnitOfWork unitOfWork)
         {
-            if (unitOfWork == null)
-                throw new ArgumentNullException("unitOfWork");
+            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
 
             this.unitOfWork = unitOfWork;
         }

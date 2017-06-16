@@ -82,14 +82,16 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.AdoNet.Repositori
         }
 
         [Test]
-        [ExpectedException(typeof(PersistenceException))]
         public void throws_if_two_identical_timeRecords_are_saved()
         {
-            TimeRecord timeRecord1 = CreateTimeRecordEntity();
-            TimeRecord timeRecord2 = CreateTimeRecordEntity();
+            Assert.Throws<PersistenceException>(() =>
+            {
+                TimeRecord timeRecord1 = CreateTimeRecordEntity();
+                TimeRecord timeRecord2 = CreateTimeRecordEntity();
 
-            timeRecordRepository.Add(timeRecord1);
-            timeRecordRepository.Add(timeRecord2);
+                timeRecordRepository.Add(timeRecord1);
+                timeRecordRepository.Add(timeRecord2);
+            });
         }
 
         [Test]

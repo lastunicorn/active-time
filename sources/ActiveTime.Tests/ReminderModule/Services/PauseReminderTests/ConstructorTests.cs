@@ -40,24 +40,21 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_recorderService_is_null()
         {
-            new PauseReminder(null, shellNavigator.Object, reminder.Object);
+            Assert.Throws<ArgumentNullException>(() => new PauseReminder(null, shellNavigator.Object, reminder.Object));
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_shellNavigator_is_null()
         {
-            new PauseReminder(recorderService.Object, null, reminder.Object);
+            Assert.Throws<ArgumentNullException>(() => new PauseReminder(recorderService.Object, null, reminder.Object));
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void throws_if_reminder_is_null()
         {
-            new PauseReminder(recorderService.Object, shellNavigator.Object, null);
+            Assert.Throws<ArgumentNullException>(() => new PauseReminder(recorderService.Object, shellNavigator.Object, null));
         }
 
         [Test]
