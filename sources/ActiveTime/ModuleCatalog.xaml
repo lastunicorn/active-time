@@ -49,7 +49,7 @@
         
     </Modularity:ModuleInfo>
 
-    <Modularity:ModuleInfo
+    <!--<Modularity:ModuleInfo
         Ref="file://ActiveTime.ReminderModule.dll"
         ModuleName="ReminderModule"
         ModuleType="DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions.ReminderModule, ActiveTime.ReminderModule"
@@ -59,7 +59,7 @@
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
         
-    </Modularity:ModuleInfo>
+    </Modularity:ModuleInfo>-->
 
     <Modularity:ModuleInfo
         Ref="file://ActiveTime.TrayIconModule.dll"

@@ -33,9 +33,9 @@ namespace DustInTheWind.ActiveTime.Converters
             if (value.GetType() == targetType)
                 return value;
 
-            if (targetType == typeof (TextWrapping))
-                return (bool) value ? TextWrapping.Wrap : TextWrapping.NoWrap;
-            
+            if (targetType == typeof(TextWrapping))
+                return (bool)value ? TextWrapping.Wrap : TextWrapping.NoWrap;
+
             return null;
         }
 
@@ -50,7 +50,7 @@ namespace DustInTheWind.ActiveTime.Converters
 
                 return textWrapping != TextWrapping.NoWrap;
             }
-            
+
             return null;
         }
     }

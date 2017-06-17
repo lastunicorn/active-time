@@ -79,6 +79,7 @@
     <Compile Include="Commands\MenuItemClickCommandBehavior.cs" />
     <Compile Include="Converters\BooleanConverter.cs" />
     <Compile Include="Converters\RecordConverter.cs" />
+    <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
@@ -177,6 +178,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles\ButtonStylesDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

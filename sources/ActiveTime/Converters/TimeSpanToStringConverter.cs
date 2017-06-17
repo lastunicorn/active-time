@@ -1,4 +1,4 @@
-// ActiveTime
+﻿// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -16,30 +16,36 @@
 
 using System;
 using System.Windows.Data;
-using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.Converters
 {
-    public class RecordConverter : IValueConverter
+    /// <summary>
+    /// Converts the <see cref="TimeSpan"/> value into <see cref="string"/> value and viceversa.
+    /// </summary>
+    public class TimeSpanToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (!(value is DayTimeInterval))
+            if (value == null || value.GetType() != typeof(TimeSpan))
                 return null;
 
-            if (targetType == typeof(string) || targetType == typeof(object))
-            {
-                DayTimeInterval record = (DayTimeInterval)value;
+            if (value.GetType() == targetType)
+                return value;
 
-                TimeSpan timeDiff = record.EndTime - record.StartTime;
-                return $"{record.StartTime:hh\\:mm\\:ss} - {record.EndTime:hh\\:mm\\:ss} = {timeDiff:hh\\:mm\\:ss}";
-            }
-            
+            if (targetType == typeof(string))
+                return ((TimeSpan)value).ToString(@"hh\:mm\:ss");
+
             return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (value == null || targetType != typeof(TimeSpan))
+                return null;
+
+            if (value is string)
+                return TimeSpan.Parse((string) value);
+
             return null;
         }
     }
