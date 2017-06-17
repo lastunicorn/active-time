@@ -56,8 +56,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     
     <!-- Status Bar -->
 
-    <SolidColorBrush x:Key="StatusBarBackground" Color="#f97300"/>
-    <SolidColorBrush x:Key="StatusBarForeground" Color="#ffca9d"/>
+    <SolidColorBrush x:Key="StatusBarBackground" Color="#007acc"/>
+    <SolidColorBrush x:Key="StatusBarForeground" Color="#e6e6e6"/>
 
     <!-- Icons -->
 
