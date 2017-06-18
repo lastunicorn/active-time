@@ -31,6 +31,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     d:DesignWidth="300"
     Loaded="MainView_OnLoaded">
 
+    <UserControl.Resources>
+        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ScrollBarStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </UserControl.Resources>
+    
     <Grid Margin="0">
 
         <Grid.ColumnDefinitions>
@@ -52,7 +62,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Row="0"
             Grid.Column="1"
             ItemsSource="{Binding Path=Records}"
-            SelectionMode="Extended">
+            SelectionMode="Extended"
+            Margin="3">
 
             <ListBox.Resources>
                 <converters:RecordConverter x:Key="RecordConverter" />
