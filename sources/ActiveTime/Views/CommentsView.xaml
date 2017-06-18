@@ -31,7 +31,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     Loaded="CommentsView_OnLoaded">
 
     <UserControl.Resources>
-        <converters:BooleanConverter x:Key="BooleanConverter" />
+        
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/CheckBoxStylesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <converters:BooleanConverter x:Key="BooleanConverter" />
+        </ResourceDictionary>
+        
     </UserControl.Resources>
 
     <DockPanel Margin="0">
@@ -93,7 +102,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Grid.Column="1"
                 Content="Wrap"
                 Margin="3"
-                IsChecked="{Binding Path=CommentTextWrap}" />
+                IsChecked="{Binding Path=CommentTextWrap}"/>
 
         </Grid>
 
