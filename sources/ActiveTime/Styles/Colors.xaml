@@ -29,19 +29,25 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <SolidColorBrush x:Key="ButtonNormalBackgroundColor" Color="#3f3f46"/>
     <SolidColorBrush x:Key="ButtonNormalForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ButtonNormalBorderColor" Color="Transparent"/>
+    <SolidColorBrush x:Key="ButtonNormalBorderColor" Color="#3f3f46"/>
 
-    <SolidColorBrush x:Key="ButtonOverBackgroundColor" Color="#ff9f4d"/>
-    <SolidColorBrush x:Key="ButtonOverForegroundColor" Color="#ffffff"/>
+    <SolidColorBrush x:Key="ButtonOverBackgroundColor" Color="#54545c"/>
+    <SolidColorBrush x:Key="ButtonOverForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="ButtonOverBorderColor" Color="#54545c"/>
 
-    <SolidColorBrush x:Key="ButtonPressedBackgroundColor" Color="#bc5700"/>
-    <SolidColorBrush x:Key="ButtonPressedForegroundColor" Color="#ffffff"/>
+    <SolidColorBrush x:Key="ButtonPressedBackgroundColor" Color="#007acc"/>
+    <SolidColorBrush x:Key="ButtonPressedForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="ButtonPressedBorderColor" Color="#007acc"/>
 
-    <SolidColorBrush x:Key="ButtonCheckedBackgroundColor" Color="#ff9f4d"/>
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="#252526"/>
+    <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#536c5e"/>
+    <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="#434346"/>
+
+    <!--<SolidColorBrush x:Key="ButtonCheckedBackgroundColor" Color="#ff9f4d"/>
     <SolidColorBrush x:Key="ButtonCheckedForegroundColor" Color="#ffffff"/>
 
     <SolidColorBrush x:Key="ButtonCheckedOverBackgroundColor" Color="#ff9f4d"/>
-    <SolidColorBrush x:Key="ButtonCheckedOverForegroundColor" Color="#ffffff"/>
+    <SolidColorBrush x:Key="ButtonCheckedOverForegroundColor" Color="#ffffff"/>-->
 
     <!-- CheckBox -->
 
@@ -54,6 +60,12 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <SolidColorBrush x:Key="CheckBoxOverBackgroundColor" Color="Transparent"/>
     <SolidColorBrush x:Key="CheckBoxOverForegroundColor" Color="#e6e6e6"/>
     
+    <!-- TextBox -->
+
+    <SolidColorBrush x:Key="TextBoxNormalBackgroundColor" Color="#333337"/>
+    <SolidColorBrush x:Key="TextBoxNormalForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="TextBoxNormalBorderColor" Color="#6a6a75"/>
+
     <!-- Status Bar -->
 
     <SolidColorBrush x:Key="StatusBarBackground" Color="#007acc"/>
@@ -65,6 +77,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <!-- Label -->
 
+    <SolidColorBrush x:Key="LabelNormalBackgroundColor" Color="Transparent"/>
     <SolidColorBrush x:Key="LabelNormalForeground" Color="#e6e6e6"/>
 
 </ResourceDictionary>

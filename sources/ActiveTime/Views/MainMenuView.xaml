@@ -22,6 +22,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:commands="clr-namespace:DustInTheWind.ActiveTime.Commands"
+    
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -35,7 +36,47 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         </ResourceDictionary>
     </UserControl.Resources>-->
 
-    <Menu Height="Auto">
+    <Menu Height="Auto" Background="#2d2d30" Foreground="#e6e6e6">
+        
+        <Menu.Style>
+            <Style TargetType="{x:Type Menu}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Menu}">
+                            <Border BorderThickness="1">
+                                
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
+                                                <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+
+                                </Border.BorderBrush>
+                                
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0" />
+                                        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                
+                                <StackPanel ClipToBounds="True"
+                                            Orientation="Horizontal"
+                                            IsItemsHost="True" />
+                                
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Menu.Style>
+        
         <MenuItem Header="_File">
             <MenuItem Header="_Export..." commands:MenuItemClick.Command="{Binding ExportCommand}" />
             <Separator Margin="0" />
@@ -44,13 +85,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <Separator Margin="0" />
             <MenuItem Header="E_xit" commands:MenuItemClick.Command="{Binding ExitCommand}" />
         </MenuItem>
+        
         <MenuItem Header="_Recorder">
             <MenuItem Header="St_art" commands:MenuItemClick.Command="{Binding StartCommand}" />
             <MenuItem Header="St_op" commands:MenuItemClick.Command="{Binding StopCommand}" />
         </MenuItem>
+        
         <MenuItem Header="_Help">
             <MenuItem Header="_About" commands:MenuItemClick.Command="{Binding AboutCommand}" />
         </MenuItem>
+        
     </Menu>
 
 </UserControl>

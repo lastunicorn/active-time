@@ -81,7 +81,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Margin="3"
             VerticalAlignment="Center"
             Text="{Binding Path=ActiveTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-            IsReadOnly="True" />
+            IsReadOnly="True"/>
 
         <Label
             Grid.Row="2"
@@ -94,17 +94,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Column="1"
             Margin="3"
             VerticalAlignment="Center"
-            IsReadOnly="True">
-
-            <TextBox.Text>
-                <MultiBinding StringFormat="{}{0:00}:{1:00}:{2:00}">
-                    <Binding Path="TotalTime.Hours" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                    <Binding Path="TotalTime.Minutes" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                    <Binding Path="TotalTime.Seconds" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                </MultiBinding>
-            </TextBox.Text>
-
-        </TextBox>
+            Text="{Binding Path=TotalTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+            IsReadOnly="True"/>
 
         <Label
             Grid.Row="1"
@@ -117,42 +108,22 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Column="3"
             Margin="3"
             VerticalAlignment="Center"
-            IsReadOnly="True">
-
-            <TextBox.Text>
-                <MultiBinding StringFormat="{}{0:00}:{1:00}:{2:00}">
-                    <Binding Path="BeginTime.Hours" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                    <Binding Path="BeginTime.Minutes" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                    <Binding Path="BeginTime.Seconds" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                </MultiBinding>
-            </TextBox.Text>
-
-        </TextBox>
+            Text="{Binding Path=BeginTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+            IsReadOnly="True"/>
 
         <Label
             Grid.Row="2"
             Grid.Column="2"
             Content="Estimated End:"
-            Name="label6"
             Margin="3" />
 
         <TextBox
             Grid.Row="2"
             Grid.Column="3"
             Margin="3"
-            Name="textBoxEstimatedEndTime"
             VerticalAlignment="Center"
-            IsReadOnly="True">
-
-            <TextBox.Text>
-                <MultiBinding StringFormat="{}{0:00}:{1:00}:{2:00}">
-                    <Binding Path="EstimatedEndTime.Hours" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                    <Binding Path="EstimatedEndTime.Minutes" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                    <Binding Path="EstimatedEndTime.Seconds" UpdateSourceTrigger="PropertyChanged" Mode="OneWay" />
-                </MultiBinding>
-            </TextBox.Text>
-
-        </TextBox>
+            Text="{Binding Path=EstimatedEndTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+            IsReadOnly="True"/>
 
         <ContentControl
             Grid.Row="3"

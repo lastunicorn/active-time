@@ -28,15 +28,13 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackgroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource ButtonNormalForegroundColor}"/>
         <Setter Property="Margin" Value="0"/>
-        <Setter Property="Padding" Value="8 4"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="8 3"/>
         <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorderColor}"/>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
-                        CornerRadius="2"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="1">
@@ -52,14 +50,22 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
                     <ControlTemplate.Triggers>
 
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource ButtonDisabledBackgroundColor}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonDisabledForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource ButtonDisabledBorderColor}"/>
+                        </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{StaticResource ButtonOverBackgroundColor}"/>
                             <Setter Property="Foreground" Value="{StaticResource ButtonOverForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource ButtonOverBorderColor}"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="{StaticResource ButtonPressedBackgroundColor}"/>
                             <Setter Property="Foreground" Value="{StaticResource ButtonPressedForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource ButtonPressedBorderColor}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

@@ -46,7 +46,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Row="0"
             Grid.Column="0"
             Content="Records:"
-            Name="label3"
             Margin="3" />
 
         <ListBox
@@ -70,15 +69,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             </ListBox.ItemTemplate>
 
             <ListBox.ContextMenu>
-                <ContextMenu Name="contextMenuRecords" Opened="contextMenuRecords_Opened">
-                    <MenuItem Name="menuItemNew" Header="New" Click="menuItemNew_Click" IsEnabled="False"/>
+                <ContextMenu Opened="contextMenuRecords_Opened">
+                    <MenuItem Header="New" Click="menuItemNew_Click" IsEnabled="False"/>
                     <Separator Margin="0"/>
-                    <MenuItem Name="menuItemMerge" Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
-                    <MenuItem Name="menuItemSplit" Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
+                    <MenuItem Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
+                    <MenuItem Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
                     <Separator Margin="0"/>
                     
                     <MenuItem
-                        Name="menuItemDelete"
                         Header="Delete"
                         commands:MenuItemClick.Command="{Binding DeleteCommand}"
                         commands:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, UpdateSourceTrigger=Explicit}"/>
