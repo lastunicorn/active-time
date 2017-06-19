@@ -31,6 +31,23 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     WindowStartupLocation="CenterOwner"
     Loaded="OverviewWindow_OnLoaded">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/LabelStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBoxStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="{StaticResource MainBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource MainForeground}"/>
+        </Style>
+    </Window.Style>
+
     <Grid Margin="0">
 
         <Grid.ColumnDefinitions>

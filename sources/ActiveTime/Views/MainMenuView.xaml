@@ -28,56 +28,23 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     d:DesignWidth="300"
     Loaded="MainMenuView_OnLoaded">
 
-    <!--<UserControl.Resources>
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/Dictionary1.xaml"/>
+                <ResourceDictionary Source="/Styles/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </UserControl.Resources>-->
+    </UserControl.Resources>
 
-    <Menu Height="Auto" Background="#2d2d30" Foreground="#e6e6e6">
-        
-        <Menu.Style>
-            <Style TargetType="{x:Type Menu}">
-                <Setter Property="OverridesDefaultStyle" Value="True" />
-                <Setter Property="SnapsToDevicePixels" Value="True" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Menu}">
-                            <Border BorderThickness="1">
-                                
-                                <Border.BorderBrush>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <LinearGradientBrush.GradientStops>
-                                            <GradientStopCollection>
-                                                <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
-                                                <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
-                                            </GradientStopCollection>
-                                        </LinearGradientBrush.GradientStops>
-                                    </LinearGradientBrush>
+    <Menu Height="Auto" Background="{StaticResource MenuNormalBackgroundColor}">
 
-                                </Border.BorderBrush>
-                                
-                                <Border.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0" />
-                                        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                
-                                <StackPanel ClipToBounds="True"
-                                            Orientation="Horizontal"
-                                            IsItemsHost="True" />
-                                
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+        <Menu.Resources>
+            <Style TargetType="MenuItem">
+                <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.MenuTextBrushKey}}"/>
             </Style>
-        </Menu.Style>
-        
-        <MenuItem Header="_File">
+        </Menu.Resources>
+
+        <MenuItem Header="_File"  Foreground="{StaticResource MenuNormalForegroundColor}">
             <MenuItem Header="_Export..." commands:MenuItemClick.Command="{Binding ExportCommand}" />
             <Separator Margin="0" />
             <MenuItem Header="_Statistics" commands:MenuItemClick.Command="{Binding StatisticsCommand}" />
@@ -85,16 +52,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <Separator Margin="0" />
             <MenuItem Header="E_xit" commands:MenuItemClick.Command="{Binding ExitCommand}" />
         </MenuItem>
-        
-        <MenuItem Header="_Recorder">
+
+        <MenuItem Header="_Recorder"  Foreground="{StaticResource MenuNormalForegroundColor}">
             <MenuItem Header="St_art" commands:MenuItemClick.Command="{Binding StartCommand}" />
             <MenuItem Header="St_op" commands:MenuItemClick.Command="{Binding StopCommand}" />
         </MenuItem>
-        
-        <MenuItem Header="_Help">
+
+        <MenuItem Header="_Help"  Foreground="{StaticResource MenuNormalForegroundColor}">
             <MenuItem Header="_About" commands:MenuItemClick.Command="{Binding AboutCommand}" />
         </MenuItem>
-        
+
     </Menu>
 
 </UserControl>

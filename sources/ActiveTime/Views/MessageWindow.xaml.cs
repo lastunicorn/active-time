@@ -32,8 +32,7 @@ namespace DustInTheWind.ActiveTime.Views
         /// </summary>
         public MessageWindow(MessageViewModel viewModel)
         {
-            if (viewModel == null)
-                throw new ArgumentNullException("viewModel");
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
             this.viewModel = viewModel;
 

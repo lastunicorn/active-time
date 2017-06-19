@@ -29,7 +29,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     WindowStartupLocation="CenterScreen"
     Loaded="MessageWindow_OnLoaded">
 
-    <DockPanel>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/ButtonStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel Background="{StaticResource MainBackground}">
 
         <Button
             DockPanel.Dock="Bottom"
@@ -39,7 +48,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             TabIndex="0" />
 
         <TextBlock
-            HorizontalAlignment="Stretch" VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
             TextAlignment="Center"
             TextWrapping="Wrap"
             FontSize="20"

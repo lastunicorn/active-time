@@ -74,14 +74,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             SelectedDateFormat="Long"
             BorderThickness="0"
-            Foreground="{StaticResource MainForeground}">
+            Foreground="{StaticResource DatePickerNormalForegroundColor}">
 
             <DatePicker.Resources>
                 <Style TargetType="{x:Type DatePickerTextBox}">
-                    <Setter Property="Background" Value="{StaticResource MainBackground}"/>
-                    <Setter Property="Foreground" Value="{StaticResource MainForeground}"/>
-                    <Setter Property="BorderThickness" Value="10"/>
-                    <Setter Property="BorderBrush" Value="{StaticResource MainBackground}"/>
+                    <Setter Property="Background" Value="{StaticResource DatePickerNormalBackgroundColor}"/>
                 </Style>
             </DatePicker.Resources>
 

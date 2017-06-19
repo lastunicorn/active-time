@@ -40,22 +40,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="../Styles/LabelStylesDictionary.xaml"/>
+                <ResourceDictionary Source="../Styles/TextBoxStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <Style TargetType="Label">
-                <Setter Property="Foreground" Value="{StaticResource MainForeground}"/>
-            </Style>
-
-            <Style TargetType="TextBox">
-                <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
-                <Setter Property="Foreground" Value="{StaticResource TextBoxNormalForegroundColor}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
-            </Style>
-
-            <Style TargetType="CheckBox">
-                <Setter Property="Background" Value="{StaticResource CheckBoxNormalBackgroundColor}"/>
-                <Setter Property="Foreground" Value="{StaticResource CheckBoxNormalForegroundColor}"/>
-            </Style>
 
             <Style TargetType="ListBox">
                 <Setter Property="Background" Value="#333337"/>

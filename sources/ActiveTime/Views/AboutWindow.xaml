@@ -27,7 +27,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     WindowStartupLocation="CenterOwner"
     Loaded="AboutWindow_OnLoaded">
 
-    <Grid>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Colors.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource MainBackground}">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -37,21 +46,26 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Center"
-                   TextAlignment="Center"
-                   FontSize="20"
-                   Margin="20">Created by Dust in the Wind</TextBlock>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontSize="20"
+            Margin="20"
+            Foreground="{StaticResource MainForeground}"
+            Text="Created by Dust in the Wind"/>
 
-        <TextBlock Grid.Row="1"
-                   Grid.Column="0"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Center"
-                   TextAlignment="Center"
-                   Margin="10"
-                   Text="{Binding Version}" />
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            Margin="10"
+            Foreground="{StaticResource MainForeground}"
+            Text="{Binding Version}" />
     </Grid>
 
 </Window>

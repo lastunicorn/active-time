@@ -57,7 +57,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <SolidColorBrush x:Key="CheckBoxDisabledBackgroundColor" Color="Transparent"/>
     <SolidColorBrush x:Key="CheckBoxDisabledForegroundColor" Color="Gray"/>
 
-    <SolidColorBrush x:Key="CheckBoxOverBackgroundColor" Color="Transparent"/>
+    <SolidColorBrush x:Key="CheckBoxOverBackgroundColor" Color="#3f3f46"/>
     <SolidColorBrush x:Key="CheckBoxOverForegroundColor" Color="#e6e6e6"/>
     
     <!-- TextBox -->
@@ -78,6 +78,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <!-- Label -->
 
     <SolidColorBrush x:Key="LabelNormalBackgroundColor" Color="Transparent"/>
-    <SolidColorBrush x:Key="LabelNormalForeground" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="LabelNormalForegroundColor" Color="#e6e6e6"/>
+
+    <!-- DatePicker -->
+
+    <SolidColorBrush x:Key="DatePickerNormalBackgroundColor" Color="#333337"/>
+    <SolidColorBrush x:Key="DatePickerNormalForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="DatePickerNormalBorderColor" Color="#2d2d30"/>
+
+    <!-- Menu -->
+
+    <SolidColorBrush x:Key="MenuNormalBackgroundColor" Color="#2d2d30"/>
+    <SolidColorBrush x:Key="MenuNormalForegroundColor" Color="#e6e6e6"/>
 
 </ResourceDictionary>
