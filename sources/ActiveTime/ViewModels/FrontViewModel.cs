@@ -47,7 +47,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             private set
             {
                 activeTime = value;
-                NotifyPropertyChanged("ActiveTime");
+                OnPropertyChanged();
             }
         }
 
@@ -59,7 +59,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             private set
             {
                 totalTime = value;
-                NotifyPropertyChanged("TotalTime");
+                OnPropertyChanged();
             }
         }
 
@@ -71,7 +71,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             private set
             {
                 records = value;
-                NotifyPropertyChanged("Records");
+                OnPropertyChanged();
             }
         }
 
@@ -83,7 +83,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 beginTime = value;
-                NotifyPropertyChanged("BeginTime");
+                OnPropertyChanged();
             }
         }
 
@@ -95,7 +95,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 estimatedEndTime = value;
-                NotifyPropertyChanged("EstimatedEndTime");
+                OnPropertyChanged();
             }
         }
 
@@ -151,7 +151,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void HandleStateService_CurrentDateChanged(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("Date");
+            OnPropertyChanged("Date");
         }
 
         private void OnDeleteCommandExecuted(object item)

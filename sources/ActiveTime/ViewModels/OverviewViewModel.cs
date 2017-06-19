@@ -38,7 +38,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             private set
             {
                 comments = value;
-                NotifyPropertyChanged("Comments");
+                OnPropertyChanged();
             }
         }
 
@@ -51,7 +51,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 firstDay = value;
-                NotifyPropertyChanged("FirstDay");
+                OnPropertyChanged();
                 PopulateComments();
             }
         }
@@ -63,7 +63,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 lastDay = value;
-                NotifyPropertyChanged("LastDay");
+                OnPropertyChanged();
                 PopulateComments();
             }
         }

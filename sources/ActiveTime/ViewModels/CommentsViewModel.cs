@@ -38,7 +38,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 comment = value;
-                NotifyPropertyChanged("Comment");
+                OnPropertyChanged();
                 RefreshButtonsState();
             }
         }
@@ -50,7 +50,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 commentTextWrap = value;
-                NotifyPropertyChanged("CommentTextWrap");
+                OnPropertyChanged();
             }
         }
 

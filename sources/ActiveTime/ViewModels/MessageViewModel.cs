@@ -31,7 +31,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 message = value;
-                NotifyPropertyChanged("Message");
+                OnPropertyChanged();
             }
         }
 

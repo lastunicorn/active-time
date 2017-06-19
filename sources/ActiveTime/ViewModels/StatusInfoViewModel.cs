@@ -44,7 +44,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void HandleStatusTextChanged(object s, EventArgs e)
         {
-            NotifyPropertyChanged("StatusText");
+            OnPropertyChanged("StatusText");
         }
     }
 }

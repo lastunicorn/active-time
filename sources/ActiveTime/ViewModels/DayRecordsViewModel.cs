@@ -32,7 +32,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             private set
             {
                 records = value;
-                NotifyPropertyChanged("Records");
+                OnPropertyChanged();
             }
         }
 

@@ -30,7 +30,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             set
             {
                 windowTitle = value;
-                NotifyPropertyChanged("WindowTitle");
+                OnPropertyChanged();
             }
         }
 
@@ -45,7 +45,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             Assembly assembly = Assembly.GetEntryAssembly();
             AssemblyName assemblyName = assembly.GetName();
 
-            return string.Format("ActiveTime {0}", assemblyName.Version.ToString(2));
+            return $"ActiveTime {assemblyName.Version.ToString(3)}";
         }
     }
 }
