@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Reflection;
 using DustInTheWind.ActiveTime.Common.UI;
 
@@ -21,7 +22,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainMenuViewModel MainMenuViewModel { get; private set; }
+        public MainMenuViewModel MainMenuViewModel { get; }
 
         private string windowTitle;
         public string WindowTitle
@@ -36,6 +37,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public MainViewModel(MainMenuViewModel mainMenuViewModel)
         {
+            if (mainMenuViewModel == null) throw new ArgumentNullException(nameof(mainMenuViewModel));
+
             MainMenuViewModel = mainMenuViewModel;
             windowTitle = BuildWindowTitle();
         }
