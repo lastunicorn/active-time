@@ -70,10 +70,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected virtual void OnStatusTextChanged(EventArgs e)
         {
-            if (StatusTextChanged != null)
-            {
-                StatusTextChanged(this, e);
-            }
+            StatusTextChanged?.Invoke(this, e);
         }
 
         #endregion

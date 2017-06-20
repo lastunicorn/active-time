@@ -43,25 +43,15 @@ namespace DustInTheWind.ActiveTime.Services
 
         protected virtual void OnValueChanged(EventArgs e)
         {
-            EventHandler handler = ValueChanged;
-
-            if (handler != null)
-                handler(this, e);
+            ValueChanged?.Invoke(this, e);
         }
 
         public CurrentDayRecord(IRecorderService recorder, IStatusInfoService statusInfoService, ITimeRecordRepository timeRecordRepository, IStateService stateService)
         {
-            if (recorder == null)
-                throw new ArgumentNullException("recorder");
-
-            if (statusInfoService == null)
-                throw new ArgumentNullException("statusInfoService");
-
-            if (timeRecordRepository == null)
-                throw new ArgumentNullException("timeRecordRepository");
-
-            if (stateService == null)
-                throw new ArgumentNullException("stateService");
+            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
+            if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
+            if (timeRecordRepository == null) throw new ArgumentNullException(nameof(timeRecordRepository));
+            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
 
             this.statusInfoService = statusInfoService;
             this.timeRecordRepository = timeRecordRepository;

@@ -22,6 +22,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
     xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.Common.UI;assembly=ActiveTime.Common"
+    xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Views"
 
     Title="{Binding Path=WindowTitle}"
     Height="500"
@@ -39,9 +40,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles/ButtonStylesDictionary.xaml"/>
-                <ResourceDictionary Source="../Styles/LabelStylesDictionary.xaml"/>
-                <ResourceDictionary Source="../Styles/TextBoxStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/Styles/LabelStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBoxStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="ListBox">
@@ -61,16 +62,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <DockPanel>
 
-        <ContentControl
-            DockPanel.Dock="Top"
-            regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainMenuRegion}"/>
+        <views:MainMenuView DockPanel.Dock="Top" DataContext="{Binding MainMenuViewModel}"/>
 
-        <ContentControl
-            DockPanel.Dock="Bottom"
-            regions:RegionManager.RegionName="{x:Static ui:RegionNames.StatusInfoRegion}"/>
+        <views:StatusInfoView DockPanel.Dock="Bottom" DataContext="{Binding StatusInfoViewModel}"/>
 
-        <ContentControl
-            regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainContentRegion}"/>
+        <ContentControl regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainContentRegion}"/>
 
     </DockPanel>
 

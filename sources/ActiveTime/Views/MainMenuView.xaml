@@ -25,8 +25,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="300"
-    Loaded="MainMenuView_OnLoaded">
+    d:DesignWidth="300">
 
     <UserControl.Resources>
         <ResourceDictionary>

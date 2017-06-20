@@ -14,9 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows.Controls;
-using DustInTheWind.ActiveTime.ViewModels;
 
 namespace DustInTheWind.ActiveTime.Views
 {
@@ -25,14 +23,9 @@ namespace DustInTheWind.ActiveTime.Views
     /// </summary>
     public partial class StatusInfoView : UserControl
     {
-        public StatusInfoView(StatusInfoViewModel viewModel)
+        public StatusInfoView()
         {
-            if (viewModel == null)
-                throw new ArgumentNullException("viewModel");
-
             InitializeComponent();
-
-            Loaded += (s, e) => DataContext = viewModel;
         }
     }
 }

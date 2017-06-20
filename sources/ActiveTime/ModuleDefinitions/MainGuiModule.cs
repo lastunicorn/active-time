@@ -50,9 +50,7 @@ namespace DustInTheWind.ActiveTime.ModuleDefinitions
             unityContainer.RegisterType<ICurrentDayComment, CurrentDayComment>(new ContainerControlledLifetimeManager());
 
             // Register views in regions.
-            regionManager.RegisterViewWithRegion(RegionNames.MainMenuRegion, typeof(MainMenuView));
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(FrontView));
-            regionManager.RegisterViewWithRegion(RegionNames.StatusInfoRegion, typeof(StatusInfoView));
 
             // register views in container. (Needed for view navigation.)
             unityContainer.RegisterType<object, CommentsView>(ViewNames.CommentsView);

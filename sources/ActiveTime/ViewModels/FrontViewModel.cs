@@ -106,10 +106,10 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public CommentsCommand CommentsCommand { get; private set; }
-        public TimeRecordsCommand TimeRecordsCommand { get; private set; }
-        public RefreshCommand RefreshCommand { get; private set; }
-        public DeleteCommand DeleteCommand { get; private set; }
+        public CommentsCommand CommentsCommand { get; }
+        public TimeRecordsCommand TimeRecordsCommand { get; }
+        public RefreshCommand RefreshCommand { get; }
+        public DeleteCommand DeleteCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
@@ -161,7 +161,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -171,7 +170,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-
         }
     }
 }

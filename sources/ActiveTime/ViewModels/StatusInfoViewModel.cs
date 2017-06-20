@@ -26,25 +26,31 @@ namespace DustInTheWind.ActiveTime.ViewModels
     public class StatusInfoViewModel : ViewModelBase
     {
         private readonly IStatusInfoService statusInfoService;
+        private string statusText;
 
         public string StatusText
         {
-            get { return statusInfoService.StatusText; }
-            set { statusInfoService.StatusText = value; }
+            get { return statusText; }
+            private set
+            {
+                statusText = value;
+                OnPropertyChanged();
+            }
         }
 
         public StatusInfoViewModel(IStatusInfoService statusInfoService)
         {
-            if (statusInfoService == null)
-                throw new ArgumentNullException("statusInfoService");
+            if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
 
             this.statusInfoService = statusInfoService;
             this.statusInfoService.StatusTextChanged += HandleStatusTextChanged;
+
+            statusText = this.statusInfoService.StatusText;
         }
 
         private void HandleStatusTextChanged(object s, EventArgs e)
         {
-            OnPropertyChanged("StatusText");
+            StatusText = statusInfoService.StatusText;
         }
     }
 }

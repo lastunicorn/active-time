@@ -29,7 +29,7 @@ namespace DustInTheWind.ActiveTime.Services
     /// <remarks>
     /// Need to make this class thread safe.
     /// </remarks>
-    class ShellNavigator : IShellNavigator
+    internal class ShellNavigator : IShellNavigator
     {
         private readonly IUnityContainer unityContainer;
         private readonly IRegionManager regionManager;
@@ -51,14 +51,9 @@ namespace DustInTheWind.ActiveTime.Services
         /// </summary>
         public ShellNavigator(IUnityContainer unityContainer, IRegionManager regionManager, DispatcherService dispatcherService)
         {
-            if (unityContainer == null)
-                throw new ArgumentNullException("unityContainer");
-
-            if (regionManager == null)
-                throw new ArgumentNullException("regionManager");
-
-            if (dispatcherService == null)
-                throw new ArgumentNullException("dispatcherService");
+            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
+            if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
+            if (dispatcherService == null) throw new ArgumentNullException(nameof(dispatcherService));
 
             this.unityContainer = unityContainer;
             this.regionManager = regionManager;
@@ -87,8 +82,7 @@ namespace DustInTheWind.ActiveTime.Services
         /// <param name="parameters">The list of parameters to be passed to the destination shell.</param>
         public void Navigate(string shellName, Dictionary<string, object> parameters = null)
         {
-            if (shellName == null)
-                throw new ArgumentNullException("shellName");
+            if (shellName == null) throw new ArgumentNullException(nameof(shellName));
 
             if (windows.ContainsKey(shellName))
             {

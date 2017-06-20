@@ -41,10 +41,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
 
         protected virtual void OnCurrentDateChanged(EventArgs e)
         {
-            EventHandler handler = CurrentDateChanged;
-
-            if (handler != null)
-                handler(this, e);
+            CurrentDateChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -52,8 +49,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
         /// </summary>
         public StateService(IStatusInfoService statusInfoService)
         {
-            if (statusInfoService == null)
-                throw new ArgumentNullException("statusInfoService");
+            if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
 
             this.statusInfoService = statusInfoService;
 

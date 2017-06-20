@@ -30,19 +30,13 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private readonly IShellNavigator shellNavigator;
         private readonly IRecorderService recorder;
 
-        public ICommand ExportCommand { get; private set; }
-
-        public ICommand StatisticsCommand { get; private set; }
-
-        public ICommand OverviewCommand { get; private set; }
-
-        public ICommand ExitCommand { get; private set; }
-
-        public ICommand AboutCommand { get; private set; }
-
-        public ICommand StartCommand { get; private set; }
-
-        public ICommand StopCommand { get; private set; }
+        public ICommand ExportCommand { get; }
+        public ICommand StatisticsCommand { get; }
+        public ICommand OverviewCommand { get; }
+        public ICommand ExitCommand { get; }
+        public ICommand AboutCommand { get; }
+        public ICommand StartCommand { get; }
+        public ICommand StopCommand { get; }
 
         public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder)
         {

@@ -29,12 +29,12 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// <summary>
         /// Gets the date for which the current instance contains information.
         /// </summary>
-        public DateTime Date { get; private set; }
+        public DateTime Date { get; }
 
         /// <summary>
         /// Gets or sets the records representing the active time.
         /// </summary>
-        public List<DayTimeInterval> ActiveTimeRecords { get; private set; }
+        public List<DayTimeInterval> ActiveTimeRecords { get; }
 
         public string Comment { get; set; }
 
@@ -193,7 +193,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             foreach (TimeRecord timeRecord in timeRecords)
             {
                 if (timeRecord == null)
-                    throw new ArgumentException("The list of TimeRecords contains null items.", "timeRecords");
+                    throw new ArgumentException("The list of TimeRecords contains null items.", nameof(timeRecords));
 
                 if (dayRecord == null)
                     dayRecord = new DayRecord(timeRecord.Date);
