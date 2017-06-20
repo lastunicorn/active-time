@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,32 +15,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows;
-using System.Windows.Controls;
-using DustInTheWind.ActiveTime.ViewModels;
+using System.Windows.Input;
 
-namespace DustInTheWind.ActiveTime.Views
+namespace DustInTheWind.ActiveTime.Commands
 {
-    /// <summary>
-    /// Interaction logic for MainView.xaml
-    /// </summary>
-    internal partial class FrontView : UserControl
+    internal class DeleteCommand : ICommand
     {
-        private readonly FrontViewModel viewModel;
+        public event EventHandler CanExecuteChanged;
 
-        public FrontView(FrontViewModel viewModel)
+        public bool CanExecute(object parameter)
         {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            InitializeComponent();
-
-            this.viewModel = viewModel;
+            return true;
         }
 
-        private void MainView_OnLoaded(object sender, RoutedEventArgs e)
+        public void Execute(object parameter)
         {
-            DataContext = viewModel;
-            viewModel.RefreshCommand.Execute(null);
         }
     }
 }

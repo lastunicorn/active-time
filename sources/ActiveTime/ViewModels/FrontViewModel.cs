@@ -15,24 +15,20 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
+using DustInTheWind.ActiveTime.Commands;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
-    public class FrontViewModel : ViewModelBase, INavigationAware
+    internal class FrontViewModel : ViewModelBase, INavigationAware
     {
-        private readonly IStatusInfoService statusInfoService;
-        private readonly IRegionManager regionManager;
         private readonly IStateService stateService;
-
         private readonly ICurrentDayRecord currentDayRecord;
-        
+
         private DateTime? date;
 
         public DateTime? Date
@@ -40,7 +36,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             get { return date; }
             set
             {
-                if(date == value)
+                if (date == value)
                     return;
 
                 date = value;
@@ -110,19 +106,10 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public ICommand CommentsCommand { get; private set; }
-
-        public ICommand TimeRecordsCommand { get; private set; }
-
-        public ICommand RefreshCommand { get; private set; }
-
-        public ICommand DeleteCommand { get; private set; }
-
-        private readonly DayTimeInterval aaa = new DayTimeInterval(TimeSpan.Zero, TimeSpan.Zero);
-        public DayTimeInterval AAA
-        {
-            get { return aaa; }
-        }
+        public CommentsCommand CommentsCommand { get; private set; }
+        public TimeRecordsCommand TimeRecordsCommand { get; private set; }
+        public RefreshCommand RefreshCommand { get; private set; }
+        public DeleteCommand DeleteCommand { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
@@ -134,15 +121,13 @@ namespace DustInTheWind.ActiveTime.ViewModels
             if (stateService == null) throw new ArgumentNullException(nameof(stateService));
             if (currentDayRecord == null) throw new ArgumentNullException(nameof(currentDayRecord));
 
-            this.statusInfoService = statusInfoService;
-            this.regionManager = regionManager;
             this.stateService = stateService;
             this.currentDayRecord = currentDayRecord;
 
-            CommentsCommand = new DelegateCommand(OnCommentsCommandExecuted);
-            TimeRecordsCommand = new DelegateCommand(OnTimeRecordsCommandExecuted);
-            RefreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
-            DeleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
+            CommentsCommand = new CommentsCommand(regionManager, stateService);
+            TimeRecordsCommand = new TimeRecordsCommand(regionManager, stateService);
+            RefreshCommand = new RefreshCommand(statusInfoService, currentDayRecord);
+            DeleteCommand = new DeleteCommand();
 
             Date = stateService.CurrentDate;
 
@@ -160,89 +145,17 @@ namespace DustInTheWind.ActiveTime.ViewModels
             Date = stateService.CurrentDate;
         }
 
-        private void OnDeleteCommandExecuted(object item)
-        {
-        }
-
-        private void OnRefreshCommandExecuted()
-        {
-            currentDayRecord.Update();
-            statusInfoService.SetStatus("Refreshed.");
-        }
-
-        private void OnCommentsCommandExecuted()
-        {
-            if (stateService.CurrentDate == null)
-                return;
-
-            //ClearRegion(RegionNames.MainContentRegion);
-            //ClearRegion(RegionNames.RecordsRegion);
-            //regionManager.Regions.Remove(RegionNames.RecordsRegion);
-
-            regionManager.RequestNavigate(RegionNames.RecordsRegion, ViewNames.CommentsView);
-        }
-
-        private void OnTimeRecordsCommandExecuted()
-        {
-            if (stateService.CurrentDate == null)
-                return;
-
-            //ClearRegion(RegionNames.MainContentRegion);
-            //ClearRegion(RegionNames.RecordsRegion);
-            //regionManager.Regions.Remove(RegionNames.RecordsRegion);
-
-            regionManager.RequestNavigate(RegionNames.RecordsRegion, ViewNames.DayRecordsView);
-        }
-
-        private void ClearRegion(string regionName)
-        {
-            IRegion mainContentRegion = regionManager.Regions[regionName];
-            IViewsCollection activeViewsInRegion = mainContentRegion.ActiveViews;
-
-            foreach (object view in activeViewsInRegion)
-            {
-                mainContentRegion.Remove(view);
-            }
-        }
-
         private void UpdateDisplayedData()
         {
-            UpdateRecords();
-            UpdateActiveTime();
-            UpdateTotalTime();
-            UpdateBeginTime();
-            UpdateEstimatedEndTime();
-        }
-
-        private void UpdateRecords()
-        {
             DayRecord dayRecord = currentDayRecord.Value;
+
             Records = dayRecord?.GetTimeRecords(false);
-        }
-
-        private void UpdateActiveTime()
-        {
-            DayRecord dayRecord = currentDayRecord.Value;
             ActiveTime = dayRecord?.GetTotalActiveTime() ?? TimeSpan.Zero;
-        }
-
-        private void UpdateTotalTime()
-        {
-            DayRecord dayRecord = currentDayRecord.Value;
             TotalTime = dayRecord?.GetTotalTime() ?? TimeSpan.Zero;
-        }
-
-        private void UpdateBeginTime()
-        {
-            DayRecord dayRecord = currentDayRecord.Value;
-
             BeginTime = dayRecord == null
                 ? TimeSpan.Zero
                 : (dayRecord.GetBeginTime() ?? TimeSpan.Zero);
-        }
 
-        private void UpdateEstimatedEndTime()
-        {
             EstimatedEndTime = BeginTime + TimeSpan.FromHours(9);
         }
 
