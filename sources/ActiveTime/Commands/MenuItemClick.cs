@@ -45,16 +45,14 @@ namespace DustInTheWind.ActiveTime.Commands
 
         public static ICommand GetCommand(MenuItem menuItem)
         {
-            if (menuItem == null)
-                throw new ArgumentNullException("menuItem");
+            if (menuItem == null) throw new ArgumentNullException(nameof(menuItem));
 
             return menuItem.GetValue(CommandProperty) as ICommand;
         }
 
         public static void SetCommand(MenuItem menuItem, ICommand command)
         {
-            if (menuItem == null)
-                throw new ArgumentNullException("menuItem");
+            if (menuItem == null) throw new ArgumentNullException(nameof(menuItem));
 
             menuItem.SetValue(CommandProperty, command);
         }
@@ -79,16 +77,14 @@ namespace DustInTheWind.ActiveTime.Commands
 
         public static object GetCommandParameter(MenuItem menuItem)
         {
-            if (menuItem == null)
-                throw new ArgumentNullException("menuItem");
+            if (menuItem == null) throw new ArgumentNullException(nameof(menuItem));
 
             return menuItem.GetValue(CommandParameterProperty);
         }
 
         public static void SetCommandParameter(MenuItem menuItem, object parameter)
         {
-            if (menuItem == null)
-                throw new ArgumentNullException("menuItem");
+            if (menuItem == null) throw new ArgumentNullException(nameof(menuItem));
 
             menuItem.SetValue(CommandParameterProperty, parameter);
         }
@@ -124,16 +120,14 @@ namespace DustInTheWind.ActiveTime.Commands
 
         public static object GetAlez(MenuItem menuItem)
         {
-            if (menuItem == null)
-                throw new ArgumentNullException("menuItem");
+            if (menuItem == null) throw new ArgumentNullException(nameof(menuItem));
 
             return menuItem.GetValue(AlezProperty);
         }
 
         public static void SetAlez(MenuItem menuItem, object alez)
         {
-            if (menuItem == null)
-                throw new ArgumentNullException("menuItem");
+            if (menuItem == null) throw new ArgumentNullException(nameof(menuItem));
 
             menuItem.SetValue(AlezProperty, alez);
         }

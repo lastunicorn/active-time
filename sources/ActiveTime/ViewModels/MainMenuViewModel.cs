@@ -46,14 +46,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder)
         {
-            if (applicationService == null)
-                throw new ArgumentNullException("applicationService");
-
-            if (shellNavigator == null)
-                throw new ArgumentNullException("shellNavigator");
-
-            if (recorder == null)
-                throw new ArgumentNullException("recorder");
+            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
+            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
 
             this.applicationService = applicationService;
             this.shellNavigator = shellNavigator;

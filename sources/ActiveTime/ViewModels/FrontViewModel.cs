@@ -32,11 +32,22 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private readonly IStateService stateService;
 
         private readonly ICurrentDayRecord currentDayRecord;
+        
+        private DateTime? date;
 
         public DateTime? Date
         {
-            get { return stateService.CurrentDate; }
-            set { stateService.CurrentDate = value; }
+            get { return date; }
+            set
+            {
+                if(date == value)
+                    return;
+
+                date = value;
+                OnPropertyChanged();
+
+                stateService.CurrentDate = value;
+            }
         }
 
         private TimeSpan activeTime;
@@ -118,17 +129,10 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// </summary>
         public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, IStateService stateService, ICurrentDayRecord currentDayRecord)
         {
-            if (statusInfoService == null)
-                throw new ArgumentNullException("statusInfoService");
-
-            if (regionManager == null)
-                throw new ArgumentNullException("regionManager");
-
-            if (stateService == null)
-                throw new ArgumentNullException("stateService");
-
-            if (currentDayRecord == null)
-                throw new ArgumentNullException("currentDayRecord");
+            if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
+            if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
+            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
+            if (currentDayRecord == null) throw new ArgumentNullException(nameof(currentDayRecord));
 
             this.statusInfoService = statusInfoService;
             this.regionManager = regionManager;
@@ -139,6 +143,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
             TimeRecordsCommand = new DelegateCommand(OnTimeRecordsCommandExecuted);
             RefreshCommand = new DelegateCommand(OnRefreshCommandExecuted);
             DeleteCommand = new DelegateCommand<object>(OnDeleteCommandExecuted);
+
+            Date = stateService.CurrentDate;
 
             stateService.CurrentDateChanged += HandleStateService_CurrentDateChanged;
             currentDayRecord.ValueChanged += HandleCurrentDayRecordChanged;
@@ -151,7 +157,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void HandleStateService_CurrentDateChanged(object sender, EventArgs e)
         {
-            OnPropertyChanged("Date");
+            Date = stateService.CurrentDate;
         }
 
         private void OnDeleteCommandExecuted(object item)
@@ -211,36 +217,27 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private void UpdateRecords()
         {
             DayRecord dayRecord = currentDayRecord.Value;
-
-            Records = dayRecord != null
-                ? dayRecord.GetTimeRecords(false)
-                : null;
+            Records = dayRecord?.GetTimeRecords(false);
         }
 
         private void UpdateActiveTime()
         {
             DayRecord dayRecord = currentDayRecord.Value;
-
-            ActiveTime = dayRecord != null
-                ? dayRecord.GetTotalActiveTime()
-                : TimeSpan.Zero;
+            ActiveTime = dayRecord?.GetTotalActiveTime() ?? TimeSpan.Zero;
         }
 
         private void UpdateTotalTime()
         {
             DayRecord dayRecord = currentDayRecord.Value;
-
-            TotalTime = dayRecord != null
-                ? dayRecord.GetTotalTime()
-                : TimeSpan.Zero;
+            TotalTime = dayRecord?.GetTotalTime() ?? TimeSpan.Zero;
         }
 
         private void UpdateBeginTime()
         {
             DayRecord dayRecord = currentDayRecord.Value;
 
-            BeginTime = dayRecord == null 
-                ? TimeSpan.Zero 
+            BeginTime = dayRecord == null
+                ? TimeSpan.Zero
                 : (dayRecord.GetBeginTime() ?? TimeSpan.Zero);
         }
 
@@ -251,7 +248,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            
+
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -261,7 +258,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+
         }
     }
 }

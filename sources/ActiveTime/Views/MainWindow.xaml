@@ -24,8 +24,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.Common.UI;assembly=ActiveTime.Common"
 
     Title="{Binding Path=WindowTitle}"
-    Height="400"
-    Width="400"
+    Height="500"
+    Width="500"
     ResizeMode="CanResizeWithGrip"
     MinWidth="400"
     MinHeight="400"

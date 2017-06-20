@@ -38,7 +38,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             set
             {
                 if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
-                    throw new ArgumentOutOfRangeException("value", "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
                 startTime = value;
             }
@@ -59,7 +59,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             set
             {
                 if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
-                    throw new ArgumentOutOfRangeException("value", "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
                 endTime = value;
             }
@@ -74,10 +74,10 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         public DayTimeInterval(TimeSpan startTime, TimeSpan endTime)
         {
             if (startTime < TimeSpan.Zero || startTime >= TimeSpan.FromHours(24))
-                throw new ArgumentOutOfRangeException("startTime", "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+                throw new ArgumentOutOfRangeException(nameof(startTime), "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
             if (endTime < TimeSpan.Zero || endTime >= TimeSpan.FromHours(24))
-                throw new ArgumentOutOfRangeException("endTime", "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+                throw new ArgumentOutOfRangeException(nameof(endTime), "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
             this.startTime = startTime;
             this.endTime = endTime;
