@@ -22,8 +22,13 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
     /// <summary>
     /// Represents an interval of time within a day.
     /// </summary>
-    public class TimeRecord : EntityBase
+    public class TimeRecord
     {
+        /// <summary>
+        /// Gets or sets an integer value that uniquely identifies the comment.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Gets or sets the date for which this record is created.
         /// </summary>

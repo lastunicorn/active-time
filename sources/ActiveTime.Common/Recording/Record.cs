@@ -26,13 +26,13 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// <summary>
         /// Gets the date for which this record is created.
         /// </summary>
-        public DateTime Date { get; private set; }
+        public DateTime Date { get; }
 
 
         /// <summary>
         /// Gets the time of day representing the start time.
         /// </summary>
-        public DayTimeInterval TimeInterval { get; private set; }
+        public DayTimeInterval TimeInterval { get; }
 
 
         /// <summary>

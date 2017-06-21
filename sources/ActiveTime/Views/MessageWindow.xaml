@@ -33,7 +33,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Colors.xaml"/>
-                <ResourceDictionary Source="/Styles/ButtonStylesDictionary.xaml"/>
+                <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

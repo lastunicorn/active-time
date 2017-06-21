@@ -61,7 +61,6 @@
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Persistence\DayComment.cs" />
-    <Compile Include="Persistence\EntityBase.cs" />
     <Compile Include="Persistence\TimeRecord.cs" />
     <Compile Include="Persistence\TimeRecordType.cs" />
     <Compile Include="Events\ApplicationExitEvent.cs" />

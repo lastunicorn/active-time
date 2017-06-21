@@ -31,19 +31,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/MenuStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Menu Height="Auto" Background="{StaticResource MenuNormalBackgroundColor}">
+    <Menu Height="Auto">
 
-        <Menu.Resources>
-            <Style TargetType="MenuItem">
-                <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.MenuTextBrushKey}}"/>
-            </Style>
-        </Menu.Resources>
-
-        <MenuItem Header="_File"  Foreground="{StaticResource MenuNormalForegroundColor}">
+        <MenuItem Header="_File">
             <MenuItem Header="_Export..." commands:MenuItemClick.Command="{Binding ExportCommand}" />
             <Separator Margin="0" />
             <MenuItem Header="_Statistics" commands:MenuItemClick.Command="{Binding StatisticsCommand}" />
@@ -52,15 +47,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <MenuItem Header="E_xit" commands:MenuItemClick.Command="{Binding ExitCommand}" />
         </MenuItem>
 
-        <MenuItem Header="_Recorder"  Foreground="{StaticResource MenuNormalForegroundColor}">
+        <MenuItem Header="_Recorder">
             <MenuItem Header="St_art" commands:MenuItemClick.Command="{Binding StartCommand}" />
             <MenuItem Header="St_op" commands:MenuItemClick.Command="{Binding StopCommand}" />
         </MenuItem>
 
-        <MenuItem Header="_Help"  Foreground="{StaticResource MenuNormalForegroundColor}">
+        <MenuItem Header="_Help">
             <MenuItem Header="_About" commands:MenuItemClick.Command="{Binding AboutCommand}" />
         </MenuItem>
 
     </Menu>
 
 </UserControl>
+

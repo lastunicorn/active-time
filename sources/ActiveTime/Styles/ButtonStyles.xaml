@@ -21,30 +21,29 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Colors.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackgroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource ButtonNormalForegroundColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorderColor}"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="8 3"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorderColor}"/>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
+                        SnapsToDevicePixels="True"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="1">
+                        BorderThickness="1"
+                        Padding="{TemplateBinding Padding}">
                         
                         <ContentPresenter
-                            x:Name="MyContentPresenter"
-                            Content="{TemplateBinding Content}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Margin="{TemplateBinding Padding}"/>
+                            VerticalAlignment="Center"/>
                         
                     </Border>
 

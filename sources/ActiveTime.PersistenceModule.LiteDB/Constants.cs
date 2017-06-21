@@ -14,13 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Common.Persistence
+namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 {
-    public class EntityBase
+    internal class Constants
     {
-        /// <summary>
-        /// Gets or sets an integer value that uniquely identifies the comment.
-        /// </summary>
-        public int Id { get; set; }
+        public const string DatabaseFileName = @"ActiveTime.LiteDB.db";
     }
 }

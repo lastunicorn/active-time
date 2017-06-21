@@ -21,17 +21,22 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
     /// <summary>
     /// Represents an interval of time within a day.
     /// </summary>
-    public class DayComment : EntityBase
+    public class DayComment
     {
+        /// <summary>
+        /// Gets or sets an integer value that uniquely identifies the comment.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Gets or sets the date for which this comment is created.
         /// </summary>
-        public virtual DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Gets or sets the comment text.
         /// </summary>
-        public virtual string Comment { get; set; }
+        public string Comment { get; set; }
         
         /// <summary>
         /// Compares the business keys.

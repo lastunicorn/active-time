@@ -24,8 +24,8 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 {
     internal class DayCommentRepository : IDayCommentRepository
     {
-        private const string ConnectionString = @"MyData.db";
-        private const string CollectionName = "daycomment";
+        private const string ConnectionString = Constants.DatabaseFileName;
+        private const string CollectionName = "DayComment";
 
         public void Add(DayComment comment)
         {

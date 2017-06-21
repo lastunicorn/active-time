@@ -34,12 +34,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     Loaded="MainView_OnLoaded">
 
     <UserControl.Resources>
+        
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Colors.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Styles/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
             <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+            
         </ResourceDictionary>
+        
     </UserControl.Resources>
 
     <Grid Margin="5">

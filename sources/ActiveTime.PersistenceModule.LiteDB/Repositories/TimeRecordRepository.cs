@@ -24,8 +24,8 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 {
     internal class TimeRecordRepository : ITimeRecordRepository
     {
-        private const string ConnectionString = @"MyData.db";
-        private const string CollectionName = "timerecord";
+        private const string ConnectionString = Constants.DatabaseFileName;
+        private const string CollectionName = "TimeRecord";
 
         public void Add(TimeRecord timeRecord)
         {

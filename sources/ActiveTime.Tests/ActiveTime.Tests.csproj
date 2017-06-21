@@ -95,14 +95,6 @@
     <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\UpdateTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\UnitOfWorkTests.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\DayCommentRepositoryTests\DayCommentAssertUtil.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\DayCommentRepositoryTests\DayCommentRepositoryCrudTests.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\DayCommentRepositoryTests\DayCommentRepositoryGetByDateTests.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\RepositoryCrudTestsBase.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\RepositoryTestsBase.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\TimeRecordRepositoryTests\TimeRecordAssertUtil.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\TimeRecordRepositoryTests\TimeRecordRepositoryCrudTests.cs" />
-    <Compile Include="PersistenceModule.NHibernate\Repositories\TimeRecordRepositoryTests\TimeRecordRepositoryGetByDateTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\ConstructorTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\InternalTimerTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\GetTimeFromLastStopTests.cs" />

@@ -35,7 +35,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <ResourceDictionary>
             
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/CheckBoxStylesDictionary.xaml" />
+                <ResourceDictionary Source="/Styles/CheckBoxStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
             <converters:BooleanConverter x:Key="BooleanConverter" />

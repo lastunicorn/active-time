@@ -34,7 +34,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <StatusBar
         Background="{StaticResource  StatusBarBackground}"
         Foreground="{StaticResource StatusBarForeground}">
