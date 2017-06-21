@@ -64,7 +64,15 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <SolidColorBrush x:Key="TextBoxNormalBackgroundColor" Color="#333337"/>
     <SolidColorBrush x:Key="TextBoxNormalForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="TextBoxNormalBorderColor" Color="#6a6a75"/>
+    <SolidColorBrush x:Key="TextBoxNormalBorderColor" Color="#3f3f46"/>
+
+    <SolidColorBrush x:Key="TextBoxOverBackgroundColor" Color="#333337"/>
+    <SolidColorBrush x:Key="TextBoxOverForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="TextBoxOverBorderColor" Color="#6a6a75"/>
+
+    <SolidColorBrush x:Key="TextBoxFocusBackgroundColor" Color="#333337"/>
+    <SolidColorBrush x:Key="TextBoxFocusForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="TextBoxFocusBorderColor" Color="#3399ff"/>
 
     <!-- Status Bar -->
 

@@ -25,9 +25,43 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="TextBox">
+
         <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource TextBoxNormalForegroundColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxNormalForegroundColor}"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+
+                    <Border
+                        x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        SnapsToDevicePixels="true"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1">
+
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="1"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxOverForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="Background" Value="{StaticResource TextBoxFocusBackgroundColor}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxFocusForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxFocusBorderColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>
