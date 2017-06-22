@@ -30,14 +30,12 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/StatusBarStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StatusBar
-        Background="{StaticResource  StatusBarBackground}"
-        Foreground="{StaticResource StatusBarForeground}">
+    <StatusBar>
 
         <StatusBarItem
             MinHeight="23"
