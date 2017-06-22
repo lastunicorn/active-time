@@ -30,6 +30,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <Setter Property="Foreground" Value="{StaticResource TextBoxNormalForegroundColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
         <Setter Property="CaretBrush" Value="{StaticResource TextBoxNormalForegroundColor}"/>
+        <Setter Property="Padding" Value="2"/>
 
         <Setter Property="Template">
             <Setter.Value>

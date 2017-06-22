@@ -39,9 +39,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Menu Height="Auto">
 
         <MenuItem Header="_File">
-            <MenuItem Header="_Export..." commands:MenuItemClick.Command="{Binding ExportCommand}" />
-            <Separator Margin="0" />
-            <MenuItem Header="_Statistics" commands:MenuItemClick.Command="{Binding StatisticsCommand}" />
             <MenuItem Header="_Overview" commands:MenuItemClick.Command="{Binding OverviewCommand}" />
             <Separator Margin="0" />
             <MenuItem Header="E_xit" commands:MenuItemClick.Command="{Binding ExitCommand}" />

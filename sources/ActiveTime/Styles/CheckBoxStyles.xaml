@@ -28,7 +28,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Style TargetType="{x:Type CheckBox}">
         <Setter Property="Background" Value="{StaticResource CheckBoxNormalBackgroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource CheckBoxNormalForegroundColor}"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <!--<Setter Property="FocusVisualStyle" Value="{x:Null}"/>-->
         
         <Setter Property="Template">
             <Setter.Value>
@@ -125,9 +125,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                         </MultiTrigger>
 
                         <!-- Focused -->
-                        <Trigger Property="IsFocused" Value="True">
+                        <!--<Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckBoxOverBackgroundColor}"></Setter>
-                        </Trigger>
+                        </Trigger>-->
 
                     </ControlTemplate.Triggers>
 

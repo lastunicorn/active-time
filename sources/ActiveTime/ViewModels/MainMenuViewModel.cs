@@ -21,23 +21,16 @@ using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using Microsoft.Practices.Prism.Commands;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
     public class MainMenuViewModel : ViewModelBase
     {
-        private readonly IApplicationService applicationService;
-        private readonly IShellNavigator shellNavigator;
-        private readonly IRecorderService recorder;
-
-        public ICommand ExportCommand { get; }
-        public ICommand StatisticsCommand { get; }
         public ICommand OverviewCommand { get; }
         public ICommand ExitCommand { get; }
-        public ICommand AboutCommand { get; }
         public ICommand StartCommand { get; }
         public ICommand StopCommand { get; }
+        public ICommand AboutCommand { get; }
 
         public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder)
         {
@@ -45,40 +38,11 @@ namespace DustInTheWind.ActiveTime.ViewModels
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
             if (recorder == null) throw new ArgumentNullException(nameof(recorder));
 
-            this.applicationService = applicationService;
-            this.shellNavigator = shellNavigator;
-            this.recorder = recorder;
-
-            ExportCommand = new DelegateCommand(OnExportCommandExecuted);
-            StatisticsCommand = new DelegateCommand(OnStatisticsCommandExecuted);
-            OverviewCommand = new DelegateCommand(OnOverviewCommandExecuted);
-            ExitCommand = new DelegateCommand(OnExitCommandExecuted);
-            AboutCommand = new DelegateCommand(OnAboutCommandExecuted);
+            OverviewCommand = new OverviewCommand(shellNavigator);
+            ExitCommand = new ExitCommand(applicationService);
             StartCommand = new StartRecorderCommand(recorder);
             StopCommand = new StopRecorderCommand(recorder);
-        }
-
-        private void OnExportCommandExecuted()
-        {
-        }
-
-        private void OnStatisticsCommandExecuted()
-        {
-        }
-
-        private void OnOverviewCommandExecuted()
-        {
-            shellNavigator.Navigate(ShellNames.OverviewShell);
-        }
-
-        private void OnExitCommandExecuted()
-        {
-            applicationService.Exit();
-        }
-
-        private void OnAboutCommandExecuted()
-        {
-            shellNavigator.Navigate(ShellNames.AboutShell);
+            AboutCommand = new AboutCommand(shellNavigator);
         }
     }
 }
