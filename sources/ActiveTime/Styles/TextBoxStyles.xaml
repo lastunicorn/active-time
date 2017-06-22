@@ -22,6 +22,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colors.xaml"/>
+        <ResourceDictionary Source="ScrollBarStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="TextBox">
