@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Commands;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
@@ -53,8 +54,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
             OverviewCommand = new DelegateCommand(OnOverviewCommandExecuted);
             ExitCommand = new DelegateCommand(OnExitCommandExecuted);
             AboutCommand = new DelegateCommand(OnAboutCommandExecuted);
-            StartCommand = new DelegateCommand(OnStartCommandExecuted);
-            StopCommand = new DelegateCommand(OnStopCommandExecuted);
+            StartCommand = new StartRecorderCommand(recorder);
+            StopCommand = new StopRecorderCommand(recorder);
         }
 
         private void OnExportCommandExecuted()
@@ -78,16 +79,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private void OnAboutCommandExecuted()
         {
             shellNavigator.Navigate(ShellNames.AboutShell);
-        }
-
-        private void OnStartCommandExecuted()
-        {
-            recorder.Start();
-        }
-
-        private void OnStopCommandExecuted()
-        {
-            recorder.Stop();
         }
     }
 }

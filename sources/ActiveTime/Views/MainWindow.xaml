@@ -45,19 +45,19 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="ListBox">
-                <Setter Property="Background" Value="#333337"/>
-                <Setter Property="Foreground" Value="#e6e6e6"/>
+            
+
+            <Style x:Key="WindowStyle" TargetType="Window">
+                <Setter Property="Background" Value="{StaticResource MainBackground}"/>
+                <Setter Property="Foreground" Value="{StaticResource MainForeground}"/>
             </Style>
+
         </ResourceDictionary>
 
     </Window.Resources>
 
     <Window.Style>
-        <Style TargetType="Window">
-            <Setter Property="Background" Value="{StaticResource MainBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource MainForeground}"/>
-        </Style>
+        <StaticResource ResourceKey="WindowStyle"/>
     </Window.Style>
 
     <DockPanel>
@@ -66,7 +66,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <views:StatusInfoView DockPanel.Dock="Bottom" DataContext="{Binding StatusInfoViewModel}"/>
 
-        <ContentControl regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainContentRegion}"/>
+        <ContentControl regions:RegionManager.RegionName="{x:Static ui:RegionNames.MainContentRegion}" Focusable="False"/>
 
     </DockPanel>
 

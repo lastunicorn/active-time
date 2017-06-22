@@ -32,15 +32,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     Loaded="MainView_OnLoaded">
 
     <UserControl.Resources>
-        
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/ScrollBarStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ListBoxStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        
+
     </UserControl.Resources>
-    
+
     <Grid Margin="0">
 
         <Grid.ColumnDefinitions>
@@ -67,15 +68,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
             <ListBox.Resources>
                 <converters:RecordConverter x:Key="RecordConverter" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#3f3f46"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#e6e6e6"/>
             </ListBox.Resources>
 
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
-                    
+
                     <TextBlock
                         Padding="10,1,0,1"
                         Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
-                    
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -86,16 +89,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     <MenuItem Header="Merge" Click="menuItemMerge_Click" IsEnabled="False"/>
                     <MenuItem Header="Split" Click="menuItemSplit_Click" IsEnabled="False"/>
                     <Separator Margin="0"/>
-                    
+
                     <MenuItem
                         Header="Delete"
                         commands:MenuItemClick.Command="{Binding DeleteCommand}"
                         commands:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, UpdateSourceTrigger=Explicit}"/>
-                    
+
                 </ContextMenu>
             </ListBox.ContextMenu>
 
         </ListBox>
+
     </Grid>
 
 </UserControl>

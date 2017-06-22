@@ -24,18 +24,17 @@ namespace DustInTheWind.ActiveTime.ViewModels
     public class MessageViewModel : ViewModelBase, IShell
     {
         private string message;
+        private Dictionary<string, object> navigationParameters;
 
         public string Message
         {
             get { return message; }
-            set
+            private set
             {
                 message = value;
                 OnPropertyChanged();
             }
         }
-
-        private Dictionary<string, object> navigationParameters;
 
         public Dictionary<string, object> NavigationParameters
         {
@@ -60,7 +59,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             bool containsTextKey = navigationParameters.ContainsKey("Text") && navigationParameters["Text"] is string;
 
             if (containsTextKey)
-                Message = navigationParameters["Text"] as string;
+                Message = (string)navigationParameters["Text"];
         }
     }
 }

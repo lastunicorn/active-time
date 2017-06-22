@@ -77,8 +77,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\StartRecorderCommand.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\RefreshCommand.cs" />
+    <Compile Include="Commands\StopRecorderCommand.cs" />
     <Compile Include="Commands\TimeRecordsCommand.cs" />
     <Compile Include="Commands\CommentsCommand.cs" />
     <Compile Include="Commands\CustomDelegateCommand.cs" />
@@ -192,6 +194,10 @@
     <Page Include="Styles\CheckBoxIconTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ListBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\MenuStyles.xaml">
       <SubType>Designer</SubType>

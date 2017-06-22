@@ -37,8 +37,15 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="{StaticResource MainBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource MainForeground}"/>
+        </Style>
+    </Window.Style>
 
-    <DockPanel Background="{StaticResource MainBackground}">
+    <DockPanel>
 
         <Button
             DockPanel.Dock="Bottom"

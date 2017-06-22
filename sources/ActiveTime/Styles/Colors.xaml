@@ -115,4 +115,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     
     <SolidColorBrush x:Key="ArrowOpenedBackground" Color="#007ACC"/>
 
+    <!-- ListBox -->
+
+    <SolidColorBrush x:Key="ListBoxBackground" Color="#333337"/>
+    <SolidColorBrush x:Key="ListBoxForeground" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="ListBoxBorder" Color="#3f3f46"/>
+    <SolidColorBrush x:Key="ListBoxOverBorderColor" Color="#6a6a75"/>
+    <SolidColorBrush x:Key="ListBoxFocusBorderColor" Color="#3399ff"/>
+
+    <SolidColorBrush x:Key="ListBoxItemNormalColor" Color="Transparent"/>
+    <SolidColorBrush x:Key="ListBoxItemOverColor" Color="#6a6a75"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedColor" Color="#3399ff"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedInactiveColor" Color="#3f3f46"/>
+
 </ResourceDictionary>
