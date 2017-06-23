@@ -35,7 +35,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.ModuleDefinitions
 
         public void Initialize()
         {
-            //unityContainer.RegisterType<IUnitOfWork, UnitOfWork>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IUnitOfWork, UnitOfWork>(new ContainerControlledLifetimeManager());
 
             unityContainer.RegisterType<ITimeRecordRepository, TimeRecordRepository>();
             unityContainer.RegisterType<IDayCommentRepository, DayCommentRepository>();
