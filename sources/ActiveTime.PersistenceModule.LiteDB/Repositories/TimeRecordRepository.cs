@@ -24,54 +24,90 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 {
     internal class TimeRecordRepository : ITimeRecordRepository
     {
-        private const string ConnectionString = Constants.DatabaseFileName;
         private const string CollectionName = "TimeRecord";
+
+        private readonly IUnitOfWork unitOfWork;
+
+        public TimeRecordRepository(IUnitOfWork unitOfWork)
+        {
+            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+
+            this.unitOfWork = unitOfWork;
+        }
 
         public void Add(TimeRecord timeRecord)
         {
-            using (var db = new LiteDatabase(ConnectionString))
+            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+
+            bool exists = timeRecords
+                .Find(x =>
+                    x.Date == timeRecord.Date &&
+                    x.StartTime == timeRecord.StartTime &&
+                    x.EndTime == timeRecord.EndTime &&
+                    x.RecordType == timeRecord.RecordType)
+                .Any();
+
+            if (exists)
             {
-                LiteCollection<TimeRecord> timeRecords = db.GetCollection<TimeRecord>(CollectionName);
-                timeRecords.Insert(timeRecord);
+                string errorMessage = string.Format("Error adding the time record '{0}' into the database.", timeRecord);
+                throw new PersistenceException(errorMessage);
             }
+
+            timeRecords.Insert(timeRecord);
         }
 
         public void Update(TimeRecord timeRecord)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<TimeRecord> timeRecords = db.GetCollection<TimeRecord>(CollectionName);
-                timeRecords.Update(timeRecord);
-            }
+            if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
+
+            if (timeRecord.Id <= 0)
+                throw new PersistenceException("The id of the time record should be a positive integer.");
+
+            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+
+            bool exists = timeRecords
+                .Find(x => x.Id == timeRecord.Id)
+                .Any();
+
+            if (!exists)
+                throw new PersistenceException("There is no record with the specified id to update.");
+
+            timeRecords.Update(timeRecord);
         }
 
         public void Delete(TimeRecord timeRecord)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<TimeRecord> timeRecords = db.GetCollection<TimeRecord>(CollectionName);
-                timeRecords.Delete(x => x.Id == timeRecord.Id);
-            }
+            if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
+
+            if (timeRecord.Id <= 0)
+                throw new PersistenceException("The id of the time record should be a positive integer.");
+
+            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+
+            bool exists = timeRecords
+                .Find(x => x.Id == timeRecord.Id)
+                .Any();
+
+            if (!exists)
+                throw new PersistenceException("There is no record with the specified id to update.");
+
+            timeRecords.Delete(x => x.Id == timeRecord.Id);
         }
 
         public TimeRecord GetById(int id)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<TimeRecord> timeRecords = db.GetCollection<TimeRecord>(CollectionName);
-                return timeRecords.Find(x => x.Id == id)
-                    .FirstOrDefault();
-            }
+            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+            return timeRecords
+                .Find(x => x.Id == id)
+                .FirstOrDefault();
         }
 
         public IList<TimeRecord> GetByDate(DateTime date)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<TimeRecord> timeRecords = db.GetCollection<TimeRecord>(CollectionName);
-                return timeRecords.Find(x => x.Date == date)
-                    .ToList();
-            }
+            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+            return timeRecords
+                .Find(x => x.Date == date)
+                .ToList();
         }
     }
 }
