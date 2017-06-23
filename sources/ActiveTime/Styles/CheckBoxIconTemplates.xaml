@@ -22,73 +22,88 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <ControlTemplate x:Key="CheckBoxCheckedIconTemplate">
 
-        <Viewbox
-            Stretch="Uniform"
+        <Border
+            Padding="2"
             Width="{TemplateBinding Width}"
-            Height="{TemplateBinding Height}"
-            SnapsToDevicePixels="False">
+            Height="{TemplateBinding Height}">
 
-            <Canvas Width="462" Height="462" SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
+            <Viewbox
+                Stretch="Uniform"
+                SnapsToDevicePixels="True">
 
-                <Rectangle
+                <Canvas
                     Width="462"
                     Height="462"
-                    RadiusX="55"
-                    RadiusY="55"
-                    StrokeThickness="40"
-                    Stroke="{TemplateBinding Foreground}"
-                    StrokeMiterLimit="4"
-                    StrokeLineJoin="Round" 
-                    StrokeStartLineCap="Flat"
-                    StrokeEndLineCap="Flat"
-                    Opacity="1"/>
+                    SnapsToDevicePixels="True"
+                    Background="{TemplateBinding Background}">
 
-                <Path 
-                    StrokeThickness="65"
-                    Stroke="{TemplateBinding Foreground}"
-                    StrokeMiterLimit="4"
-                    StrokeLineJoin="Round"
-                    StrokeStartLineCap="Round"
-                    StrokeEndLineCap="Round">
+                    <Rectangle
+                        Width="462"
+                        Height="462"
+                        StrokeThickness="20"
+                        Stroke="{TemplateBinding Foreground}"
+                        StrokeMiterLimit="4"
+                        StrokeLineJoin="Round" 
+                        StrokeStartLineCap="Flat"
+                        StrokeEndLineCap="Flat"
+                        Opacity="1"/>
 
-                    <Path.Data>
-                        <PathGeometry
+                    <Path 
+                        StrokeThickness="40"
+                        Stroke="{TemplateBinding Foreground}"
+                        StrokeMiterLimit="4"
+                        StrokeLineJoin="Round"
+                        StrokeStartLineCap="Round"
+                        StrokeEndLineCap="Round">
+
+                        <Path.Data>
+                            <PathGeometry
                             Figures="m 113.86148 260.99271 89.15423 82.58537 153.23384 -229.19757"
                             FillRule="EvenOdd"/>
-                    </Path.Data>
+                        </Path.Data>
 
-                </Path>
+                    </Path>
 
-            </Canvas>
-        </Viewbox>
+                </Canvas>
+
+            </Viewbox>
+
+        </Border>
 
     </ControlTemplate>
 
     <ControlTemplate x:Key="CheckBoxUncheckedIconTemplate">
 
-        <Viewbox 
-            Stretch="Uniform"
+        <Border
+            Padding="2"
             Width="{TemplateBinding Width}"
-            Height="{TemplateBinding Height}"
-            SnapsToDevicePixels="True">
+            Height="{TemplateBinding Height}">
 
-            <Canvas Width="462" Height="462" SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
+            <Viewbox 
+                Stretch="Uniform"
+                SnapsToDevicePixels="True">
 
-                <Rectangle
+                <Canvas
                     Width="462"
                     Height="462"
-                    RadiusX="55"
-                    RadiusY="55"
-                    StrokeThickness="40"
-                    Stroke="{TemplateBinding Foreground}"
-                    StrokeMiterLimit="4"
-                    StrokeLineJoin="Round" 
-                    StrokeStartLineCap="Flat"
-                    StrokeEndLineCap="Flat"
-                    Opacity="1"/>
+                    SnapsToDevicePixels="True"
+                    Background="{TemplateBinding Background}">
 
-            </Canvas>
-        </Viewbox>
+                    <Rectangle
+                        Width="462"
+                        Height="462"
+                        StrokeThickness="20"
+                        Stroke="{TemplateBinding Foreground}"
+                        StrokeMiterLimit="4"
+                        StrokeLineJoin="Round" 
+                        StrokeStartLineCap="Flat"
+                        StrokeEndLineCap="Flat"
+                        Opacity="1"/>
+
+                </Canvas>
+            </Viewbox>
+
+        </Border>
 
     </ControlTemplate>
 

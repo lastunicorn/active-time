@@ -49,13 +49,13 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <StackPanel
             DockPanel.Dock="Bottom"
-            Margin="0"
+            Margin="3"
             Orientation="Horizontal"
             FlowDirection="RightToLeft">
 
             <Button
                 Content="Reset"
-                Margin="5,0,0,0"
+                Margin="0,0,0,0"
                 MinWidth="75"
                 cmd:Click.Command="{Binding ResetCommand}"
                 IsCancel="True"

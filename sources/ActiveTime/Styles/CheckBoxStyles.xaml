@@ -36,8 +36,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
                     <Border
                         x:Name="Border"
-                        Padding="{TemplateBinding Padding}"
-                        Margin="{TemplateBinding Margin}">
+                        Padding="{TemplateBinding Padding}">
 
                         <Border.Style>
                             <Style TargetType="{x:Type Border}">
