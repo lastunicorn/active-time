@@ -51,22 +51,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.CustomControls
         {
             Enabled = command.CanExecute(CommandParameter);
         }
-
-        //public bool StartMenuItemEnabled
-        //{
-        //    set
-        //    {
-        //        if (this.InvokeRequired)
-        //        {
-        //            contextMenuStrip1.Invoke(new SetBoolDelegate(v => StartMenuItemEnabled = v), value);
-        //        }
-        //        else
-        //        {
-        //            toolStripMenuItemStart.Enabled = value;
-        //        }
-        //    }
-        //}
-
+        
         protected override void OnClick(EventArgs e)
         {
             command?.Execute(CommandParameter);
