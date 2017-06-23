@@ -28,19 +28,19 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
 
         public TrayIconView(TrayIconPresenter presenter)
         {
-            if (presenter == null)
-                throw new ArgumentNullException("presenter");
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
 
             this.presenter = presenter;
 
             InitializeComponent();
-
-            toolStripMenuItemShow.Click += toolStripMenuItemShow_Click;
-            toolStripMenuItemExit.Click += toolStripMenuItemExit_Click;
-            toolStripMenuItemStart.Click += toolStripMenuItemStart_Click;
-            toolStripMenuItemStop.Click += toolStripMenuItemStop_Click;
-            toolStripMenuItemStopAndDelete.Click += toolStripMenuItemStopAndDelete_Click;
-            toolStripMenuItemAbout.Click += toolStripMenuItemAbout_Click;
+            
+            toolStripMenuItemShow.Command = presenter.ShowCommand;
+            toolStripMenuItemStart.Command = presenter.StartRecorderCommand;
+            toolStripMenuItemStop.Command = presenter.StopRecorderCommand;
+            toolStripMenuItemStopAndDelete.Command = presenter.StopRecorderCommand;
+            toolStripMenuItemStopAndDelete.CommandParameter = true;
+            toolStripMenuItemAbout.Command = presenter.AboutCommand;
+            toolStripMenuItemExit.Command = presenter.ExitCommand;
 
             presenter.View = this;
         }
@@ -54,71 +54,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
         {
             set { notifyIcon1.Icon = value; }
         }
-
-        private delegate void SetBoolDelegate(bool value);
-
-        public bool StartMenuItemEnabled
-        {
-            set
-            {
-                if (contextMenuStrip1.InvokeRequired)
-                {
-                    contextMenuStrip1.Invoke(new SetBoolDelegate(v => StartMenuItemEnabled = v), value);
-                }
-                else
-                {
-                    toolStripMenuItemStart.Enabled = value;
-                }
-            }
-        }
-
-        public bool StopMenuItemEnabled
-        {
-            set
-            {
-                if (contextMenuStrip1.InvokeRequired)
-                {
-                    contextMenuStrip1.Invoke(new SetBoolDelegate(v => StopMenuItemEnabled = v), value);
-                }
-                else
-                {
-                    toolStripMenuItemStop.Enabled = value;
-                    toolStripMenuItemStopAndDelete.Enabled = value;
-                }
-            }
-        }
-
-
-        private void toolStripMenuItemStopAndDelete_Click(object sender, EventArgs e)
-        {
-            presenter.StopAndDeleteClicked();
-        }
-
-        private void toolStripMenuItemStop_Click(object sender, EventArgs e)
-        {
-            presenter.StopClicked();
-        }
-
-        private void toolStripMenuItemStart_Click(object sender, EventArgs e)
-        {
-            presenter.StartClicked();
-        }
-
-        private void toolStripMenuItemExit_Click(object sender, EventArgs e)
-        {
-            presenter.ExitClicked();
-        }
-
-        private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
-        {
-            presenter.AboutClicked();
-        }
-
-        private void toolStripMenuItemShow_Click(object sender, System.EventArgs e)
-        {
-            presenter.ShowClicked();
-        }
-
+        
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)

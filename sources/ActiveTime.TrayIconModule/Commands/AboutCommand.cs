@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,31 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.TrayIconModule.Views;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
+using System.Windows.Input;
+using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.TrayIconModule.Commands
 {
-    public class TrayIconModule : IModule
+    internal class AboutCommand : ICommand
     {
-        private TrayIconView trayIconView;
+        private readonly IShellNavigator shellNavigator;
+        public event EventHandler CanExecuteChanged;
 
-        private readonly IUnityContainer unityContainer;
-
-        public TrayIconModule(IUnityContainer unityContainer)
+        public AboutCommand(IShellNavigator shellNavigator)
         {
-            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
-
-            this.unityContainer = unityContainer;
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
+            this.shellNavigator = shellNavigator;
         }
 
-        public void Initialize()
+        public bool CanExecute(object parameter)
         {
-            trayIconView = unityContainer.Resolve<TrayIconView>();
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            shellNavigator.Navigate(ShellNames.AboutShell);
         }
     }
 }

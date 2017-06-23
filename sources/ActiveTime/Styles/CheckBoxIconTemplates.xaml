@@ -58,8 +58,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
                         <Path.Data>
                             <PathGeometry
-                            Figures="m 113.86148 260.99271 89.15423 82.58537 153.23384 -229.19757"
-                            FillRule="EvenOdd"/>
+                                Figures="m 113.86148 260.99271 89.15423 82.58537 153.23384 -229.19757"
+                                FillRule="EvenOdd"/>
                         </Path.Data>
 
                     </Path>

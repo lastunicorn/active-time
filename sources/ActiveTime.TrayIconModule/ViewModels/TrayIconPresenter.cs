@@ -16,10 +16,12 @@
 
 using System;
 using System.Drawing;
+using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.TrayIconModule.Commands;
 using DustInTheWind.ActiveTime.TrayIconModule.Views;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
@@ -37,31 +39,35 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             }
         }
 
+        public ICommand ShowCommand { get; }
+        public ICommand StartRecorderCommand { get; }
+        public ICommand StopRecorderCommand { get; }
+        public ICommand AboutCommand { get; }
+        public ICommand ExitCommand { get; }
+
         private readonly Icon iconOn;
         private readonly Icon iconOff;
 
         private readonly IRecorderService recorder;
-        private readonly IApplicationService applicationService;
         private readonly IShellNavigator shellNavigator;
 
-        public TrayIconPresenter(IRecorderService recorder, IApplicationService applicationService,
-            IShellNavigator shellNavigator)
+        public TrayIconPresenter(IRecorderService recorder, IApplicationService applicationService, IShellNavigator shellNavigator)
         {
-            if (recorder == null)
-                throw new ArgumentNullException("recorder");
-
-            if (applicationService == null)
-                throw new ArgumentNullException("applicationService");
-
-            if (shellNavigator == null)
-                throw new ArgumentNullException("shellNavigator");
+            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
+            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
 
             this.recorder = recorder;
-            this.applicationService = applicationService;
             this.shellNavigator = shellNavigator;
 
             iconOn = Properties.Resources.tray_on;
             iconOff = Properties.Resources.tray_off;
+
+            ShowCommand = new ShowCommand(shellNavigator);
+            StartRecorderCommand = new StartRecorderCommand(recorder);
+            StopRecorderCommand = new StopRecorderCommand(recorder);
+            AboutCommand = new AboutCommand(shellNavigator);
+            ExitCommand = new ExitCommand(applicationService);
 
             applicationService.Exiting += HandleApplicationServiceExiting;
 
@@ -90,18 +96,14 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
             {
                 case RecorderState.Stopped:
                     SetIconOff();
-                    SetStartMenuItemEnabled();
-                    SetStopMenuItemDisabled();
                     break;
 
                 case RecorderState.Running:
                     SetIconOn();
-                    SetStartMenuItemDisabled();
-                    SetStopMenuItemEnabled();
                     break;
 
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -135,63 +137,9 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
                 View.Visible = false;
         }
 
-        private void SetStopMenuItemEnabled()
-        {
-            if (View != null)
-                View.StopMenuItemEnabled = true;
-        }
-
-        private void SetStopMenuItemDisabled()
-        {
-            if (View != null)
-                View.StopMenuItemEnabled = false;
-        }
-
-        private void SetStartMenuItemEnabled()
-        {
-            if (View != null)
-                View.StartMenuItemEnabled = true;
-        }
-
-        private void SetStartMenuItemDisabled()
-        {
-            if (View != null)
-                View.StartMenuItemEnabled = false;
-        }
-
-        public void StopAndDeleteClicked()
-        {
-            recorder.Stop(true);
-        }
-
-        public void StopClicked()
-        {
-            recorder.Stop();
-        }
-
-        public void StartClicked()
-        {
-            recorder.Start();
-        }
-
-        public void ExitClicked()
-        {
-            applicationService.Exit();
-        }
-
-        public void ShowClicked()
-        {
-            shellNavigator.Navigate(ShellNames.MainShell);
-        }
-
         public void LeftDoubleClicked()
         {
             shellNavigator.Navigate(ShellNames.MainShell);
-        }
-
-        internal void AboutClicked()
-        {
-            shellNavigator.Navigate(ShellNames.AboutShell);
         }
     }
 }

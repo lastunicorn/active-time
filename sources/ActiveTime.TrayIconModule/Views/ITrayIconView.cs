@@ -23,7 +23,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
         Icon Icon { set; }
         bool Visible { set; }
 
-        bool StartMenuItemEnabled { set; }
-        bool StopMenuItemEnabled { set; }
+        //bool StartMenuItemEnabled { set; }
+        //bool StopMenuItemEnabled { set; }
     }
 }

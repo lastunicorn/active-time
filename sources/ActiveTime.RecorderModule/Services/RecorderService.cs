@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
     /// <summary>
     /// Periodically calls the scribe to update the time of the current record in the database.
     /// </summary>
-    class RecorderService : IRecorderService, IDisposable
+    internal class RecorderService : IRecorderService, IDisposable
     {
         private readonly IScribe scribe;
 
