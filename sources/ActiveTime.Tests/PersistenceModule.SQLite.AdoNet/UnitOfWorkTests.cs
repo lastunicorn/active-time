@@ -19,9 +19,10 @@ using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet;
+using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories.Helpers;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
 {
     [TestFixture]
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]

@@ -30,6 +30,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
     [TestFixture]
     public class OverviewViewModuleTests
     {
+        private Mock<IUnitOfWorkFactory> unitOfWorkFactory;
+        private Mock<IUnitOfWork> unitOfWork;
         private Mock<IDayCommentRepository> dayCommentRepository;
         private Mock<ITimeRecordRepository> timeRecordRepository;
         private Mock<ITimeProvider> timeProvider;
@@ -37,11 +39,26 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         [SetUp]
         public void SetUp()
         {
+            unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            unitOfWork = new Mock<IUnitOfWork>();
             dayCommentRepository = new Mock<IDayCommentRepository>();
+            timeRecordRepository = new Mock<ITimeRecordRepository>();
+
+            unitOfWorkFactory
+                .Setup(x => x.CreateNew())
+                .Returns(unitOfWork.Object);
+
+            unitOfWork
+                .Setup(x => x.TimeRecordRepository)
+                .Returns(timeRecordRepository.Object);
+
+            unitOfWork
+                .Setup(x => x.DayCommentRepository)
+                .Returns(dayCommentRepository.Object);
+
             dayCommentRepository
                 .Setup(x => x.GetByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<DayComment>());
-            timeRecordRepository = new Mock<ITimeRecordRepository>();
 
             timeProvider = new Mock<ITimeProvider>();
         }
@@ -53,7 +70,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
                 .Setup(x => x.GetDate())
                 .Returns(new DateTime(1980, 06, 13));
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
 
             Assert.AreEqual(new DateTime(1980, 06, 13), overviewViewModel.LastDay);
         }
@@ -65,7 +82,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
                 .Setup(x => x.GetDate())
                 .Returns(new DateTime(1980, 06, 13));
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
 
             Assert.AreEqual(new DateTime(1980, 05, 15), overviewViewModel.FirstDay);
         }
@@ -77,7 +94,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
                 .Setup(x => x.GetDate())
                 .Returns(new DateTime(1980, 06, 13));
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
 
             dayCommentRepository.Verify(x => x.GetByDate(overviewViewModel.FirstDay, overviewViewModel.LastDay), Times.Once());
         }
@@ -89,7 +106,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
                 .Setup(x => x.GetDate())
                 .Returns(DateTime.Now);
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
 
             Assert.IsNotNull(overviewViewModel.Comments);
         }
@@ -105,7 +122,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
                 .Setup(x => x.GetByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(dayComments);
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
 
             Assert.AreEqual(3, overviewViewModel.Reports.Count);
         }
@@ -116,7 +133,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
             timeProvider
                 .Setup(x => x.GetDate())
                 .Returns(new DateTime(1980, 06, 13));
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             dayCommentRepository.ResetCalls();
 
             overviewViewModel.FirstDay = new DateTime(2000, 06, 13);
@@ -130,7 +147,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
             timeProvider
                 .Setup(x => x.GetDate())
                 .Returns(new DateTime(1980, 06, 13));
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             dayCommentRepository.ResetCalls();
 
             overviewViewModel.LastDay = new DateTime(2000, 06, 13);
@@ -145,7 +162,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
             timeProvider
                 .Setup(x => x.GetDate())
                 .Returns(DateTime.Now);
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             overviewViewModel.PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName == "FirstDay")
@@ -164,7 +181,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
             timeProvider
                 .Setup(x => x.GetDate())
                 .Returns(DateTime.Now);
-            OverviewViewModel overviewViewModel = new OverviewViewModel(dayCommentRepository.Object, timeRecordRepository.Object, timeProvider.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             overviewViewModel.PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName == "LastDay")

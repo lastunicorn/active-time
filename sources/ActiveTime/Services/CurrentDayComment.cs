@@ -22,7 +22,7 @@ namespace DustInTheWind.ActiveTime.Services
 {
     public class CurrentDayComment : ICurrentDayComment
     {
-        private readonly IDayCommentRepository dayCommentRepository;
+        private readonly IUnitOfWorkFactory unitOfWorkFactory;
         private readonly IStateService stateService;
 
         private DayComment value;
@@ -38,12 +38,12 @@ namespace DustInTheWind.ActiveTime.Services
 
         public event EventHandler ValueChanged;
 
-        public CurrentDayComment(IDayCommentRepository dayCommentRepository, IStateService stateService)
+        public CurrentDayComment(IUnitOfWorkFactory unitOfWorkFactory, IStateService stateService)
         {
-            if (dayCommentRepository == null) throw new ArgumentNullException(nameof(dayCommentRepository));
+            if (unitOfWorkFactory == null) throw new ArgumentNullException(nameof(unitOfWorkFactory));
             if (stateService == null) throw new ArgumentNullException(nameof(stateService));
 
-            this.dayCommentRepository = dayCommentRepository;
+            this.unitOfWorkFactory = unitOfWorkFactory;
             this.stateService = stateService;
 
             stateService.CurrentDateChanged += HandleCurrentDateChanged;
@@ -65,8 +65,13 @@ namespace DustInTheWind.ActiveTime.Services
 
             if (currentDate != null)
             {
-                DayComment dayComment = dayCommentRepository.GetByDate(currentDate.Value);
-                Value = dayComment ?? new DayComment { Date = currentDate.Value };
+                using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+                {
+                    IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
+
+                    DayComment dayComment = dayCommentRepository.GetByDate(currentDate.Value);
+                    Value = dayComment ?? new DayComment { Date = currentDate.Value };
+                }
             }
             else
             {
@@ -81,7 +86,13 @@ namespace DustInTheWind.ActiveTime.Services
 
             Logger.Log(Value);
 
-            dayCommentRepository.AddOrUpdate(Value);
+            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+            {
+                IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
+
+                dayCommentRepository.AddOrUpdate(Value);
+                unitOfWork.Commit();
+            }
         }
 
         protected virtual void OnValueChanged(EventArgs e)

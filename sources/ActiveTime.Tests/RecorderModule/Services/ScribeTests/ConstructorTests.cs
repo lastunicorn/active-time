@@ -26,32 +26,32 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
     [TestFixture]
     public class ConstructorTests
     {
-        private Mock<ITimeRecordRepository> repositoryMock;
-        private Mock<ITimeProvider> timeProviderMock;
+        private Mock<ITimeProvider> timeProvider;
+        private Mock<IUnitOfWorkFactory> unitOfWorkFactory;
 
         [SetUp]
         public void SetUp()
         {
-            repositoryMock = new Mock<ITimeRecordRepository>();
-            timeProviderMock = new Mock<ITimeProvider>();
+            timeProvider = new Mock<ITimeProvider>();
+            unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
         }
 
         [Test]
         public void Constructor()
         {
-            new Scribe(repositoryMock.Object, timeProviderMock.Object);
+            new Scribe(timeProvider.Object, unitOfWorkFactory.Object);
         }
 
         [Test]
         public void Constructor_with_null_repository()
         {
-            Assert.Throws<ArgumentNullException>(() => new Scribe(null, timeProviderMock.Object));
+            Assert.Throws<ArgumentNullException>(() => new Scribe(timeProvider.Object, null));
         }
 
         [Test]
         public void Constructor_with_null_timeProvider()
         {
-            Assert.Throws<ArgumentNullException>(() => new Scribe(repositoryMock.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new Scribe(null, unitOfWorkFactory.Object));
         }
     }
 }

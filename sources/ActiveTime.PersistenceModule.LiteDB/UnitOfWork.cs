@@ -28,7 +28,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
         private LiteDatabase database;
         private LiteTransaction transaction;
 
-        private LiteDatabase OpenDatabaseAndTransaction()
+        private void OpenDatabaseAndTransaction()
         {
             if (disposed)
                 throw new ObjectDisposedException(nameof(UnitOfWork));
@@ -38,8 +38,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 
             if (transaction == null)
                 transaction = database.BeginTrans();
-
-            return database;
         }
 
         private TimeRecordRepository timeRecordRepository;
@@ -54,6 +52,21 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
                 }
 
                 return timeRecordRepository;
+            }
+        }
+
+        private DayCommentRepository dayCommentRepository;
+        public IDayCommentRepository DayCommentRepository
+        {
+            get
+            {
+                if (dayCommentRepository == null)
+                {
+                    OpenDatabaseAndTransaction();
+                    dayCommentRepository = new DayCommentRepository(database);
+                }
+
+                return dayCommentRepository;
             }
         }
 

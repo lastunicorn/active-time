@@ -26,55 +26,67 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
     [TestFixture]
     public class StampNewTests
     {
-        private Mock<ITimeRecordRepository> repositoryMock;
-        private Mock<ITimeProvider> timeProviderMock;
+        private Mock<ITimeProvider> timeProvider;
+        private Mock<IUnitOfWorkFactory> unitOfWorkFactory;
+        private Mock<IUnitOfWork> unitOfWork;
+        private Mock<ITimeRecordRepository> timeRecordRepository;
         private Scribe scribe;
 
         [SetUp]
         public void SetUp()
         {
-            repositoryMock = new Mock<ITimeRecordRepository>();
-            timeProviderMock = new Mock<ITimeProvider>();
+            timeProvider = new Mock<ITimeProvider>();
+            unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            unitOfWork = new Mock<IUnitOfWork>();
+            timeRecordRepository = new Mock<ITimeRecordRepository>();
 
-            scribe = new Scribe(repositoryMock.Object, timeProviderMock.Object);
+            unitOfWorkFactory
+                .Setup(x => x.CreateNew())
+                .Returns(unitOfWork.Object);
+
+            unitOfWork
+                .Setup(x => x.TimeRecordRepository)
+                .Returns(timeRecordRepository.Object);
+
+            scribe = new Scribe(timeProvider.Object, unitOfWorkFactory.Object);
         }
 
         [Test]
         public void calls_timeProvider()
         {
             DateTime now = DateTime.Now;
-            timeProviderMock.Setup(x => x.GetDateTime()).Returns(now);
+            timeProvider.Setup(x => x.GetDateTime()).Returns(now);
 
             scribe.StampNew();
 
-            timeProviderMock.VerifyAll();
+            timeProvider.VerifyAll();
         }
 
         [Test]
         public void saves_a_new_record_in_repository()
         {
             DateTime now = DateTime.Now;
-            timeProviderMock.Setup(x => x.GetDateTime()).Returns(now);
-            repositoryMock.Setup(x => x.Add(It.Is<TimeRecord>(r => r.Id == 0 &&
+            timeProvider.Setup(x => x.GetDateTime()).Returns(now);
+            timeRecordRepository.Setup(x => x.Add(It.Is<TimeRecord>(r => r.Id == 0 &&
                                                                    r.RecordType == TimeRecordType.Normal &&
                                                                    r.Date == now.Date &&
                                                                    (r.StartTime - now.TimeOfDay) < TimeSpan.FromSeconds(1) &&
                                                                    r.EndTime == r.StartTime)));
             scribe.StampNew();
 
-            repositoryMock.VerifyAll();
+            timeRecordRepository.VerifyAll();
         }
 
         [Test]
         public void if_called_twice_adds_new_record()
         {
-            repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()));
-            repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()));
+            timeRecordRepository.Setup(x => x.Add(It.IsAny<TimeRecord>()));
+            timeRecordRepository.Setup(x => x.Add(It.IsAny<TimeRecord>()));
 
             scribe.StampNew();
             scribe.StampNew();
 
-            repositoryMock.VerifyAll();
+            timeRecordRepository.VerifyAll();
         }
     }
 }

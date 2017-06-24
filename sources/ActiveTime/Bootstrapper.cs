@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.Services;
@@ -49,6 +50,7 @@ namespace DustInTheWind.ActiveTime
             Container.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStateService, StateService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IConfigurationService, ConfigurationService>();
+            Container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>(new ContainerControlledLifetimeManager());
         }
 
         protected override DependencyObject CreateShell()

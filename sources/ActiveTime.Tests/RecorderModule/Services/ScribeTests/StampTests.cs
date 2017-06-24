@@ -26,17 +26,29 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
     [TestFixture]
     public class StampTests
     {
-        private Mock<ITimeRecordRepository> repositoryMock;
-        private Mock<ITimeProvider> timeProviderMock;
+        private Mock<ITimeProvider> timeProvider;
+        private Mock<IUnitOfWorkFactory> unitOfWorkFactory;
+        private Mock<IUnitOfWork> unitOfWork;
+        private Mock<ITimeRecordRepository> timeRecordRepository;
         private Scribe scribe;
 
         [SetUp]
         public void SetUp()
         {
-            repositoryMock = new Mock<ITimeRecordRepository>();
-            timeProviderMock = new Mock<ITimeProvider>();
+            timeProvider = new Mock<ITimeProvider>();
+            unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            unitOfWork = new Mock<IUnitOfWork>();
+            timeRecordRepository = new Mock<ITimeRecordRepository>();
 
-            scribe = new Scribe(repositoryMock.Object, timeProviderMock.Object);
+            unitOfWorkFactory
+                .Setup(x => x.CreateNew())
+                .Returns(unitOfWork.Object);
+
+            unitOfWork
+                .Setup(x => x.TimeRecordRepository)
+                .Returns(timeRecordRepository.Object);
+
+            scribe = new Scribe(timeProvider.Object, unitOfWorkFactory.Object);
         }
 
         [Test]
@@ -44,14 +56,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         {
             TimeRecord actualTimeRecord = null;
             DateTime currentTime = new DateTime(1980, 05, 13, 12, 59, 00);
-            timeProviderMock.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetDateTime())
                 .Returns(currentTime);
-            repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()))
+            timeRecordRepository.Setup(x => x.Add(It.IsAny<TimeRecord>()))
                 .Callback<TimeRecord>(timeRecord => actualTimeRecord = timeRecord);
 
             scribe.Stamp();
 
-            repositoryMock.VerifyAll();
+            timeRecordRepository.VerifyAll();
             Assert.That(actualTimeRecord.RecordType, Is.EqualTo(TimeRecordType.Normal));
             Assert.That(actualTimeRecord.Date, Is.EqualTo(currentTime.Date));
             Assert.That(actualTimeRecord.StartTime, Is.EqualTo(currentTime.TimeOfDay));
@@ -65,14 +77,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
             DateTime secondDateTime = new DateTime(1980, 06, 13, 12, 30, 10);
             TimeRecord actualTimeRecord = null;
             StampNew(firstDateTime);
-            timeProviderMock.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetDateTime())
                 .Returns(secondDateTime);
-            repositoryMock.Setup(x => x.Update(It.IsAny<TimeRecord>()))
+            timeRecordRepository.Setup(x => x.Update(It.IsAny<TimeRecord>()))
                 .Callback<TimeRecord>(a => actualTimeRecord = a);
 
             scribe.Stamp();
 
-            repositoryMock.VerifyAll();
+            timeRecordRepository.VerifyAll();
             Assert.That(actualTimeRecord.Date, Is.EqualTo(firstDateTime.Date));
             Assert.That(actualTimeRecord.StartTime, Is.EqualTo(firstDateTime.TimeOfDay));
             Assert.That(actualTimeRecord.EndTime, Is.EqualTo(secondDateTime.TimeOfDay));
@@ -85,10 +97,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
             DateTime secondDateTime = new DateTime(1980, 06, 14, 02, 30, 10);
             TimeRecord actualTimeRecord = null;
             StampNew(firstDateTime);
-            timeProviderMock.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetDateTime())
                 .Returns(secondDateTime);
             int callsCount = 0;
-            repositoryMock.Setup(x => x.Update(It.IsAny<TimeRecord>()))
+            timeRecordRepository.Setup(x => x.Update(It.IsAny<TimeRecord>()))
                 .Callback<TimeRecord>(timeRecord =>
                 {
                     callsCount++;
@@ -98,7 +110,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
 
             scribe.Stamp();
 
-            repositoryMock.VerifyAll();
+            timeRecordRepository.VerifyAll();
             Assert.That(actualTimeRecord.Date, Is.EqualTo(firstDateTime.Date));
             Assert.That(actualTimeRecord.StartTime, Is.EqualTo(firstDateTime.TimeOfDay));
             Assert.That(actualTimeRecord.EndTime, Is.EqualTo(new TimeSpan(0, 23, 59, 59, 999)));
@@ -111,14 +123,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
             DateTime secondDateTime = new DateTime(1980, 06, 14, 02, 30, 10);
             TimeRecord actualTimeRecord = null;
             StampNew(firstDateTime);
-            timeProviderMock.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetDateTime())
                 .Returns(secondDateTime);
-            repositoryMock.Setup(x => x.Add(It.IsAny<TimeRecord>()))
+            timeRecordRepository.Setup(x => x.Add(It.IsAny<TimeRecord>()))
                 .Callback<TimeRecord>(timeRecord => actualTimeRecord = timeRecord);
 
             scribe.Stamp();
 
-            repositoryMock.VerifyAll();
+            timeRecordRepository.VerifyAll();
             Assert.That(actualTimeRecord.Date, Is.EqualTo(secondDateTime.Date));
             Assert.That(actualTimeRecord.StartTime, Is.EqualTo(TimeSpan.Zero));
             Assert.That(actualTimeRecord.EndTime, Is.EqualTo(secondDateTime.TimeOfDay));
@@ -128,7 +140,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
 
         private void StampNew(DateTime dateTime)
         {
-            timeProviderMock.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetDateTime())
                 .Returns(dateTime);
 
             scribe.StampNew();

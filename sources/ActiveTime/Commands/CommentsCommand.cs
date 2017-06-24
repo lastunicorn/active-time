@@ -50,7 +50,7 @@ namespace DustInTheWind.ActiveTime.Commands
             //ClearRegion(RegionNames.MainContentRegion);
             //ClearRegion(RegionNames.RecordsRegion);
             //regionManager.Regions.Remove(RegionNames.RecordsRegion);
-
+            
             regionManager.RequestNavigate(RegionNames.RecordsRegion, ViewNames.CommentsView);
         }
 

@@ -55,7 +55,9 @@
     <Compile Include="Exporters\MandatoryParameterException.cs" />
     <Compile Include="Exporters\ParameterNullException.cs" />
     <Compile Include="Exporters\ParameterTypeException.cs" />
+    <Compile Include="Persistence\IUnitOfWork.cs" />
     <Compile Include="Persistence\PersistenceException.cs" />
+    <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\CommentsService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />

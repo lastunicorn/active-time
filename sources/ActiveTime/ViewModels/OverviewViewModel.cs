@@ -28,8 +28,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 {
     public sealed class OverviewViewModel : ViewModelBase
     {
-        private readonly IDayCommentRepository dayCommentRepository;
-        private readonly ITimeRecordRepository timeRecordRepository;
+        private readonly IUnitOfWorkFactory unitOfWorkFactory;
 
         private string comments;
         public string Comments
@@ -68,14 +67,12 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public OverviewViewModel(IDayCommentRepository dayCommentRepository, ITimeRecordRepository timeRecordRepository, ITimeProvider timeProvider)
+        public OverviewViewModel(IUnitOfWorkFactory unitOfWorkFactory, ITimeProvider timeProvider)
         {
-            if (dayCommentRepository == null) throw new ArgumentNullException(nameof(dayCommentRepository));
-            if (timeRecordRepository == null) throw new ArgumentNullException(nameof(timeRecordRepository));
+            if (unitOfWorkFactory == null) throw new ArgumentNullException(nameof(unitOfWorkFactory));
             if (timeProvider == null) throw new ArgumentNullException(nameof(timeProvider));
 
-            this.dayCommentRepository = dayCommentRepository;
-            this.timeRecordRepository = timeRecordRepository;
+            this.unitOfWorkFactory = unitOfWorkFactory;
 
             DateTime today = timeProvider.GetDate();
             firstDay = today.AddDays(-29);
@@ -86,20 +83,26 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void PopulateComments()
         {
-            IEnumerable<DayComment> dayComments = dayCommentRepository.GetByDate(FirstDay, LastDay);
-            Comments = Stringify(dayComments);
+            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+            {
+                IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
+                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
 
-            Reports = new List<DayReport>();
-            dayComments.ForEach(x => Reports.Add(new DayReport(x)));
+                IEnumerable<DayComment> dayComments = dayCommentRepository.GetByDate(FirstDay, LastDay);
+                Comments = Stringify(dayComments, timeRecordRepository);
+
+                Reports = new List<DayReport>();
+                dayComments.ForEach(x => Reports.Add(new DayReport(x)));
+            }
         }
 
-        private string Stringify(IEnumerable<DayComment> comments)
+        private string Stringify(IEnumerable<DayComment> dayComments, ITimeRecordRepository timeRecordRepository)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Average hours per day: ");
-            sb.AppendLine(CalculateHours().ToString());
+            sb.AppendLine(CalculateHours(timeRecordRepository).ToString());
 
-            foreach (DayComment dayComment in comments)
+            foreach (DayComment dayComment in dayComments)
             {
                 IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
@@ -127,7 +130,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             return sb.ToString();
         }
 
-        private TimeSpan CalculateHours()
+        private TimeSpan CalculateHours(ITimeRecordRepository timeRecordRepository)
         {
             DateTime date = firstDay;
             TimeSpan totalTime = TimeSpan.Zero;

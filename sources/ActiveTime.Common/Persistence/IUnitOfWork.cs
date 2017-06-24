@@ -1,4 +1,4 @@
-// ActiveTime
+﻿// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,16 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.Common.Persistence
 {
-    public interface ITimeRecordRepository
+    public interface IUnitOfWork : IDisposable
     {
-        void Add(TimeRecord timeRecord);
-        void Update(TimeRecord timeRecord);
-        void Delete(TimeRecord timeRecord);
-        TimeRecord GetById(int id);
-        IList<TimeRecord> GetByDate(DateTime date);
+        ITimeRecordRepository TimeRecordRepository { get; }
+        IDayCommentRepository DayCommentRepository { get; }
+        
+        void Commit();
+
+        void Rollback();
     }
 }

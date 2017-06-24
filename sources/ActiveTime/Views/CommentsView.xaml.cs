@@ -30,8 +30,7 @@ namespace DustInTheWind.ActiveTime.Views
 
         public CommentsView(CommentsViewModel viewModel)
         {
-            if (viewModel == null)
-                throw new ArgumentNullException("viewModel");
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
             this.viewModel = viewModel;
 

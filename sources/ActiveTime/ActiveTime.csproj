@@ -103,6 +103,7 @@
     <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="UnitOfWorkFactory.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\DayRecordsViewModel.cs" />

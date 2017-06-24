@@ -93,12 +93,12 @@
     <Compile Include="MainGuiModule\ViewModels\MessageWindowViewModelTests\NavigationParameters.cs" />
     <Compile Include="MainGuiModule\ViewModels\OverviewViewModuleTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\StatusInfoViewModelTests\StatusTextChangedTests.cs" />
-    <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\DbAssert.cs" />
+    <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\Helpers\DbAssert.cs" />
     <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\TimeRecordRepositoryTests\AddTests.cs" />
-    <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\DbTestHelper.cs" />
+    <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\Helpers\DbTestHelper.cs" />
     <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\TimeRecordRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\TimeRecordRepositoryTests\UpdateTests.cs" />
-    <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\UnitOfWorkTests.cs" />
+    <Compile Include="PersistenceModule.SQLite.AdoNet\UnitOfWorkTests.cs" />
     <Compile Include="PersistenceModule.LiteDB\Helpers\DbAssert.cs" />
     <Compile Include="PersistenceModule.LiteDB\Helpers\DbTestHelper.cs" />
     <Compile Include="PersistenceModule.LiteDB\Repositories\TimeRecordRepositoryTests\AddTests.cs" />

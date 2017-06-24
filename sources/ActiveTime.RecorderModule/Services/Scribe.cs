@@ -28,23 +28,23 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
     /// </remarks>
     class Scribe : IScribe
     {
-        private readonly ITimeRecordRepository timeRecordRepository;
         private readonly ITimeProvider timeProvider;
+        private readonly IUnitOfWorkFactory unitOfWorkFactory;
         private TimeRecord currentTimeRecord;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scribe"/> class.
         /// </summary>
-        /// <param name="timeRecordRepository"></param>
         /// <param name="timeProvider"></param>
+        /// <param name="unitOfWorkFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Scribe(ITimeRecordRepository timeRecordRepository, ITimeProvider timeProvider)
+        public Scribe(ITimeProvider timeProvider, IUnitOfWorkFactory unitOfWorkFactory)
         {
-            if (timeRecordRepository == null) throw new ArgumentNullException(nameof(timeRecordRepository));
             if (timeProvider == null) throw new ArgumentNullException(nameof(timeProvider));
+            if (unitOfWorkFactory == null) throw new ArgumentNullException(nameof(unitOfWorkFactory));
 
-            this.timeRecordRepository = timeRecordRepository;
             this.timeProvider = timeProvider;
+            this.unitOfWorkFactory = unitOfWorkFactory;
         }
 
         /// <summary>
@@ -66,7 +66,14 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
                 EndTime = now.TimeOfDay
             };
 
-            timeRecordRepository.Add(newTimeRecord);
+            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+            {
+                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+                timeRecordRepository.Add(newTimeRecord);
+                unitOfWork.Commit();
+            }
+
             currentTimeRecord = newTimeRecord;
         }
 
@@ -101,8 +108,15 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
 
         private void UpdateCurrentTimeRecordAndSave(TimeSpan timeOfDay)
         {
-            currentTimeRecord.EndTime = timeOfDay;
-            timeRecordRepository.Update(currentTimeRecord);
+            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+            {
+                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+                currentTimeRecord.EndTime = timeOfDay;
+                timeRecordRepository.Update(currentTimeRecord);
+
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -114,7 +128,13 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
             if (currentTimeRecord == null)
                 return;
 
-            timeRecordRepository.Delete(currentTimeRecord);
+            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+            {
+                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+                timeRecordRepository.Delete(currentTimeRecord);
+            }
+
             currentTimeRecord = null;
         }
 

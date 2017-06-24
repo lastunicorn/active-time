@@ -19,11 +19,11 @@ using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories.Helpers
 {
     public class DbAssert
     {
-        private const string ConnectionString = "Data Source=db.s3db";
+        private static readonly string ConnectionString = "Data Source=" + TestContext.CurrentContext.TestDirectory + "db.s3db";
 
         public static void AssertExistsTimeRecord(int id)
         {

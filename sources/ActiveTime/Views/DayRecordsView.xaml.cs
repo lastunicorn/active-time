@@ -30,29 +30,28 @@ namespace DustInTheWind.ActiveTime.Views
 
         public DayRecordsView(DayRecordsViewModel viewModel)
         {
-            if (viewModel == null)
-                throw new ArgumentNullException("viewModel");
-
-            InitializeComponent();
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
             this.viewModel = viewModel;
+
+            InitializeComponent();
         }
 
-        private void menuItemNew_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void menuItemNew_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void menuItemMerge_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void menuItemMerge_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void menuItemSplit_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void menuItemSplit_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        private void contextMenuRecords_Opened(object sender, System.Windows.RoutedEventArgs e)
+        private void contextMenuRecords_Opened(object sender, RoutedEventArgs e)
         {
             //menuItemDelete.upDate
         }

@@ -14,17 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using DustInTheWind.ActiveTime.Common.Persistence;
-
-namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
+namespace DustInTheWind.ActiveTime.Common.Persistence
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWorkFactory
     {
-        ITimeRecordRepository TimeRecordRepository { get; }
-        
-        void Commit();
-
-        void Rollback();
+        IUnitOfWork CreateNew();
     }
 }

@@ -25,7 +25,7 @@ namespace DustInTheWind.ActiveTime.Services
     public class CurrentDayRecord : ICurrentDayRecord
     {
         private readonly IStatusInfoService statusInfoService;
-        private readonly ITimeRecordRepository timeRecordRepository;
+        private readonly IUnitOfWorkFactory unitOfWorkFactory;
         private readonly IStateService stateService;
 
         private DayRecord value;
@@ -46,15 +46,15 @@ namespace DustInTheWind.ActiveTime.Services
             ValueChanged?.Invoke(this, e);
         }
 
-        public CurrentDayRecord(IRecorderService recorder, IStatusInfoService statusInfoService, ITimeRecordRepository timeRecordRepository, IStateService stateService)
+        public CurrentDayRecord(IRecorderService recorder, IStatusInfoService statusInfoService, IUnitOfWorkFactory unitOfWorkFactory, IStateService stateService)
         {
             if (recorder == null) throw new ArgumentNullException(nameof(recorder));
             if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
-            if (timeRecordRepository == null) throw new ArgumentNullException(nameof(timeRecordRepository));
+            if (unitOfWorkFactory == null) throw new ArgumentNullException(nameof(unitOfWorkFactory));
             if (stateService == null) throw new ArgumentNullException(nameof(stateService));
 
             this.statusInfoService = statusInfoService;
-            this.timeRecordRepository = timeRecordRepository;
+            this.unitOfWorkFactory = unitOfWorkFactory;
             this.stateService = stateService;
 
             recorder.Started += HandleRecorderStarted;
@@ -104,9 +104,14 @@ namespace DustInTheWind.ActiveTime.Services
 
             if (currentDate != null)
             {
-                IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(currentDate.Value);
-                DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
-                Value = dayRecord ?? new DayRecord(currentDate.Value);
+                using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+                {
+                    ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+                    IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(currentDate.Value);
+                    DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
+                    Value = dayRecord ?? new DayRecord(currentDate.Value);
+                }
             }
             else
             {

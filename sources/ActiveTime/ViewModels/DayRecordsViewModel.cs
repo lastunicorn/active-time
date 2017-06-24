@@ -41,8 +41,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// </summary>
         public DayRecordsViewModel(ICurrentDayRecord currentDayRecord)
         {
-            if (currentDayRecord == null)
-                throw new ArgumentNullException("currentDayRecord");
+            if (currentDayRecord == null) throw new ArgumentNullException(nameof(currentDayRecord));
 
             this.currentDayRecord = currentDayRecord;
 
@@ -57,11 +56,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void UpdateDisplayedData()
         {
-            DayRecord dayRecord = currentDayRecord.Value;
-
-            Records = dayRecord != null
-                ? dayRecord.GetTimeRecords(false)
-                : null;
+            Records = currentDayRecord.Value?.GetTimeRecords(false);
         }
     }
 }

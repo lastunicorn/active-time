@@ -24,11 +24,11 @@ using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
-    public class CommentsViewModel : ViewModelBase, INavigationAware
+    public class CommentsViewModel : ViewModelBase
     {
         private readonly ICurrentDayComment currentDayComment;
 
-        public CustomDelegateCommand ResetCommand { get; private set; }
+        public CustomDelegateCommand ResetCommand { get; }
         public CustomDelegateCommand SaveCommand { get; }
 
         private string comment;
@@ -111,19 +111,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
             currentDayComment.Save();
 
             RefreshButtonsState();
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
         }
     }
 }

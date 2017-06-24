@@ -24,92 +24,87 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 {
     internal class DayCommentRepository : IDayCommentRepository
     {
-        private const string ConnectionString = Constants.DatabaseFileName;
-        private const string CollectionName = "DayComment";
+        public const string CollectionName = "DayComment";
+
+        private readonly LiteDatabase database;
+
+        public DayCommentRepository(LiteDatabase database)
+        {
+            if (database == null) throw new ArgumentNullException(nameof(database));
+            this.database = database;
+        }
 
         public void Add(DayComment comment)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                timeRecords.Insert(comment);
-            }
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+            dayCommentCollection.Insert(comment);
         }
 
         public void Update(DayComment comment)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                timeRecords.Update(comment);
-            }
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+            dayCommentCollection.Update(comment);
         }
 
         public void AddOrUpdate(DayComment comment)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                DayComment existingComment = timeRecords.Find(x => x.Date == comment.Date)
-                    .FirstOrDefault();
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
 
-                if (existingComment == null)
-                    timeRecords.Insert(comment);
-                else
-                {
-                    existingComment.Comment = comment.Comment;
-                    timeRecords.Update(existingComment);
-                }
+            DayComment existingComment = dayCommentCollection
+                .Find(x => x.Date == comment.Date)
+                .FirstOrDefault();
+
+            if (existingComment == null)
+            {
+                dayCommentCollection.Insert(comment);
+            }
+            else
+            {
+                existingComment.Comment = comment.Comment;
+                dayCommentCollection.Update(existingComment);
             }
         }
 
         public void Delete(DayComment comment)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                timeRecords.Delete(x => x.Id == comment.Id);
-            }
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+            dayCommentCollection.Delete(x => x.Id == comment.Id);
         }
 
         public DayComment GetById(int id)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                return timeRecords.Find(x => x.Id == id)
-                    .FirstOrDefault();
-            }
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            return dayCommentCollection
+                .Find(x => x.Id == id)
+                .FirstOrDefault();
         }
 
         public DayComment GetByDate(DateTime date)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                return timeRecords.Find(x => x.Date == date)
-                    .FirstOrDefault();
-            }
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            return dayCommentCollection
+                .Find(x => x.Date == date)
+                .FirstOrDefault();
         }
 
         public List<DayComment> GetByDate(DateTime startDate, DateTime endDate)
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                return timeRecords.Find(x => x.Date >= startDate && x.Date <= endDate)
-                    .ToList();
-            }
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            return dayCommentCollection
+                .Find(x => x.Date >= startDate && x.Date <= endDate)
+                .ToList();
         }
 
         public IList<DayComment> GetAll()
         {
-            using (var db = new LiteDatabase(ConnectionString))
-            {
-                LiteCollection<DayComment> timeRecords = db.GetCollection<DayComment>(CollectionName);
-                return timeRecords.FindAll()
-                    .ToList();
-            }
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            return dayCommentCollection
+                .FindAll()
+                .ToList();
         }
     }
 }
