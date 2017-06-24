@@ -49,7 +49,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB
         {
             InsertOneRecord();
 
-            DbAssert.AssertDoesNotExistAnyTimeRecord();
+            DbAssert.AssertTimeRecordCount(0);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB
             InsertOneRecord();
             unitOfWork.Dispose();
 
-            DbAssert.AssertDoesNotExistAnyTimeRecord();
+            DbAssert.AssertTimeRecordCount(0);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB
             InsertOneRecord();
             unitOfWork.Rollback();
 
-            DbAssert.AssertDoesNotExistAnyTimeRecord();
+            DbAssert.AssertTimeRecordCount(0);
         }
 
         [Test]
@@ -76,8 +76,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB
             TimeRecord timeRecord = InsertOneRecord();
             unitOfWork.Commit();
 
-            DbAssert.AssertExistsTimeRecord(timeRecord.Id);
-            //DbAssert.AssertExistsAnyTimeRecord();
+            DbAssert.AssertTimeRecordCount(1, x => x.Id == timeRecord.Id);
         }
 
         [Test]

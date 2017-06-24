@@ -22,7 +22,7 @@ using LiteDB;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 {
-    public class TimeRecordRepository : ITimeRecordRepository
+    internal class TimeRecordRepository : ITimeRecordRepository
     {
         public const string CollectionName = "TimeRecord";
 

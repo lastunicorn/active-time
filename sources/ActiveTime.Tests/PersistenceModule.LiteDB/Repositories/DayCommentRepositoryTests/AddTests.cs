@@ -22,13 +22,13 @@ using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers;
 using LiteDB;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories.TimeRecordRepositoryTests
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories.DayCommentRepositoryTests
 {
     [TestFixture]
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class AddTests
     {
-        private TimeRecordRepository timeRecordRepository;
+        private DayCommentRepository dayCommentRepository;
         private LiteDatabase database;
 
         [SetUp]
@@ -37,7 +37,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             DbTestHelper.ClearDatabase();
 
             database = new LiteDatabase(DbTestHelper.ConnectionString);
-            timeRecordRepository = new TimeRecordRepository(database);
+            dayCommentRepository = new DayCommentRepository(database);
         }
 
         [TearDown]
@@ -47,72 +47,70 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         }
 
         [Test]
-        public void sets_the_id_of_the_timeRecord_entity()
+        public void sets_the_id_of_the_DayComment_entity()
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
+            DayComment dayComment = CreateDayCommentEntity();
 
-            timeRecordRepository.Add(timeRecord);
+            dayCommentRepository.Add(dayComment);
 
-            Assert.That(timeRecord.Id, Is.Not.EqualTo(0));
+            Assert.That(dayComment.Id, Is.Not.EqualTo(0));
         }
 
         [Test]
-        public void saves_the_timeRecord_in_the_database()
+        public void saves_the_DayComment_in_the_database()
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
+            DayComment dayComment = CreateDayCommentEntity();
 
-            timeRecordRepository.Add(timeRecord);
+            dayCommentRepository.Add(dayComment);
 
-            DbAssert.AssertTimeRecordCount(1, x => x.Id == timeRecord.Id);
+            DbAssert.AssertDayCommentCount(1, x => x.Id == dayComment.Id);
         }
 
         [Test]
-        public void saves_two_timeRecords_in_the_database()
+        public void saves_two_DayComments_in_the_database()
         {
-            TimeRecord timeRecord1 = CreateTimeRecordEntity();
-            timeRecord1.Date = new DateTime(2014, 06, 13);
-            TimeRecord timeRecord2 = CreateTimeRecordEntity();
-            timeRecord2.Date = new DateTime(2014, 03, 05);
+            DayComment dayComment1 = CreateDayCommentEntity();
+            dayComment1.Date = new DateTime(2014, 06, 13);
+            DayComment dayComment2 = CreateDayCommentEntity();
+            dayComment2.Date = new DateTime(2014, 03, 05);
 
-            timeRecordRepository.Add(timeRecord1);
-            timeRecordRepository.Add(timeRecord2);
+            dayCommentRepository.Add(dayComment1);
+            dayCommentRepository.Add(dayComment2);
 
-            DbAssert.AssertTimeRecordCount(1, x => x.Id == timeRecord1.Id);
-            DbAssert.AssertTimeRecordCount(1, x => x.Id == timeRecord2.Id);
+            DbAssert.AssertDayCommentCount(1, x => x.Id == dayComment1.Id);
+            DbAssert.AssertDayCommentCount(1, x => x.Id == dayComment2.Id);
         }
 
         [Test]
-        public void throws_if_two_identical_timeRecords_are_saved()
+        public void throws_if_two_identical_DayComments_are_saved()
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                TimeRecord timeRecord1 = CreateTimeRecordEntity();
-                TimeRecord timeRecord2 = CreateTimeRecordEntity();
+                DayComment dayComment1 = CreateDayCommentEntity();
+                DayComment dayComment2 = CreateDayCommentEntity();
 
-                timeRecordRepository.Add(timeRecord1);
-                timeRecordRepository.Add(timeRecord2);
+                dayCommentRepository.Add(dayComment1);
+                dayCommentRepository.Add(dayComment2);
             });
         }
 
         [Test]
         public void correctly_adds_all_the_fields()
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
+            DayComment dayComment = CreateDayCommentEntity();
 
-            timeRecordRepository.Add(timeRecord);
+            dayCommentRepository.Add(dayComment);
 
-            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
+            DbAssert.AssertExistsDayCommentEqualTo(dayComment);
         }
 
-        private static TimeRecord CreateTimeRecordEntity()
+        private static DayComment CreateDayCommentEntity()
         {
-            return new TimeRecord
+            return new DayComment
             {
                 Id = 0,
                 Date = new DateTime(2014, 04, 30),
-                StartTime = new TimeSpan(1, 1, 1),
-                EndTime = new TimeSpan(2, 2, 2),
-                RecordType = TimeRecordType.Fake
+                Comment = "This is a comment"
             };
         }
     }

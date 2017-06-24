@@ -37,12 +37,38 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
         public void Add(DayComment comment)
         {
             LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            bool exists = dayCommentCollection
+                .Find(x =>
+                    x.Date == comment.Date &&
+                    x.Comment == comment.Comment)
+                .Any();
+
+            if (exists)
+            {
+                string errorMessage = string.Format("Error adding the comment record '{0}' into the database.", comment);
+                throw new PersistenceException(errorMessage);
+            }
+
             dayCommentCollection.Insert(comment);
         }
 
         public void Update(DayComment comment)
         {
+            if (comment == null) throw new ArgumentNullException(nameof(comment));
+
+            if (comment.Id <= 0)
+                throw new PersistenceException("The id of the comment record should be a positive integer.");
+
             LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            bool exists = dayCommentCollection
+                .Find(x => x.Id == comment.Id)
+                .Any();
+
+            if (!exists)
+                throw new PersistenceException("There is no record with the specified id to update.");
+
             dayCommentCollection.Update(comment);
         }
 
@@ -67,7 +93,20 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 
         public void Delete(DayComment comment)
         {
+            if (comment == null) throw new ArgumentNullException(nameof(comment));
+
+            if (comment.Id <= 0)
+                throw new PersistenceException("The id of the comment record should be a positive integer.");
+
             LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            bool exists = dayCommentCollection
+                .Find(x => x.Id == comment.Id)
+                .Any();
+
+            if (!exists)
+                throw new PersistenceException("There is no record with the specified id to update.");
+
             dayCommentCollection.Delete(x => x.Id == comment.Id);
         }
 

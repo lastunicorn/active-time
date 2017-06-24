@@ -24,21 +24,11 @@ using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
 {
-    public class DbAssert
+    public partial class DbAssert
     {
-        public static void AssertExistsTimeRecord(int id)
+        public static void AssertTimeRecordCount(int expectedCount, Expression<Func<TimeRecord, bool>> predicate = null)
         {
-            long recordCount = ReadTimeRecordCount(x => x.Id == id);
-
-            if (recordCount != 1)
-            {
-                string errorMessage = string.Format("Expected to find in database one record with id: {0}.\r\n  But found {1} records.", id, recordCount);
-                throw new AssertionException(errorMessage);
-            }
-        }
-        public static void AssertTimeRecordCount(int expectedCount)
-        {
-            long actualCount = ReadTimeRecordCount(x => true);
+            long actualCount = ReadTimeRecordCount(predicate);
 
             if (actualCount != expectedCount)
             {
@@ -47,59 +37,32 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
             }
         }
 
-        public static void AssertExistsAnyTimeRecord()
-        {
-            long recordCount = ReadTimeRecordCount(x => true);
-
-            if (recordCount <= 0)
-                throw new AssertionException("Expected to find in database at least one record.");
-        }
-
-        public static void AssertDoesNotExistAnyTimeRecord()
-        {
-            long recordCount = ReadTimeRecordCount(x => true);
-
-            if (recordCount > 0)
-            {
-                string errorMessage = string.Format("Expected to find no records in the database.\r\n  But found: {0}", recordCount);
-                throw new AssertionException(errorMessage);
-            }
-        }
-
         private static long ReadTimeRecordCount(Expression<Func<TimeRecord, bool>> predicate)
         {
             using (LiteDatabase database = new LiteDatabase(DbTestHelper.ConnectionString))
             {
+                if (predicate == null)
+                    predicate = x => true;
+
                 return database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName)
                     .Find(predicate)
                     .Count();
             }
         }
 
-        public static void AssertExistsTimeRecordEqualTo(TimeRecord expectedTimeRecord)
+        public static void AssertExistsTimeRecordEqualTo(TimeRecord expectedRecord)
         {
-            TimeRecord actualTimeRecord = GetTimeRecordById(expectedTimeRecord.Id);
+            TimeRecord actualRecord = GetTimeRecordById(expectedRecord.Id);
 
-            if (actualTimeRecord == null)
+            if (actualRecord == null)
             {
-                string errorMessage = string.Format("There is no TimeRecord in the database with the id {0}", expectedTimeRecord.Id);
+                string errorMessage = string.Format("There is no record in the database with the id {0}", expectedRecord.Id);
                 throw new AssertionException(errorMessage);
             }
 
-            if (!actualTimeRecord.Equals(expectedTimeRecord))
+            if (!actualRecord.Equals(expectedRecord))
             {
-                string errorMessage = string.Format("The TimeRecord from the database is different from the expected one.\r\n  Actual TimeRecord: {0}\r\n  Expected TimeRecord: {1}", actualTimeRecord, expectedTimeRecord);
-                throw new AssertionException(errorMessage);
-            }
-        }
-
-        public static void AssertDoesNotExistTimeRecord(int id)
-        {
-            long recordCount = ReadTimeRecordCount(x => x.Id == id);
-
-            if (recordCount != 0)
-            {
-                string errorMessage = string.Format("  Expected to not find record {0} in the database.", id);
+                string errorMessage = string.Format("The record from the database is different from the expected one.\r\n  Actual record: {0}\r\n  Expected record: {1}", actualRecord, expectedRecord);
                 throw new AssertionException(errorMessage);
             }
         }
