@@ -15,13 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using LiteDB;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 {
     public interface IUnitOfWork : IDisposable
     {
-        LiteDatabase Connection { get; }
+        //LiteDatabase Connection { get; }
 
         //void ExecuteCommand(Action<DbCommand> action);
 
@@ -36,5 +37,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
         void Commit();
 
         void Rollback();
+        ITimeRecordRepository TimeRecordRepository { get; }
     }
 }

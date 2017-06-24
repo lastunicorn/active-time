@@ -18,6 +18,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories;
+using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers;
+using LiteDB;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories.TimeRecordRepositoryTests
@@ -26,22 +28,22 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class AddTests
     {
-        private UnitOfWork unitOfWork;
         private TimeRecordRepository timeRecordRepository;
+        private LiteDatabase database;
 
         [SetUp]
         public void SetUp()
         {
             DbTestHelper.ClearDatabase();
-
-            unitOfWork = new UnitOfWork();
-            timeRecordRepository = new TimeRecordRepository(unitOfWork);
+            
+            database = new LiteDatabase(DbTestHelper.ConnectionString);
+            timeRecordRepository = new TimeRecordRepository(database);
         }
 
         [TearDown]
         public void TearDown()
         {
-            unitOfWork.Dispose();
+            database.Dispose();
         }
 
         [Test]
@@ -60,8 +62,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             TimeRecord timeRecord = CreateTimeRecordEntity();
 
             timeRecordRepository.Add(timeRecord);
-            unitOfWork.Commit();
-
+            
             DbAssert.AssertExistsTimeRecord(timeRecord.Id);
         }
 
@@ -75,8 +76,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
 
             timeRecordRepository.Add(timeRecord1);
             timeRecordRepository.Add(timeRecord2);
-            unitOfWork.Commit();
-
+            
             DbAssert.AssertExistsTimeRecord(timeRecord1.Id);
             DbAssert.AssertExistsTimeRecord(timeRecord2.Id);
         }
@@ -100,7 +100,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             TimeRecord timeRecord = CreateTimeRecordEntity();
 
             timeRecordRepository.Add(timeRecord);
-            unitOfWork.Commit();
 
             DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
         }

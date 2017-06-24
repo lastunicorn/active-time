@@ -16,20 +16,20 @@
 
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.LiteDB;
+using DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories;
 using LiteDB;
-using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
 {
     internal class DbTestHelper
     {
-        private const string ConnectionString = Constants.DatabaseFileName;
+        public const string ConnectionString = Constants.DatabaseFileName;
 
         public static void ClearDatabase()
         {
             using (LiteDatabase database = new LiteDatabase(ConnectionString))
             {
-                LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>("TimeRecord");
+                LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName);
                 timeRecordCollection.Delete(x => true);
 
                 LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>("DayComment");

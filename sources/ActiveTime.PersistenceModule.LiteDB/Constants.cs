@@ -16,7 +16,7 @@
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 {
-    internal class Constants
+    public class Constants
     {
         public const string DatabaseFileName = @"ActiveTime.LiteDB.db";
     }

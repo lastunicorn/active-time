@@ -22,24 +22,24 @@ using LiteDB;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 {
-    internal class TimeRecordRepository : ITimeRecordRepository
+    public class TimeRecordRepository : ITimeRecordRepository
     {
-        private const string CollectionName = "TimeRecord";
+        public const string CollectionName = "TimeRecord";
 
-        private readonly IUnitOfWork unitOfWork;
+        private readonly LiteDatabase database;
 
-        public TimeRecordRepository(IUnitOfWork unitOfWork)
+        public TimeRecordRepository(LiteDatabase database)
         {
-            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            if (database == null) throw new ArgumentNullException(nameof(database));
 
-            this.unitOfWork = unitOfWork;
+            this.database = database;
         }
 
         public void Add(TimeRecord timeRecord)
         {
-            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
-            bool exists = timeRecords
+            bool exists = timeRecordCollection
                 .Find(x =>
                     x.Date == timeRecord.Date &&
                     x.StartTime == timeRecord.StartTime &&
@@ -53,7 +53,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
                 throw new PersistenceException(errorMessage);
             }
 
-            timeRecords.Insert(timeRecord);
+            timeRecordCollection.Insert(timeRecord);
         }
 
         public void Update(TimeRecord timeRecord)
@@ -63,16 +63,16 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
-            bool exists = timeRecords
+            bool exists = timeRecordCollection
                 .Find(x => x.Id == timeRecord.Id)
                 .Any();
 
             if (!exists)
                 throw new PersistenceException("There is no record with the specified id to update.");
 
-            timeRecords.Update(timeRecord);
+            timeRecordCollection.Update(timeRecord);
         }
 
         public void Delete(TimeRecord timeRecord)
@@ -82,30 +82,30 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
+            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
-            bool exists = timeRecords
+            bool exists = timeRecordCollection
                 .Find(x => x.Id == timeRecord.Id)
                 .Any();
 
             if (!exists)
                 throw new PersistenceException("There is no record with the specified id to update.");
 
-            timeRecords.Delete(x => x.Id == timeRecord.Id);
+            timeRecordCollection.Delete(x => x.Id == timeRecord.Id);
         }
 
         public TimeRecord GetById(int id)
         {
-            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
-            return timeRecords
+            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            return timeRecordCollection
                 .Find(x => x.Id == id)
                 .FirstOrDefault();
         }
 
         public IList<TimeRecord> GetByDate(DateTime date)
         {
-            LiteCollection<TimeRecord> timeRecords = unitOfWork.Connection.GetCollection<TimeRecord>(CollectionName);
-            return timeRecords
+            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            return timeRecordCollection
                 .Find(x => x.Date == date)
                 .ToList();
         }

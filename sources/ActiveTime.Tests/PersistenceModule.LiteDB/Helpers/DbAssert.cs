@@ -18,23 +18,21 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.PersistenceModule.LiteDB;
+using DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories;
 using LiteDB;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
 {
     public class DbAssert
     {
-        private const string ConnectionString = Constants.DatabaseFileName;
-
         public static void AssertExistsTimeRecord(int id)
         {
             long recordCount = ReadTimeRecordCount(x => x.Id == id);
 
             if (recordCount != 1)
             {
-                string errorMessage = string.Format("  Expected to find in database one record with id: {0}.\r\n  But found {1} records.", id, recordCount);
+                string errorMessage = string.Format("Expected to find in database one record with id: {0}.\r\n  But found {1} records.", id, recordCount);
                 throw new AssertionException(errorMessage);
             }
         }
@@ -44,7 +42,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
 
             if (actualCount != expectedCount)
             {
-                string errorMessage = string.Format("  Expected to find in database {0} record(s).\r\n  But found {1} records.", expectedCount, actualCount);
+                string errorMessage = string.Format("Expected to find in database {0} record(s).\r\n  But found {1} records.", expectedCount, actualCount);
                 throw new AssertionException(errorMessage);
             }
         }
@@ -54,7 +52,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             long recordCount = ReadTimeRecordCount(x => true);
 
             if (recordCount <= 0)
-                throw new AssertionException("  Expected to find in database at least one record.");
+                throw new AssertionException("Expected to find in database at least one record.");
         }
 
         public static void AssertDoesNotExistAnyTimeRecord()
@@ -63,16 +61,16 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
 
             if (recordCount > 0)
             {
-                string errorMessage = string.Format("  Expected to find no records in the database.\r\n  But found: {0}", recordCount);
+                string errorMessage = string.Format("Expected to find no records in the database.\r\n  But found: {0}", recordCount);
                 throw new AssertionException(errorMessage);
             }
         }
 
         private static long ReadTimeRecordCount(Expression<Func<TimeRecord, bool>> predicate)
         {
-            using (LiteDatabase database = new LiteDatabase(ConnectionString))
+            using (LiteDatabase database = new LiteDatabase(DbTestHelper.ConnectionString))
             {
-                return database.GetCollection<TimeRecord>("TimeRecord")
+                return database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName)
                     .Find(predicate)
                     .Count();
             }
@@ -108,9 +106,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
 
         private static TimeRecord GetTimeRecordById(int id)
         {
-            using (LiteDatabase database = new LiteDatabase(ConnectionString))
+            using (LiteDatabase database = new LiteDatabase(DbTestHelper.ConnectionString))
             {
-                return database.GetCollection<TimeRecord>("TimeRecord")
+                return database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName)
                     .Find(x => x.Id == id)
                     .FirstOrDefault();
             }

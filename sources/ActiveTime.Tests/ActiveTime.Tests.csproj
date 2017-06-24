@@ -99,11 +99,12 @@
     <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\TimeRecordRepositoryTests\UpdateTests.cs" />
     <Compile Include="PersistenceModule.AdoNet\Repositories\UnitOfWorkTests.cs" />
-    <Compile Include="PersistenceModule.LiteDB\Repositories\DbAssert.cs" />
-    <Compile Include="PersistenceModule.LiteDB\Repositories\DbTestHelper.cs" />
+    <Compile Include="PersistenceModule.LiteDB\Helpers\DbAssert.cs" />
+    <Compile Include="PersistenceModule.LiteDB\Helpers\DbTestHelper.cs" />
     <Compile Include="PersistenceModule.LiteDB\Repositories\TimeRecordRepositoryTests\AddTests.cs" />
     <Compile Include="PersistenceModule.LiteDB\Repositories\TimeRecordRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.LiteDB\Repositories\TimeRecordRepositoryTests\UpdateTests.cs" />
+    <Compile Include="PersistenceModule.LiteDB\UnitOfWorkTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\ConstructorTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\InternalTimerTests.cs" />
     <Compile Include="RecorderModule\Services\RecorderServiceTests\GetTimeFromLastStopTests.cs" />
@@ -115,17 +116,6 @@
     <Compile Include="RecorderModule\Services\ScribeTests\ConstructorTests.cs" />
     <Compile Include="RecorderModule\Services\ScribeTests\StampTests.cs" />
     <Compile Include="RecorderModule\Services\ScribeTests\StampNewTests.cs" />
-    <Compile Include="ReminderModule\Reminding\ReminderTests\ConstructorTests.cs" />
-    <Compile Include="ReminderModule\Reminding\ReminderTests\DisposeTests.cs" />
-    <Compile Include="ReminderModule\Reminding\ReminderTests\WaitUntilRingTests.cs" />
-    <Compile Include="ReminderModule\Reminding\ReminderTests\SnoozeTests.cs" />
-    <Compile Include="ReminderModule\Reminding\ReminderTests\StopTests.cs" />
-    <Compile Include="ReminderModule\Reminding\ReminderTests\RingTests.cs" />
-    <Compile Include="ReminderModule\Reminding\ReminderTests\StartTests.cs" />
-    <Compile Include="ReminderModule\Services\PauseReminderTests\ConstructorTests.cs" />
-    <Compile Include="ReminderModule\Services\PauseReminderTests\StartMonitoringTests.cs" />
-    <Compile Include="ReminderModule\Services\PauseReminderTests\RecorderServiceEventsTests.cs" />
-    <Compile Include="ReminderModule\Services\PauseReminderTests\ReminderEventsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\Services\StatusInfoServiceTests\SetStatusTests.cs" />
     <Compile Include="TestConstants.cs" />
@@ -151,17 +141,10 @@
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
       <Name>ActiveTime.RecorderModule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj">
-      <Project>{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}</Project>
-      <Name>ActiveTime.ReminderModule</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ActiveTime\ActiveTime.csproj">
       <Project>{16baedc7-838b-4b8d-9bf4-07eb8515d999}</Project>
       <Name>ActiveTime</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ReminderModule\Reminding\ReminderTests\TestCases.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -15,38 +15,52 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories;
 using LiteDB;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 {
     public class UnitOfWork : IUnitOfWork
     {
         private const string ConnectionString = Constants.DatabaseFileName;
 
-        private LiteDatabase connection;
+        private LiteDatabase database;
         private LiteTransaction transaction;
-
-        public LiteDatabase Connection
+        
+        private LiteDatabase Database
         {
             get
             {
                 if (disposed)
-                    throw new ObjectDisposedException("UnitOfWork");
+                    throw new ObjectDisposedException(nameof(UnitOfWork));
 
-                if (connection == null)
-                    connection = new LiteDatabase(ConnectionString);
+                if (database == null)
+                    database = new LiteDatabase(ConnectionString);
 
                 if (transaction == null)
-                    transaction = connection.BeginTrans();
+                    transaction = database.BeginTrans();
 
-                return connection;
+                return database;
+            }
+        }
+
+        private TimeRecordRepository timeRecordRepository;
+        public ITimeRecordRepository TimeRecordRepository
+        {
+            get
+            {
+                if (timeRecordRepository == null)
+                    timeRecordRepository = new TimeRecordRepository(Database);
+
+                return timeRecordRepository;
             }
         }
 
         public void Commit()
         {
             if (disposed)
-                throw new ObjectDisposedException("UnitOfWork");
+                throw new ObjectDisposedException(nameof(UnitOfWork));
 
             if (transaction == null)
                 return;
@@ -60,7 +74,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
         public void Rollback()
         {
             if (disposed)
-                throw new ObjectDisposedException("UnitOfWork");
+                throw new ObjectDisposedException(nameof(UnitOfWork));
 
             if (transaction == null)
                 return;
@@ -162,10 +176,10 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
                     transaction = null;
                 }
 
-                if (connection != null)
+                if (database != null)
                 {
-                    connection.Dispose();
-                    connection = null;
+                    database.Dispose();
+                    database = null;
                 }
             }
 

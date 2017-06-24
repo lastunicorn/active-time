@@ -79,8 +79,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public void Update(TimeRecord timeRecord)
         {
-            if (timeRecord == null)
-                throw new ArgumentNullException("timeRecord");
+            if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
 
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
@@ -114,8 +113,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public void Delete(TimeRecord timeRecord)
         {
-            if (timeRecord == null)
-                throw new ArgumentNullException("timeRecord");
+            if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
 
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
