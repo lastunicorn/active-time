@@ -133,10 +133,6 @@
       <Project>{bfc9b5e5-e55e-4f98-88e5-49f31609eb4c}</Project>
       <Name>ActiveTime.PersistenceModule.LiteDB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.PersistenceModule.NHibernate\ActiveTime.PersistenceModule.SQLite.NHibernate.csproj">
-      <Project>{B311ECBA-97DA-4BAA-9321-383EBF65F030}</Project>
-      <Name>ActiveTime.PersistenceModule.SQLite.NHibernate</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.PersistenceModule.AdoNet\ActiveTime.PersistenceModule.SQLite.AdoNet.csproj">
       <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>
       <Name>ActiveTime.PersistenceModule.SQLite.AdoNet</Name>
