@@ -8,7 +8,7 @@
     <ProjectGuid>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.ActiveTime.PersistenceModule.AdoNet</RootNamespace>
+    <RootNamespace>DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet</RootNamespace>
     <AssemblyName>ActiveTime.PersistenceModule.SQLite.AdoNet</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -59,9 +59,9 @@
     </Compile>
     <Compile Include="Repositories\CustomDataReader.cs" />
     <Compile Include="Repositories\DayCommentRepository.cs" />
-    <Compile Include="Repositories\IUnitOfWork.cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Repositories\TimeRecordRepository.cs" />
-    <Compile Include="Repositories\UnitOfWork.cs" />
+    <Compile Include="UnitOfWork.cs" />
     <Compile Include="ModuleDefinitions\PersistenceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

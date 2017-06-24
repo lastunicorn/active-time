@@ -18,7 +18,7 @@ using System;
 using System.Data.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 {
     public class CustomDataReader
     {
@@ -26,8 +26,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
 
         public CustomDataReader(DbDataReader dataReader)
         {
-            if (dataReader == null)
-                throw new ArgumentNullException("dataReader");
+            if (dataReader == null) throw new ArgumentNullException(nameof(dataReader));
 
             this.dataReader = dataReader;
         }

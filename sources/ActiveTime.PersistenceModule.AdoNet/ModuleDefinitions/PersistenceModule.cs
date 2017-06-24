@@ -16,11 +16,11 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories;
+using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.ModuleDefinitions
 {
     public class PersistenceModule : IModule
     {

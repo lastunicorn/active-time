@@ -17,7 +17,7 @@
 using System;
 using System.Data.Common;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet
 {
     public interface IUnitOfWork : IDisposable
     {

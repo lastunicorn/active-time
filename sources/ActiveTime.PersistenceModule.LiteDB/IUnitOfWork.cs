@@ -16,27 +16,15 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using LiteDB;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 {
     public interface IUnitOfWork : IDisposable
     {
-        //LiteDatabase Connection { get; }
-
-        //void ExecuteCommand(Action<DbCommand> action);
-
-        //T ExecuteCommand<T>(Func<DbCommand, T> action);
-
-        void ExecuteAndCommit(Action action);
-
-        //void ExecuteCommandAndCommit(Action<DbCommand> action);
-
-        //T ExecuteCommandAndCommit<T>(Func<DbCommand, T> action);
-
+        ITimeRecordRepository TimeRecordRepository { get; }
+        
         void Commit();
 
         void Rollback();
-        ITimeRecordRepository TimeRecordRepository { get; }
     }
 }

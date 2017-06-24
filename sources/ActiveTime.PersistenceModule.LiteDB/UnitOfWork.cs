@@ -27,22 +27,19 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 
         private LiteDatabase database;
         private LiteTransaction transaction;
-        
-        private LiteDatabase Database
+
+        private LiteDatabase OpenDatabaseAndTransaction()
         {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(nameof(UnitOfWork));
+            if (disposed)
+                throw new ObjectDisposedException(nameof(UnitOfWork));
 
-                if (database == null)
-                    database = new LiteDatabase(ConnectionString);
+            if (database == null)
+                database = new LiteDatabase(ConnectionString);
 
-                if (transaction == null)
-                    transaction = database.BeginTrans();
+            if (transaction == null)
+                transaction = database.BeginTrans();
 
-                return database;
-            }
+            return database;
         }
 
         private TimeRecordRepository timeRecordRepository;
@@ -51,7 +48,10 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
             get
             {
                 if (timeRecordRepository == null)
-                    timeRecordRepository = new TimeRecordRepository(Database);
+                {
+                    OpenDatabaseAndTransaction();
+                    timeRecordRepository = new TimeRecordRepository(database);
+                }
 
                 return timeRecordRepository;
             }
@@ -84,76 +84,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
             transaction.Dispose();
             transaction = null;
         }
-
-        //public void ExecuteCommand(Action<DbCommand> action)
-        //{
-        //    using (DbCommand command = Connection.CreateCommand())
-        //    {
-        //        action(command);
-        //    }
-        //}
-
-        //public T ExecuteCommand<T>(Func<DbCommand, T> action)
-        //{
-        //    using (DbCommand command = Connection.CreateCommand())
-        //    {
-        //        return action(command);
-        //    }
-        //}
-
-        public void ExecuteAndCommit(Action action)
-        {
-            try
-            {
-                action();
-                Commit();
-            }
-            catch
-            {
-                Rollback();
-                throw;
-            }
-        }
-
-        //public void ExecuteCommandAndCommit(Action<DbCommand> action)
-        //{
-        //    try
-        //    {
-        //        using (DbCommand command = Connection.CreateCommand())
-        //        {
-        //            action(command);
-        //        }
-
-        //        Commit();
-        //    }
-        //    catch
-        //    {
-        //        Rollback();
-        //        throw;
-        //    }
-        //}
-
-        //public T ExecuteCommandAndCommit<T>(Func<DbCommand, T> action)
-        //{
-        //    try
-        //    {
-        //        T returnValue;
-
-        //        using (DbCommand command = Connection.CreateCommand())
-        //        {
-        //            returnValue = action(command);
-        //        }
-
-        //        Commit();
-
-        //        return returnValue;
-        //    }
-        //    catch
-        //    {
-        //        Rollback();
-        //        throw;
-        //    }
-        //}
 
         private bool disposed;
 

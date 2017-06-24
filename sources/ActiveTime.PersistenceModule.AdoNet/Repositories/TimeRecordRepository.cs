@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 
-namespace DustInTheWind.ActiveTime.PersistenceModule.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 {
     public class TimeRecordRepository : ITimeRecordRepository
     {
