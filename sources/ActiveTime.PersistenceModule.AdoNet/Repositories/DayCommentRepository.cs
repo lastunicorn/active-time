@@ -24,74 +24,70 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 {
     public class DayCommentRepository : IDayCommentRepository
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly DbConnection connection;
 
-        public DayCommentRepository(IUnitOfWork unitOfWork)
+        public DayCommentRepository(DbConnection connection)
         {
-            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            if (connection == null) throw new ArgumentNullException(nameof(connection));
 
-            this.unitOfWork = unitOfWork;
+            this.connection = connection;
         }
 
         public void Add(DayComment comment)
         {
-            unitOfWork.ExecuteAndCommit(() => AddInternal(comment));
+            AddInternal(comment);
         }
 
         private void AddInternal(DayComment comment)
         {
-            unitOfWork.ExecuteCommand((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
-                string sql = string.Format("insert into comments(date,comment) values('{0}', '{1}')",
-                    comment.Date.ToString("yyyy-MM-dd"),
+                string sql = string.Format("insert into comments(date,comment) values('{0:yyyy-MM-dd}', '{1}')",
+                    comment.Date,
                     SqlTextEncode(comment.Comment));
 
                 command.CommandText = sql;
 
                 if (command.ExecuteNonQuery() == 0)
                     throw new Exception();
-            });
+            }
         }
 
         public void Update(DayComment comment)
         {
-            unitOfWork.ExecuteAndCommit(() => UpdateInternal(comment));
+            UpdateInternal(comment);
         }
 
         private void UpdateInternal(DayComment comment)
         {
-            unitOfWork.ExecuteCommand((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
-                string sql = string.Format("update comments set comment='{0}' where date='{1}'",
+                string sql = string.Format("update comments set comment='{0}' where date='{1:yyyy-MM-dd}'",
                     SqlTextEncode(comment.Comment),
-                    comment.Date.ToString("yyyy-MM-dd"));
+                    comment.Date);
 
                 command.CommandText = sql;
 
                 if (command.ExecuteNonQuery() == 0)
                     throw new Exception();
-            });
+            }
         }
 
         public void AddOrUpdate(DayComment comment)
         {
-            unitOfWork.ExecuteAndCommit(() =>
-            {
-                bool existsRecord = ExistsRecord(comment);
+            bool existsRecord = ExistsRecord(comment);
 
-                if (existsRecord)
-                    UpdateInternal(comment);
-                else
-                    AddInternal(comment);
-            });
+            if (existsRecord)
+                UpdateInternal(comment);
+            else
+                AddInternal(comment);
         }
 
         public bool ExistsRecord(DayComment comment)
         {
-            return unitOfWork.ExecuteCommand((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
-                string sql = string.Format("select count(*) from comments where date='{0}'",
-                    comment.Date.ToString("yyyy-MM-dd"));
+                string sql = string.Format("select count(*) from comments where date='{0:yyyy-MM-dd}'", comment.Date);
 
                 command.CommandText = sql;
 
@@ -99,7 +95,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
                 int count = int.Parse(countAsObject.ToString());
 
                 return count > 0;
-            });
+            }
         }
 
         public void Delete(DayComment comment)
@@ -114,9 +110,9 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 
         public DayComment GetByDate(DateTime date)
         {
-            return unitOfWork.ExecuteCommandAndCommit((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
-                string sql = string.Format("select comment from comments where date='{0}'", date.ToString("yyyy-MM-dd"));
+                string sql = string.Format("select comment from comments where date='{0:yyyy-MM-dd}'", date);
 
                 command.CommandText = sql;
 
@@ -132,12 +128,12 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
                     Date = date,
                     Comment = (string)reader["comment"]
                 };
-            });
+            }
         }
 
         public List<DayComment> GetByDate(DateTime startDate, DateTime endDate)
         {
-            return unitOfWork.ExecuteCommandAndCommit((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
                 const string sql = "select date, comment from comments where date >= @startDate and date <= @endDate";
 
@@ -171,7 +167,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
                 }
 
                 return dayComments;
-            });
+            }
         }
 
         public IList<DayComment> GetAll()
@@ -185,130 +181,3 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
         }
     }
 }
-
-
-//using System;
-//using System.Collections.Generic;
-//using System.Data.SQLite;
-//using DustInTheWind.ActiveTime.Common.Persistence;
-
-//namespace DustInTheWind.ActiveTime.PersistenceModule.AdoRepositories
-//{
-//    public class DayCommentRepository : IDayCommentRepository
-//    {
-//        private const string ConnectionString = "Data Source=db.s3db";
-
-//        public void Add(DayComment comment)
-//        {
-//            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-//            {
-//                connection.Open();
-
-//                AddInternal(comment, connection);
-//            }
-//        }
-
-//        private void AddInternal(DayComment comment, SQLiteConnection connection)
-//        {
-//            string sql = string.Format("insert into comments(date,comment) values('{0}', '{1}')",
-//                comment.Date.ToString("yyyy-MM-dd"),
-//                SqlTextEncode(comment.Comment));
-
-//            using (SQLiteCommand cmdInsert = new SQLiteCommand(sql, connection))
-//            {
-//                if (cmdInsert.ExecuteNonQuery() == 0)
-//                    throw new Exception();
-//            }
-//        }
-
-//        public void Update(DayComment comment)
-//        {
-//            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-//            {
-//                connection.Open();
-
-//                UpdateInternal(comment, connection);
-//            }
-//        }
-
-//        private void UpdateInternal(DayComment comment, SQLiteConnection connection)
-//        {
-//            string sql = string.Format("update comments set comment='{0}' where date='{1}'",
-//                SqlTextEncode(comment.Comment),
-//                comment.Date.ToString("yyyy-MM-dd"));
-
-//            using (SQLiteCommand cmdUpdate = new SQLiteCommand(sql, connection))
-//            {
-//                if (cmdUpdate.ExecuteNonQuery() == 0)
-//                    throw new Exception();
-//            }
-//        }
-
-//        public void AddOrUpdate(DayComment comment)
-//        {
-//            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-//            {
-//                connection.Open();
-
-//                string sql = string.Format("select date from comments where date='{0}'",
-//                    comment.Date.ToString("yyyy-MM-dd"));
-
-//                using (SQLiteCommand cmdSelect = new SQLiteCommand(sql, connection))
-//                {
-//                    SQLiteDataReader reader = cmdSelect.ExecuteReader();
-
-//                    if (reader.Read())
-//                        UpdateInternal(comment, connection);
-//                    else
-//                        AddInternal(comment, connection);
-//                }
-//            }
-//        }
-
-//        public void Delete(DayComment comment)
-//        {
-//            throw new NotImplementedException();
-//        }
-
-//        public DayComment GetById(int id)
-//        {
-//            throw new NotImplementedException();
-//        }
-
-//        public DayComment GetByDate(DateTime date)
-//        {
-//            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-//            {
-//                connection.Open();
-
-//                string sql = string.Format("select comment from comments where date='{0}'", date.ToString("yyyy-MM-dd"));
-
-//                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
-//                {
-//                    SQLiteDataReader reader = command.ExecuteReader();
-
-//                    bool successfullyRead = reader.Read();
-
-//                    if (!successfullyRead)
-//                        return null;
-
-//                    return new DayComment
-//                    {
-//                        Date = date,
-//                        Comment = (string)reader["comment"]
-//                    };
-//                }
-//            }
-//        }
-
-//        public IList<DayComment> GetAll()
-//        {
-//            throw new NotImplementedException();
-//        }
-
-//        private string SqlTextEncode(string text)
-//        {
-//            return text.Replace("'", "''");
-//        }
-//    }
-//}

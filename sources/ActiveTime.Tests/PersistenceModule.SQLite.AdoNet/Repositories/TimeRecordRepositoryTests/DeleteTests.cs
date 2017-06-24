@@ -15,11 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Data.SQLite;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet;
 using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories;
-using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories.Helpers;
+using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Helpers;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories.TimeRecordRepositoryTests
@@ -28,22 +28,23 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Rep
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class DeleteTests
     {
-        private UnitOfWork unitOfWork;
         private TimeRecordRepository timeRecordRepository;
+        private SQLiteConnection connection;
 
         [SetUp]
         public void SetUp()
         {
             DbTestHelper.ClearDatabase();
 
-            unitOfWork = new UnitOfWork();
-            timeRecordRepository = new TimeRecordRepository(unitOfWork);
+            connection = new SQLiteConnection(DbTestHelper.ConnectionString);
+            connection.Open();
+            timeRecordRepository = new TimeRecordRepository(connection);
         }
 
         [TearDown]
         public void TearDown()
         {
-            unitOfWork.Dispose();
+            connection.Dispose();
         }
 
         [Test]

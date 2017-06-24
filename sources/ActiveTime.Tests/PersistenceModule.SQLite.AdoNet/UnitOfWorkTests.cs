@@ -19,7 +19,7 @@ using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet;
-using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories.Helpers;
+using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Helpers;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
@@ -35,6 +35,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
         {
             DbTestHelper.ClearDatabase();
 
+            UnitOfWork.ConnectionString = DbTestHelper.ConnectionString;
             unitOfWork = new UnitOfWork();
         }
 
@@ -47,7 +48,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
         [Test]
         public void no_record_exists_if_not_commited()
         {
-            InsertOneTimeRecord(unitOfWork);
+            InsertOneRecord();
 
             DbAssert.AssertDoesNotExistAnyTimeRecord();
         }
@@ -55,7 +56,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
         [Test]
         public void no_record_exists_if_disposed_without_commit()
         {
-            InsertOneTimeRecord(unitOfWork);
+            InsertOneRecord();
             unitOfWork.Dispose();
 
             DbAssert.AssertDoesNotExistAnyTimeRecord();
@@ -64,7 +65,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
         [Test]
         public void no_record_exists_if_rolledback()
         {
-            InsertOneTimeRecord(unitOfWork);
+            InsertOneRecord();
             unitOfWork.Rollback();
 
             DbAssert.AssertDoesNotExistAnyTimeRecord();
@@ -73,7 +74,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
         [Test]
         public void one_record_exists_if_commited()
         {
-            InsertOneTimeRecord(unitOfWork);
+            InsertOneRecord();
             unitOfWork.Commit();
 
             DbAssert.AssertExistsAnyTimeRecord();
@@ -82,8 +83,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
         [Test]
         public void two_records_exists_if_commited()
         {
-            InsertOneTimeRecord(unitOfWork);
-            InsertSecondTimeRecord(unitOfWork);
+            InsertOneRecord();
+            InsertSecondRecord();
             unitOfWork.Commit();
 
             DbAssert.AssertTimeRecordCount(2);
@@ -103,7 +104,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
             {
                 unitOfWork.Dispose();
 
-                DbConnection connection = unitOfWork.Connection;
+                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
             });
         }
 
@@ -141,34 +142,44 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet
             });
         }
 
-        private static void InsertOneTimeRecord(UnitOfWork unitOfWork)
+        private void InsertOneRecord()
         {
-            string sql = string.Format("insert into records(date,start_time,end_time,type) values('{0}', '{1}', '{2}', {3})",
-                new DateTime(2014, 04, 30).ToString("yyyy-MM-dd"),
-                new TimeSpan(1, 1, 1).ToString(@"hh\:mm\:ss"),
-                new TimeSpan(2, 2, 2).ToString(@"hh\:mm\:ss"),
-                (int)TimeRecordType.Normal);
+            ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
 
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
-            {
-                command.CommandText = sql;
-                command.ExecuteNonQuery();
-            }
+            TimeRecord timeRecord = CreateTimeRecordEntity();
+            timeRecordRepository.Add(timeRecord);
         }
 
-        private static void InsertSecondTimeRecord(UnitOfWork unitOfWork)
+        private static TimeRecord CreateTimeRecordEntity()
         {
-            string sql = string.Format("insert into records(date,start_time,end_time,type) values('{0}', '{1}', '{2}', {3})",
-                new DateTime(2014, 05, 01).ToString("yyyy-MM-dd"),
-                new TimeSpan(1, 1, 1).ToString(@"hh\:mm\:ss"),
-                new TimeSpan(2, 2, 2).ToString(@"hh\:mm\:ss"),
-                (int)TimeRecordType.Normal);
-
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            return new TimeRecord
             {
-                command.CommandText = sql;
-                command.ExecuteNonQuery();
-            }
+                Id = 0,
+                Date = new DateTime(2014, 04, 30),
+                StartTime = new TimeSpan(1, 1, 1),
+                EndTime = new TimeSpan(2, 2, 2),
+                RecordType = TimeRecordType.Fake
+            };
+        }
+
+        private void InsertSecondRecord()
+        {
+            ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+            TimeRecord timeRecord = CreateSecondTimeRecordEntity();
+            timeRecordRepository.Add(timeRecord);
+        }
+
+        private static TimeRecord CreateSecondTimeRecordEntity()
+        {
+            return new TimeRecord
+            {
+                Id = 0,
+                Date = new DateTime(2014, 05, 01),
+                StartTime = new TimeSpan(1, 1, 1),
+                EndTime = new TimeSpan(2, 2, 2),
+                RecordType = TimeRecordType.Normal
+            };
         }
     }
 }

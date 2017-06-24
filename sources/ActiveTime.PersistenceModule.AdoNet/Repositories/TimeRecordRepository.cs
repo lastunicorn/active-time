@@ -23,20 +23,20 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 {
     public class TimeRecordRepository : ITimeRecordRepository
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly DbConnection connection;
 
-        public TimeRecordRepository(IUnitOfWork unitOfWork)
+        public TimeRecordRepository(DbConnection connection)
         {
-            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            if (connection == null) throw new ArgumentNullException(nameof(connection));
 
-            this.unitOfWork = unitOfWork;
+            this.connection = connection;
         }
 
         public void Add(TimeRecord timeRecord)
         {
             if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
 
-            unitOfWork.ExecuteCommandAndCommit((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
                 try
                 {
@@ -64,12 +64,12 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
                 {
                     throw new PersistenceException("Error retrieving the last inserted id.", ex);
                 }
-            });
+            }
         }
 
         private long RetrieveLastInsertedId()
         {
-            using (DbCommand command = unitOfWork.Connection.CreateCommand())
+            using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandText = "select last_insert_rowid()";
                 object lastIdAsObject = command.ExecuteScalar();
@@ -84,7 +84,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            unitOfWork.ExecuteCommandAndCommit((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
                 int recordCount;
 
@@ -108,7 +108,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 
                 if (recordCount == 0)
                     throw new PersistenceException("There is no record with the specified id to update.");
-            });
+            }
         }
 
         public void Delete(TimeRecord timeRecord)
@@ -118,7 +118,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            unitOfWork.ExecuteCommandAndCommit((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
                 int recordCount;
 
@@ -137,12 +137,12 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 
                 if (recordCount == 0)
                     throw new PersistenceException("There is no record with the specified id to update.");
-            });
+            }
         }
 
         public TimeRecord GetById(int id)
         {
-            return unitOfWork.ExecuteCommandAndCommit((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandText = string.Format("select * from records where id={0}", id);
 
@@ -152,12 +152,12 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
                         ? ReadCurrentTimeRecord(dataReader)
                         : null;
                 }
-            });
+            }
         }
 
         public IList<TimeRecord> GetByDate(DateTime date)
         {
-            return unitOfWork.ExecuteCommandAndCommit((command) =>
+            using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandText = string.Format("select * from records where date='{0}'",
                     date.ToString("yyyy-MM-dd"));
@@ -174,7 +174,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 
                     return timeRecords;
                 }
-            });
+            }
         }
 
         private static TimeRecord ReadCurrentTimeRecord(DbDataReader dataReader)

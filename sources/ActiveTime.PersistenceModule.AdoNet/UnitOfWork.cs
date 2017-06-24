@@ -17,34 +17,61 @@
 using System;
 using System.Data.Common;
 using System.Data.SQLite;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private const string ConnectionString = "Data Source=db.s3db";
+        public static string ConnectionString { get; set; } = "Data Source=db.s3db";
 
         private DbConnection connection;
         private DbTransaction transaction;
 
-        public DbConnection Connection
+        private TimeRecordRepository timeRecordRepository;
+        public ITimeRecordRepository TimeRecordRepository
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("UnitOfWork");
-
-                if (connection == null)
+                if (timeRecordRepository == null)
                 {
-                    connection = new SQLiteConnection(ConnectionString);
-                    connection.Open();
+                    OpenDatabaseAndTransaction();
+                    timeRecordRepository = new TimeRecordRepository(connection);
                 }
 
-                if (transaction == null)
-                    transaction = connection.BeginTransaction();
-
-                return connection;
+                return timeRecordRepository;
             }
+        }
+
+        private DayCommentRepository dayCommentRepository;
+        public IDayCommentRepository DayCommentRepository
+        {
+            get
+            {
+                if (dayCommentRepository == null)
+                {
+                    OpenDatabaseAndTransaction();
+                    dayCommentRepository = new DayCommentRepository(connection);
+                }
+
+                return dayCommentRepository;
+            }
+        }
+        
+        private void OpenDatabaseAndTransaction()
+        {
+            if (disposed)
+                throw new ObjectDisposedException("UnitOfWork");
+
+            if (connection == null)
+            {
+                connection = new SQLiteConnection(ConnectionString);
+                connection.Open();
+            }
+
+            if (transaction == null)
+                transaction = connection.BeginTransaction();
         }
 
         public void Commit()
@@ -73,76 +100,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet
 
             transaction.Dispose();
             transaction = null;
-        }
-
-        public void ExecuteCommand(Action<DbCommand> action)
-        {
-            using (DbCommand command = Connection.CreateCommand())
-            {
-                action(command);
-            }
-        }
-
-        public T ExecuteCommand<T>(Func<DbCommand, T> action)
-        {
-            using (DbCommand command = Connection.CreateCommand())
-            {
-                return action(command);
-            }
-        }
-
-        public void ExecuteAndCommit(Action action)
-        {
-            try
-            {
-                action();
-                Commit();
-            }
-            catch
-            {
-                Rollback();
-                throw;
-            }
-        }
-
-        public void ExecuteCommandAndCommit(Action<DbCommand> action)
-        {
-            try
-            {
-                using (DbCommand command = Connection.CreateCommand())
-                {
-                    action(command);
-                }
-
-                Commit();
-            }
-            catch
-            {
-                Rollback();
-                throw;
-            }
-        }
-
-        public T ExecuteCommandAndCommit<T>(Func<DbCommand, T> action)
-        {
-            try
-            {
-                T returnValue;
-
-                using (DbCommand command = Connection.CreateCommand())
-                {
-                    returnValue = action(command);
-                }
-
-                Commit();
-
-                return returnValue;
-            }
-            catch
-            {
-                Rollback();
-                throw;
-            }
         }
 
         private bool disposed;

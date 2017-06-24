@@ -97,9 +97,9 @@
     <Compile Include="PersistenceModule.LiteDB\Repositories\DayCommentRepositoryTests\AddTests.cs" />
     <Compile Include="PersistenceModule.LiteDB\Repositories\DayCommentRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.LiteDB\Repositories\DayCommentRepositoryTests\UpdateTests.cs" />
-    <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\Helpers\DbAssert.cs" />
+    <Compile Include="PersistenceModule.SQLite.AdoNet\Helpers\DbAssert.cs" />
     <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\TimeRecordRepositoryTests\AddTests.cs" />
-    <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\Helpers\DbTestHelper.cs" />
+    <Compile Include="PersistenceModule.SQLite.AdoNet\Helpers\DbTestHelper.cs" />
     <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\TimeRecordRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.SQLite.AdoNet\Repositories\TimeRecordRepositoryTests\UpdateTests.cs" />
     <Compile Include="PersistenceModule.SQLite.AdoNet\UnitOfWorkTests.cs" />

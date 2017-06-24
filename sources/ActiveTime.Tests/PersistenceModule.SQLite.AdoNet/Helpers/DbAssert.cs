@@ -19,12 +19,10 @@ using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories.Helpers
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Helpers
 {
     public class DbAssert
     {
-        private static readonly string ConnectionString = "Data Source=" + TestContext.CurrentContext.TestDirectory + "db.s3db";
-
         public static void AssertExistsTimeRecord(int id)
         {
             long recordCount = ReadTimeRecordCount(string.Format("select count(*) from records where id = {0}", id));
@@ -67,7 +65,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Rep
 
         private static long ReadTimeRecordCount(string sql)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(DbTestHelper.ConnectionString))
             {
                 connection.Open();
 
@@ -117,7 +115,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Rep
         {
             string sql = string.Format("select * from records where id='{0}'", id);
 
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(DbTestHelper.ConnectionString))
             {
                 connection.Open();
 

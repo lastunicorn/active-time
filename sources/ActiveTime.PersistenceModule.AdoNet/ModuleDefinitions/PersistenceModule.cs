@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
@@ -28,8 +27,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.ModuleDefinit
 
         public PersistenceModule(IUnityContainer unityContainer)
         {
-            if (unityContainer == null)
-                throw new ArgumentNullException("unityContainer");
+            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
 
             this.unityContainer = unityContainer;
         }
@@ -37,9 +35,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.ModuleDefinit
         public void Initialize()
         {
             unityContainer.RegisterType<IUnitOfWork, UnitOfWork>(new ContainerControlledLifetimeManager());
-
-            unityContainer.RegisterType<ITimeRecordRepository, TimeRecordRepository>();
-            unityContainer.RegisterType<IDayCommentRepository, DayCommentRepository>();
         }
     }
 }

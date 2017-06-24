@@ -19,7 +19,6 @@ using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.LiteDB;
 using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers;
-using LiteDB;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB

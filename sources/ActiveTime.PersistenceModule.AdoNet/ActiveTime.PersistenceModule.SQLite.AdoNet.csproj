@@ -59,7 +59,6 @@
     </Compile>
     <Compile Include="Repositories\CustomDataReader.cs" />
     <Compile Include="Repositories\DayCommentRepository.cs" />
-    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Repositories\TimeRecordRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="ModuleDefinitions\PersistenceModule.cs" />

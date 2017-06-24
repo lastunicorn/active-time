@@ -17,12 +17,12 @@
 using System.Data.SQLite;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Repositories.Helpers
+namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Helpers
 {
     public class DbTestHelper
     {
-        private static readonly string ConnectionString = "Data Source=" + TestContext.CurrentContext.TestDirectory + "\\db.s3db";
-
+        public static readonly string ConnectionString = "Data Source=" + TestContext.CurrentContext.TestDirectory + "\\db.s3db";
+        
         public static void ClearDatabase()
         {
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
