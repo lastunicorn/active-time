@@ -20,7 +20,6 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
-using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
