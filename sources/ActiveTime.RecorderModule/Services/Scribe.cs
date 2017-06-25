@@ -26,7 +26,7 @@ namespace DustInTheWind.ActiveTime.RecorderModule.Services
     /// <remarks>
     /// The current record can be obtained in two ways: 1) from the database or 2) by creating a new one.
     /// </remarks>
-    class Scribe : IScribe
+    internal class Scribe : IScribe
     {
         private readonly ITimeProvider timeProvider;
         private readonly IUnitOfWorkFactory unitOfWorkFactory;

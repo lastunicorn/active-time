@@ -19,6 +19,9 @@ using Microsoft.Lync.Model;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Inhibitors
 {
+    /// <summary>
+    /// Stopps the reminder to display messages to the user if the he is not Free on Lync messenger.
+    /// </summary>
     internal class LyncReminderInhibitor : IReminderInhibitor
     {
         private readonly AvailabilityWatcher availabilityWatcher;

@@ -15,16 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using Microsoft.Win32;
 
 namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
 {
     /// <summary>
-    /// This service monitors the Windows session and stops the recorderService when the user
+    /// This service monitors the Windows session and stops the Recorder Service when the user
     /// locks the session or logs off. When the user unlocks the session, the recorderService
     /// is started only if it was previously running.
     /// </summary>
@@ -37,8 +35,8 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
         private readonly IShellNavigator shellNavigator;
 
         /// <summary>
-        /// This value is used when the user unlocks the session and specifies if the
-        /// Recorder was running when the session was locked.
+        /// Specifies if the Recorder was running when the session was locked.
+        /// This value is used when the user unlocks the session.
         /// </summary>
         private bool recorderWasRunning;
 
@@ -80,21 +78,22 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
 
                 case SessionSwitchReason.SessionLogoff:
                 case SessionSwitchReason.SessionLock:
-                    StopRecorder();
+                    HandleSystemSessionOff();
                     break;
 
                 case SessionSwitchReason.SessionLogon:
                 case SessionSwitchReason.SessionUnlock:
-                    StartRecorder();
+                    HandleSystemSessionOn();
                     break;
             }
         }
 
-        private void StopRecorder()
+        /// <summary>
+        /// The user left the desk.
+        /// </summary>
+        private void HandleSystemSessionOff()
         {
-            // The user left the desk.
-
-            bool recorderIsRunning = (recorderService.State == RecorderState.Running);
+            bool recorderIsRunning = recorderService.State == RecorderState.Running;
 
             if (recorderIsRunning)
                 recorderService.Stop();
@@ -102,24 +101,13 @@ namespace DustInTheWind.ActiveTime.SystemSessionModule.Services
             recorderWasRunning = recorderIsRunning;
         }
 
-        private void StartRecorder()
+        /// <summary>
+        /// The user returned to his desk.
+        /// </summary>
+        private void HandleSystemSessionOn()
         {
-            // The user returned to his desk.
-
-            TimeSpan? timeFromLastStop = recorderWasRunning ? recorderService.CalculateTimeFromLastStop() : null;
-
             if (recorderWasRunning)
                 recorderService.Start();
-
-            if (timeFromLastStop != null && timeFromLastStop < TimeSpan.FromMinutes(1))
-            {
-                Dictionary<string, object> parameters = new Dictionary<string, object>
-                {
-                    { "Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause." }
-                };
-
-                shellNavigator.Navigate(ShellNames.MessageShell, parameters);
-            }
         }
     }
 }

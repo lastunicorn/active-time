@@ -49,6 +49,18 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         private bool isMonitoring;
 
         /// <summary>
+        /// Minimum time that the user must use for a pause. It is imposed only when the app
+        /// requested him to make a pause. If he makes a pause ahead of time, this limit is not used.
+        /// </summary>
+        private readonly TimeSpan minimumPauseTime = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Specifies if it was time to make a pause when the session was locked.
+        /// This value is used when the user unlocks the session.
+        /// </summary>
+        private bool wasPauseAnnounced;
+
+        /// <summary>
         /// The interval time after which the "pause" message should be displayed.
         /// This value should be set before calling the <see cref="M:StartMonitoring"/> method.
         /// </summary>
@@ -95,12 +107,18 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
             if (recorderService.State == RecorderState.Running)
                 reminder.Start(PauseInterval);
 
+            wasPauseAnnounced = false;
             isMonitoring = true;
         }
 
         private void HandleRecorderServiceStarted(object sender, EventArgs e)
         {
             reminder.Start(PauseInterval);
+
+            if (wasPauseAnnounced)
+                DisplayScoldIfNecessary();
+
+            wasPauseAnnounced = false;
         }
 
         private void HandleRecorderServiceStopped(object sender, EventArgs e)
@@ -113,7 +131,10 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
             bool allowReminder = Inhibitors == null || Inhibitors.All(x => x.Allow);
 
             if (allowReminder)
+            {
+                wasPauseAnnounced = true;
                 RaiseReminder();
+            }
 
             e.Snooze = true;
             e.SnoozeTime = SnoozeInterval;
@@ -129,6 +150,21 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
             };
 
             shellNavigator.Navigate(ShellNames.MessageShell, parameters);
+        }
+
+        private void DisplayScoldIfNecessary()
+        {
+            TimeSpan? timeFromLastStop = recorderService.CalculateTimeFromLastStop();
+
+            if (timeFromLastStop != null && timeFromLastStop < minimumPauseTime)
+            {
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    {"Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause."}
+                };
+
+                shellNavigator.Navigate(ShellNames.MessageShell, parameters);
+            }
         }
     }
 }
