@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}</ProjectGuid>
+    <ProjectGuid>{F03DB5DB-21EE-407B-9B23-D2E951C17D45}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.ActiveTime.ReminderModule</RootNamespace>
-    <AssemblyName>ActiveTime.ReminderModule</AssemblyName>
+    <RootNamespace>DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor</RootNamespace>
+    <AssemblyName>ActiveTime.ReminderModule.LyncInhibitor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,9 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,14 +28,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Lync.Model, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft Office\Office15\LyncSDK\Assemblies\Desktop\Microsoft.Lync.Model.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Lync.Model, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
@@ -49,28 +39,28 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="Inhibitors\IReminderInhibitor.cs" />
-    <Compile Include="ModuleDefinitions\ReminderModule.cs" />
+    <Compile Include="AvailabilityWatcher.cs" />
+    <Compile Include="LyncReminderInhibitor.cs" />
+    <Compile Include="ModuleDefinitions\ReminderInhibitorModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reminding\IPauseReminder.cs" />
-    <Compile Include="Reminding\IReminder.cs" />
-    <Compile Include="Reminding\Reminder.cs" />
-    <Compile Include="Reminding\ReminderStatus.cs" />
-    <Compile Include="Reminding\RingEventArgs.cs" />
-    <Compile Include="Services\PauseReminder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
-      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
-      <Name>ActiveTime.Common</Name>
+    <ProjectReference Include="..\ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj">
+      <Project>{2b4e4124-2cca-4418-a66b-2c57fb91da74}</Project>
+      <Name>ActiveTime.ReminderModule</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y "$(TargetDir)*.dll" "$(SolutionDir)ActiveTime\bin\$(ConfigurationName)"</PostBuildEvent>

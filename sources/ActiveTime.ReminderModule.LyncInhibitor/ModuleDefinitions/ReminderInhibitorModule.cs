@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,26 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.ReminderModule.Lync;
-using Microsoft.Lync.Model;
+using System;
+using DustInTheWind.ActiveTime.ReminderModule.Services;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.Inhibitors
+namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor.ModuleDefinitions
 {
-    /// <summary>
-    /// Stopps the reminder to display messages to the user if the he is not Free on Lync messenger.
-    /// </summary>
-    internal class LyncReminderInhibitor : IReminderInhibitor
+    public class ReminderInhibitorModule : IModule
     {
-        private readonly AvailabilityWatcher availabilityWatcher;
+        private readonly IUnityContainer unityContainer;
 
-        public bool Allow
+        public ReminderInhibitorModule(IUnityContainer unityContainer)
         {
-            get { return availabilityWatcher.CurrentAvailability == ContactAvailability.Free; }
+            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
+            this.unityContainer = unityContainer;
         }
 
-        public LyncReminderInhibitor()
+        public void Initialize()
         {
-            availabilityWatcher = new AvailabilityWatcher();
+            PauseReminder pauseReminder = unityContainer.Resolve<PauseReminder>();
+            pauseReminder.Inhibitors.Add(new LyncReminderInhibitor());
         }
     }
 }

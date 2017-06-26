@@ -47,7 +47,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
             PauseReminder pauseReminder = unityContainer.Resolve<PauseReminder>();
             pauseReminder.PauseInterval = configurationService.ReminderPauseInterval;
             pauseReminder.SnoozeInterval = configurationService.ReminderSnoozeInterval;
-            pauseReminder.Inhibitors.Add(new LyncReminderInhibitor());
+            //pauseReminder.Inhibitors.Add(new LyncReminderInhibitor());
             pauseReminder.StartMonitoring();
 
             return pauseReminder;

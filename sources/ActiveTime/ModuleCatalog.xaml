@@ -68,7 +68,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     </Modularity:ModuleInfo>
 
-    <!--<Modularity:ModuleInfo
+    <Modularity:ModuleInfo
         Ref="file://ActiveTime.ReminderModule.dll"
         ModuleName="ReminderModule"
         ModuleType="DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions.ReminderModule, ActiveTime.ReminderModule"
@@ -78,7 +78,19 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
         
-    </Modularity:ModuleInfo>-->
+    </Modularity:ModuleInfo>
+
+    <Modularity:ModuleInfo
+        Ref="file://ActiveTime.ReminderModule.LyncInhibitor.dll"
+        ModuleName="LyncInhibitor"
+        ModuleType="DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor.ModuleDefinitions.ReminderInhibitorModule, ActiveTime.ReminderModule.LyncInhibitor"
+        InitializationMode="WhenAvailable">
+
+        <Modularity:ModuleInfo.DependsOn>
+            <sys:String>ReminderModule</sys:String>
+        </Modularity:ModuleInfo.DependsOn>
+
+    </Modularity:ModuleInfo>
 
     <Modularity:ModuleInfo
         Ref="file://ActiveTime.TrayIconModule.dll"

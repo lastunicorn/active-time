@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.ReminderModule.Lync;
+using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using Microsoft.Lync.Model;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.Inhibitors
+namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
 {
     /// <summary>
     /// Stopps the reminder to display messages to the user if the he is not Free on Lync messenger.
