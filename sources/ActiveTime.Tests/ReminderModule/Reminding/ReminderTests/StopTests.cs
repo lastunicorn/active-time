@@ -84,9 +84,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 reminder.Stopped += (sender, e) =>
                 {
                     if (sender != null)
-                    {
-                        status = ((Reminder)sender).Status;
-                    }
+                        status = ((Reminder) sender).Status;
+
                     stoppedEventWasRaised = true;
                 };
 

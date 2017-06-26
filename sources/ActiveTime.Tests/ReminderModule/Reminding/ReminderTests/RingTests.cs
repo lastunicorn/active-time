@@ -57,11 +57,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 DateTime startTime;
                 DateTime ringTime;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += (sender, e) =>
                 {
                     ringTime = DateTime.Now;
                     ringEvent.Set();
-                });
+                };
 
                 startTime = DateTime.Now;
                 ringTime = DateTime.MinValue;
@@ -69,9 +69,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 reminder.Start(ringMiliseconds);
 
                 if (ringEvent.WaitOne())
-                {
                     Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
-                }
             }
         }
 
@@ -86,21 +84,18 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
 
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += (sender, e) =>
                 {
                     if (sender != null)
-                    {
-                        status = ((Reminder)sender).Status;
-                    }
+                        status = ((Reminder) sender).Status;
+
                     ringEvent.Set();
-                });
+                };
 
                 reminder.Start(ringMiliseconds);
 
                 if (ringEvent.WaitOne())
-                {
                     Assert.That(status, Is.EqualTo(ReminderStatus.Stopping));
-                }
             }
         }
 
@@ -120,11 +115,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 DateTime startTime;
                 DateTime ringTime;
 
-                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
+                reminder.Ring += (sender, e) =>
                 {
                     ringTime = DateTime.Now;
                     ringEvent.Set();
-                });
+                };
 
                 startTime = DateTime.Now;
                 ringTime = DateTime.MinValue;
@@ -149,14 +144,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
 
-                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
+                reminder.Ring += (sender, e) =>
                 {
                     if (sender != null)
                     {
                         status = ((Reminder)sender).Status;
                     }
                     ringEvent.Set();
-                });
+                };
 
                 reminder.Start(ringMiliseconds);
 
@@ -183,11 +178,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 DateTime startTime;
                 DateTime ringTime;
 
-                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
+                reminder.Ring += (sender, e) =>
                 {
                     ringTime = DateTime.Now;
                     ringEvent.Set();
-                });
+                };
 
                 startTime = DateTime.Now;
                 ringTime = DateTime.MinValue;
@@ -195,9 +190,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 reminder.Start(ringMiliseconds);
 
                 if (ringEvent.WaitOne())
-                {
                     Assert.That(ringTime - startTime, Is.EqualTo(TimeSpan.FromMilliseconds(ringMiliseconds)).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
-                }
             }
         }
 
@@ -212,21 +205,19 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
 
-                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
+                reminder.Ring += (sender, e) =>
                 {
                     if (sender != null)
                     {
                         status = ((Reminder)sender).Status;
                     }
                     ringEvent.Set();
-                });
+                };
 
                 reminder.Start(ringMiliseconds);
 
                 if (ringEvent.WaitOne())
-                {
                     Assert.That(status, Is.EqualTo(ReminderStatus.Stopping));
-                }
             }
         }
 
@@ -245,11 +236,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             {
                 DateTime ringTime;
 
-                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
+                reminder.Ring += (sender, e) =>
                 {
                     ringTime = DateTime.Now;
                     ringEvent.Set();
-                });
+                };
 
                 DateTime startTime = DateTime.Now;
                 ringTime = DateTime.MinValue;
@@ -257,9 +248,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                 reminder.Start(ringMiliseconds);
 
                 if (ringEvent.WaitOne())
-                {
                     Assert.That(ringTime - startTime, Is.EqualTo(ringMiliseconds).Within(TimeSpan.FromMilliseconds(TestConstants.TimeErrorAccepted)));
-                }
             }
         }
 
@@ -274,21 +263,19 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
             {
                 ReminderStatus status = ReminderStatus.NotStarted;
 
-                reminder.Ring += new EventHandler<RingEventArgs>((sender, e) =>
+                reminder.Ring += (sender, e) =>
                 {
                     if (sender != null)
                     {
                         status = ((Reminder)sender).Status;
                     }
                     ringEvent.Set();
-                });
+                };
 
                 reminder.Start(ringMiliseconds);
 
                 if (ringEvent.WaitOne())
-                {
                     Assert.That(status, Is.EqualTo(ReminderStatus.Stopping));
-                }
             }
         }
 

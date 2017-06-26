@@ -56,11 +56,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
 
             using (ManualResetEvent ringEvent = new ManualResetEvent(false))
             {
-                reminder.Ring += new EventHandler<RingEventArgs>(delegate(object sender, RingEventArgs e)
+                reminder.Ring += (sender, e) =>
                 {
                     e.Snooze = true;
                     ringEvent.Set();
-                });
+                };
 
                 reminder.Start(ringMiliseconds);
 
@@ -105,9 +105,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
                         case 2:
                             snoozeEndTime = DateTime.Now;
                             ringEvent.Set();
-                            break;
-
-                        default:
                             break;
                     }
 
