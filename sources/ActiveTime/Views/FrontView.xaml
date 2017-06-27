@@ -34,17 +34,18 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     Loaded="MainView_OnLoaded">
 
     <UserControl.Resources>
-        
+
         <ResourceDictionary>
-            
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/DatePickerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
-            
+
         </ResourceDictionary>
-        
+
     </UserControl.Resources>
 
     <Grid Margin="5">
@@ -80,13 +81,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             SelectedDateFormat="Long"
             BorderThickness="0"
-            Foreground="{StaticResource DatePickerNormalForegroundColor}">
-
-            <DatePicker.Resources>
-                <Style TargetType="{x:Type DatePickerTextBox}">
-                    <Setter Property="Background" Value="{StaticResource DatePickerNormalBackgroundColor}"/>
-                </Style>
-            </DatePicker.Resources>
+            Padding="0">
 
         </DatePicker>
 
