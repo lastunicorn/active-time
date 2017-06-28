@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
         /// <summary>
         /// Gets the name of the current instance.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// The <see cref="Mutex"/> object used to ensure that only one instance
@@ -58,7 +58,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
 
         #region IDisposable Members
 
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Releases all resources used by the current instance.

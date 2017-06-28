@@ -28,7 +28,14 @@ namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
 
         public bool Allow
         {
-            get { return availabilityWatcher.CurrentAvailability == ContactAvailability.Free; }
+            get
+            {
+                ContactAvailability availability = availabilityWatcher.CurrentAvailability;
+
+                return availability != ContactAvailability.Busy &&
+                    availability != ContactAvailability.BusyIdle &&
+                    availability != ContactAvailability.DoNotDisturb;
+            }
         }
 
         public LyncReminderInhibitor()

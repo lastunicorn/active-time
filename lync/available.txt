@@ -1,0 +1,77 @@
+Available
+-------------------------
+
+Availability - 3500
+ActivityId - Free
+LocationName - 
+TimeZone - E. Europe Daylight Time
+TimeZoneBias - -180
+MeetingSubject - 
+MeetingLocation - 
+Activity - Available
+CustomActivity - System.Collections.Generic.List`1[System.Object]
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+IdleStartTime - 
+DisplayName - Alexandru Iuga
+Reserved1 - System.Collections.Generic.List`1[System.Object]
+PrimaryEmailAddress - alexandru.iuga@iquestgroup.com
+EmailAddresses - System.Collections.Generic.List`1[System.Object]
+Title - Software Engineer
+Company - iQuest Group
+Department - Microsoft Solutions Practice
+Office - Brasov, Coresi Business Park
+HomePageUrl - 
+Photo - Microsoft.Lync.Model.UCStream
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+The thread 0x4a04 has exited with code 0 (0x0).
+DefaultNote - 
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+DefaultNoteType - 
+PersonalNote - 
+OutOfficeNote - 
+SourceNetwork - 0
+IconUrl - 
+Exception thrown: 'System.IO.FileNotFoundException' in Microsoft.Lync.Model.dll
+IconStream - The system cannot find the file specified. (Exception from HRESULT: 0x80070002)
+ContactEndpoints - System.Collections.Generic.List`1[System.Object]
+Reserved2 - 0
+Reserved3 - 2
+NextCalendarStateStartTime - 28.06.2017 19:00:00
+Exception thrown: 'System.NullReferenceException' in Microsoft.Lync.Model.dll
+Exception thrown: 'System.NullReferenceException' in Microsoft.Lync.Model.dll
+Reserved4 - Object reference not set to an instance of an object.
+CapabilityString - 
+Capabilities - 415
+ContactType - 1
+Description - 
+Reserved5 - Object reference not set to an instance of an object.
+FirstName - Alexandru
+LastName - Iuga
+Reserved6 - Microsoft.Lync.Model.ContactEndpoint
+Reserved7 - Microsoft.Lync.Model.ContactEndpoint
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+Exception thrown: 'Microsoft.Lync.Model.ItemNotFoundException' in Microsoft.Lync.Model.dll
+Exception thrown: 'System.NotImplementedException' in Microsoft.Lync.Model.dll
+Exception thrown: 'System.NotSupportedException' in Microsoft.Lync.Model.dll
+Exception thrown: 'System.NotSupportedException' in Microsoft.Lync.Model.dll
+Exception thrown: 'System.NotImplementedException' in Microsoft.Lync.Model.dll
+Exception thrown: 'System.ArgumentException' in Microsoft.Lync.Model.dll
+Reserved8 - 
+Reserved9 - 
+Reserved10 - 
+CapabilityDetails - System.Collections.Generic.List`1[System.Object]
+DefaultNotePublishedTime - 
+CurrentCalendarState - 0
+NextCalendarState - 2
+AttributionString - 
+InstantMessageAddresses - System.Collections.Generic.List`1[System.Object]
+IsOutOfOffice - False
+Reserved11 - 
+Reserved12 - The method or operation is not implemented.
+Reserved13 - Specified method is not supported.
+Reserved14 - Specified method is not supported.
+Reserved15 - The method or operation is not implemented.
+Invalid - Value does not fall within the expected range.

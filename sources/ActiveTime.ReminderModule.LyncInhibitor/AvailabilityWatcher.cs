@@ -43,7 +43,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
 
             if (client.InSuppressedMode)
                 throw new Exception("Lync UI is suppressed.");
-
+            
             currentAvailability = RetrieveAvailability();
 
             client.StateChanged += HandleClientStateChanged;
@@ -79,7 +79,8 @@ namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
 
         private ContactAvailability RetrieveAvailability()
         {
-            return (ContactAvailability)client.Self.Contact.GetContactInformation(ContactInformationType.Availability);
+            object contactInformation = client.Self?.Contact?.GetContactInformation(ContactInformationType.Availability) ?? ContactAvailability.None;
+            return (ContactAvailability)contactInformation;
         }
 
         protected virtual void OnAvailabilityChanged()

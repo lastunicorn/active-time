@@ -30,7 +30,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
         /// <summary>
         /// Gets the name of the current instance.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationLevelGuard"/> class with

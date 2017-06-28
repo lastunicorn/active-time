@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
         /// <summary>
         /// Gets the name of the current instance.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets a value that specifies the level at which the current instance of the
@@ -107,8 +107,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
                 // Dispose managed resources.
                 // ...
 
-                if (guard != null)
-                    guard.Dispose();
+                guard?.Dispose();
             }
 
             // Call the appropriate methods to clean up unmanaged resources here.
