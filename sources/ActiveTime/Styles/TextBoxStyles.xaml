@@ -54,11 +54,24 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                             <Setter Property="Foreground" Value="{StaticResource TextBoxOverForegroundColor}"/>
                             <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}"/>
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="true">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsKeyboardFocusWithin" Value="True"/>
+                            </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{StaticResource TextBoxFocusBackgroundColor}"/>
                             <Setter Property="Foreground" Value="{StaticResource TextBoxFocusForegroundColor}"/>
                             <Setter Property="BorderBrush" Value="{StaticResource TextBoxFocusBorderColor}"/>
-                        </Trigger>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource TextBoxFocusInactiveBackgroundColor}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxFocusInactiveForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxFocusInactiveBorderColor}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>

@@ -1,4 +1,22 @@
-﻿<ResourceDictionary
+﻿<!--
+ActiveTime
+Copyright (C) 2011 Dust in the Wind
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see<http://www.gnu.org/licenses/> .
+-->
+
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -8,13 +26,14 @@
 
     <Style TargetType="DatePicker">
         <Setter Property="Foreground" Value="{StaticResource DatePickerNormalForegroundColor}"/>
+        <Setter Property="Background" Value="{StaticResource DatePickerNormalBackgroundColor}"/>
     </Style>
-    
+
     <Style TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="TextAlignment" Value="Left"/>
-        <Setter Property="Foreground" Value="{StaticResource DatePickerNormalForegroundColor}"/>
-        <Setter Property="Background" Value="{StaticResource DatePickerNormalBackgroundColor}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource DatePickerNormalBorderColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxNormalForegroundColor}"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -38,16 +57,30 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="{StaticResource DatePickerOverBackgroundColor}"/>
-                            <Setter Property="Foreground" Value="{StaticResource DatePickerOverForegroundColor}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource DatePickerOverBorderColor}"/>
+                            <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxOverForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}"/>
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="Background" Value="{StaticResource DatePickerFocusBackgroundColor}"/>
-                            <Setter Property="Foreground" Value="{StaticResource DatePickerFocusForegroundColor}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource DatePickerFocusBorderColor}"/>
-                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsKeyboardFocusWithin" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource TextBoxFocusBackgroundColor}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxFocusForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxFocusBorderColor}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource TextBoxFocusInactiveBackgroundColor}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBoxFocusInactiveForegroundColor}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxFocusInactiveBorderColor}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -58,7 +91,9 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Background" Value="#FFFFFFFF" />
         <Setter Property="Padding" Value="2" />
-        --><!--<Setter Property="SelectionBackground" Value="#FF444444" />--><!--
+        -->
+    <!--<Setter Property="SelectionBackground" Value="#FF444444" />-->
+    <!--
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <LinearGradientBrush EndPoint=".5,0" StartPoint=".5,1">
@@ -77,10 +112,14 @@
                     <Grid x:Name="Root">
                         
                         <Grid.Resources>
-                            --><!-- Main DatePicker Brushes --><!--
+                            -->
+    <!-- Main DatePicker Brushes -->
+    <!--
                             <SolidColorBrush x:Key="DisabledBrush" Color="#8CFFFFFF" />
 
-                            --><!-- Button Template --><!--
+                            -->
+    <!-- Button Template -->
+    <!--
                             <ControlTemplate x:Key="DropDownButtonTemplate" TargetType="Button">
                                 <Grid FlowDirection="LeftToRight">
                                     <VisualStateManager.VisualStateGroups>
@@ -137,7 +176,9 @@
                                         </VisualStateGroup>
                                     </VisualStateManager.VisualStateGroups>
 
-                                    --><!--Start UI--><!--
+                                    -->
+    <!--Start UI-->
+    <!--
                                     <Grid Height="18" Width="19" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Background="#11FFFFFF">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="20*" />
@@ -181,7 +222,9 @@
                                         <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" Fill="#FFFFFFFF" StrokeThickness="0" Grid.ColumnSpan="4" Width="3" Height="3" />
                                         <Border Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="4" BorderThickness="1" BorderBrush="#B2FFFFFF" Opacity="0" CornerRadius="0,0,.5,.5" x:Name="DisabledVisual" />
                                     </Grid>
-                                    --><!--End UI--><!--
+                                    -->
+    <!--End UI-->
+    <!--
                                 </Grid>
                             </ControlTemplate>
                         </Grid.Resources>

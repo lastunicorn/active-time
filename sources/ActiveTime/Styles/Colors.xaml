@@ -76,6 +76,10 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <SolidColorBrush x:Key="TextBoxFocusForegroundColor" Color="#e6e6e6"/>
     <SolidColorBrush x:Key="TextBoxFocusBorderColor" Color="#3399ff"/>
 
+    <SolidColorBrush x:Key="TextBoxFocusInactiveBackgroundColor" Color="#333337"/>
+    <SolidColorBrush x:Key="TextBoxFocusInactiveForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="TextBoxFocusInactiveBorderColor" Color="#6a6a75"/>
+
     <!-- Status Bar -->
 
     <SolidColorBrush x:Key="StatusBarBackground" Color="#007acc"/>
@@ -94,15 +98,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <SolidColorBrush x:Key="DatePickerNormalBackgroundColor" Color="#333337"/>
     <SolidColorBrush x:Key="DatePickerNormalForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="DatePickerNormalBorderColor" Color="#3f3f46"/>
-
-    <SolidColorBrush x:Key="DatePickerOverBackgroundColor" Color="#333337"/>
-    <SolidColorBrush x:Key="DatePickerOverForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="DatePickerOverBorderColor" Color="#6a6a75"/>
-
-    <SolidColorBrush x:Key="DatePickerFocusBackgroundColor" Color="#333337"/>
-    <SolidColorBrush x:Key="DatePickerFocusForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="DatePickerFocusBorderColor" Color="#3399ff"/>
 
     <!-- Menu -->
 
