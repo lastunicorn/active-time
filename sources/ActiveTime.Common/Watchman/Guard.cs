@@ -49,8 +49,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
         /// <exception cref="ActiveTimeException"></exception>
         public Guard(string name, GuardLevel guardLevel)
         {
-            if (name == null)
-                throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
             Name = name;
             GuardLevel = guardLevel;

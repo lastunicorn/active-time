@@ -27,6 +27,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Style TargetType="DatePicker">
         <Setter Property="Foreground" Value="{StaticResource DatePickerNormalForegroundColor}"/>
         <Setter Property="Background" Value="{StaticResource DatePickerNormalBackgroundColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
     <Style TargetType="{x:Type DatePickerTextBox}">

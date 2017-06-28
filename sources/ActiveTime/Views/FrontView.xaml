@@ -80,7 +80,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             MinWidth="150"
             SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             SelectedDateFormat="Long"
-            BorderThickness="0"
             Padding="0">
 
         </DatePicker>

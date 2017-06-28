@@ -37,6 +37,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <ResourceDictionary Source="/Styles/LabelStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/WindowStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/DatePickerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -45,52 +46,48 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <StaticResource ResourceKey="WindowStyle"/>
     </Window.Style>
 
-    <Grid Margin="0">
+    <DockPanel Margin="0">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid DockPanel.Dock="Top">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Content="First Day:"/>
 
-        <Label
-            Grid.Row="0"
-            Grid.Column="0"
-            Content="FirstDay:"/>
+            <DatePicker
+                Grid.Row="0"
+                Grid.Column="1"
+                MinWidth="150"
+                HorizontalAlignment="Left"
+                Margin="3"
+                SelectedDate="{Binding Path=FirstDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                SelectedDateFormat="Long" />
 
-        <DatePicker
-            Grid.Row="0"
-            Grid.Column="1"
-            MinWidth="150"
-            HorizontalAlignment="Left"
-            Margin="3"
-            SelectedDate="{Binding Path=FirstDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-            SelectedDateFormat="Long" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="2"
+                Content="Last Day:"/>
 
-        <Label
-            Grid.Row="0"
-            Grid.Column="2"
-            Content="LastDay:"/>
+            <DatePicker
+                Grid.Row="0"
+                Grid.Column="3"
+                MinWidth="150"
+                HorizontalAlignment="Left"
+                Margin="3"
+                SelectedDate="{Binding Path=LastDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                SelectedDateFormat="Long" />
 
-        <DatePicker
-            Grid.Row="0"
-            Grid.Column="3"
-            MinWidth="150"
-            HorizontalAlignment="Left"
-            Margin="3"
-            SelectedDate="{Binding Path=LastDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-            SelectedDateFormat="Long" />
+        </Grid>
 
         <TextBox
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="4"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
             Text="{Binding Path=Comments, Mode=OneWay}"
@@ -117,6 +114,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>-->
-        
-    </Grid>
+
+    </DockPanel>
 </Window>

@@ -26,8 +26,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public AboutViewModel(IApplicationService applicationService)
         {
-            if (applicationService == null)
-                throw new ArgumentNullException("applicationService");
+            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
 
             Version version = applicationService.GetVersion();
             Version = string.Format("Version {0}", version);

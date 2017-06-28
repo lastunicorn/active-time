@@ -26,11 +26,8 @@ namespace DustInTheWind.ActiveTime.Common.UI.ShellNavigation
 
         public ShellInfo(string shellName, Type shellType, string ownerName = null)
         {
-            if (shellName == null)
-                throw new ArgumentNullException("shellName");
-
-            if (shellType == null)
-                throw new ArgumentNullException("shellType");
+            if (shellName == null) throw new ArgumentNullException(nameof(shellName));
+            if (shellType == null) throw new ArgumentNullException(nameof(shellType));
 
             ShellName = shellName;
             ShellType = shellType;

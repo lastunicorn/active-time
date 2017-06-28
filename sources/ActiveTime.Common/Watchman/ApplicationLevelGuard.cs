@@ -42,8 +42,7 @@ namespace DustInTheWind.ActiveTime.Common.Watchman
         /// <exception cref="ActiveTimeException"></exception>
         public ApplicationLevelGuard(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
             Name = name;
 
