@@ -96,7 +96,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <!-- DatePicker -->
 
-    <SolidColorBrush x:Key="DatePickerNormalBackgroundColor" Color="#333337"/>
+    <SolidColorBrush x:Key="DatePickerNormalBackgroundColor" Color="Transparent"/>
     <SolidColorBrush x:Key="DatePickerNormalForegroundColor" Color="#e6e6e6"/>
 
     <!-- Menu -->
