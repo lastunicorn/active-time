@@ -151,28 +151,50 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
                     Value = endDate
                 });
 
-                DbDataReader reader = command.ExecuteReader();
-
-                List<DayComment> dayComments = new List<DayComment>();
-
-                while (reader.Read())
+                using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    DayComment dayComment = new DayComment
+                    List<DayComment> dayComments = new List<DayComment>();
+
+                    while (dataReader.Read())
                     {
-                        Date = (DateTime)reader["date"],
-                        Comment = (string)reader["comment"]
-                    };
+                        DayComment dayComment = new DayComment
+                        {
+                            Date = (DateTime)dataReader["date"],
+                            Comment = (string)dataReader["comment"]
+                        };
 
-                    dayComments.Add(dayComment);
+                        dayComments.Add(dayComment);
+                    }
+
+                    return dayComments;
                 }
-
-                return dayComments;
             }
         }
 
         public IList<DayComment> GetAll()
         {
-            throw new NotImplementedException();
+            using (DbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = "select * from comments";
+
+                using (DbDataReader dataReader = command.ExecuteReader())
+                {
+                    List<DayComment> dayComments = new List<DayComment>();
+
+                    while (dataReader.Read())
+                    {
+                        DayComment dayComment = new DayComment
+                        {
+                            Date = (DateTime)dataReader["date"],
+                            Comment = (string)dataReader["comment"]
+                        };
+
+                        dayComments.Add(dayComment);
+                    }
+
+                    return dayComments;
+                }
+            }
         }
 
         private string SqlTextEncode(string text)

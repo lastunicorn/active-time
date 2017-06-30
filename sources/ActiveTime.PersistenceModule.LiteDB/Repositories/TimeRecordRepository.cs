@@ -49,11 +49,27 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
 
             if (exists)
             {
-                string errorMessage = string.Format("Error adding the time record '{0}' into the database.", timeRecord);
+                string errorMessage = string.Format("An identical time record already exists in the database. Record: '{0}'", timeRecord);
                 throw new PersistenceException(errorMessage);
             }
 
             timeRecordCollection.Insert(timeRecord);
+        }
+
+        public void AddIfNotExist(TimeRecord timeRecord)
+        {
+            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+
+            bool exists = timeRecordCollection
+                .Find(x =>
+                    x.Date == timeRecord.Date &&
+                    x.StartTime == timeRecord.StartTime &&
+                    x.EndTime == timeRecord.EndTime &&
+                    x.RecordType == timeRecord.RecordType)
+                .Any();
+
+            if (!exists)
+                timeRecordCollection.Insert(timeRecord);
         }
 
         public void Update(TimeRecord timeRecord)
@@ -107,6 +123,14 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
             LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
             return timeRecordCollection
                 .Find(x => x.Date == date)
+                .ToList();
+        }
+
+        public IList<TimeRecord> GetAll()
+        {
+            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            return timeRecordCollection
+                .FindAll()
                 .ToList();
         }
     }

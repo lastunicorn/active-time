@@ -24,10 +24,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:Modularity="clr-namespace:Microsoft.Practices.Prism.Modularity;assembly=Microsoft.Practices.Prism">
 
-    <Modularity:ModuleInfo
+    <!--<Modularity:ModuleInfo
         Ref="file://ActiveTime.PersistenceModule.LiteDB.dll"
         ModuleName="PersistenceModule"
         ModuleType="DustInTheWind.ActiveTime.PersistenceModule.LiteDB.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule.LiteDB"
+        InitializationMode="WhenAvailable">
+    </Modularity:ModuleInfo>-->
+
+    <Modularity:ModuleInfo
+        ModuleName="PersistenceModule"
+        Ref="file://ActiveTime.PersistenceModule.SQLite.AdoNet.dll"
+        ModuleType="DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule.SQLite.AdoNet"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
 

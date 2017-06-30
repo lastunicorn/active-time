@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.ModuleDefinit
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IUnitOfWork, UnitOfWork>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IUnitOfWork, UnitOfWork>(new PerResolveLifetimeManager());
         }
     }
 }

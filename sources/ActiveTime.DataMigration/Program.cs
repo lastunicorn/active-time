@@ -14,12 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+
 namespace DustInTheWind.ActiveTime.DataMigration
 {
     internal class Program
     {
         private static void Main(string[] args)
         {
+            //IFlow flow = new DisplayFlow();
+            //IFlow flow = new MigrationFlow();
+            //flow.Run();
+
+            Console.ReadKey(true);
         }
     }
 }

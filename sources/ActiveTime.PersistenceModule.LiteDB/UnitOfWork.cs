@@ -23,7 +23,7 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private const string ConnectionString = Constants.DatabaseFileName;
+        public const string ConnectionString = Constants.DatabaseFileName;
 
         private LiteDatabase database;
         private LiteTransaction transaction;

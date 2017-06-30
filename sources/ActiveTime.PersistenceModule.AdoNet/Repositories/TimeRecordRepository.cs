@@ -177,6 +177,32 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
             }
         }
 
+        public IList<TimeRecord> GetAll()
+        {
+            using (DbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = "select * from records";
+
+                using (DbDataReader dataReader = command.ExecuteReader())
+                {
+                    List<TimeRecord> timeRecords = new List<TimeRecord>();
+
+                    while (dataReader.Read())
+                    {
+                        TimeRecord timeRecord = ReadCurrentTimeRecord(dataReader);
+                        timeRecords.Add(timeRecord);
+                    }
+
+                    return timeRecords;
+                }
+            }
+        }
+
+        public void AddIfNotExist(TimeRecord timeRecord)
+        {
+            throw new NotImplementedException();
+        }
+
         private static TimeRecord ReadCurrentTimeRecord(DbDataReader dataReader)
         {
             CustomDataReader customDataReader = new CustomDataReader(dataReader);

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Text;
 
 namespace DustInTheWind.ActiveTime.Common.Persistence
 {
@@ -50,6 +51,17 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
             DayComment dayComment = obj as DayComment;
 
             return dayComment != null && Date == dayComment.Date;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(Date.ToShortDateString());
+            sb.Append(" - ");
+            sb.Append(Comment);
+
+            return sb.ToString();
         }
     }
 }

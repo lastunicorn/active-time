@@ -26,5 +26,7 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         void Delete(TimeRecord timeRecord);
         TimeRecord GetById(int id);
         IList<TimeRecord> GetByDate(DateTime date);
+        IList<TimeRecord> GetAll();
+        void AddIfNotExist(TimeRecord timeRecord);
     }
 }

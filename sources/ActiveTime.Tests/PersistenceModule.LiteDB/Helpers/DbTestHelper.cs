@@ -32,7 +32,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
                 LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName);
                 timeRecordCollection.Delete(x => true);
 
-                LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>("DayComment");
+                LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(DayCommentRepository.CollectionName);
                 dayCommentCollection.Delete(x => true);
             }
         }
