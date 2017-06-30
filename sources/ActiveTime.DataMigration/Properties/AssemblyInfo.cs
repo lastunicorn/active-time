@@ -15,17 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ActiveTime.PersistenceModule.LiteDB")]
+[assembly: AssemblyTitle("ActiveTime.DataMigration")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dust in the Wind")]
-[assembly: AssemblyProduct("ActiveTime.PersistenceModule.LiteDB")]
+[assembly: AssemblyProduct("ActiveTime.DataMigration")]
 [assembly: AssemblyCopyright("Copyright © Dust in the Wind 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -36,6 +35,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bfc9b5e5-e55e-4f98-88e5-49f31609eb4c")]
-
-[assembly: InternalsVisibleTo("ActiveTime.Tests")]
+[assembly: Guid("6343d3ec-d787-43d7-b590-918eb97464c2")]
