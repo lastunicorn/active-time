@@ -155,29 +155,21 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
             }
         }
 
-        public IList<TimeRecord> GetByDate(DateTime date)
+        public IEnumerable<TimeRecord> GetByDate(DateTime date)
         {
             using (DbCommand command = connection.CreateCommand())
             {
-                command.CommandText = string.Format("select * from records where date='{0}'",
-                    date.ToString("yyyy-MM-dd"));
+                command.CommandText = string.Format("select * from records where date='{0:yyyy-MM-dd}'", date);
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    List<TimeRecord> timeRecords = new List<TimeRecord>();
-
                     while (dataReader.Read())
-                    {
-                        TimeRecord timeRecord = ReadCurrentTimeRecord(dataReader);
-                        timeRecords.Add(timeRecord);
-                    }
-
-                    return timeRecords;
+                        yield return ReadCurrentTimeRecord(dataReader);
                 }
             }
         }
 
-        public IList<TimeRecord> GetAll()
+        public IEnumerable<TimeRecord> GetAll()
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -185,22 +177,10 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    List<TimeRecord> timeRecords = new List<TimeRecord>();
-
                     while (dataReader.Read())
-                    {
-                        TimeRecord timeRecord = ReadCurrentTimeRecord(dataReader);
-                        timeRecords.Add(timeRecord);
-                    }
-
-                    return timeRecords;
+                        yield return ReadCurrentTimeRecord(dataReader);
                 }
             }
-        }
-
-        public void AddIfNotExist(TimeRecord timeRecord)
-        {
-            throw new NotImplementedException();
         }
 
         private static TimeRecord ReadCurrentTimeRecord(DbDataReader dataReader)

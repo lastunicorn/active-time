@@ -108,7 +108,7 @@ namespace DustInTheWind.ActiveTime.Services
                 {
                     ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
 
-                    IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(currentDate.Value);
+                    IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(currentDate.Value);
                     DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
                     Value = dayRecord ?? new DayRecord(currentDate.Value);
                 }

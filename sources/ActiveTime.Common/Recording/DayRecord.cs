@@ -180,7 +180,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static DayRecord FromTimeRecords(IList<TimeRecord> timeRecords)
+        public static DayRecord FromTimeRecords(IEnumerable<TimeRecord> timeRecords)
         {
             if (timeRecords == null)
                 return null;

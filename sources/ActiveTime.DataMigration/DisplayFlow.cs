@@ -71,7 +71,7 @@ namespace DustInTheWind.ActiveTime.DataMigration
             Console.WriteLine("---------------------------------------------------------");
             Console.WriteLine();
 
-            IList<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetAll();
+            IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetAll();
 
             foreach (TimeRecord timeRecord in timeRecords)
                 Console.WriteLine(timeRecord);

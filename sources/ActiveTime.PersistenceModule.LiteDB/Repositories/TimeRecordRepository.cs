@@ -56,22 +56,6 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
             timeRecordCollection.Insert(timeRecord);
         }
 
-        public void AddIfNotExist(TimeRecord timeRecord)
-        {
-            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
-
-            bool exists = timeRecordCollection
-                .Find(x =>
-                    x.Date == timeRecord.Date &&
-                    x.StartTime == timeRecord.StartTime &&
-                    x.EndTime == timeRecord.EndTime &&
-                    x.RecordType == timeRecord.RecordType)
-                .Any();
-
-            if (!exists)
-                timeRecordCollection.Insert(timeRecord);
-        }
-
         public void Update(TimeRecord timeRecord)
         {
             if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
@@ -118,20 +102,18 @@ namespace DustInTheWind.ActiveTime.PersistenceModule.LiteDB.Repositories
                 .FirstOrDefault();
         }
 
-        public IList<TimeRecord> GetByDate(DateTime date)
+        public IEnumerable<TimeRecord> GetByDate(DateTime date)
         {
             LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
             return timeRecordCollection
-                .Find(x => x.Date == date)
-                .ToList();
+                .Find(x => x.Date == date);
         }
 
-        public IList<TimeRecord> GetAll()
+        public IEnumerable<TimeRecord> GetAll()
         {
             LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
             return timeRecordCollection
-                .FindAll()
-                .ToList();
+                .FindAll();
         }
     }
 }

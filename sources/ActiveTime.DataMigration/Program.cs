@@ -23,8 +23,8 @@ namespace DustInTheWind.ActiveTime.DataMigration
         private static void Main(string[] args)
         {
             //IFlow flow = new DisplayFlow();
-            //IFlow flow = new MigrationFlow();
-            //flow.Run();
+            IFlow flow = new MigrationFlow();
+            flow.Run();
 
             Console.ReadKey(true);
         }

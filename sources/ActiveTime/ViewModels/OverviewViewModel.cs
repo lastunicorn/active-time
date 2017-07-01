@@ -104,7 +104,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             foreach (DayComment dayComment in dayComments)
             {
-                IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
+                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
 
                 sb.Append(dayComment.Date.ToShortDateString());
@@ -138,7 +138,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             while (date <= lastDay)
             {
-                IList<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
+                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
                 DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
 
                 if (dayRecord != null)
