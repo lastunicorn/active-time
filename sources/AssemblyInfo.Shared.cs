@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011 Dust in the Wind
+// Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,6 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
+
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyCompany("Dust in the Wind")]
+[assembly: AssemblyProduct("Active Time")]
+[assembly: AssemblyCopyright("Copyright © Dust in the Wind 2011-2017")]
+[assembly: AssemblyTrademark("")]
 
 // Version information for an assembly consists of the following four values:
 //

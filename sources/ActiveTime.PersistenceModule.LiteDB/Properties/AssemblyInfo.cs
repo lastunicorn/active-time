@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011 Dust in the Wind
+// Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,10 +24,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ActiveTime.PersistenceModule.LiteDB")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Dust in the Wind")]
-[assembly: AssemblyProduct("ActiveTime.PersistenceModule.LiteDB")]
-[assembly: AssemblyCopyright("Copyright © Dust in the Wind 2017")]
-[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
