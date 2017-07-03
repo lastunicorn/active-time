@@ -27,7 +27,17 @@ namespace DustInTheWind.ActiveTime.Common.Services
     /// </summary>
     public abstract class ApplicationServiceBase : IApplicationService
     {
-        #region Event Exiting
+        public DateTime? StartTime { get; private set; }
+
+        public TimeSpan RunTime
+        {
+            get
+            {
+                return StartTime == null
+                  ? TimeSpan.Zero
+                  : DateTime.Now - StartTime.Value;
+            }
+        }
 
         /// <summary>
         /// Event raised just before existing the application.
@@ -35,29 +45,32 @@ namespace DustInTheWind.ActiveTime.Common.Services
         /// </summary>
         public event EventHandler Exiting;
 
-        /// <summary>
-        /// Raises the Exiting event.
-        /// </summary>
-        /// <param name="e">An EventArgs that contains the event data.</param>
-        protected virtual void OnExiting(EventArgs e)
+        public void Start()
         {
-            EventHandler eventHandler = Exiting;
-
-            if (eventHandler != null)
-                eventHandler(this, e);
+            StartTime = DateTime.Now;
         }
-
-        #endregion
 
         /// <summary>
         /// Publishes the <see cref="ApplicationExitEvent"/> and then exits the application.
         /// </summary>
         public void Exit()
         {
-            try { OnExiting(EventArgs.Empty); }
-            catch { }
+            try
+            {
+                OnExiting(EventArgs.Empty);
+            }
+            catch
+            {
+            }
 
-            PerformExit();
+            try
+            {
+                PerformExit();
+            }
+            finally
+            {
+                StartTime = null;
+            }
         }
 
         protected abstract void PerformExit();
@@ -67,6 +80,15 @@ namespace DustInTheWind.ActiveTime.Common.Services
             Assembly assembly = Assembly.GetEntryAssembly();
             AssemblyName assemblyName = assembly.GetName();
             return assemblyName.Version;
+        }
+
+        /// <summary>
+        /// Raises the Exiting event.
+        /// </summary>
+        /// <param name="e">An EventArgs that contains the event data.</param>
+        protected virtual void OnExiting(EventArgs e)
+        {
+            Exiting?.Invoke(this, e);
         }
     }
 }

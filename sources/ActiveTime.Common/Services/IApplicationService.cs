@@ -21,6 +21,11 @@ namespace DustInTheWind.ActiveTime.Common.Services
     public interface IApplicationService
     {
         event EventHandler Exiting;
+
+        DateTime? StartTime { get; }
+        TimeSpan RunTime { get; }
+
+        void Start();
         void Exit();
         Version GetVersion();
     }

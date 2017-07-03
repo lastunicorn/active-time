@@ -21,7 +21,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     
-    Title="About" Height="169" Width="353"
+    Title="About"
+    Height="200"
+    Width="353"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterOwner"
@@ -31,9 +33,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/WindowStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
+    <Window.Style>
+        <StaticResource ResourceKey="WindowStyle"/>
+    </Window.Style>
 
     <Grid Background="{StaticResource MainBackground}">
 
@@ -57,15 +64,40 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Foreground="{StaticResource MainForeground}"
             Text="Created by Dust in the Wind"/>
 
-        <TextBlock
+        <StackPanel
             Grid.Row="1"
             Grid.Column="0"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center"
-            TextAlignment="Center"
-            Margin="10"
-            Foreground="{StaticResource MainForeground}"
-            Text="{Binding Version}" />
+            Orientation="Vertical">
+
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Center">
+
+                <TextBlock Text="Start time:" Margin="0 0 8 0" FontWeight="Bold"/>
+                <TextBlock Text="{Binding StartTime}"/>
+
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Center">
+
+                <TextBlock Text="Run time:" Margin="0 0 8 0" FontWeight="Bold"/>
+                <TextBlock Text="{Binding RunTime}"/>
+
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="10">
+
+                <TextBlock Text="Version:" Margin="0 0 8 0" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Version}"/>
+
+            </StackPanel>
+
+        </StackPanel>
     </Grid>
 
 </Window>
