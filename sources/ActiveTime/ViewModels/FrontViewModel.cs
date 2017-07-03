@@ -152,11 +152,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
             Records = dayRecord?.GetTimeRecords(false);
             ActiveTime = dayRecord?.GetTotalActiveTime() ?? TimeSpan.Zero;
             TotalTime = dayRecord?.GetTotalTime() ?? TimeSpan.Zero;
-            BeginTime = dayRecord == null
-                ? TimeSpan.Zero
-                : (dayRecord.GetBeginTime() ?? TimeSpan.Zero);
-
-            EstimatedEndTime = BeginTime + TimeSpan.FromHours(9);
+            BeginTime = dayRecord?.GetBeginTime() ?? TimeSpan.Zero;
+            EstimatedEndTime = dayRecord?.GetEstimatedEndTime() ?? TimeSpan.Zero;
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

@@ -18,7 +18,7 @@ using System;
 
 namespace DustInTheWind.ActiveTime.DataMigration
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {

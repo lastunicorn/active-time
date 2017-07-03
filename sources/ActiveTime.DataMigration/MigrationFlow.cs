@@ -106,7 +106,8 @@ namespace DustInTheWind.ActiveTime.DataMigration
             if (existsDestinationRecords)
             {
                 bool existsIdenticalRecord = destinationRecords
-                    .Any(x => x.Date == timeRecord.Date &&
+                    .Any(x => x.Date - timeRecord.Date > TimeSpan.FromSeconds(-1) &&
+                              x.Date - timeRecord.Date < TimeSpan.FromSeconds(1) &&
                               x.StartTime == timeRecord.StartTime &&
                               x.EndTime == timeRecord.EndTime &&
                               x.RecordType == timeRecord.RecordType);

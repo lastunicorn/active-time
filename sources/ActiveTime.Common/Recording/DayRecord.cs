@@ -172,6 +172,45 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             return allRecords.ToArray();
         }
 
+        public TimeSpan? GetEstimatedEndTime()
+        {
+            TimeSpan? beginTime = GetBeginTime();
+
+            if (beginTime == null)
+                return null;
+
+            TimeSpan? estimatedEndTime = beginTime;
+
+            TimeSpan consumedPauseTime = TimeSpan.Zero;
+            bool existsLunchPause = false;
+
+            if (ActiveTimeRecords != null)
+            {
+                TimeSpan? previousEnd = null;
+                foreach (DayTimeInterval dayTimeInterval in ActiveTimeRecords)
+                {
+                    if (previousEnd != null)
+                    {
+                        TimeSpan pauseTime = dayTimeInterval.StartTime - previousEnd.Value;
+                        consumedPauseTime += pauseTime;
+
+                        existsLunchPause = pauseTime > TimeSpan.FromMinutes(30) && dayTimeInterval.StartTime > TimeSpan.FromHours(11.5);
+                    }
+
+                    previousEnd = dayTimeInterval.EndTime;
+                }
+            }
+
+            estimatedEndTime += TimeSpan.FromHours(8);
+
+            if(!existsLunchPause)
+                estimatedEndTime += TimeSpan.FromHours(1);
+
+            estimatedEndTime += consumedPauseTime;
+
+            return estimatedEndTime;
+        }
+
         /// <summary>
         /// Creates a new instance of the <see cref="DayRecord"/> class and populates it with the
         /// time record received as parameter.
