@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 
@@ -27,6 +28,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
     {
         private readonly IStatusInfoService statusInfoService;
         private string statusText;
+        private bool isRecorderStarted;
 
         public string StatusText
         {
@@ -38,19 +40,43 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public StatusInfoViewModel(IStatusInfoService statusInfoService)
+        public bool IsRecorderStarted
+        {
+            get { return isRecorderStarted; }
+            private set
+            {
+                isRecorderStarted = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public StatusInfoViewModel(IStatusInfoService statusInfoService, IRecorderService recorderService)
         {
             if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
 
             this.statusInfoService = statusInfoService;
             this.statusInfoService.StatusTextChanged += HandleStatusTextChanged;
 
+            recorderService.Started += HandleRecorderServiceStarted;
+            recorderService.Stopped += HandleRecorderServiceStopped;
+
             statusText = this.statusInfoService.StatusText;
+            isRecorderStarted = recorderService.State == RecorderState.Running;
         }
 
         private void HandleStatusTextChanged(object s, EventArgs e)
         {
             StatusText = statusInfoService.StatusText;
+        }
+
+        private void HandleRecorderServiceStopped(object sender, EventArgs eventArgs)
+        {
+            IsRecorderStarted = false;
+        }
+
+        private void HandleRecorderServiceStarted(object sender, EventArgs eventArgs)
+        {
+            IsRecorderStarted = true;
         }
     }
 }
