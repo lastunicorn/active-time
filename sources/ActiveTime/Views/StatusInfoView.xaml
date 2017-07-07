@@ -38,12 +38,26 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <StatusBar>
 
+        <StatusBar.Style>
+            <Style TargetType="StatusBar">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsRecorderStarted}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource StatusBarBackground}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsRecorderStarted}" Value="False">
+                        <Setter Property="Background" Value="#CA5100"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StatusBar.Style>
+
         <StatusBar.ItemsPanel>
             <ItemsPanelTemplate>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
@@ -56,23 +70,39 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             MinHeight="23"
             Content="{Binding Path=StatusText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
-        <StatusBarItem Grid.Column="2">
-            <TextBlock Margin="8 0">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsRecorderStarted}" Value="True">
-                                <Setter Property="Text" Value="On"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsRecorderStarted}" Value="False">
-                                <Setter Property="Text" Value="Off"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+        <Separator Grid.Column="2"/>
+        
+        <StatusBarItem Grid.Column="3">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Recorder is"/>
+                <Button
+                    Padding="8 0"
+                    Command="{Binding ToggleRecorderCommand}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Cursor="Hand">
+
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRecorderStarted}" Value="True">
+                                    <Setter Property="Content" Value="On"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsRecorderStarted}" Value="False">
+                                    <Setter Property="Content" Value="Off"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                </Button>
+
+            </StackPanel>
         </StatusBarItem>
 
     </StatusBar>
 
 </UserControl>
+ 
+ 
+ 

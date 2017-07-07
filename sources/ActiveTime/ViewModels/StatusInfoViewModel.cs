@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Commands;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
@@ -24,7 +25,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
     /// <summary>
     /// Contains the UI logic of the status bar displayed at the bottom of the main window.
     /// </summary>
-    public class StatusInfoViewModel : ViewModelBase
+    internal class StatusInfoViewModel : ViewModelBase
     {
         private readonly IStatusInfoService statusInfoService;
         private string statusText;
@@ -50,12 +51,16 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
+        public ToggleRecorderCommand ToggleRecorderCommand { get; }
+
         public StatusInfoViewModel(IStatusInfoService statusInfoService, IRecorderService recorderService)
         {
             if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
 
             this.statusInfoService = statusInfoService;
             this.statusInfoService.StatusTextChanged += HandleStatusTextChanged;
+
+            ToggleRecorderCommand = new ToggleRecorderCommand(recorderService);
 
             recorderService.Started += HandleRecorderServiceStarted;
             recorderService.Stopped += HandleRecorderServiceStopped;
@@ -69,12 +74,12 @@ namespace DustInTheWind.ActiveTime.ViewModels
             StatusText = statusInfoService.StatusText;
         }
 
-        private void HandleRecorderServiceStopped(object sender, EventArgs eventArgs)
+        private void HandleRecorderServiceStopped(object sender, EventArgs e)
         {
             IsRecorderStarted = false;
         }
 
-        private void HandleRecorderServiceStarted(object sender, EventArgs eventArgs)
+        private void HandleRecorderServiceStarted(object sender, EventArgs e)
         {
             IsRecorderStarted = true;
         }

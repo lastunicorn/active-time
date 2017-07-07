@@ -20,7 +20,7 @@ using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    internal class MainViewModel : ViewModelBase
     {
         public MainMenuViewModel MainMenuViewModel { get; }
         public StatusInfoViewModel StatusInfoViewModel { get; }

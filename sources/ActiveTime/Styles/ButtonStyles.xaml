@@ -28,6 +28,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackgroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource ButtonNormalForegroundColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorderColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="8 3"/>
 
@@ -38,7 +39,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                         SnapsToDevicePixels="True"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="1"
+                        BorderThickness="{TemplateBinding BorderThickness}"
                         Padding="{TemplateBinding Padding}">
                         
                         <ContentPresenter
