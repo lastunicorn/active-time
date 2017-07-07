@@ -19,6 +19,7 @@ using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.ViewModels;
 using Moq;
 using NUnit.Framework;
+using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.StatusInfoViewModelTests
 {
@@ -26,13 +27,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.StatusInfo
     public class StatusTextChangedTests
     {
         private Mock<IStatusInfoService> statusInfoService;
+        private Mock<IRecorderService> recorderService;
         private StatusInfoViewModel statusInfoViewModel;
 
         [SetUp]
         public void SetUp()
         {
             statusInfoService = new Mock<IStatusInfoService>();
-            statusInfoViewModel = new StatusInfoViewModel(statusInfoService.Object);
+            recorderService = new Mock<IRecorderService>();
+            statusInfoViewModel = new StatusInfoViewModel(statusInfoService.Object, recorderService.Object);
         }
 
         [Test]
