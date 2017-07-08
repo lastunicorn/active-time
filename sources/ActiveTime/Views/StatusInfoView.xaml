@@ -39,13 +39,15 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <StatusBar>
 
         <StatusBar.Style>
-            <Style TargetType="StatusBar">
+            <Style TargetType="StatusBar" BasedOn="{StaticResource {x:Type StatusBar}}">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding IsRecorderStarted}" Value="True">
-                        <Setter Property="Background" Value="{StaticResource StatusBarBackground}"/>
+                        <Setter Property="Background" Value="{StaticResource StatusBarNormalBackground}"/>
+                        <Setter Property="Foreground" Value="{StaticResource StatusBarNormalForeground}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding IsRecorderStarted}" Value="False">
-                        <Setter Property="Background" Value="#CA5100"/>
+                        <Setter Property="Background" Value="{StaticResource StatusBarOffBackground}"/>
+                        <Setter Property="Foreground" Value="{StaticResource StatusBarOffForeground}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -71,33 +73,29 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Content="{Binding Path=StatusText, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
         <Separator Grid.Column="2"/>
-        
+
         <StatusBarItem Grid.Column="3">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Recorder is"/>
-                <Button
-                    Padding="8 0"
-                    Command="{Binding ToggleRecorderCommand}"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Cursor="Hand">
+            <Button
+                Padding="8 0"
+                Command="{Binding ToggleRecorderCommand}"
+                Background="Transparent"
+                BorderThickness="0"
+                Cursor="Hand">
 
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsRecorderStarted}" Value="True">
-                                    <Setter Property="Content" Value="On"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding IsRecorderStarted}" Value="False">
-                                    <Setter Property="Content" Value="Off"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsRecorderStarted}" Value="True">
+                                <Setter Property="Content" Value="Recorder is On"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsRecorderStarted}" Value="False">
+                                <Setter Property="Content" Value="Recorder is Off"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
 
-                </Button>
-
-            </StackPanel>
+            </Button>
         </StatusBarItem>
 
     </StatusBar>
