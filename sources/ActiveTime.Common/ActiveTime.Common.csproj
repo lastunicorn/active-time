@@ -59,7 +59,6 @@
     <Compile Include="Persistence\PersistenceException.cs" />
     <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
-    <Compile Include="Services\CommentsService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Persistence\DayComment.cs" />
