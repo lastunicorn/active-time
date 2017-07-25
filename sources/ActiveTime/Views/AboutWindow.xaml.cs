@@ -23,21 +23,14 @@ namespace DustInTheWind.ActiveTime.Views
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
     /// </summary>
-    public partial class AboutWindow : Window
+    internal partial class AboutWindow : Window
     {
-        private readonly AboutViewModel viewModel;
-
         public AboutWindow(AboutViewModel viewModel)
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            this.viewModel = viewModel;
-
             InitializeComponent();
-        }
 
-        private void AboutWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
             DataContext = viewModel;
         }
     }

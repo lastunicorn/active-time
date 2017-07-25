@@ -34,8 +34,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     UseLayoutRounding="True"
     VisualClearTypeHint="Enabled"
     VisualTextRenderingMode="Auto"
-    WindowStartupLocation="CenterScreen"
-    Loaded="MainWindow_OnLoaded">
+    WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
 

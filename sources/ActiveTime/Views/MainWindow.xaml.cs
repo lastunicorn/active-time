@@ -25,19 +25,12 @@ namespace DustInTheWind.ActiveTime.Views
     /// </summary>
     internal partial class MainWindow : Window
     {
-        private readonly MainViewModel viewModel;
-
         public MainWindow(MainViewModel viewModel)
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            this.viewModel = viewModel;
-
             InitializeComponent();
-        }
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
             DataContext = viewModel;
         }
     }

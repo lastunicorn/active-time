@@ -16,12 +16,14 @@
 
 using System;
 using System.Timers;
+using System.Windows.Input;
+using DustInTheWind.ActiveTime.Commands;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
-    public class AboutViewModel : ViewModelBase, IDisposable
+    internal class AboutViewModel : ViewModelBase, IDisposable
     {
         private readonly IApplicationService applicationService;
         private readonly Timer timer;
@@ -42,11 +44,15 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
+        public ICommand WindowClosed { get; }
+
         public AboutViewModel(IApplicationService applicationService)
         {
             this.applicationService = applicationService;
 
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+
+            WindowClosed = new RelayCommand(HandleWindowClosed);
 
             Version version = applicationService.GetVersion();
             Version = version.ToString();
@@ -55,13 +61,23 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             RunTime = applicationService.RunTime;
 
-            timer = new Timer(1000 * 60);
+            timer = new Timer(200);
             timer.Elapsed += HandleTimerElapsed;
+            timer.Start();
         }
 
         private void HandleTimerElapsed(object sender, ElapsedEventArgs e)
         {
             RunTime = applicationService.RunTime;
+        }
+
+        private void HandleWindowClosed(object e)
+        {
+            if (timer == null)
+                return;
+
+            timer.Stop();
+            timer.Dispose();
         }
 
         public void Dispose()

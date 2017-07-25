@@ -78,6 +78,7 @@
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\OverviewCommand.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\StartRecorderCommand.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\RefreshCommand.cs" />
@@ -168,6 +169,7 @@
     <None Include="db.s3db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

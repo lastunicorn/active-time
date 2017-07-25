@@ -25,19 +25,12 @@ namespace DustInTheWind.ActiveTime.Views
     /// </summary>
     public partial class OverviewWindow : Window
     {
-        private readonly OverviewViewModel viewModel;
-
         public OverviewWindow(OverviewViewModel viewModel)
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            this.viewModel = viewModel;
-
             InitializeComponent();
-        }
 
-        private void OverviewWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
             DataContext = viewModel;
         }
     }
