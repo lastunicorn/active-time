@@ -24,6 +24,7 @@ namespace DustInTheWind.ActiveTime.Services
     {
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
         private readonly IStateService stateService;
+        private readonly ILogger logger;
 
         private DayComment value;
         public DayComment Value
@@ -38,13 +39,15 @@ namespace DustInTheWind.ActiveTime.Services
 
         public event EventHandler ValueChanged;
 
-        public CurrentDayComment(IUnitOfWorkFactory unitOfWorkFactory, IStateService stateService)
+        public CurrentDayComment(IUnitOfWorkFactory unitOfWorkFactory, IStateService stateService, ILogger logger)
         {
             if (unitOfWorkFactory == null) throw new ArgumentNullException(nameof(unitOfWorkFactory));
             if (stateService == null) throw new ArgumentNullException(nameof(stateService));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
 
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.stateService = stateService;
+            this.logger = logger;
 
             stateService.CurrentDateChanged += HandleCurrentDateChanged;
         }
@@ -84,7 +87,7 @@ namespace DustInTheWind.ActiveTime.Services
             if (Value == null)
                 return;
 
-            Logger.Log(Value);
+            logger.Log(Value);
 
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
             {

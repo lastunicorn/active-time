@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
+using DustInTheWind.ActiveTime.Services;
 using Microsoft.Lync.Model;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
@@ -24,6 +26,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
     /// </summary>
     internal class LyncReminderInhibitor : IReminderInhibitor
     {
+        private readonly ILogger logger;
         private readonly AvailabilityWatcher availabilityWatcher;
 
         public bool Allow
@@ -32,15 +35,23 @@ namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
             {
                 ContactAvailability availability = availabilityWatcher.CurrentAvailability;
 
-                return availability != ContactAvailability.Busy &&
-                    availability != ContactAvailability.BusyIdle &&
-                    availability != ContactAvailability.DoNotDisturb;
+                bool allow = availability != ContactAvailability.Busy &&
+                             availability != ContactAvailability.BusyIdle &&
+                             availability != ContactAvailability.DoNotDisturb;
+
+                logger.Log($"LyncReminderInhibitor - availability = {availability}; allow = {allow}");
+
+                return allow;
             }
         }
 
-        public LyncReminderInhibitor()
+        public LyncReminderInhibitor(ILogger logger, AvailabilityWatcher availabilityWatcher)
         {
-            availabilityWatcher = new AvailabilityWatcher();
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (availabilityWatcher == null) throw new ArgumentNullException(nameof(availabilityWatcher));
+
+            this.logger = logger;
+            this.availabilityWatcher = availabilityWatcher;
         }
     }
 }

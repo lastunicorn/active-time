@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
 {
@@ -22,6 +24,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
     {
         TimeSpan PauseInterval { get; set; }
         TimeSpan SnoozeInterval { get; set; }
+        List<IReminderInhibitor> Inhibitors { get; }
         void StartMonitoring();
     }
 }

@@ -21,6 +21,7 @@ using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
+using DustInTheWind.ActiveTime.Services;
 using Moq;
 using NUnit.Framework;
 
@@ -33,6 +34,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         private Mock<IShellNavigator> shellNavigator;
         private Mock<IReminder> reminder;
         private PauseReminder pauseReminder;
+        private Mock<ILogger> logger;
 
         [SetUp]
         public void SetUp()
@@ -40,8 +42,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
             recorderService = new Mock<IRecorderService>();
             shellNavigator = new Mock<IShellNavigator>();
             reminder = new Mock<IReminder>();
+            logger = new Mock<ILogger>();
 
-            pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object);
+            pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object, logger.Object);
         }
 
         [Test]

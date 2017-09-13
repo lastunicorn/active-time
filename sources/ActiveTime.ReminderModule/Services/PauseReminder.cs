@@ -22,6 +22,7 @@ using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
+using DustInTheWind.ActiveTime.Services;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services
 {
@@ -45,6 +46,8 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         /// It is used to calculate the time when the user should make a pause.
         /// </summary>
         private readonly IReminder reminder;
+
+        private readonly ILogger logger;
 
         private bool isMonitoring;
 
@@ -79,15 +82,17 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
         /// <param name="recorderService">The recorder is used to check when the user is working.</param>
         /// <param name="shellNavigator">It is used to display a message box to the user.</param>
         /// <param name="reminder">It is used to calculate the time when the user should make a pause.</param>
-        public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder)
+        public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder, ILogger logger)
         {
             if (recorderService == null) throw new ArgumentNullException(nameof(recorderService));
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
             if (reminder == null) throw new ArgumentNullException(nameof(reminder));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
 
             this.recorderService = recorderService;
             this.shellNavigator = shellNavigator;
             this.reminder = reminder;
+            this.logger = logger;
 
             Inhibitors = new List<IReminderInhibitor>();
 
@@ -135,6 +140,10 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
                 wasPauseAnnounced = true;
                 RaiseReminder();
             }
+            else
+            {
+                logger.Log("Reminder is inhibited.");
+            }
 
             e.Snooze = true;
             e.SnoozeTime = SnoozeInterval;
@@ -146,7 +155,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
 
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                {"Text", string.Format("Time passed: {0:hh\\:mm\\:ss}\n\nMake a pause NOW!", timeFromLastPause)}
+                { "Text", $"Time passed: {timeFromLastPause:hh\\:mm\\:ss}\n\nMake a pause NOW!" }
             };
 
             shellNavigator.Navigate(ShellNames.MessageShell, parameters);
@@ -160,7 +169,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Services
             {
                 Dictionary<string, object> parameters = new Dictionary<string, object>
                 {
-                    {"Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause."}
+                    { "Text", "Really?\nDo you think you can trick me?\n\nMake a REAL pause." }
                 };
 
                 shellNavigator.Navigate(ShellNames.MessageShell, parameters);

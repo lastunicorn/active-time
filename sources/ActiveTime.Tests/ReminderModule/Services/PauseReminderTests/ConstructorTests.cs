@@ -19,6 +19,7 @@ using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
+using DustInTheWind.ActiveTime.Services;
 using Moq;
 using NUnit.Framework;
 
@@ -30,6 +31,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         private Mock<IRecorderService> recorderService;
         private Mock<IShellNavigator> shellNavigator;
         private Mock<IReminder> reminder;
+        private Mock<ILogger> logger;
 
         [SetUp]
         public void SetUp()
@@ -37,30 +39,31 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
             recorderService = new Mock<IRecorderService>();
             shellNavigator = new Mock<IShellNavigator>();
             reminder = new Mock<IReminder>();
+            logger = new Mock<ILogger>();
         }
 
         [Test]
         public void throws_if_recorderService_is_null()
         {
-            Assert.Throws<ArgumentNullException>(() => new PauseReminder(null, shellNavigator.Object, reminder.Object));
+            Assert.Throws<ArgumentNullException>(() => new PauseReminder(null, shellNavigator.Object, reminder.Object, logger.Object));
         }
 
         [Test]
         public void throws_if_shellNavigator_is_null()
         {
-            Assert.Throws<ArgumentNullException>(() => new PauseReminder(recorderService.Object, null, reminder.Object));
+            Assert.Throws<ArgumentNullException>(() => new PauseReminder(recorderService.Object, null, reminder.Object, logger.Object));
         }
 
         [Test]
         public void throws_if_reminder_is_null()
         {
-            Assert.Throws<ArgumentNullException>(() => new PauseReminder(recorderService.Object, shellNavigator.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new PauseReminder(recorderService.Object, shellNavigator.Object, null, logger.Object));
         }
 
         [Test]
         public void PauseInterval_initial_value_is_1_hour()
         {
-            PauseReminder pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object);
+            PauseReminder pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object, logger.Object);
 
             Assert.That(pauseReminder.PauseInterval, Is.EqualTo(TimeSpan.FromHours(1)));
         }
@@ -68,7 +71,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Services.PauseRemind
         [Test]
         public void SnoozeInterval_initial_value_is_3_minutes()
         {
-            PauseReminder pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object);
+            PauseReminder pauseReminder = new PauseReminder(recorderService.Object, shellNavigator.Object, reminder.Object, logger.Object);
 
             Assert.That(pauseReminder.SnoozeInterval, Is.EqualTo(TimeSpan.FromMinutes(3)));
         }

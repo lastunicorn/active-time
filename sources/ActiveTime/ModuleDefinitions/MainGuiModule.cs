@@ -46,6 +46,7 @@ namespace DustInTheWind.ActiveTime.ModuleDefinitions
         public void Initialize()
         {
             // Register services.
+            unityContainer.RegisterType<ILogger, Logger>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ICurrentDayRecord, CurrentDayRecord>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ICurrentDayComment, CurrentDayComment>(new ContainerControlledLifetimeManager());
 

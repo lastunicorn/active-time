@@ -60,6 +60,7 @@
     <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Persistence\DayComment.cs" />
     <Compile Include="Persistence\TimeRecord.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Services\IStateService.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="Services\CurrentTimeProvider.cs" />
+    <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\StateService.cs" />
     <Compile Include="Services\StatusInfoService.cs" />
     <Compile Include="UI\ShellNavigation\IShell.cs" />

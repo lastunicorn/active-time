@@ -16,12 +16,14 @@
 
 using System;
 using System.Timers;
+using DustInTheWind.ActiveTime.Services;
 using Microsoft.Lync.Model;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
 {
     internal class AvailabilityWatcher
     {
+        private readonly ILogger logger;
         private readonly LyncClient client;
         private ContactAvailability currentAvailability;
 
@@ -30,15 +32,25 @@ namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
             get { return currentAvailability; }
             private set
             {
+                if (currentAvailability == value)
+                    return;
+
                 currentAvailability = value;
+
+                logger.Log($"Lync availability changed: {value}");
+
                 OnAvailabilityChanged();
             }
         }
 
         public event EventHandler AvailabilityChanged;
 
-        public AvailabilityWatcher()
+        public AvailabilityWatcher(ILogger logger)
         {
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+
+            this.logger = logger;
+
             client = LyncClient.GetClient();
 
             if (client.InSuppressedMode)

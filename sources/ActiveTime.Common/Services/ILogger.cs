@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,15 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.Services
 {
-    public interface ICurrentDayRecord
+    public interface ILogger
     {
-        DayRecord Value { get; }
-        event EventHandler ValueChanged;
-        void Update();
+        void Log(DayComment value);
+        void Log(string message);
     }
 }

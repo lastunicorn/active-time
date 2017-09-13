@@ -44,6 +44,10 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
@@ -59,6 +63,10 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -100,7 +108,6 @@
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\ICurrentDayComment.cs" />
     <Compile Include="Services\ICurrentDayRecord.cs" />
-    <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />
@@ -290,6 +297,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

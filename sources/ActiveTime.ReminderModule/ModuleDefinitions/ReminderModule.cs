@@ -39,6 +39,9 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
 
             PauseReminder pauseReminder = CreatePauseReminder();
             unityContainer.RegisterInstance<IPauseReminder>(pauseReminder, new ContainerControlledLifetimeManager());
+
+            IPauseReminder p1 = unityContainer.Resolve<IPauseReminder>();
+            IPauseReminder p2 = unityContainer.Resolve<IPauseReminder>();
         }
 
         private PauseReminder CreatePauseReminder()
