@@ -18,11 +18,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
-using DustInTheWind.ActiveTime.Services;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.Services
 {

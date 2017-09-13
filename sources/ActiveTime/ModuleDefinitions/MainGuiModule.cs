@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.Services;
@@ -33,9 +34,6 @@ namespace DustInTheWind.ActiveTime.ModuleDefinitions
         /// <summary>
         /// Initializes a new instance of the <see cref="MainGuiModule"/> class.
         /// </summary>
-        /// <param name="unityContainer"></param>
-        /// <param name="regionManager"></param>
-        /// <param name="shellNavigator"></param>
         public MainGuiModule(IUnityContainer unityContainer, IRegionManager regionManager, IShellNavigator shellNavigator)
         {
             this.unityContainer = unityContainer;
