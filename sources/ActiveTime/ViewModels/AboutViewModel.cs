@@ -31,13 +31,12 @@ namespace DustInTheWind.ActiveTime.ViewModels
         private TimeSpan runTime;
 
         public string Version { get; }
-
         public DateTime? StartTime { get; }
 
         public TimeSpan RunTime
         {
             get { return runTime; }
-            set
+            private set
             {
                 runTime = value;
                 OnPropertyChanged();
@@ -48,9 +47,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public AboutViewModel(IApplicationService applicationService)
         {
-            this.applicationService = applicationService;
-
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+
+            this.applicationService = applicationService;
 
             WindowClosed = new RelayCommand(HandleWindowClosed);
 

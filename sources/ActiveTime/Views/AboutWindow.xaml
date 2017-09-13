@@ -22,6 +22,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Converters"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.ViewModels"
 
     Title="About"
     Height="200"
@@ -29,7 +32,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterOwner"
-    x:ClassModifier="internal">
+    x:ClassModifier="internal"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
 
     <Window.Resources>
         <ResourceDictionary>
