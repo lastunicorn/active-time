@@ -82,14 +82,5 @@ namespace DustInTheWind.ActiveTime.Common.Recording
             this.startTime = startTime;
             this.endTime = endTime;
         }
-
-        /// <summary>
-        /// Calculates and returns the time between <see cref="StartTime"/> and <see cref="EndTime"/>.
-        /// </summary>
-        /// <returns>A <see cref="TimeSpan"/> instance representing the time between <see cref="StartTime"/> and <see cref="EndTime"/></returns>
-        public TimeSpan GetTimeSpan()
-        {
-            return endTime - startTime;
-        }
     }
 }
