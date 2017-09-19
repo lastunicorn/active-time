@@ -22,12 +22,12 @@ using DustInTheWind.ActiveTime.Services;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
-    public class CommentsViewModel : ViewModelBase
+    internal class CommentsViewModel : ViewModelBase
     {
         private readonly ICurrentDayComment currentDayComment;
 
-        public CustomDelegateCommand ResetCommand { get; }
-        public CustomDelegateCommand SaveCommand { get; }
+        public ResetCommentCommand ResetCommand { get; }
+        public SaveCommentCommand SaveCommand { get; }
 
         private string comment;
         public string Comment
@@ -58,40 +58,18 @@ namespace DustInTheWind.ActiveTime.ViewModels
             if (currentDayComment == null) throw new ArgumentNullException(nameof(currentDayComment));
 
             this.currentDayComment = currentDayComment;
-            currentDayComment.ValueChanged += HandleCurrentDayCommentChanged;
-            currentDayComment.CommentChanged += HandleCurrentDayCommentChanged;
 
-            ResetCommand = new CustomDelegateCommand(OnResetCommandExecute);
-            SaveCommand = new CustomDelegateCommand(OnSaveCommandExecute);
+            ResetCommand = new ResetCommentCommand(currentDayComment);
+            SaveCommand = new SaveCommentCommand(currentDayComment);
+            
+            currentDayComment.CommentChanged += HandleCurrentDayCommentChanged;
 
             currentDayComment.Update();
         }
 
         private void HandleCurrentDayCommentChanged(object sender, EventArgs e)
         {
-            UpdateDisplayedData();
-        }
-
-        private void UpdateDisplayedData()
-        {
             Comment = currentDayComment.Comment;
-
-            RefreshButtonsState();
-        }
-
-        private void RefreshButtonsState()
-        {
-            SaveCommand.IsEnabled = !currentDayComment.IsCommentSaved;
-        }
-
-        private void OnResetCommandExecute(object parameter)
-        {
-            currentDayComment.Update();
-        }
-
-        private void OnSaveCommandExecute(object parameter)
-        {
-            currentDayComment.Save();
         }
     }
 }

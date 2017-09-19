@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.Views
     /// <summary>
     /// Interaction logic for CommentsView.xaml
     /// </summary>
-    public partial class CommentsView : UserControl
+    partial class CommentsView : UserControl
     {
         private readonly CommentsViewModel viewModel;
 

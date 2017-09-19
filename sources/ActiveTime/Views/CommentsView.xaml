@@ -30,6 +30,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     mc:Ignorable="d" 
     d:DesignHeight="300"
     d:DesignWidth="300"
+    x:ClassModifier="internal"
     Loaded="CommentsView_OnLoaded"
     Focusable="False"
     d:DataContext="{d:DesignInstance viewModels:CommentsViewModel }">

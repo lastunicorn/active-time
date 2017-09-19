@@ -87,6 +87,8 @@
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\OverviewCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Commands\ResetCommentCommand.cs" />
+    <Compile Include="Commands\SaveCommentCommand.cs" />
     <Compile Include="Commands\StartRecorderCommand.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\RefreshCommand.cs" />
