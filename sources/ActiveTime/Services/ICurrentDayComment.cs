@@ -15,14 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.Services
 {
     public interface ICurrentDayComment
     {
-        DayComment Value { get; }
+        //DayComment Value { get; }
+        string Comment { get; set; }
+        bool IsCommentSaved { get; }
         event EventHandler ValueChanged;
+        event EventHandler CommentChanged;
         void Save();
         void Update();
     }

@@ -27,17 +27,37 @@ namespace DustInTheWind.ActiveTime.Services
         private readonly ILogger logger;
 
         private DayComment value;
-        public DayComment Value
+        private string comment;
+
+        private DayComment Value
         {
             get { return value; }
-            private set
+            set
             {
                 this.value = value;
+                Comment = value?.Comment;
+
                 OnValueChanged(EventArgs.Empty);
             }
         }
 
+        public string Comment
+        {
+            get { return comment; }
+            set
+            {
+                if (comment == value)
+                    return;
+
+                comment = value;
+                OnCommentChanged();
+            }
+        }
+
+        public bool IsCommentSaved => (value == null && comment == null) || (value != null && value.Comment == comment);
+
         public event EventHandler ValueChanged;
+        public event EventHandler CommentChanged;
 
         public CurrentDayComment(IUnitOfWorkFactory unitOfWorkFactory, IStateService stateService, ILogger logger)
         {
@@ -87,6 +107,8 @@ namespace DustInTheWind.ActiveTime.Services
             if (Value == null)
                 return;
 
+            Value.Comment = comment;
+
             logger.Log(Value);
 
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
@@ -96,11 +118,18 @@ namespace DustInTheWind.ActiveTime.Services
                 dayCommentRepository.AddOrUpdate(Value);
                 unitOfWork.Commit();
             }
+
+            OnCommentChanged();
         }
 
         protected virtual void OnValueChanged(EventArgs e)
         {
             ValueChanged?.Invoke(this, e);
+        }
+
+        protected virtual void OnCommentChanged()
+        {
+            CommentChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

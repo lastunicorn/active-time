@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Commands;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
@@ -38,7 +37,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             {
                 comment = value;
                 OnPropertyChanged();
-                RefreshButtonsState();
+                currentDayComment.Comment = value;
             }
         }
 
@@ -60,6 +59,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             this.currentDayComment = currentDayComment;
             currentDayComment.ValueChanged += HandleCurrentDayCommentChanged;
+            currentDayComment.CommentChanged += HandleCurrentDayCommentChanged;
 
             ResetCommand = new CustomDelegateCommand(OnResetCommandExecute);
             SaveCommand = new CustomDelegateCommand(OnSaveCommandExecute);
@@ -74,42 +74,24 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void UpdateDisplayedData()
         {
-            Comment = currentDayComment.Value?.Comment;
+            Comment = currentDayComment.Comment;
 
             RefreshButtonsState();
         }
 
         private void RefreshButtonsState()
         {
-            DayComment dayComment = currentDayComment.Value;
-
-            bool isDataUnsaved = (dayComment != null && dayComment.Comment != comment) ||
-                (dayComment == null && !string.IsNullOrEmpty(comment));
-
-            SaveCommand.IsEnabled = isDataUnsaved;
+            SaveCommand.IsEnabled = !currentDayComment.IsCommentSaved;
         }
 
         private void OnResetCommandExecute(object parameter)
         {
-            UpdateDisplayedData();
+            currentDayComment.Update();
         }
 
         private void OnSaveCommandExecute(object parameter)
         {
-            SaveInternal();
-        }
-
-        private void SaveInternal()
-        {
-            DayComment dayComment = currentDayComment.Value;
-
-            if (dayComment == null)
-                return;
-
-            dayComment.Comment = Comment;
             currentDayComment.Save();
-
-            RefreshButtonsState();
         }
     }
 }
