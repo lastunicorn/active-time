@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
     internal class FrontViewModel : ViewModelBase, INavigationAware
     {
         private readonly IStateService stateService;
-        private readonly ICurrentDayRecord currentDayRecord;
+        private readonly ICurrentDay currentDay;
 
         private DateTime? date;
 
@@ -114,28 +114,28 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, IStateService stateService, ICurrentDayRecord currentDayRecord)
+        public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, IStateService stateService, ICurrentDay currentDay)
         {
             if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
             if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
             if (stateService == null) throw new ArgumentNullException(nameof(stateService));
-            if (currentDayRecord == null) throw new ArgumentNullException(nameof(currentDayRecord));
+            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
 
             this.stateService = stateService;
-            this.currentDayRecord = currentDayRecord;
+            this.currentDay = currentDay;
 
             CommentsCommand = new CommentsCommand(regionManager, stateService);
             TimeRecordsCommand = new TimeRecordsCommand(regionManager, stateService);
-            RefreshCommand = new RefreshCommand(statusInfoService, currentDayRecord);
+            RefreshCommand = new RefreshCommand(statusInfoService, currentDay);
             DeleteCommand = new DeleteCommand();
 
             Date = stateService.CurrentDate;
 
             stateService.CurrentDateChanged += HandleStateService_CurrentDateChanged;
-            currentDayRecord.ValueChanged += HandleCurrentDayRecordChanged;
+            currentDay.DatesChanged += HandleCurrentDayDatesChanged;
         }
 
-        private void HandleCurrentDayRecordChanged(object sender, EventArgs eventArgs)
+        private void HandleCurrentDayDatesChanged(object sender, EventArgs eventArgs)
         {
             UpdateDisplayedData();
         }
@@ -147,13 +147,11 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void UpdateDisplayedData()
         {
-            DayRecord dayRecord = currentDayRecord.Value;
-
-            Records = dayRecord?.GetTimeRecords(false);
-            ActiveTime = dayRecord?.GetTotalActiveTime() ?? TimeSpan.Zero;
-            TotalTime = dayRecord?.GetTotalTime() ?? TimeSpan.Zero;
-            BeginTime = dayRecord?.GetBeginTime() ?? TimeSpan.Zero;
-            EstimatedEndTime = dayRecord?.GetEstimatedEndTime() ?? TimeSpan.Zero;
+            Records = currentDay.Records;
+            ActiveTime = currentDay.ActiveTime;
+            TotalTime = currentDay.TotalTime;
+            BeginTime = currentDay.BeginTime;
+            EstimatedEndTime = currentDay.EstimatedEndTime;
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

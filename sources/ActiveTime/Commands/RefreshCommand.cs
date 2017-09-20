@@ -24,16 +24,16 @@ namespace DustInTheWind.ActiveTime.Commands
     internal class RefreshCommand : ICommand
     {
         private readonly IStatusInfoService statusInfoService;
-        private readonly ICurrentDayRecord currentDayRecord;
+        private readonly ICurrentDay currentDay;
         public event EventHandler CanExecuteChanged;
 
-        public RefreshCommand(IStatusInfoService statusInfoService, ICurrentDayRecord currentDayRecord)
+        public RefreshCommand(IStatusInfoService statusInfoService, ICurrentDay currentDay)
         {
             if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
-            if (currentDayRecord == null) throw new ArgumentNullException(nameof(currentDayRecord));
+            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
 
             this.statusInfoService = statusInfoService;
-            this.currentDayRecord = currentDayRecord;
+            this.currentDay = currentDay;
         }
 
         public bool CanExecute(object parameter)
@@ -43,7 +43,7 @@ namespace DustInTheWind.ActiveTime.Commands
 
         public void Execute(object parameter)
         {
-            currentDayRecord.Update();
+            currentDay.ReloadDayRecord();
             statusInfoService.SetStatus("Refreshed.");
         }
     }

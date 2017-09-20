@@ -15,17 +15,23 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.Services
 {
-    public interface ICurrentDayComment
+    public interface ICurrentDay
     {
-        //DayComment Value { get; }
         string Comment { get; set; }
         bool IsCommentSaved { get; }
-        event EventHandler ValueChanged;
+        DayTimeInterval[] Records { get; }
+        TimeSpan ActiveTime { get; }
+        TimeSpan TotalTime { get; }
+        TimeSpan? BeginTime { get; }
+        TimeSpan? EstimatedEndTime { get; }
         event EventHandler CommentChanged;
-        void Save();
-        void Update();
+        event EventHandler DatesChanged;
+        void SaveComments();
+        void ReloadComments();
+        void ReloadDayRecord();
     }
 }

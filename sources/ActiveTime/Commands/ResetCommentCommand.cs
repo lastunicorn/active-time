@@ -24,15 +24,15 @@ namespace DustInTheWind.ActiveTime.Commands
     {
         public event EventHandler CanExecuteChanged;
 
-        private readonly ICurrentDayComment currentDayComment;
+        private readonly ICurrentDay currentDay;
 
-        public ResetCommentCommand(ICurrentDayComment currentDayComment)
+        public ResetCommentCommand(ICurrentDay currentDay)
         {
-            if (currentDayComment == null) throw new ArgumentNullException(nameof(currentDayComment));
+            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
 
-            this.currentDayComment = currentDayComment;
+            this.currentDay = currentDay;
 
-            currentDayComment.CommentChanged += HandleCurrentDayCommentChanged;
+            currentDay.CommentChanged += HandleCurrentDayCommentChanged;
         }
 
         private void HandleCurrentDayCommentChanged(object sender, EventArgs e)
@@ -42,12 +42,12 @@ namespace DustInTheWind.ActiveTime.Commands
 
         public bool CanExecute(object parameter)
         {
-            return !currentDayComment.IsCommentSaved;
+            return !currentDay.IsCommentSaved;
         }
 
         public void Execute(object parameter)
         {
-            currentDayComment.Update();
+            currentDay.ReloadComments();
         }
 
         protected virtual void OnCanExecuteChanged()

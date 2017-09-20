@@ -105,11 +105,9 @@
     <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\CurrentDayComment.cs" />
-    <Compile Include="Services\CurrentDayRecord.cs" />
+    <Compile Include="Services\CurrentDay.cs" />
     <Compile Include="Services\DispatcherService.cs" />
-    <Compile Include="Services\ICurrentDayComment.cs" />
-    <Compile Include="Services\ICurrentDayRecord.cs" />
+    <Compile Include="Services\ICurrentDay.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />

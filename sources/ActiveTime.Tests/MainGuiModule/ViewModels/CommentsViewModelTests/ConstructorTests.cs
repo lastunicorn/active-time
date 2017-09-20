@@ -29,14 +29,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
     {
         private Mock<IStateService> stateServiceMock;
         private Mock<IDayCommentRepository> dayCommentRepositoryMock;
-        private Mock<ICurrentDayComment> currentDayComment;
+        private Mock<ICurrentDay> currentDayComment;
 
         [SetUp]
         public void SetUp()
         {
             stateServiceMock = new Mock<IStateService>();
             dayCommentRepositoryMock = new Mock<IDayCommentRepository>();
-            currentDayComment = new Mock<ICurrentDayComment>();
+            currentDayComment = new Mock<ICurrentDay>();
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
             DateTime date = new DateTime(2011, 06, 13);
 
             stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
-            currentDayComment.Setup(x => x.Update());
+            currentDayComment.Setup(x => x.ReloadComments());
 
             CreateNewViewModel();
 

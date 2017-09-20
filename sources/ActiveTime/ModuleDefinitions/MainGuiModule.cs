@@ -45,8 +45,7 @@ namespace DustInTheWind.ActiveTime.ModuleDefinitions
         {
             // Register services.
             unityContainer.RegisterType<ILogger, Logger>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<ICurrentDayRecord, CurrentDayRecord>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<ICurrentDayComment, CurrentDayComment>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ICurrentDay, CurrentDay>(new ContainerControlledLifetimeManager());
 
             // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(FrontView));

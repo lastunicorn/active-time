@@ -23,8 +23,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
 {
     public class DayRecordsViewModel : ViewModelBase
     {
-        private readonly ICurrentDayRecord currentDayRecord;
-        
+        private readonly ICurrentDay currentDayRecord;
+
         private DayTimeInterval[] records;
         public DayTimeInterval[] Records
         {
@@ -39,24 +39,19 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="DayRecordsViewModel"/> class.
         /// </summary>
-        public DayRecordsViewModel(ICurrentDayRecord currentDayRecord)
+        public DayRecordsViewModel(ICurrentDay currentDayRecord)
         {
             if (currentDayRecord == null) throw new ArgumentNullException(nameof(currentDayRecord));
 
             this.currentDayRecord = currentDayRecord;
 
-            currentDayRecord.ValueChanged += HandleCurrentDayRecordChanged;
-            currentDayRecord.Update();
+            currentDayRecord.DatesChanged += HandleCurrentDayDatesChanged;
+            currentDayRecord.ReloadDayRecord();
         }
 
-        private void HandleCurrentDayRecordChanged(object sender, EventArgs eventArgs)
+        private void HandleCurrentDayDatesChanged(object sender, EventArgs eventArgs)
         {
-            UpdateDisplayedData();
-        }
-
-        private void UpdateDisplayedData()
-        {
-            Records = currentDayRecord.Value?.GetTimeRecords(false);
+            Records = currentDayRecord.Records;
         }
     }
 }

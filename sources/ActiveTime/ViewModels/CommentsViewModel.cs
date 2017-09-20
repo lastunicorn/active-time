@@ -24,10 +24,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 {
     internal class CommentsViewModel : ViewModelBase
     {
-        private readonly ICurrentDayComment currentDayComment;
-
-        public ResetCommentCommand ResetCommand { get; }
-        public SaveCommentCommand SaveCommand { get; }
+        private readonly ICurrentDay currentDay;
 
         private string comment;
         public string Comment
@@ -37,7 +34,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
             {
                 comment = value;
                 OnPropertyChanged();
-                currentDayComment.Comment = value;
+                currentDay.Comment = value;
             }
         }
 
@@ -52,24 +49,27 @@ namespace DustInTheWind.ActiveTime.ViewModels
             }
         }
 
-        public CommentsViewModel(IStateService stateService, ICurrentDayComment currentDayComment)
+        public ResetCommentCommand ResetCommand { get; }
+        public SaveCommentCommand SaveCommand { get; }
+
+        public CommentsViewModel(IStateService stateService, ICurrentDay currentDay)
         {
             if (stateService == null) throw new ArgumentNullException(nameof(stateService));
-            if (currentDayComment == null) throw new ArgumentNullException(nameof(currentDayComment));
+            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
 
-            this.currentDayComment = currentDayComment;
+            this.currentDay = currentDay;
 
-            ResetCommand = new ResetCommentCommand(currentDayComment);
-            SaveCommand = new SaveCommentCommand(currentDayComment);
+            ResetCommand = new ResetCommentCommand(currentDay);
+            SaveCommand = new SaveCommentCommand(currentDay);
             
-            currentDayComment.CommentChanged += HandleCurrentDayCommentChanged;
+            currentDay.CommentChanged += HandleCurrentDayCommentChanged;
 
-            currentDayComment.Update();
+            currentDay.ReloadComments();
         }
 
         private void HandleCurrentDayCommentChanged(object sender, EventArgs e)
         {
-            Comment = currentDayComment.Comment;
+            Comment = currentDay.Comment;
         }
     }
 }
