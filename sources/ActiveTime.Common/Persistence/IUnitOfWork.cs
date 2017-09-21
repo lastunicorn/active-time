@@ -24,7 +24,6 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         IDayCommentRepository DayCommentRepository { get; }
         
         void Commit();
-
         void Rollback();
     }
 }

@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Text;
 
 namespace DustInTheWind.ActiveTime.Common.Persistence
 {
@@ -38,7 +37,7 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         /// Gets or sets the comment text.
         /// </summary>
         public string Comment { get; set; }
-        
+
         /// <summary>
         /// Compares the business keys.
         /// </summary>
@@ -55,13 +54,8 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(Date.ToShortDateString());
-            sb.Append(" - ");
-            sb.Append(Comment);
-
-            return sb.ToString();
+            string shortDateString = Date.ToShortDateString();
+            return $"{shortDateString} - {Comment}";
         }
     }
 }

@@ -28,8 +28,10 @@ namespace DustInTheWind.ActiveTime.Services
         TimeSpan TotalTime { get; }
         TimeSpan? BeginTime { get; }
         TimeSpan? EstimatedEndTime { get; }
+
         event EventHandler CommentChanged;
         event EventHandler DatesChanged;
+
         void SaveComments();
         void ReloadComments();
         void ReloadDayRecord();

@@ -129,6 +129,7 @@ namespace DustInTheWind.ActiveTime.Services
 
                     dayComment = dayCommentRepository.GetByDate(currentDate.Value)
                                  ?? new DayComment { Date = currentDate.Value };
+
                     Comment = dayComment?.Comment;
                 }
             }
@@ -150,9 +151,7 @@ namespace DustInTheWind.ActiveTime.Services
                     ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
 
                     IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(currentDate.Value);
-
-                    dayRecord = DayRecord.FromTimeRecords(timeRecords)
-                                ?? new DayRecord(currentDate.Value);
+                    dayRecord = new DayRecord(timeRecords);
 
                     OnDatesChanged();
                 }

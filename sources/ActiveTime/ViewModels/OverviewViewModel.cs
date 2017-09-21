@@ -105,20 +105,17 @@ namespace DustInTheWind.ActiveTime.ViewModels
             foreach (DayComment dayComment in dayComments)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
-                DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
+                DayRecord dayRecord = new DayRecord(timeRecords);
 
                 sb.Append(dayComment.Date.ToShortDateString());
 
-                if (dayRecord != null)
-                {
-                    sb.Append(" - active: ");
-                    sb.Append(dayRecord.GetTotalActiveTime());
-                    sb.Append(" [ ");
-                    sb.Append(dayRecord.GetBeginTime());
-                    sb.Append(" - ");
-                    sb.Append(dayRecord.GetEndTime());
-                    sb.Append(" ] ");
-                }
+                sb.Append(" - active: ");
+                sb.Append(dayRecord.GetTotalActiveTime());
+                sb.Append(" [ ");
+                sb.Append(dayRecord.GetBeginTime());
+                sb.Append(" - ");
+                sb.Append(dayRecord.GetEndTime());
+                sb.Append(" ] ");
 
                 sb.AppendLine();
                 sb.Append(dayComment.Comment);
@@ -139,19 +136,16 @@ namespace DustInTheWind.ActiveTime.ViewModels
             while (date <= lastDay)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
-                DayRecord dayRecord = DayRecord.FromTimeRecords(timeRecords);
+                DayRecord dayRecord = new DayRecord(timeRecords);
 
-                if (dayRecord != null)
-                {
-                    TimeSpan totalDayActiveTime = dayRecord.GetTotalActiveTime();
+                TimeSpan totalDayActiveTime = dayRecord.GetTotalActiveTime();
 
-                    totalTime += totalDayActiveTime;
+                totalTime += totalDayActiveTime;
 
-                    double pauseTime = (totalDayActiveTime.TotalMinutes / 52.5) * 7.5;
-                    totalTime += TimeSpan.FromMinutes(pauseTime);
+                double pauseTime = (totalDayActiveTime.TotalMinutes / 52.5) * 7.5;
+                totalTime += TimeSpan.FromMinutes(pauseTime);
 
-                    dayCount++;
-                }
+                dayCount++;
 
                 date = date.AddDays(1);
             }

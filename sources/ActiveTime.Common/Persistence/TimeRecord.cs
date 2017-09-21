@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Text;
 
 namespace DustInTheWind.ActiveTime.Common.Persistence
 {
@@ -71,18 +70,8 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(Date.ToShortDateString());
-            sb.Append(" [");
-            sb.Append(StartTime);
-            sb.Append(" - ");
-            sb.Append(EndTime);
-            sb.Append("]");
-            sb.Append(" ");
-            sb.Append(RecordType);
-
-            return sb.ToString();
+            string shortDateString = Date.ToShortDateString();
+            return $"{shortDateString} [{StartTime} - {EndTime}] {RecordType}";
         }
     }
 }
