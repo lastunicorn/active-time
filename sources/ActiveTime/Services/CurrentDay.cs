@@ -48,7 +48,7 @@ namespace DustInTheWind.ActiveTime.Services
 
         public bool IsCommentSaved => (dayComment == null && comment == null) || (dayComment != null && dayComment.Comment == comment);
 
-        public DayTimeInterval[] Records => dayRecord?.GetTimeRecords(false);
+        public DayTimeInterval[] Records => dayRecord?.GetTimeRecords(true);
         public TimeSpan ActiveTime => dayRecord?.GetTotalActiveTime() ?? TimeSpan.Zero;
         public TimeSpan TotalTime => dayRecord?.GetTotalTime() ?? TimeSpan.Zero;
         public TimeSpan? BeginTime => dayRecord?.GetBeginTime() ?? TimeSpan.Zero;

@@ -72,9 +72,22 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <converters:RecordConverter x:Key="RecordConverter" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#3f3f46"/>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#e6e6e6"/>
+
+                <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
+                    <TextBlock
+                        Padding="10,2,0,2"
+                        Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type recording:Break}">
+                    <TextBlock
+                        Padding="10,2,0,2"
+                        Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}"
+                        Foreground="OrangeRed"/>
+                </DataTemplate>
             </ListBox.Resources>
 
-            <ListBox.ItemTemplate>
+            <!--<ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
 
                     <TextBlock
@@ -82,7 +95,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                         Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
 
                 </DataTemplate>
-            </ListBox.ItemTemplate>
+            </ListBox.ItemTemplate>-->
 
             <ListBox.ContextMenu>
                 <ContextMenu Opened="contextMenuRecords_Opened">

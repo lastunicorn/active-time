@@ -87,7 +87,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         
     </Modularity:ModuleInfo>
 
-    <Modularity:ModuleInfo
+    <!--<Modularity:ModuleInfo
         ModuleName="LyncInhibitor"
         Ref="file://ActiveTime.ReminderModule.LyncInhibitor.dll"
         ModuleType="DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor.ModuleDefinitions.ReminderInhibitorModule, ActiveTime.ReminderModule.LyncInhibitor"
@@ -97,7 +97,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <sys:String>ReminderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
 
-    </Modularity:ModuleInfo>
+    </Modularity:ModuleInfo>-->
 
     <Modularity:ModuleInfo
         ModuleName="TrayIconModule"
