@@ -95,7 +95,6 @@
     <Compile Include="Commands\StopRecorderCommand.cs" />
     <Compile Include="Commands\TimeRecordsCommand.cs" />
     <Compile Include="Commands\CommentsCommand.cs" />
-    <Compile Include="Commands\CustomDelegateCommand.cs" />
     <Compile Include="Commands\MenuItemClick.cs" />
     <Compile Include="Commands\MenuItemClickCommandBehavior.cs" />
     <Compile Include="Commands\ToggleRecorderCommand.cs" />
