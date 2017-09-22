@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ActiveTime.Recording
+namespace DustInTheWind.ActiveTime.Recording
 {
     public interface IRecorderService
     {

@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 
-namespace ActiveTime.Exporters
+namespace DustInTheWind.ActiveTime.Exporters
 {
     /// <summary>
     /// This class loads the exporters and keeps a list with the instances for later usage.

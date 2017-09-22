@@ -18,7 +18,7 @@ using System;
 using System.IO;
 using DustInTheWind.ActiveTime.Persistence;
 
-namespace ActiveTime.Logging
+namespace DustInTheWind.ActiveTime.Logging
 {
     public class Logger : ILogger
     {

@@ -16,10 +16,10 @@
 
 using System;
 using System.Collections.Generic;
-using ActiveTime.Logging;
-using ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Persistence;
+using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime.Services
 {

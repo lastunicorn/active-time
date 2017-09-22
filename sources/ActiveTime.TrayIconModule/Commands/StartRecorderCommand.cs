@@ -16,7 +16,7 @@
 
 using System;
 using System.Windows.Input;
-using ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.Commands
 {

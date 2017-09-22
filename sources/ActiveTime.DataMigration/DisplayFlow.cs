@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Persistence;
 using LiteDB;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.UnitOfWork;
-using LiteDBUnitOfWork = DustInTheWind.ActiveTime.PersistenceModule.LiteDB.UnitOfWork;
+using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.Module.UnitOfWork;
 
 namespace DustInTheWind.ActiveTime.DataMigration
 {

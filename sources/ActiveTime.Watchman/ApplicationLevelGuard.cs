@@ -18,7 +18,7 @@ using System;
 using System.Collections;
 using DustInTheWind.ActiveTime.Common;
 
-namespace ActiveTime.Watchman
+namespace DustInTheWind.ActiveTime.Watchman
 {
     public class ApplicationLevelGuard : IGuard
     {

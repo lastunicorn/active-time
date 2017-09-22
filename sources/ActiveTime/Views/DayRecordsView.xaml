@@ -25,7 +25,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:commands="clr-namespace:DustInTheWind.ActiveTime.Commands"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Converters"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.ViewModels"
-    xmlns:recording="clr-namespace:ActiveTime.Recording;assembly=ActiveTime.Recording"
+    xmlns:recording="clr-namespace:DustInTheWind.ActiveTime.Recording;assembly=ActiveTime.Recording"
 
     mc:Ignorable="d" 
     d:DesignHeight="300"

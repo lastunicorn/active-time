@@ -18,7 +18,7 @@ using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common;
 
-namespace ActiveTime.Watchman
+namespace DustInTheWind.ActiveTime.Watchman
 {
     public class MachineLevelGuard : IGuard
     {

@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Services;
 using DustInTheWind.ActiveTime.Views;
 using Microsoft.Practices.Prism.Modularity;

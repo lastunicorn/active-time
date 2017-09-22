@@ -18,18 +18,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Common", "Active
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.TrayIconModule", "ActiveTime.TrayIconModule\ActiveTime.TrayIconModule.csproj", "{D993640F-730C-472F-8625-80365A397D19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.RecorderModule", "ActiveTime.RecorderModule\ActiveTime.RecorderModule.csproj", "{CC12E02C-99C8-4DDA-9F68-3CF670D13958}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Recording.Module", "ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj", "{CC12E02C-99C8-4DDA-9F68-3CF670D13958}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.SQLite.AdoNet", "ActiveTime.PersistenceModule.AdoNet\ActiveTime.PersistenceModule.SQLite.AdoNet.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Persistence.SQLite.AdoNet.Module", "ActiveTime.Persistence.SQLite.AdoNet.Module\ActiveTime.Persistence.SQLite.AdoNet.Module.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.SystemSessionModule", "ActiveTime.SystemSessionModule\ActiveTime.SystemSessionModule.csproj", "{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.SystemSession.Module", "ActiveTime.SystemSession.Module\ActiveTime.SystemSession.Module.csproj", "{6350A1C1-F502-4F39-9C3E-FE4E28C5F272}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7679C591-8D74-4077-8E00-811810432C0F}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfo.Shared.cs = AssemblyInfo.Shared.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.PersistenceModule.LiteDB", "ActiveTime.PersistenceModule.LiteDB\ActiveTime.PersistenceModule.LiteDB.csproj", "{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Persistence.LiteDB.Module", "ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj", "{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule", "ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
 EndProject

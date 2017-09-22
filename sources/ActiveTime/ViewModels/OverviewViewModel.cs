@@ -17,10 +17,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Persistence;
+using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Services;
 using Microsoft.Practices.ObjectBuilder2;
 

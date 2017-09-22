@@ -7,7 +7,7 @@
     <ProjectGuid>{77D07B88-1439-4F65-98B0-252269B83435}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ActiveTime.Exporters</RootNamespace>
+    <RootNamespace>DustInTheWind.ActiveTime.Exporters</RootNamespace>
     <AssemblyName>ActiveTime.Exporters</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

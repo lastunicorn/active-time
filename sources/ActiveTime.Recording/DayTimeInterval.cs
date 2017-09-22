@@ -16,7 +16,7 @@
 
 using System;
 
-namespace ActiveTime.Recording
+namespace DustInTheWind.ActiveTime.Recording
 {
     /// <summary>
     /// Represents an interval of time inside a day.

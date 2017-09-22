@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Persistence;
 
-namespace ActiveTime.Recording
+namespace DustInTheWind.ActiveTime.Recording
 {
     /// <summary>
     /// Contains activity information for a single day.

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace ActiveTime.Watchman
+namespace DustInTheWind.ActiveTime.Watchman
 {
     /// <summary>
     /// Specifies the level at which an instance of the <see cref="Guard"/> class will work.

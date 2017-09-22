@@ -17,11 +17,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ActiveTime.Logging;
-using ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.Logging;
+using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 

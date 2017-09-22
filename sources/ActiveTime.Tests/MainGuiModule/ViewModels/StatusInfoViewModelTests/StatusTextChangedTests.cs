@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.ViewModels;
 using Moq;
 using NUnit.Framework;

@@ -16,7 +16,7 @@
 
 using System;
 using System.Windows.Data;
-using ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime.Converters
 {

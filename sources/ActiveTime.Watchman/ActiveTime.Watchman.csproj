@@ -7,7 +7,7 @@
     <ProjectGuid>{02EF6444-A390-457D-908C-26B3B9EB09AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ActiveTime.Watchman</RootNamespace>
+    <RootNamespace>DustInTheWind.ActiveTime.Watchman</RootNamespace>
     <AssemblyName>ActiveTime.Watchman</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

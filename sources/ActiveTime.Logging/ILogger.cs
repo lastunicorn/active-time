@@ -16,7 +16,7 @@
 
 using DustInTheWind.ActiveTime.Persistence;
 
-namespace ActiveTime.Logging
+namespace DustInTheWind.ActiveTime.Logging
 {
     public interface ILogger
     {

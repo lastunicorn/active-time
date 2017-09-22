@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace ActiveTime.Exporters
+namespace DustInTheWind.ActiveTime.Exporters
 {
     /// <summary>
     /// Exception thrown when the list of parameters provided to initialize an exporter
