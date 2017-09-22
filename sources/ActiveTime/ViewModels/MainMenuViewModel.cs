@@ -16,8 +16,8 @@
 
 using System;
 using System.Windows.Input;
+using ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Commands;
-using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;

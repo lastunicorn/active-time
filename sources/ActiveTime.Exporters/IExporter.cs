@@ -16,9 +16,9 @@
 
 using System.Collections.Generic;
 using System.IO;
-using DustInTheWind.ActiveTime.Common.Recording;
+using ActiveTime.Recording;
 
-namespace DustInTheWind.ActiveTime.Common.Exporters
+namespace ActiveTime.Exporters
 {
     /// <summary>
     /// Represents a class that exports the provided records to an external format.

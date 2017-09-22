@@ -16,8 +16,8 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.ViewModels;
 using Moq;
 using NUnit.Framework;

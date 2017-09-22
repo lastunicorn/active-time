@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace DustInTheWind.ActiveTime.Common.Exporters
+namespace ActiveTime.Exporters
 {
     /// <summary>
     /// Exception thrown when the list of parameters provided to initialize an exporter does not contain a mandatory value.

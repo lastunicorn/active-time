@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Persistence;
 
-namespace DustInTheWind.ActiveTime.Common.Services
+namespace ActiveTime.Logging
 {
     public interface ILogger
     {

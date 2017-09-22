@@ -16,7 +16,7 @@
 
 using System;
 using System.Data.SQLite;
-using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Persistence;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Helpers

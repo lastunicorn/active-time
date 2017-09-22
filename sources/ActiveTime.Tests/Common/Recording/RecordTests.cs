@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Recording;
+using ActiveTime.Recording;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.Common.Recording

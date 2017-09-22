@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Persistence;
 using LiteDB;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.UnitOfWork;
 using LiteDBUnitOfWork = DustInTheWind.ActiveTime.PersistenceModule.LiteDB.UnitOfWork;

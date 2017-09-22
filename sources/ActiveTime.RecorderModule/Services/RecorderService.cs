@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Common.Recording;
+using ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.RecorderModule.Services

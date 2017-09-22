@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace DustInTheWind.ActiveTime.Common.Exporters
+namespace ActiveTime.Exporters
 {
     /// <summary>
     /// Exception raised by an Exporter.

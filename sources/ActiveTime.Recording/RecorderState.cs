@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Common.Recording
+namespace ActiveTime.Recording
 {
     /// <summary>
     /// Represents the state of a <see cref="IRecorderService"/> instance.

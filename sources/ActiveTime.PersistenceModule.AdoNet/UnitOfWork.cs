@@ -17,7 +17,7 @@
 using System;
 using System.Data.Common;
 using System.Data.SQLite;
-using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet.Repositories;
 
 namespace DustInTheWind.ActiveTime.PersistenceModule.SQLite.AdoNet
