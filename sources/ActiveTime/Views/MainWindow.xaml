@@ -24,6 +24,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
     xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.Common.UI;assembly=ActiveTime.Common"
     xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.ViewModels"
 
     Title="{Binding Path=WindowTitle}"
     Height="500"
@@ -34,7 +37,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     UseLayoutRounding="True"
     VisualClearTypeHint="Enabled"
     VisualTextRenderingMode="Auto"
-    WindowStartupLocation="CenterScreen">
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
 
     <Window.Resources>
 

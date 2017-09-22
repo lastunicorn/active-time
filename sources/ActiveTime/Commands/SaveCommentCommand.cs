@@ -15,15 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Services;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class SaveCommentCommand : ICommand
+    internal class SaveCommentCommand : CommandBase
     {
-        public event EventHandler CanExecuteChanged;
-
         private readonly ICurrentDay currentDay;
 
         public SaveCommentCommand(ICurrentDay currentDay)
@@ -40,19 +37,14 @@ namespace DustInTheWind.ActiveTime.Commands
             OnCanExecuteChanged();
         }
 
-        public bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter)
         {
             return !currentDay.IsCommentSaved;
         }
 
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             currentDay.SaveComments();
-        }
-
-        protected virtual void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

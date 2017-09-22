@@ -45,6 +45,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             this.currentDayRecord = currentDayRecord;
 
+            Records = currentDayRecord.Records;
+
             currentDayRecord.DatesChanged += HandleCurrentDayDatesChanged;
             currentDayRecord.ReloadDayRecord();
         }

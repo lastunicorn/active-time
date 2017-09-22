@@ -15,15 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class ExitCommand : ICommand
+    internal class ExitCommand : CommandBase
     {
         private readonly IApplicationService applicationService;
-        public event EventHandler CanExecuteChanged;
 
         public ExitCommand(IApplicationService applicationService)
         {
@@ -31,12 +29,7 @@ namespace DustInTheWind.ActiveTime.Commands
             this.applicationService = applicationService;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             applicationService.Exit();
         }

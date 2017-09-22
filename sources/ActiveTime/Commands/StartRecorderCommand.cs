@@ -15,15 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class StartRecorderCommand : ICommand
+    internal class StartRecorderCommand : CommandBase
     {
         private readonly IRecorderService recorder;
-        public event EventHandler CanExecuteChanged;
 
         public StartRecorderCommand(IRecorderService recorder)
         {
@@ -34,29 +32,24 @@ namespace DustInTheWind.ActiveTime.Commands
             recorder.Stopped += HandleRecorderStopped;
         }
 
-        private void HandleRecorderStarted(object sender, EventArgs eventArgs)
+        private void HandleRecorderStarted(object sender, EventArgs e)
         {
             OnCanExecuteChanged();
         }
 
-        private void HandleRecorderStopped(object sender, EventArgs eventArgs)
+        private void HandleRecorderStopped(object sender, EventArgs e)
         {
             OnCanExecuteChanged();
         }
 
-        public bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter)
         {
             return recorder.State == RecorderState.Stopped;
         }
 
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             recorder.Start();
-        }
-
-        protected virtual void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

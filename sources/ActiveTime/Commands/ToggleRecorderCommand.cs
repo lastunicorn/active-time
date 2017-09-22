@@ -15,15 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class ToggleRecorderCommand : ICommand
+    internal class ToggleRecorderCommand : CommandBase
     {
         private readonly IRecorderService recorder;
-        public event EventHandler CanExecuteChanged;
 
         public ToggleRecorderCommand(IRecorderService recorder)
         {
@@ -31,12 +29,7 @@ namespace DustInTheWind.ActiveTime.Commands
             this.recorder = recorder;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             switch (recorder.State)
             {

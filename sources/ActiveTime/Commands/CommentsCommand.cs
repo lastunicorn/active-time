@@ -15,17 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class CommentsCommand : ICommand
+    internal class CommentsCommand : CommandBase
     {
         private readonly IRegionManager regionManager;
-        public event EventHandler CanExecuteChanged;
 
         public CommentsCommand(IRegionManager regionManager)
         {
@@ -33,12 +31,7 @@ namespace DustInTheWind.ActiveTime.Commands
             this.regionManager = regionManager;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             //ClearRegion(RegionNames.MainContentRegion);
             //ClearRegion(RegionNames.RecordsRegion);

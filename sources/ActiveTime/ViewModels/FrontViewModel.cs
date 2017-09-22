@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Commands;
-using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
@@ -65,18 +64,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
             private set
             {
                 totalTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DayTimeInterval[] records;
-
-        public DayTimeInterval[] Records
-        {
-            get { return records; }
-            private set
-            {
-                records = value;
                 OnPropertyChanged();
             }
         }
@@ -144,7 +131,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         private void UpdateDisplayedData()
         {
-            Records = currentDay.Records;
             ActiveTime = currentDay.ActiveTime;
             TotalTime = currentDay.TotalTime;
             BeginTime = currentDay.BeginTime;
