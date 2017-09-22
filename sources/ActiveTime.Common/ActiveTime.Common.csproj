@@ -49,43 +49,19 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="ActiveTimeException.cs" />
-    <Compile Include="Exporters\ExporterException.cs" />
-    <Compile Include="Exporters\ExportersManager.cs" />
-    <Compile Include="Exporters\IExporter.cs" />
-    <Compile Include="Exporters\MandatoryParameterException.cs" />
-    <Compile Include="Exporters\ParameterNullException.cs" />
-    <Compile Include="Exporters\ParameterTypeException.cs" />
-    <Compile Include="Persistence\IUnitOfWork.cs" />
-    <Compile Include="Persistence\PersistenceException.cs" />
-    <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
-    <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
-    <Compile Include="Persistence\DayComment.cs" />
-    <Compile Include="Persistence\TimeRecord.cs" />
-    <Compile Include="Persistence\TimeRecordType.cs" />
     <Compile Include="Events\ApplicationExitEvent.cs" />
     <Compile Include="Services\IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="Services\CurrentTimeProvider.cs" />
-    <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\StatusInfoService.cs" />
     <Compile Include="UI\ShellNavigation\IShell.cs" />
     <Compile Include="UI\ShellNavigation\IShellNavigator.cs" />
-    <Compile Include="Recording\IRecorderService.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Services\IStatusInfoService.cs" />
-    <Compile Include="Persistence\ITimeRecordRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recording\Break.cs" />
-    <Compile Include="Recording\DayRecord.cs" />
-    <Compile Include="Recording\DayTimeInterval.cs" />
-    <Compile Include="Recording\Record.cs" />
-    <Compile Include="Recording\RecorderState.cs" />
     <Compile Include="UI\RegionNames.cs" />
     <Compile Include="UI\ShellNavigation\ShellInfo.cs" />
     <Compile Include="UI\ShellNames.cs" />

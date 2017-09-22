@@ -191,6 +191,18 @@
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj">
+      <Project>{0f05cada-95f8-458d-a52c-de51bff8e453}</Project>
+      <Name>ActiveTime.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Persistence\ActiveTime.Persistence.csproj">
+      <Project>{7b8576cc-7df6-4fa9-9658-7abef74fe983}</Project>
+      <Name>ActiveTime.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
+      <Project>{c3078beb-d0db-487b-9a50-dd834fca445b}</Project>
+      <Name>ActiveTime.Recording</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

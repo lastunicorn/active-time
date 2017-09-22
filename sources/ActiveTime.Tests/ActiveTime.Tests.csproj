@@ -128,6 +128,14 @@
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Exporters\ActiveTime.Exporters.csproj">
+      <Project>{77d07b88-1439-4f65-98b0-252269b83435}</Project>
+      <Name>ActiveTime.Exporters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj">
+      <Project>{0f05cada-95f8-458d-a52c-de51bff8e453}</Project>
+      <Name>ActiveTime.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.PersistenceModule.LiteDB\ActiveTime.PersistenceModule.LiteDB.csproj">
       <Project>{bfc9b5e5-e55e-4f98-88e5-49f31609eb4c}</Project>
       <Name>ActiveTime.PersistenceModule.LiteDB</Name>
@@ -136,9 +144,17 @@
       <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>
       <Name>ActiveTime.PersistenceModule.SQLite.AdoNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Persistence\ActiveTime.Persistence.csproj">
+      <Project>{7b8576cc-7df6-4fa9-9658-7abef74fe983}</Project>
+      <Name>ActiveTime.Persistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.RecorderModule\ActiveTime.RecorderModule.csproj">
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
       <Name>ActiveTime.RecorderModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
+      <Project>{c3078beb-d0db-487b-9a50-dd834fca445b}</Project>
+      <Name>ActiveTime.Recording</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj">
       <Project>{2b4e4124-2cca-4418-a66b-2c57fb91da74}</Project>
