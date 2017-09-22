@@ -115,6 +115,7 @@ namespace DustInTheWind.ActiveTime.Services
         public void ReloadDayRecord()
         {
             UpdateDayRecordFromRepository();
+            statusInfoService.SetStatus("Refreshed.");
         }
 
         private void UpdateCommentsFromRepository()

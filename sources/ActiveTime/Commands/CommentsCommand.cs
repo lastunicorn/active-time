@@ -15,18 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class CommentsCommand : ICommand
+    internal class CommentsCommand : CommandBase
     {
         private readonly IRegionManager regionManager;
         private readonly IStateService stateService;
-        public event EventHandler CanExecuteChanged;
 
         public CommentsCommand(IRegionManager regionManager, IStateService stateService)
         {
@@ -37,12 +35,7 @@ namespace DustInTheWind.ActiveTime.Commands
             this.stateService = stateService;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             if (stateService.CurrentDate == null)
                 return;

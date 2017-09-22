@@ -113,7 +113,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
             CommentsCommand = new CommentsCommand(regionManager, stateService);
             TimeRecordsCommand = new TimeRecordsCommand(regionManager, stateService);
-            RefreshCommand = new RefreshCommand(statusInfoService, currentDay);
+            RefreshCommand = new RefreshCommand(currentDay);
             DeleteCommand = new DeleteCommand();
 
             Date = stateService.CurrentDate;

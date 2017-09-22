@@ -15,29 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class OverviewCommand : ICommand
+    internal class OverviewCommand : CommandBase
     {
         private readonly IShellNavigator shellNavigator;
-        public event EventHandler CanExecuteChanged;
-
+        
         public OverviewCommand(IShellNavigator shellNavigator)
         {
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
             this.shellNavigator = shellNavigator;
         }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        
+        public override void Execute(object parameter)
         {
             shellNavigator.Navigate(ShellNames.OverviewShell);
         }

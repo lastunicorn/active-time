@@ -15,36 +15,24 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Services;
 
 namespace DustInTheWind.ActiveTime.Commands
 {
-    internal class RefreshCommand : ICommand
+    internal class RefreshCommand : CommandBase
     {
-        private readonly IStatusInfoService statusInfoService;
         private readonly ICurrentDay currentDay;
-        public event EventHandler CanExecuteChanged;
 
-        public RefreshCommand(IStatusInfoService statusInfoService, ICurrentDay currentDay)
+        public RefreshCommand(ICurrentDay currentDay)
         {
-            if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
             if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
 
-            this.statusInfoService = statusInfoService;
             this.currentDay = currentDay;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             currentDay.ReloadDayRecord();
-            statusInfoService.SetStatus("Refreshed.");
         }
     }
 }

@@ -84,6 +84,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\AboutCommand.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\OverviewCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
