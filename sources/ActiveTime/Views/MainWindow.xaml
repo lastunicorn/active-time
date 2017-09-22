@@ -50,7 +50,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/WindowStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
 
     </Window.Resources>

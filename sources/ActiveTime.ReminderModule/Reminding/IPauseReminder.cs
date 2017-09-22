@@ -24,7 +24,9 @@ namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
     {
         TimeSpan PauseInterval { get; set; }
         TimeSpan SnoozeInterval { get; set; }
+
         List<IReminderInhibitor> Inhibitors { get; }
+
         void StartMonitoring();
     }
 }

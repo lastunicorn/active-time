@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.ReminderModule.Reminding;
 using DustInTheWind.ActiveTime.ReminderModule.Services;
@@ -29,6 +30,9 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
 
         public ReminderModule(IUnityContainer unityContainer, IConfigurationService configurationService)
         {
+            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
+            if (configurationService == null) throw new ArgumentNullException(nameof(configurationService));
+
             this.unityContainer = unityContainer;
             this.configurationService = configurationService;
         }
@@ -39,17 +43,14 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
 
             PauseReminder pauseReminder = CreatePauseReminder();
             unityContainer.RegisterInstance<IPauseReminder>(pauseReminder, new ContainerControlledLifetimeManager());
-
-            IPauseReminder p1 = unityContainer.Resolve<IPauseReminder>();
-            IPauseReminder p2 = unityContainer.Resolve<IPauseReminder>();
         }
 
         private PauseReminder CreatePauseReminder()
         {
             PauseReminder pauseReminder = unityContainer.Resolve<PauseReminder>();
+
             pauseReminder.PauseInterval = configurationService.ReminderPauseInterval;
             pauseReminder.SnoozeInterval = configurationService.ReminderSnoozeInterval;
-            //pauseReminder.Inhibitors.Add(new LyncReminderInhibitor());
             pauseReminder.StartMonitoring();
 
             return pauseReminder;

@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Commands;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
 using Microsoft.Practices.Prism.Regions;
@@ -100,9 +99,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, ICurrentDay currentDay)
+        public FrontViewModel(IRegionManager regionManager, ICurrentDay currentDay)
         {
-            if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
             if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
             if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
             
