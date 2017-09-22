@@ -128,10 +128,6 @@
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Exporters\ActiveTime.Exporters.csproj">
-      <Project>{77d07b88-1439-4f65-98b0-252269b83435}</Project>
-      <Name>ActiveTime.Exporters</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj">
       <Project>{0f05cada-95f8-458d-a52c-de51bff8e453}</Project>
       <Name>ActiveTime.Logging</Name>
