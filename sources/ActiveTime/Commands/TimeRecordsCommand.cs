@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using Microsoft.Practices.Prism.Regions;
 
@@ -32,7 +31,7 @@ namespace DustInTheWind.ActiveTime.Commands
             this.regionManager = regionManager;
         }
         
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             //ClearRegion(RegionNames.MainContentRegion);
             //ClearRegion(RegionNames.RecordsRegion);
