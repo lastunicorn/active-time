@@ -69,11 +69,9 @@
     <Compile Include="Services\IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\IStateService.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="Services\CurrentTimeProvider.cs" />
     <Compile Include="Services\Logger.cs" />
-    <Compile Include="Services\StateService.cs" />
     <Compile Include="Services\StatusInfoService.cs" />
     <Compile Include="UI\ShellNavigation\IShell.cs" />
     <Compile Include="UI\ShellNavigation\IShellNavigator.cs" />

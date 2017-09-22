@@ -26,7 +26,6 @@ namespace DustInTheWind.ActiveTime.ViewModels
 {
     internal class FrontViewModel : ViewModelBase, INavigationAware
     {
-        private readonly IStateService stateService;
         private readonly ICurrentDay currentDay;
 
         private DateTime? date;
@@ -42,7 +41,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
                 date = value;
                 OnPropertyChanged();
 
-                stateService.CurrentDate = value;
+                currentDay.Date = value;
             }
         }
 
@@ -114,24 +113,22 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, IStateService stateService, ICurrentDay currentDay)
+        public FrontViewModel(IStatusInfoService statusInfoService, IRegionManager regionManager, ICurrentDay currentDay)
         {
             if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
             if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
-            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
             if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
-
-            this.stateService = stateService;
+            
             this.currentDay = currentDay;
 
-            CommentsCommand = new CommentsCommand(regionManager, stateService);
-            TimeRecordsCommand = new TimeRecordsCommand(regionManager, stateService);
+            CommentsCommand = new CommentsCommand(regionManager);
+            TimeRecordsCommand = new TimeRecordsCommand(regionManager);
             RefreshCommand = new RefreshCommand(statusInfoService, currentDay);
             DeleteCommand = new DeleteCommand();
 
-            Date = stateService.CurrentDate;
+            Date = currentDay.Date;
 
-            stateService.CurrentDateChanged += HandleStateService_CurrentDateChanged;
+            currentDay.DateChanged += HandleCurrentDateChanged;
             currentDay.DatesChanged += HandleCurrentDayDatesChanged;
         }
 
@@ -140,9 +137,9 @@ namespace DustInTheWind.ActiveTime.ViewModels
             UpdateDisplayedData();
         }
 
-        private void HandleStateService_CurrentDateChanged(object sender, EventArgs e)
+        private void HandleCurrentDateChanged(object sender, EventArgs e)
         {
-            Date = stateService.CurrentDate;
+            Date = currentDay.Date;
         }
 
         private void UpdateDisplayedData()

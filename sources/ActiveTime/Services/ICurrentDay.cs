@@ -21,6 +21,7 @@ namespace DustInTheWind.ActiveTime.Services
 {
     public interface ICurrentDay
     {
+        DateTime? Date { get; set; }
         string Comment { get; set; }
         bool IsCommentSaved { get; }
         DayTimeInterval[] Records { get; }
@@ -29,6 +30,7 @@ namespace DustInTheWind.ActiveTime.Services
         TimeSpan? BeginTime { get; }
         TimeSpan? EstimatedEndTime { get; }
 
+        event EventHandler DateChanged;
         event EventHandler CommentChanged;
         event EventHandler DatesChanged;
 

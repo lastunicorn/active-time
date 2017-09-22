@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Services;
 using DustInTheWind.ActiveTime.ViewModels;
 using Moq;
@@ -27,42 +26,34 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
     [TestFixture]
     public class ConstructorTests
     {
-        private Mock<IStateService> stateServiceMock;
         private Mock<IDayCommentRepository> dayCommentRepositoryMock;
-        private Mock<ICurrentDay> currentDayComment;
+        private Mock<ICurrentDay> currentDay;
 
         [SetUp]
         public void SetUp()
         {
-            stateServiceMock = new Mock<IStateService>();
             dayCommentRepositoryMock = new Mock<IDayCommentRepository>();
-            currentDayComment = new Mock<ICurrentDay>();
-        }
-
-        [Test]
-        public void throws_if_stateService_is_null()
-        {
-            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(null, currentDayComment.Object));
+            currentDay = new Mock<ICurrentDay>();
         }
 
         [Test]
         public void throws_if_currentDayComment_is_null()
         {
-            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(stateServiceMock.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(null));
         }
 
         [Test]
         public void successfully_instantiated()
         {
-            new CommentsViewModel(stateServiceMock.Object, currentDayComment.Object);
+            new CommentsViewModel(currentDay.Object);
         }
 
         [Test]
         public void Constructor_clears_Comment_if_Date_from_stateService_is_null()
         {
-            stateServiceMock.Setup(x => x.CurrentDate).Returns(null as DateTime?);
+            currentDay.Setup(x => x.Date).Returns(null as DateTime?);
 
-            CommentsViewModel viewModel = CreateNewViewModel();
+            CommentsViewModel viewModel = new CommentsViewModel(currentDay.Object);
 
             Assert.That(viewModel.Comment, Is.Null);
         }
@@ -72,10 +63,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         {
             DateTime date = new DateTime(2011, 06, 13);
 
-            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
-            currentDayComment.Setup(x => x.ReloadComments());
+            currentDay.Setup(x => x.Date).Returns(date);
+            currentDay.Setup(x => x.ReloadComments());
 
-            CreateNewViewModel();
+            new CommentsViewModel(currentDay.Object);
 
             dayCommentRepositoryMock.VerifyAll();
         }
@@ -85,17 +76,12 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         {
             DateTime date = new DateTime(2011, 06, 13);
 
-            stateServiceMock.Setup(x => x.CurrentDate).Returns(date);
+            currentDay.Setup(x => x.Date).Returns(date);
             dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayComment);
 
-            CommentsViewModel viewModel = CreateNewViewModel();
+            CommentsViewModel viewModel = new CommentsViewModel(currentDay.Object);
 
             Assert.That(viewModel.Comment, Is.Null);
-        }
-
-        private CommentsViewModel CreateNewViewModel()
-        {
-            return new CommentsViewModel(stateServiceMock.Object, currentDayComment.Object);
         }
     }
 }

@@ -25,16 +25,12 @@ namespace DustInTheWind.ActiveTime.Commands
     internal class CommentsCommand : ICommand
     {
         private readonly IRegionManager regionManager;
-        private readonly IStateService stateService;
         public event EventHandler CanExecuteChanged;
 
-        public CommentsCommand(IRegionManager regionManager, IStateService stateService)
+        public CommentsCommand(IRegionManager regionManager)
         {
             if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
-            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
-
             this.regionManager = regionManager;
-            this.stateService = stateService;
         }
 
         public bool CanExecute(object parameter)
@@ -44,9 +40,6 @@ namespace DustInTheWind.ActiveTime.Commands
 
         public void Execute(object parameter)
         {
-            if (stateService.CurrentDate == null)
-                return;
-
             //ClearRegion(RegionNames.MainContentRegion);
             //ClearRegion(RegionNames.RecordsRegion);
             //regionManager.Regions.Remove(RegionNames.RecordsRegion);

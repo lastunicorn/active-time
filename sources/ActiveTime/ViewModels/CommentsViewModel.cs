@@ -52,9 +52,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
         public ResetCommentCommand ResetCommand { get; }
         public SaveCommentCommand SaveCommand { get; }
 
-        public CommentsViewModel(IStateService stateService, ICurrentDay currentDay)
+        public CommentsViewModel(ICurrentDay currentDay)
         {
-            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
             if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
 
             this.currentDay = currentDay;

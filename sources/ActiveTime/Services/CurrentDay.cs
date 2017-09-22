@@ -25,13 +25,28 @@ namespace DustInTheWind.ActiveTime.Services
     public class CurrentDay : ICurrentDay
     {
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
-        private readonly IStateService stateService;
         private readonly ILogger logger;
         private readonly IStatusInfoService statusInfoService;
 
+        private DateTime? date;
         private DayComment dayComment;
         private DayRecord dayRecord;
         private string comment;
+
+        public DateTime? Date
+        {
+            get { return date; }
+            set
+            {
+                date = value;
+                statusInfoService.SetStatus("Date changed.");
+
+                UpdateCommentsFromRepository();
+                UpdateDayRecordFromRepository();
+
+                OnDateChanged(EventArgs.Empty);
+            }
+        }
 
         public string Comment
         {
@@ -54,34 +69,27 @@ namespace DustInTheWind.ActiveTime.Services
         public TimeSpan? BeginTime => dayRecord?.GetBeginTime() ?? TimeSpan.Zero;
         public TimeSpan? EstimatedEndTime => dayRecord?.GetEstimatedEndTime() ?? TimeSpan.Zero;
 
+        public event EventHandler DateChanged;
         public event EventHandler CommentChanged;
         public event EventHandler DatesChanged;
 
-        public CurrentDay(IUnitOfWorkFactory unitOfWorkFactory, IStateService stateService, ILogger logger, IRecorderService recorder, IStatusInfoService statusInfoService)
+        public CurrentDay(IUnitOfWorkFactory unitOfWorkFactory, ILogger logger, IRecorderService recorder, IStatusInfoService statusInfoService)
         {
             if (unitOfWorkFactory == null) throw new ArgumentNullException(nameof(unitOfWorkFactory));
-            if (stateService == null) throw new ArgumentNullException(nameof(stateService));
             if (logger == null) throw new ArgumentNullException(nameof(logger));
             if (recorder == null) throw new ArgumentNullException(nameof(recorder));
             if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
 
             this.unitOfWorkFactory = unitOfWorkFactory;
-            this.stateService = stateService;
             this.logger = logger;
             this.statusInfoService = statusInfoService;
+
+            date = DateTime.Today;
 
             recorder.Started += HandleRecorderStarted;
             recorder.Stopped += HandleRecorderStopped;
             recorder.Stamping += HandleRecorderStamping;
             recorder.Stamped += HandleRecorderStamped;
-
-            stateService.CurrentDateChanged += HandleCurrentDateChanged;
-        }
-
-        private void HandleCurrentDateChanged(object sender, EventArgs e)
-        {
-            UpdateCommentsFromRepository();
-            UpdateDayRecordFromRepository();
         }
 
         private void HandleRecorderStarted(object sender, EventArgs e)
@@ -119,46 +127,40 @@ namespace DustInTheWind.ActiveTime.Services
 
         private void UpdateCommentsFromRepository()
         {
-            DateTime? currentDate = stateService.CurrentDate;
-
-            if (currentDate != null)
-            {
-                using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
-                {
-                    IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
-
-                    dayComment = dayCommentRepository.GetByDate(currentDate.Value)
-                                 ?? new DayComment { Date = currentDate.Value };
-
-                    Comment = dayComment?.Comment;
-                }
-            }
-            else
+            if (date == null)
             {
                 dayComment = null;
                 Comment = null;
+                return;
+            }
+
+            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+            {
+                IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
+
+                dayComment = dayCommentRepository.GetByDate(date.Value)
+                             ?? new DayComment { Date = date.Value };
+
+                Comment = dayComment?.Comment;
             }
         }
 
         private void UpdateDayRecordFromRepository()
         {
-            DateTime? currentDate = stateService.CurrentDate;
-
-            if (currentDate != null)
-            {
-                using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
-                {
-                    ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
-
-                    IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(currentDate.Value);
-                    dayRecord = new DayRecord(timeRecords);
-
-                    OnDatesChanged();
-                }
-            }
-            else
+            if (date == null)
             {
                 dayRecord = null;
+                OnDatesChanged();
+                return;
+            }
+
+            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
+            {
+                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date.Value);
+                dayRecord = new DayRecord(timeRecords);
+
                 OnDatesChanged();
             }
         }
@@ -181,6 +183,11 @@ namespace DustInTheWind.ActiveTime.Services
             }
 
             OnCommentChanged();
+        }
+
+        protected virtual void OnDateChanged(EventArgs e)
+        {
+            DateChanged?.Invoke(this, e);
         }
 
         protected virtual void OnCommentChanged()

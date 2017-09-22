@@ -32,10 +32,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         [SetUp]
         public void SetUp()
         {
-            Mock<IStateService> stateServiceMock = new Mock<IStateService>();
             Mock<ICurrentDay> currentDayComment = new Mock<ICurrentDay>();
 
-            viewModel = new CommentsViewModel(stateServiceMock.Object, currentDayComment.Object);
+            viewModel = new CommentsViewModel(currentDayComment.Object);
         }
 
         #region CommentTextWrap Property
