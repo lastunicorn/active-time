@@ -1,6 +1,6 @@
 using System;
 
-namespace DustInTheWind.ActiveTime.Common.Watchman
+namespace ActiveTime.Watchman
 {
     public class IncompetentGuard : IGuard
     {

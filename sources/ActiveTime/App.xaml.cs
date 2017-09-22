@@ -16,8 +16,8 @@
 
 using System;
 using System.Windows;
+using ActiveTime.Watchman;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Watchman;
 
 namespace DustInTheWind.ActiveTime
 {
