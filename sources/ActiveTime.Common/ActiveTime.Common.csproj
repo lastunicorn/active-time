@@ -51,7 +51,6 @@
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
-    <Compile Include="Events\ApplicationExitEvent.cs" />
     <Compile Include="Services\IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>

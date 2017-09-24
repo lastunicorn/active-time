@@ -16,7 +16,6 @@
 
 using System;
 using System.Reflection;
-//using DustInTheWind.ActiveTime.Common.Events;
 
 namespace DustInTheWind.ActiveTime.Common.Services
 {
@@ -50,9 +49,6 @@ namespace DustInTheWind.ActiveTime.Common.Services
             StartTime = DateTime.Now;
         }
 
-        ///// <summary>
-        ///// Publishes the <see cref="ApplicationExitEvent"/> and then exits the application.
-        ///// </summary>
         public void Exit()
         {
             try
