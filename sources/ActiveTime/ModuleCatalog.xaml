@@ -27,7 +27,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Modularity:ModuleInfo
         ModuleName="PersistenceModule"
         Ref="file://ActiveTime.PersistenceModule.LiteDB.dll"
-        ModuleType="DustInTheWind.ActiveTime.PersistenceModule.LiteDB.ModuleDefinitions.PersistenceModule, ActiveTime.PersistenceModule.LiteDB"
+        ModuleType="DustInTheWind.ActiveTime.Persistence.LiteDB.Module.ModuleDefinitions.PersistenceModule, ActiveTime.Persistence.LiteDB.Module"
         InitializationMode="WhenAvailable">
     </Modularity:ModuleInfo>
 
@@ -41,7 +41,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Modularity:ModuleInfo
         ModuleName="RecorderModule"
         Ref="file://ActiveTime.RecorderModule.dll"
-        ModuleType="DustInTheWind.ActiveTime.RecorderModule.ModuleDefinitions.RecorderModule, ActiveTime.RecorderModule"
+        ModuleType="DustInTheWind.ActiveTime.Recording.Module.ModuleDefinitions.RecorderModule, ActiveTime.Recording.Module"
         InitializationMode="WhenAvailable">
 
         <Modularity:ModuleInfo.DependsOn>
@@ -66,7 +66,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Modularity:ModuleInfo
         ModuleName="SystemSessionModule"
         Ref="file://ActiveTime.SystemSessionModule.dll"
-        ModuleType="DustInTheWind.ActiveTime.SystemSessionModule.ModuleDefinitions.SystemSessionModule, ActiveTime.SystemSessionModule"
+        ModuleType="DustInTheWind.ActiveTime.SystemSession.Module.ModuleDefinitions.SystemSessionModule, ActiveTime.SystemSession.Module"
         InitializationMode="WhenAvailable">
 
         <Modularity:ModuleInfo.DependsOn>

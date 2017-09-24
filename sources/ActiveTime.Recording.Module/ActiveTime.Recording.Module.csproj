@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DustInTheWind.ActiveTime.Recording.Module</RootNamespace>
-    <AssemblyName>ActiveTime.RecorderModule</AssemblyName>
+    <AssemblyName>ActiveTime.Recording.Module</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

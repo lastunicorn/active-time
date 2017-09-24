@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DustInTheWind.ActiveTime.Persistence.LiteDB.Module</RootNamespace>
-    <AssemblyName>ActiveTime.PersistenceModule.LiteDB</AssemblyName>
+    <AssemblyName>ActiveTime.Persistence.LiteDB.Module</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

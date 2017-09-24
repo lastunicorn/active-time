@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DustInTheWind.ActiveTime.SystemSession.Module</RootNamespace>
-    <AssemblyName>ActiveTime.SystemSessionModule</AssemblyName>
+    <AssemblyName>ActiveTime.SystemSession.Module</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
