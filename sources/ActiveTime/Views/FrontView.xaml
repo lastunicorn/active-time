@@ -92,55 +92,83 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Content="Active Time:"
             Margin="3" />
 
-        <TextBox
+        <Border
             Grid.Row="1"
             Grid.Column="1"
-            Margin="3"
-            VerticalAlignment="Center"
-            Text="{Binding Path=ActiveTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-            IsReadOnly="True"/>
+            Grid.ColumnSpan="3"
+            BorderThickness="1"
+            BorderBrush="{StaticResource TextBoxNormalBorderColor}"
+            Background="{StaticResource TextBoxNormalBackgroundColor}"
+            Padding="10 0"
+            Margin="3 1">
+
+            <StackPanel
+                Orientation="Horizontal"
+                VerticalAlignment="Center">
+
+                <TextBlock
+                    Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                    FontSize="20"
+                    VerticalAlignment="Bottom"/>
+
+                <TextBlock
+                    Text="/"
+                    Margin="10 0 0 0"
+                    FontSize="14"
+                    VerticalAlignment="Bottom"
+                    Foreground="DarkGray"/>
+
+                <TextBlock
+                    Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                    Margin="5 0 0 0"
+                    VerticalAlignment="Bottom"
+                    FontSize="14"
+                    Foreground="DarkGray"/>
+
+            </StackPanel>
+            
+        </Border>
 
         <Label
             Grid.Row="2"
             Grid.Column="0"
-            Content="Total Time:"
+            Content="Interval:"
             Margin="3" />
 
-        <TextBox
+        <Border
             Grid.Row="2"
             Grid.Column="1"
-            Margin="3"
-            VerticalAlignment="Center"
-            Text="{Binding Path=TotalTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-            IsReadOnly="True"/>
+            Grid.ColumnSpan="3"
+            BorderThickness="1"
+            BorderBrush="{StaticResource TextBoxNormalBorderColor}"
+            Background="{StaticResource TextBoxNormalBackgroundColor}"
+            Padding="10 0"
+            Margin="3 1">
 
-        <Label
-            Grid.Row="1"
-            Grid.Column="2"
-            Content="Begin:"
-            Margin="3" />
+            <StackPanel
+                Orientation="Horizontal"
+                VerticalAlignment="Center">
 
-        <TextBox
-            Grid.Row="1"
-            Grid.Column="3"
-            Margin="3"
-            VerticalAlignment="Center"
-            Text="{Binding Path=BeginTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-            IsReadOnly="True"/>
+                <TextBlock
+                    Text="{Binding Path=BeginTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                    FontSize="14"
+                    Foreground="DarkGray"/>
 
-        <Label
-            Grid.Row="2"
-            Grid.Column="2"
-            Content="Estimated End:"
-            Margin="3" />
+                <TextBlock
+                    Text="-"
+                    Margin="10 0 0 0"
+                    FontSize="14"
+                    Foreground="DarkGray"/>
 
-        <TextBox
-            Grid.Row="2"
-            Grid.Column="3"
-            Margin="3"
-            VerticalAlignment="Center"
-            Text="{Binding Path=EstimatedEndTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-            IsReadOnly="True"/>
+                <TextBlock
+                    Text="{Binding Path=EstimatedEndTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                    Margin="10 0 0 0"
+                    FontSize="14"
+                    Foreground="DarkGray"/>
+
+            </StackPanel>
+        
+        </Border>
 
         <ContentControl
             Grid.Row="3"

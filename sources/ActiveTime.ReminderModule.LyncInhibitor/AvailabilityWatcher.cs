@@ -16,7 +16,7 @@
 
 using System;
 using System.Timers;
-using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Logging;
 using Microsoft.Lync.Model;
 
 namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
