@@ -19,7 +19,7 @@ using System.Timers;
 using DustInTheWind.ActiveTime.Logging;
 using Microsoft.Lync.Model;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
+namespace DustInTheWind.ActiveTime.Reminder.LyncInhibitor
 {
     internal class AvailabilityWatcher
     {

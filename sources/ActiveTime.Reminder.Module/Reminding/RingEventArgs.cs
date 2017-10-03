@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
+namespace DustInTheWind.ActiveTime.Reminder.Module.Reminding
 {
     /// <summary>
     /// Provides data for <see cref="IReminder.Ring"/> event.

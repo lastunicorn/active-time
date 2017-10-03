@@ -16,10 +16,10 @@
 
 using System;
 using DustInTheWind.ActiveTime.Logging;
-using DustInTheWind.ActiveTime.ReminderModule.Inhibitors;
+using DustInTheWind.ActiveTime.Reminder.Module.Inhibitors;
 using Microsoft.Lync.Model;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor
+namespace DustInTheWind.ActiveTime.Reminder.LyncInhibitor
 {
     /// <summary>
     /// Stopps the reminder to display messages to the user if the he is not Free on Lync messenger.

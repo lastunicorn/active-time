@@ -99,8 +99,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 AcceptsReturn="True"
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Auto"
-                TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}"
-                FontSize="14">
+                TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}">
 
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>

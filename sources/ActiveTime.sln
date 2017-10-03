@@ -31,9 +31,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Persistence.LiteDB.Module", "ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj", "{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule", "ActiveTime.ReminderModule\ActiveTime.ReminderModule.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Reminder.Module", "ActiveTime.Reminder.Module\ActiveTime.Reminder.Module.csproj", "{2B4E4124-2CCA-4418-A66B-2C57FB91DA74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ReminderModule.LyncInhibitor", "ActiveTime.ReminderModule.LyncInhibitor\ActiveTime.ReminderModule.LyncInhibitor.csproj", "{F03DB5DB-21EE-407B-9B23-D2E951C17D45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Reminder.LyncInhibitor", "ActiveTime.Reminder.LyncInhibitor\ActiveTime.Reminder.LyncInhibitor.csproj", "{F03DB5DB-21EE-407B-9B23-D2E951C17D45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.DataMigration", "ActiveTime.DataMigration\ActiveTime.DataMigration.csproj", "{6343D3EC-D787-43D7-B590-918EB97464C2}"
 EndProject

@@ -17,7 +17,7 @@
 using System;
 using System.Threading;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
+namespace DustInTheWind.ActiveTime.Reminder.Module.Reminding
 {
     /// <summary>
     /// It is a timer that "rings" after a specified time.

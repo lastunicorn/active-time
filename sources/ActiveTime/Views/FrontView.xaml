@@ -96,7 +96,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="3"
-            BorderThickness="1"
+            BorderThickness="0"
             BorderBrush="{StaticResource TextBoxNormalBorderColor}"
             Background="{StaticResource TextBoxNormalBackgroundColor}"
             Padding="10 0"
@@ -114,7 +114,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <TextBlock
                     Text="/"
                     Margin="10 0 0 0"
-                    FontSize="14"
                     VerticalAlignment="Bottom"
                     Foreground="DarkGray"/>
 
@@ -122,7 +121,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
                     Margin="5 0 0 0"
                     VerticalAlignment="Bottom"
-                    FontSize="14"
                     Foreground="DarkGray"/>
 
             </StackPanel>
@@ -139,7 +137,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Row="2"
             Grid.Column="1"
             Grid.ColumnSpan="3"
-            BorderThickness="1"
+            BorderThickness="0"
             BorderBrush="{StaticResource TextBoxNormalBorderColor}"
             Background="{StaticResource TextBoxNormalBackgroundColor}"
             Padding="10 0"
@@ -151,19 +149,16 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
                 <TextBlock
                     Text="{Binding Path=BeginTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                    FontSize="14"
                     Foreground="DarkGray"/>
 
                 <TextBlock
                     Text="-"
                     Margin="10 0 0 0"
-                    FontSize="14"
                     Foreground="DarkGray"/>
 
                 <TextBlock
                     Text="{Binding Path=EstimatedEndTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
                     Margin="10 0 0 0"
-                    FontSize="14"
                     Foreground="DarkGray"/>
 
             </StackPanel>

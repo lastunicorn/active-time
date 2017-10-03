@@ -16,7 +16,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using DustInTheWind.ActiveTime.ReminderModule.Reminding;
+using DustInTheWind.ActiveTime.Reminder.Module.Reminding;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTests
@@ -28,12 +28,12 @@ namespace DustInTheWind.ActiveTime.UnitTests.ReminderModule.Reminding.ReminderTe
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class StartTests
     {
-        private Reminder reminder;
+        private Reminder.Module.Reminding.Reminder reminder;
 
         [SetUp]
         public void SetUp()
         {
-            reminder = new Reminder();
+            reminder = new Reminder.Module.Reminding.Reminder();
         }
 
         [TearDown]

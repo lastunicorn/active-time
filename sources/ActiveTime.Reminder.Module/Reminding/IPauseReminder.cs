@@ -1,4 +1,4 @@
-// ActiveTime
+﻿// ActiveTime
 // Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.ReminderModule.Inhibitors
+using System;
+using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Reminder.Module.Inhibitors;
+
+namespace DustInTheWind.ActiveTime.Reminder.Module.Reminding
 {
-    public interface IReminderInhibitor
+    public interface IPauseReminder
     {
-        bool Allow { get; }
+        TimeSpan PauseInterval { get; set; }
+        TimeSpan SnoozeInterval { get; set; }
+
+        List<IReminderInhibitor> Inhibitors { get; }
+
+        void StartMonitoring();
     }
 }

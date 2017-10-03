@@ -15,12 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.ReminderModule.Reminding;
-using DustInTheWind.ActiveTime.ReminderModule.Services;
+using DustInTheWind.ActiveTime.Reminder.Module.Reminding;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.Reminder.LyncInhibitor.ModuleDefinitions
 {
     public class ReminderInhibitorModule : IModule
     {

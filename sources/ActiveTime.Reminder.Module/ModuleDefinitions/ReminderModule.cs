@@ -16,12 +16,12 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.ReminderModule.Reminding;
-using DustInTheWind.ActiveTime.ReminderModule.Services;
+using DustInTheWind.ActiveTime.Reminder.Module.Reminding;
+using DustInTheWind.ActiveTime.Reminder.Module.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.Reminder.Module.ModuleDefinitions
 {
     public class ReminderModule : IModule
     {
@@ -39,7 +39,7 @@ namespace DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions
 
         public void Initialize()
         {
-            unityContainer.RegisterType<IReminder, Reminder>();
+            unityContainer.RegisterType<IReminder, Reminding.Reminder>();
 
             PauseReminder pauseReminder = CreatePauseReminder();
             unityContainer.RegisterInstance<IPauseReminder>(pauseReminder, new ContainerControlledLifetimeManager());

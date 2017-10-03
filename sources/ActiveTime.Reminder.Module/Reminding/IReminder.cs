@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.ReminderModule.Reminding
+namespace DustInTheWind.ActiveTime.Reminder.Module.Reminding
 {
     public interface IReminder
     {
