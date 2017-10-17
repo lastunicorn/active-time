@@ -100,7 +100,12 @@ namespace DustInTheWind.ActiveTime.ViewModels
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Average hours per day: ");
-            sb.AppendLine(CalculateHours(timeRecordRepository).ToString());
+
+            TimeSpan averageHours = CalculateHours(timeRecordRepository);
+            sb.AppendLine(averageHours.ToDefaultFormat());
+
+            sb.AppendLine("--------------------------------------------------");
+            sb.AppendLine();
 
             foreach (DayComment dayComment in dayComments)
             {
@@ -110,11 +115,20 @@ namespace DustInTheWind.ActiveTime.ViewModels
                 sb.Append(dayComment.Date.ToShortDateString());
 
                 sb.Append(" - active: ");
-                sb.Append(dayRecord.GetTotalActiveTime());
+
+                TimeSpan totalActiveTime = dayRecord.GetTotalActiveTime();
+                sb.Append(totalActiveTime.ToDefaultFormat());
+
                 sb.Append(" [ ");
-                sb.Append(dayRecord.GetBeginTime());
+
+                TimeSpan? beginTime = dayRecord.GetBeginTime();
+                sb.Append(beginTime.ToDefaultFormat());
+
                 sb.Append(" - ");
-                sb.Append(dayRecord.GetEndTime());
+
+                TimeSpan? endTime = dayRecord.GetEndTime();
+                sb.Append(endTime.ToDefaultFormat());
+
                 sb.Append(" ] ");
 
                 sb.AppendLine();

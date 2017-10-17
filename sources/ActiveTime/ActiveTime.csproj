@@ -110,6 +110,7 @@
     <Compile Include="Services\ICurrentDay.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />

@@ -33,7 +33,7 @@ namespace DustInTheWind.ActiveTime.Converters
                 return value;
 
             if (targetType == typeof(string))
-                return ((TimeSpan)value).ToString(@"hh\:mm\:ss");
+                return ((TimeSpan)value).ToDefaultFormat();
 
             return null;
         }
