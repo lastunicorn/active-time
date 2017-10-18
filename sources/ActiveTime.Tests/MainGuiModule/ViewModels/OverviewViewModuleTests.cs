@@ -112,22 +112,6 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         }
 
         [Test]
-        public void populates_Reports_property_with_data_retrieved_from_dayCommentRepository()
-        {
-            List<DayComment> dayComments = new List<DayComment> { new DayComment(), new DayComment(), new DayComment() };
-            timeProvider
-                .Setup(x => x.GetDate())
-                .Returns(DateTime.Now);
-            dayCommentRepository
-                .Setup(x => x.GetByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(dayComments);
-
-            OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
-
-            Assert.AreEqual(3, overviewViewModel.Reports.Count);
-        }
-
-        [Test]
         public void calls_GetByDate_when_FirsDay_is_set()
         {
             timeProvider
