@@ -102,7 +102,9 @@
     <Compile Include="Converters\BooleanConverter.cs" />
     <Compile Include="Converters\RecordConverter.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
+    <Compile Include="ReportBuilder.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\CurrentDay.cs" />

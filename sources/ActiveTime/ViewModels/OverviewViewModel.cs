@@ -15,14 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ActiveTime.Recording;
-using DustInTheWind.ActiveTime.Services;
-using Microsoft.Practices.ObjectBuilder2;
 
 namespace DustInTheWind.ActiveTime.ViewModels
 {
@@ -40,9 +35,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public List<DayReport> Reports { get; set; }
-
+        
         private DateTime firstDay;
         public DateTime FirstDay
         {
@@ -87,88 +80,14 @@ namespace DustInTheWind.ActiveTime.ViewModels
             {
                 IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
                 ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
-
-                IEnumerable<DayComment> dayComments = dayCommentRepository.GetByDate(FirstDay, LastDay);
-                Comments = Stringify(dayComments, timeRecordRepository);
-
-                Reports = new List<DayReport>();
-                dayComments.ForEach(x => Reports.Add(new DayReport(x)));
+                
+                ReportBuilder reportBuilder = new ReportBuilder(dayCommentRepository, timeRecordRepository)
+                {
+                    FirstDay = firstDay,
+                    LastDay = lastDay
+                };
+                Comments = reportBuilder.Build();
             }
-        }
-
-        private string Stringify(IEnumerable<DayComment> dayComments, ITimeRecordRepository timeRecordRepository)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Average hours per day: ");
-
-            TimeSpan averageHours = CalculateHours(timeRecordRepository);
-            sb.AppendLine(averageHours.ToDefaultFormat());
-
-            sb.AppendLine("--------------------------------------------------");
-            sb.AppendLine();
-
-            foreach (DayComment dayComment in dayComments)
-            {
-                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
-                DayRecord dayRecord = new DayRecord(timeRecords);
-
-                sb.Append(dayComment.Date.ToShortDateString());
-
-                sb.Append(" - active: ");
-
-                TimeSpan totalActiveTime = dayRecord.GetTotalActiveTime();
-                sb.Append(totalActiveTime.ToDefaultFormat());
-
-                sb.Append(" [ ");
-
-                TimeSpan? beginTime = dayRecord.GetBeginTime();
-                sb.Append(beginTime.ToDefaultFormat());
-
-                sb.Append(" - ");
-
-                TimeSpan? endTime = dayRecord.GetEndTime();
-                sb.Append(endTime.ToDefaultFormat());
-
-                sb.Append(" ] ");
-
-                sb.AppendLine();
-                sb.Append(dayComment.Comment);
-                sb.AppendLine();
-                sb.AppendLine("--------------------------------------------------");
-                sb.AppendLine();
-            }
-
-            return sb.ToString();
-        }
-
-        private TimeSpan CalculateHours(ITimeRecordRepository timeRecordRepository)
-        {
-            DateTime date = firstDay;
-            TimeSpan totalTime = TimeSpan.Zero;
-            int dayCount = 0;
-
-            while (date <= lastDay)
-            {
-                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
-                DayRecord dayRecord = new DayRecord(timeRecords);
-
-                TimeSpan totalDayActiveTime = dayRecord.GetTotalActiveTime();
-
-                totalTime += totalDayActiveTime;
-
-                double pauseTime = (totalDayActiveTime.TotalMinutes / 52.5) * 7.5;
-                totalTime += TimeSpan.FromMinutes(pauseTime);
-
-                dayCount++;
-
-                date = date.AddDays(1);
-            }
-
-            double average = dayCount == 0
-                ? 0
-                : totalTime.TotalHours / dayCount;
-
-            return TimeSpan.FromHours(average);
         }
     }
 }
