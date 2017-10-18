@@ -151,7 +151,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
             <Grid
                 VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch">
+                HorizontalAlignment="Stretch"
+                MaxWidth="500">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

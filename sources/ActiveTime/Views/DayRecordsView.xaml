@@ -53,6 +53,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label
@@ -115,6 +116,42 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         </ListBox>
 
+        <ScrollViewer
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto"
+            Margin="3 10">
+            
+            <ItemsControl
+                ItemsSource="{Binding Records}">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel
+                            Orientation="Horizontal"
+                            IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
+                        <Rectangle
+                            Height="30"
+                            Fill="DodgerBlue"
+                            Width="{Binding IntervalInMinutes}"/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type recording:Break}">
+                        <Rectangle
+                            Height="30"
+                            Fill="OrangeRed"
+                            Width="{Binding IntervalInMinutes}"/>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+                
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 
 </UserControl>

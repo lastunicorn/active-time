@@ -65,6 +65,9 @@ namespace DustInTheWind.ActiveTime.Recording
             }
         }
 
+        public TimeSpan Interval => endTime - startTime;
+        public double IntervalInMinutes => (endTime - startTime).TotalMinutes;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DayTimeInterval"/> class.
         /// </summary>
