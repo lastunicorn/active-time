@@ -91,7 +91,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Column="0"
             Grid.ColumnSpan="4"
             BorderThickness="1"
-            Padding="10 0"
+            Padding="0 6 0 6"
             Margin="3 1">
             
             <Border.Style>
@@ -111,8 +111,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             
             <StackPanel
                 Orientation="Vertical"
-                HorizontalAlignment="Center"
-                Margin="0 5 0 5">
+                HorizontalAlignment="Center">
 
                 <TextBlock
                     Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
@@ -132,7 +131,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Column="0"
             Grid.ColumnSpan="4"
             BorderThickness="1"
-            Padding="10 0"
+            Padding="0 6 0 6"
             Margin="3 1">
 
             <Border.Style>
