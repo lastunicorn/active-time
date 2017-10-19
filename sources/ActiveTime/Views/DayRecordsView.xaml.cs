@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.Views
     /// <summary>
     /// Interaction logic for DayRecordsView.xaml
     /// </summary>
-    public partial class DayRecordsView : UserControl
+    internal partial class DayRecordsView : UserControl
     {
         private readonly DayRecordsViewModel viewModel;
 

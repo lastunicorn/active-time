@@ -21,7 +21,7 @@ namespace DustInTheWind.ActiveTime.Views
     /// <summary>
     /// Interaction logic for StatusView.xaml
     /// </summary>
-    public partial class StatusInfoView : UserControl
+    internal partial class StatusInfoView : UserControl
     {
         public StatusInfoView()
         {

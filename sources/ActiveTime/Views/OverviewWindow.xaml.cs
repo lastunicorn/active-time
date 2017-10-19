@@ -23,7 +23,7 @@ namespace DustInTheWind.ActiveTime.Views
     /// <summary>
     /// Interaction logic for OverviewWindow.xaml
     /// </summary>
-    public partial class OverviewWindow : Window
+    internal partial class OverviewWindow : Window
     {
         public OverviewWindow(OverviewViewModel viewModel)
         {

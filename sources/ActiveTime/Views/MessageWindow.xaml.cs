@@ -23,7 +23,7 @@ namespace DustInTheWind.ActiveTime.Views
     /// <summary>
     /// Interaction logic for MessageWindow.xaml
     /// </summary>
-    public partial class MessageWindow : Window
+    internal partial class MessageWindow : Window
     {
         private readonly MessageViewModel viewModel;
 

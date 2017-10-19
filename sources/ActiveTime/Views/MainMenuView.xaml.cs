@@ -21,7 +21,7 @@ namespace DustInTheWind.ActiveTime.Views
     /// <summary>
     /// Interaction logic for MainMenuView.xaml
     /// </summary>
-    public partial class MainMenuView : UserControl
+    internal partial class MainMenuView : UserControl
     {
         public MainMenuView()
         {
