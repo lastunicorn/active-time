@@ -75,12 +75,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <Grid Margin="0">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="90" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -92,8 +88,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Margin="3" />
 
             <TextBox
-                Grid.Row="0"
-                Grid.Column="1"
+                Grid.Row="1"
+                Grid.Column="0"
                 Margin="3"
                 Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
                 AcceptsReturn="True"
@@ -108,8 +104,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             </TextBox>
 
             <CheckBox
-                Grid.Row="1"
-                Grid.Column="1"
+                Grid.Row="2"
+                Grid.Column="0"
                 Content="Wrap"
                 Margin="3"
                 IsChecked="{Binding Path=CommentTextWrap}"/>
