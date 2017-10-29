@@ -139,31 +139,43 @@ namespace DustInTheWind.ActiveTime.Recording
             if (beginTime == null)
                 return null;
 
-            TimeSpan? estimatedEndTime = beginTime;
+            TimeSpan totalBrakeTime = TimeSpan.Zero;
+            TimeSpan? lunchBreakTime = null;
 
-            TimeSpan consumedPauseTime = TimeSpan.Zero;
-            bool existsLunchPause = false;
-
-            TimeSpan? previousEnd = null;
+            DayTimeInterval previousInterval = null;
             foreach (DayTimeInterval dayTimeInterval in activeTimeRecords)
             {
-                if (previousEnd != null)
+                if (previousInterval != null)
                 {
-                    TimeSpan pauseTime = dayTimeInterval.StartTime - previousEnd.Value;
-                    consumedPauseTime += pauseTime;
+                    TimeSpan breakStartTime = dayTimeInterval.StartTime;
+                    TimeSpan breakEndTime = previousInterval.EndTime;
+                    TimeSpan breakTime = breakStartTime - breakEndTime;
 
-                    existsLunchPause = pauseTime > TimeSpan.FromMinutes(30) && dayTimeInterval.StartTime > TimeSpan.FromHours(11.5);
+                    bool isLunchBreak = breakStartTime >= TimeSpan.FromHours(11) &&
+                        breakEndTime <= TimeSpan.FromHours(16) &&
+                        breakTime >= TimeSpan.FromMinutes(30) &&
+                        (lunchBreakTime == null || breakTime > lunchBreakTime);
+
+                    if (isLunchBreak)
+                    {
+                        if (lunchBreakTime != null)
+                            totalBrakeTime += lunchBreakTime.Value;
+
+                        lunchBreakTime = breakTime;
+                    }
+                    else
+                    {
+                        totalBrakeTime += breakTime;
+                    }
                 }
 
-                previousEnd = dayTimeInterval.EndTime;
+                previousInterval = dayTimeInterval;
             }
 
-            estimatedEndTime += TimeSpan.FromHours(8);
-
-            if (!existsLunchPause)
-                estimatedEndTime += TimeSpan.FromHours(1);
-
-            estimatedEndTime += consumedPauseTime;
+            TimeSpan? estimatedEndTime = beginTime +
+                TimeSpan.FromHours(7) +
+                (totalBrakeTime < TimeSpan.FromHours(1) ? TimeSpan.FromHours(1) : totalBrakeTime) +
+                (lunchBreakTime ?? TimeSpan.Zero);
 
             return estimatedEndTime;
         }

@@ -61,25 +61,26 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Calendar
-            Grid.Row="1"
+            Grid.Row="0"
             Grid.Column="0"
             Grid.RowSpan="2"
             Margin="3"
-            SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></Calendar>
+            SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+        </Calendar>
 
         <Border
-            Grid.Row="1"
+            Grid.Row="0"
             Grid.Column="1"
             BorderThickness="1"
             Padding="0 6 0 6"
             Margin="3 1">
-            
+
             <Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
@@ -94,7 +95,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     </Style.Triggers>
                 </Style>
             </Border.Style>
-            
+
             <StackPanel
                 Orientation="Vertical"
                 HorizontalAlignment="Center"
@@ -110,11 +111,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     TextAlignment="Center"/>
 
             </StackPanel>
-            
+
         </Border>
 
         <Border
-            Grid.Row="2"
+            Grid.Row="1"
             Grid.Column="1"
             BorderThickness="1"
             Padding="0 6 0 6"
@@ -144,7 +145,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                
+
                 <StackPanel
                     Grid.Column="0"
                     Orientation="Vertical">
@@ -180,17 +181,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 </StackPanel>
 
             </Grid>
-        
+
         </Border>
 
         <ContentControl
-            Grid.Row="3"
+            Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             regions:RegionManager.RegionName="{x:Static ui:RegionNames.RecordsRegion}"/>
 
         <StackPanel
-            Grid.Row="4"
+            Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="3 5"
