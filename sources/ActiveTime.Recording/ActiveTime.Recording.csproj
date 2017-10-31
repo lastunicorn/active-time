@@ -43,6 +43,7 @@
     <Compile Include="IRecorderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
+    <Compile Include="RecordAnalyzer.cs" />
     <Compile Include="RecorderState.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -142,6 +142,10 @@ namespace DustInTheWind.ActiveTime.Recording
             TimeSpan totalBrakeTime = TimeSpan.Zero;
             TimeSpan? lunchBreakTime = null;
 
+            TimeSpan minLunchTimeStart = TimeSpan.FromHours(11);
+            TimeSpan maxLunchTimeEnd = TimeSpan.FromHours(16);
+            TimeSpan minLunchTimeInterval = TimeSpan.FromMinutes(30);
+
             DayTimeInterval previousInterval = null;
             foreach (DayTimeInterval dayTimeInterval in activeTimeRecords)
             {
@@ -149,11 +153,11 @@ namespace DustInTheWind.ActiveTime.Recording
                 {
                     TimeSpan breakStartTime = dayTimeInterval.StartTime;
                     TimeSpan breakEndTime = previousInterval.EndTime;
-                    TimeSpan breakTime = breakStartTime - breakEndTime;
+                    TimeSpan breakTime = breakEndTime - breakStartTime;
 
-                    bool isLunchBreak = breakStartTime >= TimeSpan.FromHours(11) &&
-                        breakEndTime <= TimeSpan.FromHours(16) &&
-                        breakTime >= TimeSpan.FromMinutes(30) &&
+                    bool isLunchBreak = breakStartTime >= minLunchTimeStart &&
+                        breakEndTime <= maxLunchTimeEnd &&
+                        breakTime >= minLunchTimeInterval &&
                         (lunchBreakTime == null || breakTime > lunchBreakTime);
 
                     if (isLunchBreak)
@@ -175,7 +179,7 @@ namespace DustInTheWind.ActiveTime.Recording
             TimeSpan? estimatedEndTime = beginTime +
                 TimeSpan.FromHours(7) +
                 (totalBrakeTime < TimeSpan.FromHours(1) ? TimeSpan.FromHours(1) : totalBrakeTime) +
-                (lunchBreakTime ?? TimeSpan.Zero);
+                (lunchBreakTime ?? ((previousInterval != null && previousInterval.EndTime <= maxLunchTimeEnd - minLunchTimeInterval) ? TimeSpan.FromHours(1) : TimeSpan.Zero));
 
             return estimatedEndTime;
         }
