@@ -54,50 +54,65 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <DockPanel Margin="0">
 
-        <Grid DockPanel.Dock="Top">
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Border
+            DockPanel.Dock="Top"
+            BorderThickness="1"
+            Padding="10">
 
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Content="First Day:"/>
+            <Grid
+                VerticalAlignment="Center"
+                HorizontalAlignment="Stretch"
+                MaxWidth="500">
 
-            <DatePicker
-                Grid.Row="0"
-                Grid.Column="1"
-                MinWidth="150"
-                HorizontalAlignment="Left"
-                Margin="3"
-                SelectedDate="{Binding Path=FirstDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                SelectedDateFormat="Long" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-            <Label
-                Grid.Row="0"
-                Grid.Column="2"
-                Content="Last Day:"/>
+                <StackPanel
+                    Grid.Column="0"
+                    Orientation="Vertical">
 
-            <DatePicker
-                Grid.Row="0"
-                Grid.Column="3"
-                MinWidth="150"
-                HorizontalAlignment="Left"
-                Margin="3"
-                SelectedDate="{Binding Path=LastDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                SelectedDateFormat="Long" />
+                    <DatePicker
+                        MinWidth="150"
+                        HorizontalAlignment="Center"
+                        SelectedDate="{Binding Path=FirstDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        SelectedDateFormat="Long"
+                        FontSize="18"/>
 
-        </Grid>
+                    <TextBlock
+                        Text="First Day"
+                        TextAlignment="Center"/>
+
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Vertical">
+
+                    <DatePicker
+                        MinWidth="150"
+                        HorizontalAlignment="Center"
+                        SelectedDate="{Binding Path=LastDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        SelectedDateFormat="Long"
+                        FontSize="18"/>
+
+                    <TextBlock
+                        Text="Last Day"
+                        TextAlignment="Center"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
 
         <TextBox
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
             Text="{Binding Path=Comments, Mode=OneWay}"
-            IsReadOnly="True"/>
+            IsReadOnly="True"
+            Margin="0 4 0 0"/>
 
     </DockPanel>
 </Window>
