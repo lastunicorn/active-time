@@ -31,7 +31,6 @@ namespace DustInTheWind.ActiveTime.Services
 
         private DateTime? date;
         private DayComment dayComment;
-        private DayRecord dayRecord;
         private string comment;
 
         public DateTime? Date
@@ -64,11 +63,11 @@ namespace DustInTheWind.ActiveTime.Services
 
         public bool IsCommentSaved => (dayComment == null && comment == null) || (dayComment != null && dayComment.Comment == comment);
 
-        public DayTimeInterval[] Records => dayRecord?.GetTimeRecords(true);
-        public TimeSpan ActiveTime => dayRecord?.GetTotalActiveTime() ?? TimeSpan.Zero;
-        public TimeSpan TotalTime => dayRecord?.GetTotalTime() ?? TimeSpan.Zero;
-        public TimeSpan? BeginTime => dayRecord?.GetBeginTime() ?? TimeSpan.Zero;
-        public TimeSpan? EstimatedEndTime => dayRecord?.GetEstimatedEndTime() ?? TimeSpan.Zero;
+        public DayTimeInterval[] Records { get; private set; }
+        public TimeSpan ActiveTime { get; private set; }
+        public TimeSpan TotalTime { get; private set; }
+        public TimeSpan? BeginTime { get; private set; }
+        public TimeSpan? EstimatedEndTime { get; private set; }
 
         public event EventHandler DateChanged;
         public event EventHandler CommentChanged;
@@ -151,8 +150,7 @@ namespace DustInTheWind.ActiveTime.Services
         {
             if (date == null)
             {
-                dayRecord = null;
-                OnDatesChanged();
+                ClearDates();
                 return;
             }
 
@@ -161,10 +159,32 @@ namespace DustInTheWind.ActiveTime.Services
                 ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
 
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date.Value);
-                dayRecord = new DayRecord(timeRecords);
-
-                OnDatesChanged();
+                SetDates(timeRecords);
             }
+        }
+
+        private void ClearDates()
+        {
+            Records = new DayTimeInterval[0];
+            ActiveTime = TimeSpan.Zero;
+            TotalTime = TimeSpan.Zero;
+            BeginTime = TimeSpan.Zero;
+            EstimatedEndTime = TimeSpan.Zero;
+
+            OnDatesChanged();
+        }
+
+        private void SetDates(IEnumerable<TimeRecord> timeRecords)
+        {
+            RecordAnalyzer recordAnalyzer = new RecordAnalyzer(timeRecords);
+
+            Records = recordAnalyzer.AllIntervals.ToArray();
+            ActiveTime = recordAnalyzer.TotalActiveTime;
+            TotalTime = recordAnalyzer.TotalTime;
+            BeginTime = recordAnalyzer.OverallBeginTime ?? TimeSpan.Zero;
+            EstimatedEndTime = recordAnalyzer.EstimatedEndTime ?? TimeSpan.Zero;
+
+            OnDatesChanged();
         }
 
         public void SaveComments()

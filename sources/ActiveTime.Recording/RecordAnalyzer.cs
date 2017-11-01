@@ -21,6 +21,9 @@ using DustInTheWind.ActiveTime.Persistence;
 namespace DustInTheWind.ActiveTime.Recording
 {
     /// <summary>
+    /// Contains activity information for a single day.
+    /// </summary>
+    /// <remarks>
     /// Analyses the list of records and:
     /// - calculates the estimated end time.
     /// - builds the full time records.
@@ -28,30 +31,41 @@ namespace DustInTheWind.ActiveTime.Recording
     /// - exposes the end time of the whole list.
     /// - calculates the total time.
     /// - calculates the total active time.
-    /// </summary>
-    internal class RecordAnalyzer
+    /// </remarks>
+    public class RecordAnalyzer
     {
-        private readonly List<DayTimeInterval> activeTimeRecords;
+        private readonly List<DayTimeInterval> activeIntervals;
 
         private readonly TimeSpan minLunchTimeStart = TimeSpan.FromHours(11);
         private readonly TimeSpan maxLunchTimeEnd = TimeSpan.FromHours(16);
         private readonly TimeSpan minLunchTimeInterval = TimeSpan.FromMinutes(30);
-        private TimeSpan totalBrakeTime;
-        private TimeSpan? lunchBreakTime;
-        private DayTimeInterval previousRecord;
-        private DayTimeInterval currentRecord;
 
-        public TimeSpan? BeginTime { get; private set; }
+        private DayTimeInterval previousActiveInterval;
+        private DayTimeInterval currentActiveInterval;
+        private Break previousBreakInterval;
 
-        public TimeSpan? EndTime { get; private set; }
+        public List<DayTimeInterval> AllIntervals { get; }
+
+        public TimeSpan? OverallBeginTime { get; private set; }
+
+        public TimeSpan? OverallEndTime { get; private set; }
 
         public TimeSpan? EstimatedEndTime { get; private set; }
+
+        public TimeSpan TotalActiveTime { get; private set; }
+
+        public TimeSpan TotalTime { get; private set; }
+
+        public TimeSpan TotalBreakTime { get; private set; }
+
+        public TimeSpan? LunchBreakTime { get; private set; }
 
         public RecordAnalyzer(IEnumerable<TimeRecord> timeRecords)
         {
             if (timeRecords == null) throw new ArgumentNullException(nameof(timeRecords));
 
-            activeTimeRecords = new List<DayTimeInterval>();
+            activeIntervals = new List<DayTimeInterval>();
+            AllIntervals = new List<DayTimeInterval>();
 
             foreach (TimeRecord timeRecord in timeRecords)
             {
@@ -59,110 +73,133 @@ namespace DustInTheWind.ActiveTime.Recording
                     throw new ArgumentException("The list of TimeRecords contains null items.", nameof(timeRecords));
 
                 DayTimeInterval dayTimeInterval = new DayTimeInterval(timeRecord.StartTime, timeRecord.EndTime);
-                activeTimeRecords.Add(dayTimeInterval);
+                activeIntervals.Add(dayTimeInterval);
             }
+
+            Analyze();
         }
 
-        public void Analyze()
+        private void Analyze()
         {
             Clear();
 
-            if (activeTimeRecords.Count == 0)
-                return;
-
-            BeginTime = activeTimeRecords[0].StartTime;
-            EndTime = activeTimeRecords[0].EndTime;
-
-            IEnumerator<DayTimeInterval> enumerator = activeTimeRecords.GetEnumerator();
-
-            while (enumerator.MoveNext())
+            using (IEnumerator<DayTimeInterval> enumerator = activeIntervals.GetEnumerator())
             {
-                previousRecord = currentRecord;
-                currentRecord = enumerator.Current;
+                while (enumerator.MoveNext())
+                {
+                    previousActiveInterval = currentActiveInterval;
+                    currentActiveInterval = enumerator.Current;
+                    previousBreakInterval = CalculateBreakInterval();
 
-                UpdateBeginTime();
-                UpdateEndTime();
+                    UpdateBeginTime();
+                    UpdateEndTime();
+                    UpdateActiveTime();
+                    UpdateBreakTime();
 
-                bool isFirstRecord = previousRecord == null;
-
-                if (!isFirstRecord)
-                    UpdateBreakList();
+                    UpdateAllIntervalList();
+                }
             }
 
-            //foreach (DayTimeInterval record in activeTimeRecords)
-            //{
-            //    currentRecord = record;
-
-            //    UpdateBeginTime();
-            //    UpdateEndTime();
-
-            //    bool isFirstRecord = previousRecord == null;
-            //    if (!isFirstRecord)
-            //    {
-            //        UpdateLunchBreak();
-            //    }
-
-            //    previousRecord = currentRecord;
-            //}
-
+            TotalTime = CalculateTotalTime();
             EstimatedEndTime = CalculateEstimatedEndTime();
         }
 
-        private void UpdateBreakList()
+        private Break CalculateBreakInterval()
         {
-            TimeSpan breakStartTime = previousRecord.EndTime;
-            TimeSpan breakEndTime = currentRecord.StartTime;
-            TimeSpan breakTime = breakEndTime - breakStartTime;
+            if (previousActiveInterval == null || currentActiveInterval == null)
+                return null;
 
-            bool isLunchBreak = breakStartTime >= minLunchTimeStart &&
-                                breakEndTime <= maxLunchTimeEnd &&
-                                breakTime >= minLunchTimeInterval &&
-                                (lunchBreakTime == null || breakTime > lunchBreakTime);
+            TimeSpan breakStartTime = previousActiveInterval.EndTime;
+            TimeSpan breakEndTime = currentActiveInterval.StartTime;
 
-            if (isLunchBreak)
-            {
-                if (lunchBreakTime != null)
-                    totalBrakeTime += lunchBreakTime.Value;
-
-                lunchBreakTime = breakTime;
-            }
-            else
-            {
-                totalBrakeTime += breakTime;
-            }
-        }
-
-        private TimeSpan? CalculateEstimatedEndTime()
-        {
-            return BeginTime +
-                TimeSpan.FromHours(7) +
-                (totalBrakeTime < TimeSpan.FromHours(1) ? TimeSpan.FromHours(1) : totalBrakeTime) +
-                (lunchBreakTime ?? ((EndTime != null && EndTime.Value <= maxLunchTimeEnd - minLunchTimeInterval) ? TimeSpan.FromHours(1) : TimeSpan.Zero));
-        }
-
-        private void UpdateEndTime()
-        {
-            if (currentRecord.EndTime > EndTime)
-                EndTime = currentRecord.EndTime;
-        }
-
-        private void UpdateBeginTime()
-        {
-            if (currentRecord.StartTime < BeginTime)
-                BeginTime = currentRecord.StartTime;
+            return new Break(breakStartTime, breakEndTime);
         }
 
         private void Clear()
         {
+            AllIntervals.Clear();
+
             EstimatedEndTime = null;
-            BeginTime = null;
-            EndTime = null;
+            OverallBeginTime = null;
+            OverallEndTime = null;
+            TotalBreakTime = TimeSpan.Zero;
 
-            totalBrakeTime = TimeSpan.Zero;
-            lunchBreakTime = null;
+            LunchBreakTime = null;
 
-            previousRecord = null;
-            currentRecord = null;
+            previousActiveInterval = null;
+            currentActiveInterval = null;
+        }
+
+        private void UpdateBeginTime()
+        {
+            if (OverallBeginTime == null || currentActiveInterval.StartTime < OverallBeginTime)
+                OverallBeginTime = currentActiveInterval.StartTime;
+        }
+
+        private void UpdateEndTime()
+        {
+            if (OverallEndTime == null || currentActiveInterval.EndTime > OverallEndTime)
+                OverallEndTime = currentActiveInterval.EndTime;
+        }
+
+        private void UpdateActiveTime()
+        {
+            TotalActiveTime += currentActiveInterval.Interval;
+        }
+
+        private void UpdateBreakTime()
+        {
+            if (previousActiveInterval == null)
+                return;
+
+            TimeSpan breakStartTime = previousBreakInterval.StartTime;
+            TimeSpan breakEndTime = previousBreakInterval.EndTime;
+            TimeSpan breakTime = previousBreakInterval.Interval;
+
+            bool isLunchBreak = breakStartTime >= minLunchTimeStart &&
+                                breakEndTime <= maxLunchTimeEnd &&
+                                breakTime >= minLunchTimeInterval &&
+                                (LunchBreakTime == null || breakTime > LunchBreakTime);
+
+            if (isLunchBreak)
+            {
+                if (LunchBreakTime != null)
+                    TotalBreakTime += LunchBreakTime.Value;
+
+                LunchBreakTime = breakTime;
+            }
+            else
+            {
+                TotalBreakTime += breakTime;
+            }
+        }
+
+        private void UpdateAllIntervalList()
+        {
+            if (previousBreakInterval != null)
+                AllIntervals.Add(previousBreakInterval);
+
+            if (currentActiveInterval != null)
+                AllIntervals.Add(currentActiveInterval);
+        }
+
+        private TimeSpan CalculateTotalTime()
+        {
+            if (OverallBeginTime == null || OverallEndTime == null)
+                return TimeSpan.Zero;
+
+            return OverallEndTime.Value - OverallBeginTime.Value;
+        }
+
+        private TimeSpan? CalculateEstimatedEndTime()
+        {
+            if (OverallBeginTime == null || OverallEndTime == null)
+                return null;
+
+            return OverallBeginTime +
+                TimeSpan.FromHours(7) +
+                (TotalBreakTime < TimeSpan.FromHours(1) ? TimeSpan.FromHours(1) : TotalBreakTime) +
+                (LunchBreakTime ?? ((OverallEndTime.Value <= maxLunchTimeEnd - minLunchTimeInterval) ? TimeSpan.FromHours(1) : TimeSpan.Zero));
         }
     }
 }

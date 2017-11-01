@@ -69,23 +69,23 @@ namespace DustInTheWind.ActiveTime
             foreach (DayComment dayComment in DayComments)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
-                DayRecord dayRecord = new DayRecord(timeRecords);
+                RecordAnalyzer recordAnalyzer = new RecordAnalyzer(timeRecords);
 
                 sb.Append(dayComment.Date.ToDefaultFormat());
 
                 sb.Append(" - active: ");
 
-                TimeSpan totalActiveTime = dayRecord.GetTotalActiveTime();
+                TimeSpan totalActiveTime = recordAnalyzer.TotalActiveTime;
                 sb.Append(totalActiveTime.ToDefaultFormat());
 
                 sb.Append(" [ ");
 
-                TimeSpan? beginTime = dayRecord.GetBeginTime();
+                TimeSpan? beginTime = recordAnalyzer.OverallBeginTime;
                 sb.Append(beginTime.ToDefaultFormat());
 
                 sb.Append(" - ");
 
-                TimeSpan? endTime = dayRecord.GetEndTime();
+                TimeSpan? endTime = recordAnalyzer.OverallEndTime;
                 sb.Append(endTime.ToDefaultFormat());
 
                 sb.Append(" ] ");
@@ -109,9 +109,9 @@ namespace DustInTheWind.ActiveTime
             while (date <= LastDay)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
-                DayRecord dayRecord = new DayRecord(timeRecords);
+                RecordAnalyzer recordAnalyzer = new RecordAnalyzer(timeRecords);
 
-                TimeSpan totalDayActiveTime = dayRecord.GetTotalActiveTime();
+                TimeSpan totalDayActiveTime = recordAnalyzer.TotalActiveTime;
 
                 totalTime += totalDayActiveTime;
 

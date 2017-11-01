@@ -67,7 +67,7 @@ namespace DustInTheWind.ActiveTime.Exporters
         /// Writes a day record.
         /// </summary>
         /// <param name="sw"></param>
-        /// <param name="dayRecord">The record that should be exported.</param>
-        void ExportDayRecord(StreamWriter sw, DayRecord dayRecord);
+        /// <param name="recordAnalyzer">The records that should be exported.</param>
+        void ExportDayRecord(StreamWriter sw, RecordAnalyzer recordAnalyzer);
     }
 }
