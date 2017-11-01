@@ -133,4 +133,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <SolidColorBrush x:Key="ListBoxItemSelectedColor" Color="#3399ff"/>
     <SolidColorBrush x:Key="ListBoxItemSelectedInactiveColor" Color="#3f3f46"/>
 
+    <!-- Record Bar -->
+
+    <SolidColorBrush x:Key="RecordBarActive" Color="#007acc"/>
+    <SolidColorBrush x:Key="RecordBarInactive" Color="#CA5100"/>
+
 </ResourceDictionary>

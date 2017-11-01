@@ -80,7 +80,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     <TextBlock
                         Padding="10,2,0,2"
                         Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}"
-                        Foreground="OrangeRed"/>
+                        Foreground="{StaticResource RecordBarInactive}"/>
                 </DataTemplate>
             </ListBox.Resources>
 
@@ -133,14 +133,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
                         <Rectangle
                             Height="30"
-                            Fill="DodgerBlue"
+                            Fill="{StaticResource RecordBarActive}"
                             Width="{Binding IntervalInMinutes}"/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type recording:Break}">
                         <Rectangle
                             Height="30"
-                            Fill="OrangeRed"
+                            Fill="{StaticResource RecordBarInactive}"
                             Width="{Binding IntervalInMinutes}"/>
                     </DataTemplate>
                 </ItemsControl.Resources>
