@@ -15,8 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Windows.Input;
 using DustInTheWind.ActiveTime.Commands;
 using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 using DustInTheWind.ActiveTime.Services;
 using Microsoft.Practices.Prism.Regions;
 
@@ -95,21 +97,24 @@ namespace DustInTheWind.ActiveTime.ViewModels
         public TimeRecordsCommand TimeRecordsCommand { get; }
         public RefreshCommand RefreshCommand { get; }
         public DeleteCommand DeleteCommand { get; }
+        public CalendarCommand CalendarCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IRegionManager regionManager, ICurrentDay currentDay)
+        public FrontViewModel(IRegionManager regionManager, ICurrentDay currentDay, IShellNavigator shellNavigator)
         {
             if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
             if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
-            
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
+
             this.currentDay = currentDay;
 
             CommentsCommand = new CommentsCommand(regionManager);
             TimeRecordsCommand = new TimeRecordsCommand(regionManager);
             RefreshCommand = new RefreshCommand(currentDay);
             DeleteCommand = new DeleteCommand();
+            CalendarCommand = new CalendarCommand(shellNavigator);
 
             Date = currentDay.Date;
 

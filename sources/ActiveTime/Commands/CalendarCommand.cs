@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,14 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Common.UI
+using System;
+using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+
+namespace DustInTheWind.ActiveTime.Commands
 {
-    public static class ShellNames
+    internal class CalendarCommand : CommandBase
     {
-        public const string MainShell = "MainShell";
-        public const string MessageShell = "MessageShell";
-        public const string AboutShell = "AboutShell";
-        public const string OverviewShell = "OverviewShell";
-        public const string CalendarShell = "CalendarShell";
+        private readonly IShellNavigator shellNavigator;
+
+        public CalendarCommand(IShellNavigator shellNavigator)
+        {
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
+            this.shellNavigator = shellNavigator;
+        }
+
+        public override void Execute(object parameter)
+        {
+            shellNavigator.Navigate(ShellNames.CalendarShell);
+        }
     }
 }

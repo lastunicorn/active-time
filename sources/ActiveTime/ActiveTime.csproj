@@ -84,6 +84,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\AboutCommand.cs" />
+    <Compile Include="Commands\CalendarCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\OverviewCommand.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\CalendarViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\DayRecordsViewModel.cs" />
     <Compile Include="Services\DayReport.cs" />
@@ -126,6 +128,9 @@
     <Compile Include="ViewModels\StatusInfoViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalendarWindow.xaml.cs">
+      <DependentUpon>CalendarWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CommentsView.xaml.cs">
       <DependentUpon>CommentsView.xaml</DependentUpon>
@@ -269,6 +274,10 @@
     <Page Include="Views\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CalendarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DayRecordsView.xaml">
       <SubType>Designer</SubType>
