@@ -53,30 +53,34 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <Grid Margin="5">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Calendar
+        <StackPanel
             Grid.Row="0"
-            Grid.Column="0"
-            Grid.RowSpan="2"
-            Margin="3"
-            SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            Orientation="Horizontal">
 
-        </Calendar>
+            <Label
+                Content="Date:"
+                Margin="3" />
+
+            <DatePicker
+                Margin="3"
+                HorizontalAlignment="Left"
+                MinWidth="150"
+                SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                SelectedDateFormat="Long"
+                Padding="0"/>
+
+        </StackPanel>
 
         <Border
-            Grid.Row="0"
-            Grid.Column="1"
+            Grid.Row="1"
             BorderThickness="1"
             Padding="0 6 0 6"
             Margin="3 1">
@@ -115,8 +119,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         </Border>
 
         <Border
-            Grid.Row="1"
-            Grid.Column="1"
+            Grid.Row="2"
             BorderThickness="1"
             Padding="0 6 0 6"
             Margin="3 1">
@@ -185,15 +188,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         </Border>
 
         <ContentControl
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.Row="3"
             regions:RegionManager.RegionName="{x:Static ui:RegionNames.RecordsRegion}"/>
 
         <StackPanel
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.Row="4"
             Margin="3 5"
             Orientation="Horizontal">
 
