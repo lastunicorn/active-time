@@ -15,28 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.DataMigration.Flows;
 
-namespace DustInTheWind.ActiveTime.DataMigration
+namespace DustInTheWind.ActiveTime.DataMigration.Utils
 {
-    internal static class Program
+    internal static partial class CustomConsole
     {
-        private static void Main(string[] args)
-        {
-            try
-            {
-                //IFlow flow = new DisplayFlow();
-                IFlow flow = new MigrationFlow();
-                flow.Run();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine();
-                Console.WriteLine(ex);
-                Console.WriteLine();
-            }
+        private const ConsoleColor SuccessColor = ConsoleColor.Green;
+        private const ConsoleColor WarningColor = ConsoleColor.Yellow;
+        private const ConsoleColor ErrorColor = ConsoleColor.Red;
+        private const ConsoleColor EmphasiesColor = ConsoleColor.White;
 
+        public static void Pause()
+        {
+            Console.WriteLine();
+            Console.Write("Press any key to continue...");
             Console.ReadKey(true);
+            Console.WriteLine();
         }
     }
 }

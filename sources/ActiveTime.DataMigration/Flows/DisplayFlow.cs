@@ -21,7 +21,7 @@ using LiteDB;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
 using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.Module.UnitOfWork;
 
-namespace DustInTheWind.ActiveTime.DataMigration
+namespace DustInTheWind.ActiveTime.DataMigration.Flows
 {
     internal class DisplayFlow : IFlow
     {
@@ -39,8 +39,11 @@ namespace DustInTheWind.ActiveTime.DataMigration
             Console.WriteLine("=========================================================");
             Console.WriteLine();
 
-            using (IUnitOfWork unitOfWork = new SQLiteUnitOfWork())
+            using (SQLiteUnitOfWork unitOfWork = new SQLiteUnitOfWork())
+            {
                 DisplayAllData(unitOfWork);
+                unitOfWork.DisplayAllTables();
+            }
         }
 
         private static void DisplayLiteDBDatabase()
@@ -60,6 +63,7 @@ namespace DustInTheWind.ActiveTime.DataMigration
 
                 Console.WriteLine();
             }
+
             using (IUnitOfWork unitOfWork = new LiteDBUnitOfWork())
                 DisplayAllData(unitOfWork);
         }

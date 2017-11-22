@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories;
@@ -57,7 +58,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
                 return dayCommentRepository;
             }
         }
-        
+
         private void OpenDatabaseAndTransaction()
         {
             if (disposed)
@@ -71,6 +72,44 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
 
             if (transaction == null)
                 transaction = connection.BeginTransaction();
+        }
+
+        public void DisplayAllTables()
+        {
+            DataTable dataTable = connection.GetSchema("Tables");
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Console.WriteLine();
+                Console.WriteLine("------------------------------------------");
+
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    DataColumn column = dataTable.Columns[i];
+                    Console.WriteLine(column.ColumnName + ": " + row[i]);
+                }
+            }
+
+            DumpTable("dbinfo");
+        }
+
+        private void DumpTable(string dbName)
+        {
+            using (DbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = "select * from " + dbName;
+                DbDataReader dataReader = command.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Console.WriteLine();
+
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        Console.WriteLine("-> " + dataReader[i]);
+                    }
+                }
+            }
         }
 
         public void Commit()

@@ -18,72 +18,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Persistence;
-using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
-using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.Module.UnitOfWork;
 
-namespace DustInTheWind.ActiveTime.DataMigration
+namespace DustInTheWind.ActiveTime.DataMigration.Flows
 {
-    internal class MigrationFlow : IFlow
+    internal class TimeMigration
     {
-        private Dictionary<DateTime, bool> destinationExitentDays;
-        private IUnitOfWork sourceUnitOfWork;
-        private IUnitOfWork destinationUnitOfWork;
-        private int migratedRecordsCount;
-        private int ignoredRecordsCount;
-        private Dictionary<DateTime, string> warnings;
+        private readonly IUnitOfWork sourceUnitOfWork;
+        private readonly IUnitOfWork destinationUnitOfWork;
 
-        public void Run()
+        private Dictionary<DateTime, bool> destinationExitentDays;
+
+        public int MigratedRecordsCount { get; private set; }
+        public int IgnoredRecordsCount { get; private set; }
+        public Dictionary<DateTime, string> Warnings { get; } = new Dictionary<DateTime, string>();
+
+        public TimeMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
+        {
+            if (sourceUnitOfWork == null) throw new ArgumentNullException(nameof(sourceUnitOfWork));
+            if (destinationUnitOfWork == null) throw new ArgumentNullException(nameof(destinationUnitOfWork));
+
+            this.sourceUnitOfWork = sourceUnitOfWork;
+            this.destinationUnitOfWork = destinationUnitOfWork;
+        }
+
+        public void Migrate()
         {
             PrepareMigration();
-
-            try
-            {
-                MigrateAllRecords();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine();
-                DisplayError(ex);
-            }
-            finally
-            {
-                ConcludeMigration();
-            }
+            MigrateRecords();
         }
 
         private void PrepareMigration()
         {
-            Console.WriteLine("Migrating TimeRecords");
+            Console.WriteLine("Migrating Time Records");
 
             destinationExitentDays = new Dictionary<DateTime, bool>();
-            warnings = new Dictionary<DateTime, string>();
-            migratedRecordsCount = 0;
-            ignoredRecordsCount = 0;
-
-            sourceUnitOfWork = new SQLiteUnitOfWork();
-            destinationUnitOfWork = new LiteDBUnitOfWork();
+            Warnings.Clear();
+            MigratedRecordsCount = 0;
+            IgnoredRecordsCount = 0;
         }
 
-        private void ConcludeMigration()
-        {
-            Console.WriteLine();
-            DisplaySuccess(string.Format("Successfully migrated records: {0}", migratedRecordsCount));
-            DisplaySuccess(string.Format("Already present records: {0}", ignoredRecordsCount));
-
-            if (warnings.Count > 0)
-            {
-                Console.WriteLine();
-                DisplayWarning("Warnings:");
-
-                foreach (string warningText in warnings.Values)
-                    DisplayWarning(string.Format(" {0}", warningText));
-            }
-
-            sourceUnitOfWork?.Dispose();
-            destinationUnitOfWork?.Dispose();
-        }
-
-        private void MigrateAllRecords()
+        private void MigrateRecords()
         {
             IEnumerable<TimeRecord> timeRecords = sourceUnitOfWork.TimeRecordRepository.GetAll();
 
@@ -91,8 +65,6 @@ namespace DustInTheWind.ActiveTime.DataMigration
                 MigrateRecord(timeRecord);
 
             Console.WriteLine();
-
-            destinationUnitOfWork.Commit();
         }
 
         private void MigrateRecord(TimeRecord timeRecord)
@@ -114,21 +86,21 @@ namespace DustInTheWind.ActiveTime.DataMigration
 
                 if (existsIdenticalRecord)
                 {
-                    ignoredRecordsCount++;
+                    IgnoredRecordsCount++;
                 }
                 else
                 {
-                    if (!warnings.ContainsKey(date))
+                    if (!Warnings.ContainsKey(date))
                     {
                         string message = string.Format("Date {0:d} conflict: Some records already exists in the destination database. No record will be imported.", date);
-                        warnings.Add(date, message);
+                        Warnings.Add(date, message);
                     }
                 }
             }
             else
             {
                 InsertRecordInDestination(timeRecord);
-                migratedRecordsCount++;
+                MigratedRecordsCount++;
             }
         }
 
@@ -155,30 +127,6 @@ namespace DustInTheWind.ActiveTime.DataMigration
             destinationExitentDays.Add(date, existsRecords);
 
             return existsRecords;
-        }
-
-        private void DisplayError(Exception ex)
-        {
-            ConsoleColor old = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(ex);
-            Console.ForegroundColor = old;
-        }
-
-        private void DisplayWarning(string text)
-        {
-            ConsoleColor old = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(text);
-            Console.ForegroundColor = old;
-        }
-
-        private void DisplaySuccess(string text)
-        {
-            ConsoleColor old = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(text);
-            Console.ForegroundColor = old;
         }
     }
 }
