@@ -35,28 +35,21 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public void Add(DayComment comment)
         {
-            try
+            LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
+
+            bool exists = dayCommentCollection
+                .Find(x =>
+                    x.Date == comment.Date &&
+                    x.Comment == comment.Comment)
+                .Any();
+
+            if (exists)
             {
-                LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(CollectionName);
-
-                bool exists = dayCommentCollection
-                    .Find(x =>
-                        x.Date == comment.Date &&
-                        x.Comment == comment.Comment)
-                    .Any();
-
-                if (exists)
-                {
-                    string errorMessage = string.Format("Error adding the comment record '{0}' into the database.", comment);
-                    throw new PersistenceException(errorMessage);
-                }
-
-                dayCommentCollection.Insert(comment);
+                string errorMessage = string.Format("Error adding the comment record '{0}' into the database.", comment);
+                throw new PersistenceException(errorMessage);
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
+
+            dayCommentCollection.Insert(comment);
         }
 
         public void Update(DayComment comment)
