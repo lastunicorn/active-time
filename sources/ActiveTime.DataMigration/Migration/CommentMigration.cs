@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Persistence;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Flows
+namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {
     internal class CommentMigration
     {
@@ -46,8 +46,6 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
         private void PrepareMigration()
         {
-            Console.WriteLine("Migrating Comment Records");
-
             Warnings.Clear();
             MigratedRecordsCount = 0;
             IgnoredRecordsCount = 0;

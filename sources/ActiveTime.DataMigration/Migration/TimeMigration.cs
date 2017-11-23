@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Persistence;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Flows
+namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {
     internal class TimeMigration
     {
@@ -49,8 +49,6 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
         private void PrepareMigration()
         {
-            Console.WriteLine("Migrating Time Records");
-
             destinationExitentDays = new Dictionary<DateTime, bool>();
             Warnings.Clear();
             MigratedRecordsCount = 0;

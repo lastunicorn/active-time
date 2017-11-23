@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Utils
 {
@@ -31,6 +32,23 @@ namespace DustInTheWind.ActiveTime.DataMigration.Utils
             Console.Write("Press any key to continue...");
             Console.ReadKey(true);
             Console.WriteLine();
+        }
+
+        public static int Ask(Dictionary<int, string> items, string question = "Your choice: ")
+        {
+            foreach (KeyValuePair<int, string> item in items)
+                Console.WriteLine($"{item.Key} - {item.Value}");
+
+            while (true)
+            {
+                Console.WriteLine();
+                Console.Write(question);
+                string inputValueRaw = Console.ReadLine();
+
+                int inputValue;
+                if (int.TryParse(inputValueRaw, out inputValue))
+                    return inputValue;
+            }
         }
     }
 }

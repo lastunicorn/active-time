@@ -20,6 +20,7 @@ using DustInTheWind.ActiveTime.Persistence;
 using LiteDB;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
 using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.Module.UnitOfWork;
+using DustInTheWind.ActiveTime.DataMigration.Utils;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Flows
 {
@@ -28,16 +29,16 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
         public void Run()
         {
             DisplayLiteDBDatabase();
-            Console.WriteLine();
+            CustomConsole.WriteLine();
             DisplaySQLiteDatabase();
         }
 
         private static void DisplaySQLiteDatabase()
         {
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("Database: " + SQLiteUnitOfWork.ConnectionString);
-            Console.WriteLine("=========================================================");
-            Console.WriteLine();
+            CustomConsole.WriteLineEmphasies("=========================================================");
+            CustomConsole.WriteLineEmphasies("Database: " + SQLiteUnitOfWork.ConnectionString);
+            CustomConsole.WriteLineEmphasies("=========================================================");
+            CustomConsole.WriteLine();
 
             using (SQLiteUnitOfWork unitOfWork = new SQLiteUnitOfWork())
             {
@@ -48,10 +49,10 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
         private static void DisplayLiteDBDatabase()
         {
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("Database: " + LiteDBUnitOfWork.ConnectionString);
-            Console.WriteLine("=========================================================");
-            Console.WriteLine();
+            CustomConsole.WriteLineEmphasies("=========================================================");
+            CustomConsole.WriteLineEmphasies("Database: " + LiteDBUnitOfWork.ConnectionString);
+            CustomConsole.WriteLineEmphasies("=========================================================");
+            CustomConsole.WriteLine();
 
             using (LiteDatabase database = new LiteDatabase(LiteDBUnitOfWork.ConnectionString))
             {
@@ -59,9 +60,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
                 IEnumerable<string> collectionNames = database.GetCollectionNames();
 
                 foreach (string collectionName in collectionNames)
-                    Console.WriteLine("- " + collectionName);
+                    CustomConsole.WriteLine("- " + collectionName);
 
-                Console.WriteLine();
+                CustomConsole.WriteLine();
             }
 
             using (IUnitOfWork unitOfWork = new LiteDBUnitOfWork())
@@ -70,10 +71,10 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
         private static void DisplayAllData(IUnitOfWork unitOfWork)
         {
-            Console.WriteLine("---------------------------------------------------------");
-            Console.WriteLine("TimeRecord");
-            Console.WriteLine("---------------------------------------------------------");
-            Console.WriteLine();
+            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+            CustomConsole.WriteLineEmphasies("TimeRecord");
+            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+            CustomConsole.WriteLine();
 
             IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetAll();
 
@@ -82,17 +83,17 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
             Console.WriteLine();
 
-            Console.WriteLine("---------------------------------------------------------");
-            Console.WriteLine("DayComment");
-            Console.WriteLine("---------------------------------------------------------");
-            Console.WriteLine();
+            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+            CustomConsole.WriteLineEmphasies("DayComment");
+            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+            CustomConsole.WriteLine();
 
             IList<DayComment> dayComments = unitOfWork.DayCommentRepository.GetAll();
 
             foreach (DayComment dayComment in dayComments)
-                Console.WriteLine(dayComment);
+                CustomConsole.WriteLine(dayComment);
 
-            Console.WriteLine();
+            CustomConsole.WriteLine();
         }
     }
 }

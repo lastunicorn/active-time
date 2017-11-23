@@ -15,7 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using DustInTheWind.ActiveTime.DataMigration.Flows;
+using DustInTheWind.ActiveTime.DataMigration.Utils;
 
 namespace DustInTheWind.ActiveTime.DataMigration
 {
@@ -25,18 +27,46 @@ namespace DustInTheWind.ActiveTime.DataMigration
         {
             try
             {
-                //IFlow flow = new DisplayFlow();
-                IFlow flow = new MigrationFlow();
-                flow.Run();
+                CustomConsole.WriteLine("ActiveTime Data Migration Tool");
+                CustomConsole.WriteLine("===============================================================================");
+
+                Dictionary<int, string> items = CreateMenuItems();
+                int selectedItem = CustomConsole.Ask(items);
+                IFlow flow = ChooseFlow(selectedItem);
+
+                flow?.Run();
             }
             catch (Exception ex)
             {
-                Console.WriteLine();
-                Console.WriteLine(ex);
-                Console.WriteLine();
+                CustomConsole.WriteLineError(ex);
             }
 
-            Console.ReadKey(true);
+            CustomConsole.Pause();
+        }
+
+        private static Dictionary<int, string> CreateMenuItems()
+        {
+            return new Dictionary<int, string>
+            {
+                {1, "Display Data"},
+                {2, "Migrate Data"},
+                {0, "Exit"}
+            };
+        }
+
+        private static IFlow ChooseFlow(int selectedItem)
+        {
+            switch (selectedItem)
+            {
+                case 1:
+                    return new DisplayFlow();
+
+                case 2:
+                    return new MigrationFlow();
+
+                default:
+                    return null;
+            }
         }
     }
 }

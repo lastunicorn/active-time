@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.DataMigration.Migration;
 using DustInTheWind.ActiveTime.DataMigration.Utils;
 using DustInTheWind.ActiveTime.Persistence;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
@@ -39,7 +40,10 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
             try
             {
+                Console.WriteLine("Migrating Time Records");
                 timeMigration.Migrate();
+
+                Console.WriteLine("Migrating Comment Records");
                 commentMigration.Migrate();
 
                 destinationUnitOfWork.Commit();

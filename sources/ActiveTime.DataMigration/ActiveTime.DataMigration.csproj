@@ -52,8 +52,8 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="Flows\DisplayFlow.cs" />
-    <Compile Include="Flows\CommentMigration.cs" />
-    <Compile Include="Flows\TimeMigration.cs" />
+    <Compile Include="Migration\CommentMigration.cs" />
+    <Compile Include="Migration\TimeMigration.cs" />
     <Compile Include="IFlow.cs" />
     <Compile Include="Flows\MigrationFlow.cs" />
     <Compile Include="Program.cs" />
