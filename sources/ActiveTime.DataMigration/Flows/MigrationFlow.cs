@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.DataMigration.Migration;
 using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ConsoleTools;
+using DustInTheWind.WindTools;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
 using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.Module.UnitOfWork;
 
@@ -51,7 +51,7 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
             catch (Exception ex)
             {
                 Console.WriteLine();
-                WindConsole.WriteLineError(ex);
+                CustomConsole.WriteLineError(ex);
             }
             finally
             {
@@ -71,29 +71,29 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
         private void ConcludeMigration()
         {
             Console.WriteLine();
-            WindConsole.WriteLineSuccess(string.Format("Successfully migrated time records: {0}", timeMigration.MigratedRecordsCount));
-            WindConsole.WriteLineSuccess(string.Format("Already present time records: {0}", timeMigration.IgnoredRecordsCount));
+            CustomConsole.WriteLineSuccess(string.Format("Successfully migrated time records: {0}", timeMigration.MigratedRecordsCount));
+            CustomConsole.WriteLineSuccess(string.Format("Already present time records: {0}", timeMigration.IgnoredRecordsCount));
 
             Console.WriteLine();
-            WindConsole.WriteLineSuccess(string.Format("Successfully migrated comment records: {0}", commentMigration.MigratedRecordsCount));
-            WindConsole.WriteLineSuccess(string.Format("Already present comment records: {0}", commentMigration.IgnoredRecordsCount));
+            CustomConsole.WriteLineSuccess(string.Format("Successfully migrated comment records: {0}", commentMigration.MigratedRecordsCount));
+            CustomConsole.WriteLineSuccess(string.Format("Already present comment records: {0}", commentMigration.IgnoredRecordsCount));
 
             if (timeMigration.Warnings.Count > 0)
             {
                 Console.WriteLine();
-                WindConsole.WriteLineWarning("Warnings (time records):");
+                CustomConsole.WriteLineWarning("Warnings (time records):");
 
                 foreach (string warningText in timeMigration.Warnings.Values)
-                    WindConsole.WriteLineWarning(string.Format(" {0}", warningText));
+                    CustomConsole.WriteLineWarning(string.Format(" {0}", warningText));
             }
 
             if (commentMigration.Warnings.Count > 0)
             {
                 Console.WriteLine();
-                WindConsole.WriteLineWarning("Warnings (comment records):");
+                CustomConsole.WriteLineWarning("Warnings (comment records):");
 
                 foreach (string warningText in commentMigration.Warnings.Values)
-                    WindConsole.WriteLineWarning(string.Format(" {0}", warningText));
+                    CustomConsole.WriteLineWarning(string.Format(" {0}", warningText));
             }
 
             sourceUnitOfWork?.Dispose();

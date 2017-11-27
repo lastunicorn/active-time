@@ -36,8 +36,9 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DustInTheWind.ConsoleTools">
-      <HintPath>..\ExternalLibraries\WindConsole\DustInTheWind.ConsoleTools.dll</HintPath>
+    <Reference Include="DustInTheWind.WindTools, Version=1.0.0.34313, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindTools.1.0.0.34313\lib\net461\DustInTheWind.WindTools.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="LiteDB, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.3.1.1\lib\net35\LiteDB.dll</HintPath>
