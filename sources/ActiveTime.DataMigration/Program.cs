@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.DataMigration.Flows;
-using DustInTheWind.ActiveTime.DataMigration.Utils;
+using DustInTheWind.ConsoleTools;
 
 namespace DustInTheWind.ActiveTime.DataMigration
 {
@@ -27,21 +27,21 @@ namespace DustInTheWind.ActiveTime.DataMigration
         {
             try
             {
-                CustomConsole.WriteLine("ActiveTime Data Migration Tool");
-                CustomConsole.WriteLine("===============================================================================");
+                WindConsole.WriteLine("ActiveTime Data Migration Tool");
+                WindConsole.WriteLine("===============================================================================");
 
                 Dictionary<int, string> items = CreateMenuItems();
-                int selectedItem = CustomConsole.Ask(items);
+                int selectedItem = WindConsole.Ask(items);
                 IFlow flow = ChooseFlow(selectedItem);
 
                 flow?.Run();
             }
             catch (Exception ex)
             {
-                CustomConsole.WriteLineError(ex);
+                WindConsole.WriteLineError(ex);
             }
 
-            CustomConsole.Pause();
+            WindConsole.Pause();
         }
 
         private static Dictionary<int, string> CreateMenuItems()
