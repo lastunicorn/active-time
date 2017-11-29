@@ -66,6 +66,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Orientation="Horizontal"
             HorizontalAlignment="Center">
 
+            <Button
+                Content="&lt;&lt;"
+                Command="{Binding DecrementDayCommand}"
+                Margin="0,5,20,5"/>
+            
             <DatePicker
                 Margin="3"
                 HorizontalAlignment="Left"
@@ -79,6 +84,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Content="..."
                 Command="{Binding CalendarCommand}"
                 Margin="0,5"/>
+
+            <Button
+                Content="&gt;&gt;"
+                Command="{Binding IncrementDayCommand}"
+                Margin="20,5,0,5"/>
 
         </StackPanel>
 

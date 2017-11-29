@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Commands;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
@@ -98,6 +97,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
         public RefreshCommand RefreshCommand { get; }
         public DeleteCommand DeleteCommand { get; }
         public CalendarCommand CalendarCommand { get; }
+        public DecrementDayCommand DecrementDayCommand { get; }
+        public IncrementDayCommand IncrementDayCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
@@ -115,6 +116,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
             RefreshCommand = new RefreshCommand(currentDay);
             DeleteCommand = new DeleteCommand();
             CalendarCommand = new CalendarCommand(shellNavigator);
+            DecrementDayCommand = new DecrementDayCommand(currentDay);
+            IncrementDayCommand = new IncrementDayCommand(currentDay);
 
             Date = currentDay.Date;
 

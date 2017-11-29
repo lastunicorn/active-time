@@ -90,7 +90,9 @@
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\CalendarCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\DecrementDayCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\IncrementDayCommand.cs" />
     <Compile Include="Commands\OverviewCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\ResetCommentCommand.cs" />
