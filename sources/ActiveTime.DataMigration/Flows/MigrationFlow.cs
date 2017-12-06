@@ -34,23 +34,38 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
         private TimeMigration timeMigration;
         private CommentMigration commentMigration;
 
+        private DateTime previousTimeRecordDate;
+        private DateTime previousCommentDate;
+
+        public bool Simulate { get; set; }
+
         public void Run()
         {
             PrepareMigration();
 
             try
             {
-                Console.WriteLine("Migrating Time Records");
-                timeMigration.Migrate();
+                CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+                CustomConsole.WriteLineEmphasies("Migrating Time Records");
+                CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+                CustomConsole.WriteLine();
 
-                Console.WriteLine("Migrating Comment Records");
+                timeMigration.Migrate();
+                CustomConsole.WriteLine();
+
+                CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+                CustomConsole.WriteLineEmphasies("Migrating Comment Records");
+                CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+                CustomConsole.WriteLine();
+
                 commentMigration.Migrate();
+                CustomConsole.WriteLine();
 
                 destinationUnitOfWork.Commit();
             }
             catch (Exception ex)
             {
-                Console.WriteLine();
+                CustomConsole.WriteLine();
                 CustomConsole.WriteLineError(ex);
             }
             finally
@@ -65,22 +80,65 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
             destinationUnitOfWork = new LiteDBUnitOfWork();
 
             timeMigration = new TimeMigration(sourceUnitOfWork, destinationUnitOfWork);
+            timeMigration.Simulate = Simulate;
+            timeMigration.TimeRecordMigrated += HandleTimeRecordMigrated;
+            previousTimeRecordDate = DateTime.MinValue;
+
             commentMigration = new CommentMigration(sourceUnitOfWork, destinationUnitOfWork);
+            commentMigration.Simulate = Simulate;
+            commentMigration.CommentMigrated += HandleCommentMigrated;
+            previousCommentDate = DateTime.MinValue;
+        }
+
+        private void HandleTimeRecordMigrated(object sender, TimeRecordMigratedEventArgs e)
+        {
+            TimeRecord timeRecord = e.TimeRecord;
+
+            DateTime date = timeRecord.Date;
+
+            bool isSameMonth = date.Year == previousTimeRecordDate.Year && date.Month == previousTimeRecordDate.Month;
+            if (!isSameMonth)
+            {
+                Console.WriteLine();
+                Console.Write(date.Year + " " + date.Month + " -");
+            }
+
+            Console.Write(" " + date.Day);
+
+            previousTimeRecordDate = date;
+        }
+
+        private void HandleCommentMigrated(object sender, CommentMigratedEventArgs e)
+        {
+            DayComment dayComment = e.DayComment;
+
+            DateTime date = dayComment.Date;
+
+            bool isSameMonth = date.Year == previousCommentDate.Year && date.Month == previousCommentDate.Month;
+            if (!isSameMonth)
+            {
+                Console.WriteLine();
+                Console.Write(date.Year + " " + date.Month + " -");
+            }
+
+            Console.Write(" " + date.Day);
+
+            previousCommentDate = date;
         }
 
         private void ConcludeMigration()
         {
-            Console.WriteLine();
+            CustomConsole.WriteLine();
             CustomConsole.WriteLineSuccess(string.Format("Successfully migrated time records: {0}", timeMigration.MigratedRecordsCount));
             CustomConsole.WriteLineSuccess(string.Format("Already present time records: {0}", timeMigration.IgnoredRecordsCount));
 
-            Console.WriteLine();
+            CustomConsole.WriteLine();
             CustomConsole.WriteLineSuccess(string.Format("Successfully migrated comment records: {0}", commentMigration.MigratedRecordsCount));
             CustomConsole.WriteLineSuccess(string.Format("Already present comment records: {0}", commentMigration.IgnoredRecordsCount));
 
             if (timeMigration.Warnings.Count > 0)
             {
-                Console.WriteLine();
+                CustomConsole.WriteLine();
                 CustomConsole.WriteLineWarning("Warnings (time records):");
 
                 foreach (string warningText in timeMigration.Warnings.Values)
@@ -89,7 +147,7 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
             if (commentMigration.Warnings.Count > 0)
             {
-                Console.WriteLine();
+                CustomConsole.WriteLine();
                 CustomConsole.WriteLineWarning("Warnings (comment records):");
 
                 foreach (string warningText in commentMigration.Warnings.Values)

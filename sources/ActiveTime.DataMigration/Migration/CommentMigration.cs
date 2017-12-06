@@ -25,9 +25,12 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
         private readonly IUnitOfWork sourceUnitOfWork;
         private readonly IUnitOfWork destinationUnitOfWork;
 
+        public bool Simulate { get; set; }
         public int MigratedRecordsCount { get; private set; }
         public int IgnoredRecordsCount { get; private set; }
         public Dictionary<DateTime, string> Warnings { get; } = new Dictionary<DateTime, string>();
+
+        public event EventHandler<CommentMigratedEventArgs> CommentMigrated;
 
         public CommentMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
         {
@@ -56,9 +59,10 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             IEnumerable<DayComment> dayComments = sourceUnitOfWork.DayCommentRepository.GetAll();
 
             foreach (DayComment dayComment in dayComments)
+            {
                 MigrateComment(dayComment);
-
-            Console.WriteLine();
+                OnCommentMigrated(new CommentMigratedEventArgs(dayComment));
+            }
         }
 
         private void MigrateComment(DayComment dayComment)
@@ -88,7 +92,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             }
             else
             {
-                InsertRecordInDestination(dayComment);
+                if (!Simulate)
+                    InsertRecordInDestination(dayComment);
+
                 MigratedRecordsCount++;
             }
         }
@@ -102,7 +108,11 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             };
 
             destinationUnitOfWork.DayCommentRepository.Add(dayCommentCopy);
-            Console.Write(".");
+        }
+
+        protected virtual void OnCommentMigrated(CommentMigratedEventArgs e)
+        {
+            CommentMigrated?.Invoke(this, e);
         }
     }
 }

@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Persistence;
+using DustInTheWind.WindTools;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {
@@ -28,9 +29,12 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
         private Dictionary<DateTime, bool> destinationExitentDays;
 
+        public bool Simulate { get; set; }
         public int MigratedRecordsCount { get; private set; }
         public int IgnoredRecordsCount { get; private set; }
         public Dictionary<DateTime, string> Warnings { get; } = new Dictionary<DateTime, string>();
+
+        public event EventHandler<TimeRecordMigratedEventArgs> TimeRecordMigrated;
 
         public TimeMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
         {
@@ -60,9 +64,10 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             IEnumerable<TimeRecord> timeRecords = sourceUnitOfWork.TimeRecordRepository.GetAll();
 
             foreach (TimeRecord timeRecord in timeRecords)
+            {
                 MigrateRecord(timeRecord);
-
-            Console.WriteLine();
+                OnTimeRecordMigrated(new TimeRecordMigratedEventArgs(timeRecord));
+            }
         }
 
         private void MigrateRecord(TimeRecord timeRecord)
@@ -97,7 +102,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             }
             else
             {
-                InsertRecordInDestination(timeRecord);
+                if (!Simulate)
+                    InsertRecordInDestination(timeRecord);
+
                 MigratedRecordsCount++;
             }
         }
@@ -113,7 +120,6 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             };
 
             destinationUnitOfWork.TimeRecordRepository.Add(timeRecordCopy);
-            Console.Write(".");
         }
 
         private bool CheckIfDateExistsInDestination(DateTime date, IEnumerable<TimeRecord> destinationRecords)
@@ -125,6 +131,11 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             destinationExitentDays.Add(date, existsRecords);
 
             return existsRecords;
+        }
+
+        protected virtual void OnTimeRecordMigrated(TimeRecordMigratedEventArgs e)
+        {
+            TimeRecordMigrated?.Invoke(this, e);
         }
     }
 }

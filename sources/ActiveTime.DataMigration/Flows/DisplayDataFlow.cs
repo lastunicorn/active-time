@@ -18,19 +18,43 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.WindTools;
-using LiteDB;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
 using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.Module.UnitOfWork;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Flows
 {
-    internal class DisplayFlow : IFlow
+    internal class DisplayDataFlow : IFlow
     {
         public void Run()
         {
             DisplayLiteDBDatabase();
-            CustomConsole.WriteLine();
+            Console.WriteLine();
             DisplaySQLiteDatabase();
+        }
+
+        private static void DisplayLiteDBDatabase()
+        {
+            CustomConsole.WriteLineEmphasies("=========================================================");
+            CustomConsole.WriteLineEmphasies("Database: " + LiteDBUnitOfWork.ConnectionString);
+            CustomConsole.WriteLineEmphasies("=========================================================");
+            CustomConsole.WriteLine();
+
+            //using (LiteDatabase database = new LiteDatabase(LiteDBUnitOfWork.ConnectionString))
+            //{
+            //    Console.WriteLine("Collections:");
+            //    IEnumerable<string> collectionNames = database.GetCollectionNames();
+
+            //    foreach (string collectionName in collectionNames)
+            //        CustomConsole.WriteLine("- " + collectionName);
+
+            //    CustomConsole.WriteLine();
+            //}
+
+            using (LiteDBUnitOfWork unitOfWork = new LiteDBUnitOfWork())
+            {
+                DisplayTimeRecords(unitOfWork);
+                DisplayDayComments(unitOfWork);
+            }
         }
 
         private static void DisplaySQLiteDatabase()
@@ -42,34 +66,12 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
             using (SQLiteUnitOfWork unitOfWork = new SQLiteUnitOfWork())
             {
-                DisplayAllData(unitOfWork);
-                unitOfWork.DisplayAllTables();
+                DisplayTimeRecords(unitOfWork);
+                DisplayDayComments(unitOfWork);
             }
         }
 
-        private static void DisplayLiteDBDatabase()
-        {
-            CustomConsole.WriteLineEmphasies("=========================================================");
-            CustomConsole.WriteLineEmphasies("Database: " + LiteDBUnitOfWork.ConnectionString);
-            CustomConsole.WriteLineEmphasies("=========================================================");
-            CustomConsole.WriteLine();
-
-            using (LiteDatabase database = new LiteDatabase(LiteDBUnitOfWork.ConnectionString))
-            {
-                Console.WriteLine("Collections:");
-                IEnumerable<string> collectionNames = database.GetCollectionNames();
-
-                foreach (string collectionName in collectionNames)
-                    CustomConsole.WriteLine("- " + collectionName);
-
-                CustomConsole.WriteLine();
-            }
-
-            using (IUnitOfWork unitOfWork = new LiteDBUnitOfWork())
-                DisplayAllData(unitOfWork);
-        }
-
-        private static void DisplayAllData(IUnitOfWork unitOfWork)
+        private static void DisplayTimeRecords(IUnitOfWork unitOfWork)
         {
             CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
             CustomConsole.WriteLineEmphasies("TimeRecord");
@@ -82,7 +84,10 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
                 Console.WriteLine(timeRecord);
 
             Console.WriteLine();
+        }
 
+        private static void DisplayDayComments(IUnitOfWork unitOfWork)
+        {
             CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
             CustomConsole.WriteLineEmphasies("DayComment");
             CustomConsole.WriteLineEmphasies("---------------------------------------------------------");

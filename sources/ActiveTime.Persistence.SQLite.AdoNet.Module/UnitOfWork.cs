@@ -76,6 +76,8 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
 
         public void DisplayAllTables()
         {
+            OpenDatabaseAndTransaction();
+
             DataTable dataTable = connection.GetSchema("Tables");
 
             foreach (DataRow row in dataTable.Rows)

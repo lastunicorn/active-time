@@ -172,7 +172,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
         {
             using (DbCommand command = connection.CreateCommand())
             {
-                command.CommandText = "select * from records";
+                command.CommandText = "select * from records order by date";
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {

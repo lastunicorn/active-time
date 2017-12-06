@@ -55,8 +55,12 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="Flows\DisplayFlow.cs" />
+    <Compile Include="Flows\DisplayDatabaseStructureFlow.cs" />
+    <Compile Include="Flows\DisplayDatesFlow.cs" />
+    <Compile Include="Flows\DisplayDataFlow.cs" />
+    <Compile Include="Migration\CommentMigratedEventArgs.cs" />
     <Compile Include="Migration\CommentMigration.cs" />
+    <Compile Include="Migration\TimeRecordMigratedEventArgs.cs" />
     <Compile Include="Migration\TimeMigration.cs" />
     <Compile Include="IFlow.cs" />
     <Compile Include="Flows\MigrationFlow.cs" />

@@ -30,27 +30,36 @@ namespace DustInTheWind.ActiveTime.DataMigration
                 CustomConsole.WriteLine("ActiveTime Data Migration Tool");
                 CustomConsole.WriteLine("===============================================================================");
 
-                Dictionary<int, string> items = CreateMenuItems();
-                int selectedItem = CustomConsole.Ask(items);
-                IFlow flow = ChooseFlow(selectedItem);
+                while (true)
+                {
+                    CustomConsole.WriteLine();
 
-                flow?.Run();
+                    Dictionary<int, string> items = CreateMenuItems();
+                    int selectedItem = CustomConsole.Ask(items);
+                    IFlow flow = ChooseFlow(selectedItem);
+
+                    if (flow == null)
+                        break;
+
+                    RunFlow(flow);
+                }
             }
             catch (Exception ex)
             {
                 CustomConsole.WriteLineError(ex);
             }
-
-            CustomConsole.Pause();
         }
 
         private static Dictionary<int, string> CreateMenuItems()
         {
             return new Dictionary<int, string>
             {
-                {1, "Display Data"},
-                {2, "Migrate Data"},
-                {0, "Exit"}
+                { 1, "Display Database Structure" },
+                { 2, "Display All Data" },
+                { 3, "Display Record Dates" },
+                { 4, "Simulate Migration" },
+                { 5, "Migrate Data" },
+                { 0, "Exit" }
             };
         }
 
@@ -58,14 +67,24 @@ namespace DustInTheWind.ActiveTime.DataMigration
         {
             switch (selectedItem)
             {
-                case 1:
-                    return new DisplayFlow();
+                case 1: return new DisplayDatabaseStructureFlow();
+                case 2: return new DisplayDataFlow();
+                case 3: return new DisplayDatesFlow();
+                case 4: return new MigrationFlow { Simulate = true };
+                case 5: return new MigrationFlow();
+                default: return null;
+            }
+        }
 
-                case 2:
-                    return new MigrationFlow();
-
-                default:
-                    return null;
+        private static void RunFlow(IFlow flow)
+        {
+            try
+            {
+                flow.Run();
+            }
+            catch (Exception ex)
+            {
+                CustomConsole.WriteLineError(ex);
             }
         }
     }
