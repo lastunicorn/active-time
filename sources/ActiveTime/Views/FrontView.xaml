@@ -29,6 +29,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:ui="clr-namespace:DustInTheWind.ActiveTime.Common.UI;assembly=ActiveTime.Common"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Converters"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.ViewModels"
+    xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Views"
 
     mc:Ignorable="d" 
     d:DesignHeight="300"
@@ -51,162 +52,143 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     </UserControl.Resources>
 
-    <Grid Margin="5">
+    <DockPanel Margin="5">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        <DockPanel DockPanel.Dock="Top">
 
-        <StackPanel
-            Grid.Row="0"
-            Orientation="Horizontal"
-            HorizontalAlignment="Center">
+            <!-- Date -->
 
-            <Button
-                Content="&lt;&lt;"
-                Command="{Binding DecrementDayCommand}"
-                Margin="0,5,20,5"/>
-            
-            <DatePicker
-                Margin="3"
-                HorizontalAlignment="Left"
-                MinWidth="150"
-                SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                SelectedDateFormat="Long"
-                Padding="0"
-                VerticalAlignment="Center"/>
-            
-            <Button
-                Content="..."
-                Command="{Binding CalendarCommand}"
-                Margin="0,5"/>
+            <views:CurrentDateView
+                DockPanel.Dock="Left"
+                Margin="5"
+                DataContext="{Binding CurrentDateViewModel}"/>
 
-            <Button
-                Content="&gt;&gt;"
-                Command="{Binding IncrementDayCommand}"
-                Margin="20,5,0,5"/>
+            <Grid>
 
-        </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-        <Border
-            Grid.Row="1"
-            BorderThickness="1"
-            Padding="0 6 0 6"
-            Margin="3 1">
+                <!-- Active Time -->
 
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
+                <Border
+                Grid.Row="0"
+                BorderThickness="1"
+                Padding="0 6 0 6"
+                Margin="3 1">
 
-            <StackPanel
-                Orientation="Vertical"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
 
-                <TextBlock
-                    Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                    FontSize="25"/>
+                    <StackPanel
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
 
-                <TextBlock
-                    Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                    Foreground="DarkGray"
-                    TextAlignment="Center"/>
+                        <TextBlock
+                        Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                        FontSize="25"/>
 
-            </StackPanel>
+                        <TextBlock
+                        Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                        Foreground="DarkGray"
+                        TextAlignment="Center"/>
 
-        </Border>
+                    </StackPanel>
 
-        <Border
-            Grid.Row="2"
-            BorderThickness="1"
-            Padding="0 6 0 6"
-            Margin="3 1">
+                </Border>
 
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
+                <!-- Start/End Time -->
 
-            <Grid
-                VerticalAlignment="Center"
-                HorizontalAlignment="Stretch"
-                MaxWidth="500">
+                <Border
+                Grid.Row="1"
+                BorderThickness="1"
+                Padding="0 6 0 6"
+                Margin="3 1">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
 
-                <StackPanel
-                    Grid.Column="0"
-                    Orientation="Vertical">
+                    <Grid
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    MaxWidth="500">
 
-                    <TextBlock
-                        Text="{Binding Path=BeginTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                        TextAlignment="Center"
-                        FontSize="18"
-                        Foreground="DarkGray"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock
-                        Text="Start Time"
-                        TextAlignment="Center"
-                        Foreground="DarkGray"/>
+                        <StackPanel
+                        Grid.Column="0"
+                        Orientation="Vertical">
 
-                </StackPanel>
+                            <TextBlock
+                            Text="{Binding Path=BeginTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                            TextAlignment="Center"
+                            FontSize="18"
+                            Foreground="DarkGray"/>
 
-                <StackPanel
-                    Grid.Column="1"
-                    Orientation="Vertical">
+                            <TextBlock
+                            Text="Start Time"
+                            TextAlignment="Center"
+                            Foreground="DarkGray"/>
 
-                    <TextBlock
-                        Text="{Binding Path=EstimatedEndTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                        TextAlignment="Center"
-                        FontSize="18"
-                        Foreground="DarkGray"/>
+                        </StackPanel>
 
-                    <TextBlock
-                        Text="End Time"
-                        TextAlignment="Center"
-                        Foreground="DarkGray"/>
+                        <StackPanel
+                        Grid.Column="1"
+                        Orientation="Vertical">
 
-                </StackPanel>
+                            <TextBlock
+                            Text="{Binding Path=EstimatedEndTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                            TextAlignment="Center"
+                            FontSize="18"
+                            Foreground="DarkGray"/>
 
+                            <TextBlock
+                            Text="End Time"
+                            TextAlignment="Center"
+                            Foreground="DarkGray"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
             </Grid>
 
-        </Border>
+        </DockPanel>
 
-        <ContentControl
-            Grid.Row="3"
-            regions:RegionManager.RegionName="{x:Static ui:RegionNames.RecordsRegion}"/>
+        <!-- Buttons Bar -->
 
         <StackPanel
-            Grid.Row="4"
-            Margin="3 5"
+            DockPanel.Dock="Bottom"
             Orientation="Horizontal">
 
             <Button
@@ -214,13 +196,13 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 MinWidth="75"
                 Margin="0,0,5,0"
                 cmd:Click.Command="{Binding TimeRecordsCommand}"/>
-            
+
             <Button
                 Content="Comments"
                 MinWidth="75"
                 Margin="0,0,5,0"
                 cmd:Click.Command="{Binding CommentsCommand}"/>
-            
+
             <Button
                 Content="Refresh"
                 Margin="0,0,5,0"
@@ -228,6 +210,13 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 MinWidth="75" />
 
         </StackPanel>
-    </Grid>
+
+        <!-- Content -->
+
+        <ContentControl
+            regions:RegionManager.RegionName="{x:Static ui:RegionNames.RecordsRegion}"/>
+
+    </DockPanel>
 
 </UserControl>
+

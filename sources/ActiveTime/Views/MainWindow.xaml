@@ -31,10 +31,10 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     Title="{Binding Path=WindowTitle}"
     Height="500"
-    Width="500"
+    Width="600"
     ResizeMode="CanResizeWithGrip"
-    MinWidth="400"
-    MinHeight="500"
+    MinWidth="450"
+    MinHeight="450"
     UseLayoutRounding="True"
     VisualClearTypeHint="Enabled"
     VisualTextRenderingMode="Auto"

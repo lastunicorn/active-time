@@ -124,6 +124,7 @@
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CalendarViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
+    <Compile Include="ViewModels\CurrentDateViewModel.cs" />
     <Compile Include="ViewModels\DayRecordsViewModel.cs" />
     <Compile Include="Services\DayReport.cs" />
     <Compile Include="ViewModels\FrontViewModel.cs" />
@@ -140,6 +141,9 @@
     </Compile>
     <Compile Include="Views\CommentsView.xaml.cs">
       <DependentUpon>CommentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CurrentDateView.xaml.cs">
+      <DependentUpon>CurrentDateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DayRecordsView.xaml.cs">
       <DependentUpon>DayRecordsView.xaml</DependentUpon>
@@ -284,6 +288,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CalendarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CurrentDateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

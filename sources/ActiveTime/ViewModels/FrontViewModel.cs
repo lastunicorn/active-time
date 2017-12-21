@@ -27,22 +27,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
     {
         private readonly ICurrentDay currentDay;
 
-        private DateTime? date;
-
-        public DateTime? Date
-        {
-            get { return date; }
-            set
-            {
-                if (date == value)
-                    return;
-
-                date = value;
-                OnPropertyChanged();
-
-                currentDay.Date = value;
-            }
-        }
+        public CurrentDateViewModel CurrentDateViewModel { get; }
 
         private TimeSpan activeTime;
 
@@ -96,43 +81,31 @@ namespace DustInTheWind.ActiveTime.ViewModels
         public TimeRecordsCommand TimeRecordsCommand { get; }
         public RefreshCommand RefreshCommand { get; }
         public DeleteCommand DeleteCommand { get; }
-        public CalendarCommand CalendarCommand { get; }
-        public DecrementDayCommand DecrementDayCommand { get; }
-        public IncrementDayCommand IncrementDayCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IRegionManager regionManager, ICurrentDay currentDay, IShellNavigator shellNavigator)
+        public FrontViewModel(IRegionManager regionManager, ICurrentDay currentDay, IShellNavigator shellNavigator, CurrentDateViewModel currentDateViewModel)
         {
             if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
             if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
+            if (currentDateViewModel == null) throw new ArgumentNullException(nameof(currentDateViewModel));
 
             this.currentDay = currentDay;
+            CurrentDateViewModel = currentDateViewModel;
 
             CommentsCommand = new CommentsCommand(regionManager);
             TimeRecordsCommand = new TimeRecordsCommand(regionManager);
             RefreshCommand = new RefreshCommand(currentDay);
             DeleteCommand = new DeleteCommand();
-            CalendarCommand = new CalendarCommand(shellNavigator);
-            DecrementDayCommand = new DecrementDayCommand(currentDay);
-            IncrementDayCommand = new IncrementDayCommand(currentDay);
 
-            Date = currentDay.Date;
-
-            currentDay.DateChanged += HandleCurrentDateChanged;
             currentDay.DatesChanged += HandleCurrentDayDatesChanged;
         }
 
         private void HandleCurrentDayDatesChanged(object sender, EventArgs eventArgs)
         {
             UpdateDisplayedData();
-        }
-
-        private void HandleCurrentDateChanged(object sender, EventArgs e)
-        {
-            Date = currentDay.Date;
         }
 
         private void UpdateDisplayedData()
