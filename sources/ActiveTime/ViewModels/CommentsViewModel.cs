@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Commands;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Services;
 
@@ -62,6 +61,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
             SaveCommand = new SaveCommentCommand(currentDay);
             
             currentDay.CommentChanged += HandleCurrentDayCommentChanged;
+
+            Comment = currentDay.Comment;
 
             currentDay.ReloadComments();
         }
