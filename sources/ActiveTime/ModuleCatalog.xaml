@@ -78,7 +78,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Modularity:ModuleInfo
         ModuleName="ReminderModule"
         Ref="file://ActiveTime.ReminderModule.dll"
-        ModuleType="DustInTheWind.ActiveTime.ReminderModule.ModuleDefinitions.ReminderModule, ActiveTime.ReminderModule"
+        ModuleType="DustInTheWind.ActiveTime.Reminder.Module.ModuleDefinitions.ReminderModule, ActiveTime.Reminder.Module"
         InitializationMode="WhenAvailable">
         
         <Modularity:ModuleInfo.DependsOn>
@@ -90,7 +90,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Modularity:ModuleInfo
         ModuleName="LyncInhibitor"
         Ref="file://ActiveTime.ReminderModule.LyncInhibitor.dll"
-        ModuleType="DustInTheWind.ActiveTime.ReminderModule.LyncInhibitor.ModuleDefinitions.ReminderInhibitorModule, ActiveTime.ReminderModule.LyncInhibitor"
+        ModuleType="DustInTheWind.ActiveTime.Reminder.LyncInhibitor.ModuleDefinitions.ReminderInhibitorModule, ActiveTime.Reminder.LyncInhibitor"
         InitializationMode="WhenAvailable">
 
         <Modularity:ModuleInfo.DependsOn>
