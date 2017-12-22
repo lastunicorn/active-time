@@ -52,18 +52,21 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     </UserControl.Resources>
 
-    <DockPanel Margin="5">
+    <DockPanel Margin="8">
 
-        <DockPanel DockPanel.Dock="Top">
+        <DockPanel
+            DockPanel.Dock="Top"
+            Margin="0 0 0 5">
 
             <!-- Date -->
 
             <views:CurrentDateView
                 DockPanel.Dock="Left"
-                Margin="5"
-                DataContext="{Binding CurrentDateViewModel}"/>
+                Margin="0,0,5,0"
+                DataContext="{Binding CurrentDateViewModel}"
+                VerticalAlignment="Stretch"/>
 
-            <Grid>
+            <Grid Margin="5 0 0 0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -76,7 +79,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Grid.Row="0"
                 BorderThickness="1"
                 Padding="0 6 0 6"
-                Margin="3 1">
+                Margin="0 0 0 1">
 
                     <Border.Style>
                         <Style TargetType="Border">
@@ -117,7 +120,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Grid.Row="1"
                 BorderThickness="1"
                 Padding="0 6 0 6"
-                Margin="3 1">
+                Margin="0 1 0 0">
 
                     <Border.Style>
                         <Style TargetType="Border">
@@ -189,7 +192,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <StackPanel
             DockPanel.Dock="Bottom"
-            Orientation="Horizontal">
+            Orientation="Horizontal"
+            Margin="0 5 0 0">
 
             <Button
                 Content="Time Records"
@@ -219,4 +223,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     </DockPanel>
 
 </UserControl>
+
+
 

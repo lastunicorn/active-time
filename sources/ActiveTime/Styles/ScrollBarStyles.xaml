@@ -116,9 +116,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                             <ColumnDefinition Width="4" />
                         </Grid.ColumnDefinitions>
 
-                        <Ellipse Grid.Column="0" Grid.ColumnSpan="2" Fill="#ffebd9" />
-                        <Rectangle Grid.Column="1" Grid.ColumnSpan="3" Fill="#ffebd9" />
-                        <Ellipse Grid.Column="3" Grid.ColumnSpan="2" Fill="#ffebd9" />
+                        <Ellipse Grid.Column="0" Grid.ColumnSpan="2" Fill="#dcdcdc" />
+                        <Rectangle Grid.Column="1" Grid.ColumnSpan="3" Fill="#dcdcdc" />
+                        <Ellipse Grid.Column="3" Grid.ColumnSpan="2" Fill="#dcdcdc" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -139,9 +139,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                             <RowDefinition Height="4" />
                         </Grid.RowDefinitions>
 
-                        <Ellipse Grid.Row="0" Grid.RowSpan="2" Fill="#ffebd9" />
-                        <Rectangle Grid.Row="1" Grid.RowSpan="3" Fill="#ffebd9" />
-                        <Ellipse Grid.Row="3" Grid.RowSpan="2" Fill="#ffebd9" />
+                        <Ellipse Grid.Row="0" Grid.RowSpan="2" Fill="#dcdcdc" />
+                        <Rectangle Grid.Row="1" Grid.RowSpan="3" Fill="#dcdcdc" />
+                        <Ellipse Grid.Row="3" Grid.RowSpan="2" Fill="#dcdcdc" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

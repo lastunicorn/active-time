@@ -35,6 +35,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/DatePickerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>
@@ -46,7 +47,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         HorizontalAlignment="Center">
 
         <DatePicker
-            Margin="0,5"
+            Margin="0,0,0,5"
             HorizontalAlignment="Left"
             MinWidth="150"
             SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -59,11 +60,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Content="..."
             Command="{Binding CalendarCommand}"
             Margin="0,5"
-            MinHeight="30"/>
+            MinHeight="40"/>
 
         <Grid
             HorizontalAlignment="Stretch"
-            Margin="0,5">
+            Margin="0,5,0,0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -74,13 +75,13 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Grid.Column="0"
                 Content="&lt;&lt;"
                 Command="{Binding DecrementDayCommand}"
-                MinHeight="30"/>
+                MinHeight="40"/>
 
             <Button
                 Grid.Column="1"
                 Content="&gt;&gt;"
                 Command="{Binding IncrementDayCommand}"
-                MinHeight="30"/>
+                MinHeight="40"/>
         </Grid>
 
     </StackPanel>

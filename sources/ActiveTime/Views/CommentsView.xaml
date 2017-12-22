@@ -47,17 +47,51 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel Margin="0" Focusable="False">
+    <Grid Margin="0" Focusable="False">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Content="Comment:"
+            Margin="0 0 0 0" />
+
+        <TextBox
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0 0 0 5"
+            Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
+            AcceptsReturn="True"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto"
+            TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}">
+
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>
+            </TextBox.InputBindings>
+
+        </TextBox>
+
+        <CheckBox
+            Grid.Row="2"
+            Content="Wrap"
+            Margin="0 0 0 5"
+            IsChecked="{Binding Path=CommentTextWrap}"/>
 
         <StackPanel
-            DockPanel.Dock="Bottom"
-            Margin="3"
+            Grid.Row="3"
+            Margin="0"
             Orientation="Horizontal"
             FlowDirection="RightToLeft">
 
             <Button
                 Content="Reset"
-                Margin="0,0,0,0"
+                Margin="0,0,5,0"
                 MinWidth="75"
                 cmd:Click.Command="{Binding ResetCommand}"
                 IsCancel="True"
@@ -65,7 +99,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
             <Button
                 Content="Save"
-                Margin="5,0,0,0"
+                Margin="0,0,5,0"
                 MinWidth="75"
                 cmd:Click.Command="{Binding SaveCommand}"
                 IsDefault="True"
@@ -73,45 +107,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         </StackPanel>
 
-        <Grid Margin="0">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Content="Comment:"
-                Margin="3" />
-
-            <TextBox
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="3"
-                Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
-                AcceptsReturn="True"
-                HorizontalScrollBarVisibility="Auto"
-                VerticalScrollBarVisibility="Auto"
-                TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}">
-
-                <TextBox.InputBindings>
-                    <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>
-                </TextBox.InputBindings>
-
-            </TextBox>
-
-            <CheckBox
-                Grid.Row="2"
-                Grid.Column="0"
-                Content="Wrap"
-                Margin="3"
-                IsChecked="{Binding Path=CommentTextWrap}"/>
-
-        </Grid>
-
-    </DockPanel>
+    </Grid>
 
 </UserControl>

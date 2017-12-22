@@ -57,13 +57,13 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <Label
             Grid.Row="0"
             Content="Records:"
-            Margin="3" />
+            Margin="0" />
 
         <ListBox
             Grid.Row="1"
             ItemsSource="{Binding Path=Records}"
             SelectionMode="Extended"
-            Margin="3">
+            Margin="0 0 0 5">
 
             <ListBox.Resources>
                 <converters:RecordConverter x:Key="RecordConverter" />
@@ -116,7 +116,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Grid.Row="2"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
-            Margin="3 10">
+            Margin="0">
             
             <ItemsControl
                 ItemsSource="{Binding Records}">
