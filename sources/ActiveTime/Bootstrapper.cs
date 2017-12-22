@@ -50,6 +50,7 @@ namespace DustInTheWind.ActiveTime
             Container.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IConfigurationService, ConfigurationService>();
             Container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<Dwarfs, Dwarfs>(new ContainerControlledLifetimeManager());
         }
 
         protected override DependencyObject CreateShell()

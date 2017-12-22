@@ -26,17 +26,13 @@ namespace DustInTheWind.ActiveTime.Common.Services
     /// </summary>
     public abstract class ApplicationServiceBase : IApplicationService
     {
+        private readonly Dwarfs dwarfs;
+
         public DateTime? StartTime { get; private set; }
 
-        public TimeSpan RunTime
-        {
-            get
-            {
-                return StartTime == null
-                  ? TimeSpan.Zero
-                  : DateTime.Now - StartTime.Value;
-            }
-        }
+        public TimeSpan RunTime => StartTime == null
+            ? TimeSpan.Zero
+            : DateTime.Now - StartTime.Value;
 
         /// <summary>
         /// Event raised just before existing the application.
@@ -44,9 +40,15 @@ namespace DustInTheWind.ActiveTime.Common.Services
         /// </summary>
         public event EventHandler Exiting;
 
+        protected ApplicationServiceBase()
+        {
+            dwarfs = new Dwarfs();
+        }
+
         public void Start()
         {
             StartTime = DateTime.Now;
+            dwarfs.StartAll();
         }
 
         public void Exit()
@@ -62,6 +64,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
             try
             {
                 PerformExit();
+                dwarfs.StopAll();
             }
             finally
             {
