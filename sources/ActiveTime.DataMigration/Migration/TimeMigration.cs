@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.WindTools;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {
@@ -81,10 +80,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             if (existsDestinationRecords)
             {
                 bool existsIdenticalRecord = destinationRecords
-                    .Any(x => x.Date - timeRecord.Date > TimeSpan.FromSeconds(-1) &&
-                              x.Date - timeRecord.Date < TimeSpan.FromSeconds(1) &&
-                              x.StartTime == timeRecord.StartTime &&
-                              x.EndTime == timeRecord.EndTime &&
+                    .Any(x => x.Date.EqualsWithin(timeRecord.Date, TimeSpan.FromSeconds(1)) &&
+                              x.StartTime.EqualsWithin(timeRecord.StartTime, TimeSpan.FromMinutes(1)) &&
+                              x.EndTime.EqualsWithin(timeRecord.EndTime, TimeSpan.FromMinutes(1)) &&
                               x.RecordType == timeRecord.RecordType);
 
                 if (existsIdenticalRecord)

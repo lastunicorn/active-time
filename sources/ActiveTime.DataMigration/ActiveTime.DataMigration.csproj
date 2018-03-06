@@ -60,6 +60,7 @@
     <Compile Include="Flows\DisplayDataFlow.cs" />
     <Compile Include="Migration\CommentMigratedEventArgs.cs" />
     <Compile Include="Migration\CommentMigration.cs" />
+    <Compile Include="Migration\DataTimeExtensions.cs" />
     <Compile Include="Migration\TimeRecordMigratedEventArgs.cs" />
     <Compile Include="Migration\TimeMigration.cs" />
     <Compile Include="IFlow.cs" />

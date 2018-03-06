@@ -60,7 +60,15 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
             foreach (DayComment dayComment in dayComments)
             {
-                MigrateComment(dayComment);
+                try
+                {
+                    MigrateComment(dayComment);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error migrating comment for date " + dayComment.Date, ex);
+                }
+
                 OnCommentMigrated(new CommentMigratedEventArgs(dayComment));
             }
         }
