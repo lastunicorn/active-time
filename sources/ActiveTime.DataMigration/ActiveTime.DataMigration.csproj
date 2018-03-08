@@ -58,15 +58,18 @@
     <Compile Include="Flows\DisplayDatesCommand.cs" />
     <Compile Include="Flows\DisplayDataCommand.cs" />
     <Compile Include="Flows\ExitCommand.cs" />
+    <Compile Include="Flows\StatisticsCommand.cs" />
     <Compile Include="Migration\CommentMigratedEventArgs.cs" />
     <Compile Include="Migration\CommentMigration.cs" />
     <Compile Include="Migration\DataTimeExtensions.cs" />
     <Compile Include="Migration\TimeRecordMigratedEventArgs.cs" />
     <Compile Include="Migration\TimeMigration.cs" />
-    <Compile Include="IFlow.cs" />
     <Compile Include="Flows\MigrationCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Statistics\AnalisedPeriod.cs" />
+    <Compile Include="Statistics\DateTimeExtension.cs" />
+    <Compile Include="Statistics\TimePerDay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

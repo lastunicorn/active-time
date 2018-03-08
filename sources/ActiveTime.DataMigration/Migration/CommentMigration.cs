@@ -34,11 +34,8 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
         public CommentMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
         {
-            if (sourceUnitOfWork == null) throw new ArgumentNullException(nameof(sourceUnitOfWork));
-            if (destinationUnitOfWork == null) throw new ArgumentNullException(nameof(destinationUnitOfWork));
-
-            this.sourceUnitOfWork = sourceUnitOfWork;
-            this.destinationUnitOfWork = destinationUnitOfWork;
+            this.sourceUnitOfWork = sourceUnitOfWork ?? throw new ArgumentNullException(nameof(sourceUnitOfWork));
+            this.destinationUnitOfWork = destinationUnitOfWork ?? throw new ArgumentNullException(nameof(destinationUnitOfWork));
         }
 
         public void Migrate()

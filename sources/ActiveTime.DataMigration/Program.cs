@@ -86,6 +86,12 @@ namespace DustInTheWind.ActiveTime.DataMigration
                 },
                 new TextMenuItem
                 {
+                    Id = "6",
+                    Text = "Statistics",
+                    Command = new StatisticsCommand()
+                },
+                new TextMenuItem
+                {
                     Id = "0",
                     Text = "Exit",
                     Command = new ExitCommand()
