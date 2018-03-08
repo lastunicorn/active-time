@@ -36,9 +36,8 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DustInTheWind.WindTools, Version=1.0.0.34313, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindTools.1.0.0.34313\lib\net461\DustInTheWind.WindTools.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DustInTheWind.ConsoleTools, Version=0.2.0.37841, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConsoleTools.0.3.0\lib\net461\DustInTheWind.ConsoleTools.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.3.1.1\lib\net35\LiteDB.dll</HintPath>
@@ -55,16 +54,17 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="Flows\DisplayDatabaseStructureFlow.cs" />
-    <Compile Include="Flows\DisplayDatesFlow.cs" />
-    <Compile Include="Flows\DisplayDataFlow.cs" />
+    <Compile Include="Flows\DisplayDatabaseStructureCommand.cs" />
+    <Compile Include="Flows\DisplayDatesCommand.cs" />
+    <Compile Include="Flows\DisplayDataCommand.cs" />
+    <Compile Include="Flows\ExitCommand.cs" />
     <Compile Include="Migration\CommentMigratedEventArgs.cs" />
     <Compile Include="Migration\CommentMigration.cs" />
     <Compile Include="Migration\DataTimeExtensions.cs" />
     <Compile Include="Migration\TimeRecordMigratedEventArgs.cs" />
     <Compile Include="Migration\TimeMigration.cs" />
     <Compile Include="IFlow.cs" />
-    <Compile Include="Flows\MigrationFlow.cs" />
+    <Compile Include="Flows\MigrationCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

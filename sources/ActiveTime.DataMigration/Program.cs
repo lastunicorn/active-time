@@ -17,12 +17,15 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.DataMigration.Flows;
-using DustInTheWind.WindTools;
+using DustInTheWind.ConsoleTools;
+using DustInTheWind.ConsoleTools.MenuControl;
 
 namespace DustInTheWind.ActiveTime.DataMigration
 {
     internal static class Program
     {
+        public static volatile bool ExitWasRequested;
+
         private static void Main(string[] args)
         {
             try
@@ -30,18 +33,15 @@ namespace DustInTheWind.ActiveTime.DataMigration
                 CustomConsole.WriteLine("ActiveTime Data Migration Tool");
                 CustomConsole.WriteLine("===============================================================================");
 
-                while (true)
+                ExitWasRequested = false;
+                IEnumerable<TextMenuItem> items = CreateMenuItems();
+
+                while (!ExitWasRequested)
                 {
                     CustomConsole.WriteLine();
 
-                    Dictionary<int, string> items = CreateMenuItems();
-                    int selectedItem = CustomConsole.Ask(items);
-                    IFlow flow = ChooseFlow(selectedItem);
-
-                    if (flow == null)
-                        break;
-
-                    RunFlow(flow);
+                    TextMenu textMenu = new TextMenu(items);
+                    textMenu.Display();
                 }
             }
             catch (Exception ex)
@@ -50,42 +50,47 @@ namespace DustInTheWind.ActiveTime.DataMigration
             }
         }
 
-        private static Dictionary<int, string> CreateMenuItems()
+        private static IEnumerable<TextMenuItem> CreateMenuItems()
         {
-            return new Dictionary<int, string>
+            return new List<TextMenuItem>
             {
-                { 1, "Display Database Structure" },
-                { 2, "Display All Data" },
-                { 3, "Display Record Dates" },
-                { 4, "Simulate Migration" },
-                { 5, "Migrate Data" },
-                { 0, "Exit" }
+                new TextMenuItem
+                {
+                    Id = "1",
+                    Text = "Display Database Structure",
+                    Command = new DisplayDatabaseStructureCommand()
+                },
+                new TextMenuItem
+                {
+                    Id = "2",
+                    Text = "Display All Data",
+                    Command = new DisplayDataCommand()
+                },
+                new TextMenuItem
+                {
+                    Id = "3",
+                    Text = "Display Record Dates",
+                    Command = new DisplayDatesCommand()
+                },
+                new TextMenuItem
+                {
+                    Id = "4",
+                    Text = "Simulate Migration",
+                    Command = new MigrationCommand { Simulate = true }
+                },
+                new TextMenuItem
+                {
+                    Id = "5",
+                    Text = "Migrate",
+                    Command = new MigrationCommand()
+                },
+                new TextMenuItem
+                {
+                    Id = "0",
+                    Text = "Exit",
+                    Command = new ExitCommand()
+                }
             };
-        }
-
-        private static IFlow ChooseFlow(int selectedItem)
-        {
-            switch (selectedItem)
-            {
-                case 1: return new DisplayDatabaseStructureFlow();
-                case 2: return new DisplayDataFlow();
-                case 3: return new DisplayDatesFlow();
-                case 4: return new MigrationFlow { Simulate = true };
-                case 5: return new MigrationFlow();
-                default: return null;
-            }
-        }
-
-        private static void RunFlow(IFlow flow)
-        {
-            try
-            {
-                flow.Run();
-            }
-            catch (Exception ex)
-            {
-                CustomConsole.WriteLineError(ex);
-            }
         }
     }
 }
