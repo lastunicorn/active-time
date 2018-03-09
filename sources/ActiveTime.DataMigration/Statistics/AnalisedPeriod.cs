@@ -72,7 +72,7 @@ namespace DustInTheWind.ActiveTime.DataMigration.Statistics
         private IEnumerable<TimePerDay> GetItemsForEntirePeriod()
         {
             IEnumerable<TimePerDay> itemsFromDb = GetItemsFromDb();
-            
+
             DateTime? lastDay = null;
 
             foreach (TimePerDay timePerDay in itemsFromDb)
@@ -90,7 +90,7 @@ namespace DustInTheWind.ActiveTime.DataMigration.Statistics
                         Time = TimeSpan.Zero
                     };
                 }
-                
+
                 yield return timePerDay;
             }
         }
@@ -103,7 +103,6 @@ namespace DustInTheWind.ActiveTime.DataMigration.Statistics
                 .Where(x => x.Date >= startTime && x.Date <= endTime);
 
             return records
-                .Where(x => !x.Date.IsWeekEnd())
                 .GroupBy(x => x.Date)
                 .Select(x => new TimePerDay(unitOfWork)
                 {
@@ -125,6 +124,14 @@ namespace DustInTheWind.ActiveTime.DataMigration.Statistics
 
             foreach (TimePerDay timePerDay in this)
             {
+                bool ignore = timePerDay.IsWeekEnd ||
+                              timePerDay.IsHoliday ||
+                              timePerDay.IsVacation ||
+                              timePerDay.IsInvalidTime;
+
+                if (ignore)
+                    continue;
+
                 count = count + 1;
                 sum = sum + timePerDay.Time;
             }

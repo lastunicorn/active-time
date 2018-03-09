@@ -47,6 +47,7 @@ namespace DustInTheWind.ActiveTime.DataMigration
             catch (Exception ex)
             {
                 CustomConsole.WriteLineError(ex);
+                Pause.QuickDisplay();
             }
         }
 

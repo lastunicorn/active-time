@@ -83,19 +83,20 @@ namespace DustInTheWind.ActiveTime.DataMigration.Statistics
         private bool CalculateIsVacation()
         {
             return CommentLines
-                .Any(x => x.StartsWith("vacation:", StringComparison.OrdinalIgnoreCase));
+                .Any(x => x.Equals("vacation:", StringComparison.OrdinalIgnoreCase));
         }
 
         private bool CalculateIsHoliday()
         {
             return CommentLines
-                .Any(x => x.StartsWith("holyday:", StringComparison.OrdinalIgnoreCase));
+                .Any(x => x.Equals("holiday:", StringComparison.OrdinalIgnoreCase) ||
+                          x.Equals("free day:", StringComparison.OrdinalIgnoreCase));
         }
 
         private bool CalculateIsInvalidTime()
         {
             return CommentLines
-                .Any(x => x.StartsWith("invalid time:", StringComparison.OrdinalIgnoreCase));
+                .Any(x => x.Equals("invalid time:", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

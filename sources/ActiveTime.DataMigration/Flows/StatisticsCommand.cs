@@ -27,7 +27,36 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
         public void Execute()
         {
-            DateTime startTime = new DateTime(2017, 01, 01);
+            // 2011
+            //DateTime startTime = new DateTime(2011, 01, 01);
+            //DateTime endTime = new DateTime(2012, 01, 01);
+
+            // 2012
+            //DateTime startTime = new DateTime(2012, 01, 01);
+            //DateTime endTime = new DateTime(2013, 01, 01);
+
+            // 2013
+            //DateTime startTime = new DateTime(2013, 01, 01);
+            //DateTime endTime = new DateTime(2014, 01, 01);
+
+            // 2014
+            //DateTime startTime = new DateTime(2014, 01, 01);
+            //DateTime endTime = new DateTime(2015, 01, 01);
+
+            // 2015 - fixed
+            //DateTime startTime = new DateTime(2015, 01, 01);
+            //DateTime endTime = new DateTime(2016, 01, 01);
+
+            // 2016 - fixed
+            //DateTime startTime = new DateTime(2016, 01, 01);
+            //DateTime endTime = new DateTime(2017, 01, 01);
+
+            // 2017 - fixed
+            //DateTime startTime = new DateTime(2017, 01, 01);
+            //DateTime endTime = DateTime.Today.AddDays(-1);
+
+            // All
+            DateTime startTime = new DateTime(2015, 01, 01);
             DateTime endTime = DateTime.Today.AddDays(-1);
 
             using (AnalisedPeriod analisedPeriod = new AnalisedPeriod(startTime, endTime))
@@ -49,6 +78,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
             {
                 ConsoleColor color = DecideDayColor(timePerDay);
                 int count = (int)Math.Round(timePerDay.Time.TotalMinutes / 15);
+
+                if (count < 0)
+                    count = 0;
 
                 CustomConsole.WriteLine(color, "{0,-14:yyyy MM dd ddd} - {1}", timePerDay.Date, new string('*', count));
             }
