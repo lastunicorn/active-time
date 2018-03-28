@@ -37,7 +37,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <ResourceDictionary Source="/Styles/Colors.xaml"/>
                 <ResourceDictionary Source="/Styles/DatePickerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
         </ResourceDictionary>
 
     </UserControl.Resources>

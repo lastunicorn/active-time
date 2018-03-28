@@ -22,12 +22,14 @@ namespace DustInTheWind.ActiveTime
     {
         public static string ToDefaultFormat(this TimeSpan? timespan)
         {
-            return timespan?.ToString(@"hh\:mm\:ss");
+            return timespan?.ToDefaultFormat() ?? string.Empty;
         }
 
         public static string ToDefaultFormat(this TimeSpan timespan)
         {
-            return timespan.ToString(@"hh\:mm\:ss");
+            return timespan.TotalDays >= 1
+                ? timespan.ToString(@"d\.hh\:mm\:ss")
+                : timespan.ToString(@"hh\:mm\:ss");
         }
     }
 }

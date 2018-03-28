@@ -52,6 +52,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     </UserControl.Resources>
 
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding DecrementDayCommand}" Key="PageUp" Modifiers="Control"/>
+        <KeyBinding Command="{Binding IncrementDayCommand}" Key="PageDown" Modifiers="Control"/>
+    </UserControl.InputBindings>
+    
     <DockPanel Margin="8">
 
         <DockPanel
@@ -76,10 +81,10 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <!-- Active Time -->
 
                 <Border
-                Grid.Row="0"
-                BorderThickness="1"
-                Padding="0 6 0 6"
-                Margin="0 0 0 1">
+                    Grid.Row="0"
+                    BorderThickness="1"
+                    Padding="0 6 0 6"
+                    Margin="0 0 0 1">
 
                     <Border.Style>
                         <Style TargetType="Border">
@@ -97,18 +102,18 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     </Border.Style>
 
                     <StackPanel
-                    Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                        Orientation="Vertical"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
 
                         <TextBlock
-                        Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                        FontSize="25"/>
+                            Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                            FontSize="25"/>
 
                         <TextBlock
-                        Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                        Foreground="DarkGray"
-                        TextAlignment="Center"/>
+                            Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                            Foreground="DarkGray"
+                            TextAlignment="Center"/>
 
                     </StackPanel>
 
@@ -138,9 +143,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     </Border.Style>
 
                     <Grid
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Stretch"
-                    MaxWidth="500">
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Stretch"
+                        MaxWidth="500">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -148,36 +153,36 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                         </Grid.ColumnDefinitions>
 
                         <StackPanel
-                        Grid.Column="0"
-                        Orientation="Vertical">
+                            Grid.Column="0"
+                            Orientation="Vertical">
 
                             <TextBlock
-                            Text="{Binding Path=BeginTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                            TextAlignment="Center"
-                            FontSize="18"
-                            Foreground="DarkGray"/>
+                                Text="{Binding Path=BeginTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                                TextAlignment="Center"
+                                FontSize="18"
+                                Foreground="DarkGray"/>
 
                             <TextBlock
-                            Text="Start Time"
-                            TextAlignment="Center"
-                            Foreground="DarkGray"/>
+                                Text="Start Time"
+                                TextAlignment="Center"
+                                Foreground="DarkGray"/>
 
                         </StackPanel>
 
                         <StackPanel
-                        Grid.Column="1"
-                        Orientation="Vertical">
+                            Grid.Column="1"
+                            Orientation="Vertical">
 
                             <TextBlock
-                            Text="{Binding Path=EstimatedEndTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                            TextAlignment="Center"
-                            FontSize="18"
-                            Foreground="DarkGray"/>
+                                Text="{Binding Path=EstimatedEndTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                                TextAlignment="Center"
+                                FontSize="18"
+                                Foreground="DarkGray"/>
 
                             <TextBlock
-                            Text="End Time"
-                            TextAlignment="Center"
-                            Foreground="DarkGray"/>
+                                Text="End Time"
+                                TextAlignment="Center"
+                                Foreground="DarkGray"/>
 
                         </StackPanel>
 

@@ -81,6 +81,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
         public TimeRecordsCommand TimeRecordsCommand { get; }
         public RefreshCommand RefreshCommand { get; }
         public DeleteCommand DeleteCommand { get; }
+        public DecrementDayCommand DecrementDayCommand { get; }
+        public IncrementDayCommand IncrementDayCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
@@ -99,6 +101,8 @@ namespace DustInTheWind.ActiveTime.ViewModels
             TimeRecordsCommand = new TimeRecordsCommand(regionManager);
             RefreshCommand = new RefreshCommand(currentDay);
             DeleteCommand = new DeleteCommand();
+            DecrementDayCommand = new DecrementDayCommand(currentDay);
+            IncrementDayCommand = new IncrementDayCommand(currentDay);
 
             currentDay.DatesChanged += HandleCurrentDayDatesChanged;
         }
