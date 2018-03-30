@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.DataMigration.Statistics;
-using DustInTheWind.ConsoleTools;
+using DustInTheWind.ActiveTime.DataMigration.ViewControls;
 using DustInTheWind.ConsoleTools.MenuControl;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Flows
@@ -55,9 +55,14 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
             //DateTime startTime = new DateTime(2017, 01, 01);
             //DateTime endTime = DateTime.Today.AddDays(-1);
 
+            // 2017 03 - fixed
+
+            DateTime startTime = new DateTime(2018, 03, 01);
+            DateTime endTime = new DateTime(2018, 04, 01).AddDays(-1);
+
             // All
-            DateTime startTime = new DateTime(2015, 01, 01);
-            DateTime endTime = DateTime.Today.AddDays(-1);
+            //DateTime startTime = new DateTime(2015, 01, 01);
+            //DateTime endTime = DateTime.Today.AddDays(-1);
 
             using (AnalisedPeriod analisedPeriod = new AnalisedPeriod(startTime, endTime))
             {
@@ -76,34 +81,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
         {
             foreach (TimePerDay timePerDay in analisedPeriod)
             {
-                ConsoleColor color = DecideDayColor(timePerDay);
-                int count = (int)Math.Round(timePerDay.Time.TotalMinutes / 15);
-
-                if (count < 0)
-                    count = 0;
-
-                CustomConsole.WriteLine(color, "{0,-14:yyyy MM dd ddd} - {1}", timePerDay.Date, new string('*', count));
+                TimePerDayView timePerDayView = new TimePerDayView(timePerDay);
+                timePerDayView.Display();
             }
-        }
-
-        private static ConsoleColor DecideDayColor(TimePerDay timePerDay)
-        {
-            if (timePerDay.IsWeekEnd)
-                return ConsoleColor.DarkCyan;
-
-            if (timePerDay.IsVacation)
-                return ConsoleColor.DarkCyan;
-
-            if (timePerDay.IsHoliday)
-                return ConsoleColor.DarkCyan;
-
-            if (timePerDay.IsInvalidTime)
-                return ConsoleColor.DarkGray;
-
-            if (timePerDay.Time < TimeSpan.FromHours(3))
-                return ConsoleColor.Red;
-
-            return ConsoleColor.Gray;
         }
     }
 }
