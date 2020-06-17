@@ -7,7 +7,7 @@
     <ProjectGuid>{9D813167-EE59-4936-812C-1A8238B69510}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ActiveTime.Presentation</RootNamespace>
+    <RootNamespace>DustInTheWind.ActiveTime.Presentation</RootNamespace>
     <AssemblyName>DustInTheWind.ActiveTime.Presentation</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,11 +49,6 @@
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -98,12 +93,11 @@
     <Compile Include="ReportBuilder.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\CurrentDay.cs" />
     <Compile Include="Services\DayReport.cs" />
     <Compile Include="Services\DispatcherService.cs" />
-    <Compile Include="Services\ICurrentDay.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
+    <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CalendarViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
@@ -255,21 +249,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
+    <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj">
+      <Project>{1786A70F-7015-47DA-98A4-C99F7016CACE}</Project>
+      <Name>ActiveTime.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
-      <Name>ActiveTime.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj">
-      <Project>{0F05CADA-95F8-458D-A52C-DE51BFF8E453}</Project>
-      <Name>ActiveTime.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence\ActiveTime.Persistence.csproj">
-      <Project>{7B8576CC-7DF6-4FA9-9658-7ABEF74FE983}</Project>
-      <Name>ActiveTime.Persistence</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
-      <Project>{C3078BEB-D0DB-487B-9A50-DD834FCA445B}</Project>
-      <Name>ActiveTime.Recording</Name>
+      <Name>ActiveTime.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

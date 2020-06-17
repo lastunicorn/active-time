@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Recording.Module.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
@@ -27,9 +28,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.ModuleDefinitions
 
         public RecorderModule(IUnityContainer unityContainer)
         {
-            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
-
-            this.unityContainer = unityContainer;
+            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
         }
 
         public void Initialize()

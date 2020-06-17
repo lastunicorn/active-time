@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,16 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows;
 using DustInTheWind.ActiveTime.Common.Services;
 
-namespace DustInTheWind.ActiveTime.Services
+namespace DustInTheWind.ActiveTime.Presentation.Services
 {
     public class ApplicationService : ApplicationServiceBase
     {
         protected override void PerformExit()
         {
-            Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

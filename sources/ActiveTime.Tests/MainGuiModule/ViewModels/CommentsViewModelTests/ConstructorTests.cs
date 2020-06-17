@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,9 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ActiveTime.Services;
-using DustInTheWind.ActiveTime.ViewModels;
+using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Presentation.Services;
+using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using Moq;
 using NUnit.Framework;
 
@@ -27,13 +32,18 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
     public class ConstructorTests
     {
         private Mock<IDayCommentRepository> dayCommentRepositoryMock;
-        private Mock<ICurrentDay> currentDay;
+        private CurrentDay currentDay;
 
         [SetUp]
         public void SetUp()
         {
             dayCommentRepositoryMock = new Mock<IDayCommentRepository>();
-            currentDay = new Mock<ICurrentDay>();
+
+            Mock<IUnitOfWorkFactory> unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            Mock<ILogger> logger = new Mock<ILogger>();
+            Mock<IRecorderService> recorderService = new Mock<IRecorderService>();
+            Mock<IStatusInfoService> statusInfoService = new Mock<IStatusInfoService>();
+            currentDay = new CurrentDay(unitOfWorkFactory.Object, logger.Object, recorderService.Object, statusInfoService.Object);
         }
 
         [Test]
@@ -45,15 +55,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         [Test]
         public void successfully_instantiated()
         {
-            new CommentsViewModel(currentDay.Object);
+            new CommentsViewModel(currentDay);
         }
 
         [Test]
         public void Constructor_clears_Comment_if_Date_from_stateService_is_null()
         {
-            currentDay.Setup(x => x.Date).Returns(null as DateTime?);
+            currentDay.Date = null;
 
-            CommentsViewModel viewModel = new CommentsViewModel(currentDay.Object);
+            CommentsViewModel viewModel = new CommentsViewModel(currentDay);
 
             Assert.That(viewModel.Comment, Is.Null);
         }
@@ -62,11 +72,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         public void Constructor_updates_CurrentDayComment()
         {
             DateTime date = new DateTime(2011, 06, 13);
+            currentDay.Date = date;
 
-            currentDay.Setup(x => x.Date).Returns(date);
-            currentDay.Setup(x => x.ReloadComments());
-
-            new CommentsViewModel(currentDay.Object);
+            new CommentsViewModel(currentDay);
 
             dayCommentRepositoryMock.VerifyAll();
         }
@@ -75,11 +83,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         public void Constructor_clears_Comment_if_retrieved_DayComment_is_null()
         {
             DateTime date = new DateTime(2011, 06, 13);
-
-            currentDay.Setup(x => x.Date).Returns(date);
+            currentDay.Date = date;
             dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayComment);
 
-            CommentsViewModel viewModel = new CommentsViewModel(currentDay.Object);
+            CommentsViewModel viewModel = new CommentsViewModel(currentDay);
 
             Assert.That(viewModel.Comment, Is.Null);
         }

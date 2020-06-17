@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,11 +30,9 @@ namespace DustInTheWind.ActiveTime.SystemSession.Module.ModuleDefinitions
         /// </summary>
         public SystemSessionModule(IUnityContainer unityContainer)
         {
-            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
-
-            this.unityContainer = unityContainer;
+            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
         }
-        
+
         public void Initialize()
         {
             SystemSessionService systemSessionService = unityContainer.Resolve<SystemSessionService>();

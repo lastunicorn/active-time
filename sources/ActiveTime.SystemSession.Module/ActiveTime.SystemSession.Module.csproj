@@ -55,13 +55,9 @@
     <Compile Include="Services\SystemSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
-      <Name>ActiveTime.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
-      <Project>{c3078beb-d0db-487b-9a50-dd834fca445b}</Project>
-      <Name>ActiveTime.Recording</Name>
+      <Name>ActiveTime.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

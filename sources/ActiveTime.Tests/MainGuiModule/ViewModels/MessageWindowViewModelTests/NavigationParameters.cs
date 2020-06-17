@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using ActiveTime.Presentation.Properties;
-using DustInTheWind.ActiveTime.ViewModels;
+using DustInTheWind.ActiveTime.Presentation.Properties;
+using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
@@ -74,7 +74,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWin
         }
 
         [Test]
-        public void Message_remians_unchanged_if_NavigationParameters_does_not_contain_Text()
+        public void Message_remains_unchanged_if_NavigationParameters_does_not_contain_Text()
         {
             messageViewModel.NavigationParameters = new Dictionary<string, object>
             {

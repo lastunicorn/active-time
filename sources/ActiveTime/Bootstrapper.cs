@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,10 +16,11 @@
 
 using System;
 using System.Windows;
+using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ActiveTime.Services;
+using DustInTheWind.ActiveTime.Presentation.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
@@ -43,14 +44,16 @@ namespace DustInTheWind.ActiveTime
             // Register WPF related services.
             Container.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IShellNavigator, ShellNavigator>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<DispatcherService, DispatcherService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<DispatcherService>(new ContainerControlledLifetimeManager());
 
             // Register business services.
             Container.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IConfigurationService, ConfigurationService>();
             Container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<Dwarfs, Dwarfs>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<Dwarfs>(new ContainerControlledLifetimeManager());
+
+            IShellNavigator shellNavigator = Container.Resolve<IShellNavigator>();
         }
 
         protected override DependencyObject CreateShell()

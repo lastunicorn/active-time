@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
 using System;
 using System.Drawing;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Common.Presentation;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.TrayIconModule.Commands;
 using DustInTheWind.ActiveTime.TrayIconModule.Views;
 
@@ -29,9 +29,10 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
     internal class TrayIconPresenter
     {
         private ITrayIconView view;
+
         public ITrayIconView View
         {
-            get { return view; }
+            get => view;
             set
             {
                 view = value;
@@ -53,12 +54,10 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
 
         public TrayIconPresenter(IRecorderService recorder, IApplicationService applicationService, IShellNavigator shellNavigator)
         {
-            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
-            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
 
-            this.recorder = recorder;
-            this.shellNavigator = shellNavigator;
+            this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
+            this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
 
             iconOn = Properties.Resources.tray_on;
             iconOff = Properties.Resources.tray_off;

@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,11 +30,8 @@ namespace DustInTheWind.ActiveTime.Reminder.Module.ModuleDefinitions
 
         public ReminderModule(IUnityContainer unityContainer, IConfigurationService configurationService)
         {
-            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
-            if (configurationService == null) throw new ArgumentNullException(nameof(configurationService));
-
-            this.unityContainer = unityContainer;
-            this.configurationService = configurationService;
+            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
+            this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
         }
 
         public void Initialize()

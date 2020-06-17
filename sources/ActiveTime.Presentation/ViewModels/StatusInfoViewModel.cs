@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Commands;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Presentation.Commands;
 
-namespace DustInTheWind.ActiveTime.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     /// <summary>
     /// Contains the UI logic of the status bar displayed at the bottom of the main window.
@@ -33,7 +33,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public string StatusText
         {
-            get { return statusText; }
+            get => statusText;
             private set
             {
                 statusText = value;
@@ -43,7 +43,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public bool IsRecorderStarted
         {
-            get { return isRecorderStarted; }
+            get => isRecorderStarted;
             private set
             {
                 isRecorderStarted = value;
@@ -55,9 +55,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public StatusInfoViewModel(IStatusInfoService statusInfoService, IRecorderService recorderService)
         {
-            if (statusInfoService == null) throw new ArgumentNullException(nameof(statusInfoService));
-
-            this.statusInfoService = statusInfoService;
+            this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
             this.statusInfoService.StatusTextChanged += HandleStatusTextChanged;
 
             ToggleRecorderCommand = new ToggleRecorderCommand(recorderService);

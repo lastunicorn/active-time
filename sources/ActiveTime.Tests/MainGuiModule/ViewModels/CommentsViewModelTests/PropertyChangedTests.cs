@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,9 +16,13 @@
 
 using System;
 using System.Linq.Expressions;
+using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Services;
-using DustInTheWind.ActiveTime.ViewModels;
+using DustInTheWind.ActiveTime.Presentation.Services;
+using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using Moq;
 using NUnit.Framework;
 
@@ -32,9 +36,13 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         [SetUp]
         public void SetUp()
         {
-            Mock<ICurrentDay> currentDayComment = new Mock<ICurrentDay>();
+            Mock<IUnitOfWorkFactory> unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            Mock<ILogger> logger = new Mock<ILogger>();
+            Mock<IRecorderService> recorderService = new Mock<IRecorderService>();
+            Mock<IStatusInfoService> statusInfoService = new Mock<IStatusInfoService>();
+            CurrentDay currentDay = new CurrentDay(unitOfWorkFactory.Object, logger.Object, recorderService.Object, statusInfoService.Object);
 
-            viewModel = new CommentsViewModel(currentDayComment.Object);
+            viewModel = new CommentsViewModel(currentDay);
         }
 
         #region CommentTextWrap Property

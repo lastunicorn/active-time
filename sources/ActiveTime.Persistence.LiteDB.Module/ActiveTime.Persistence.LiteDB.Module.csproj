@@ -59,13 +59,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{c1f39aba-06c0-4e71-a30d-00eb10d4c9e5}</Project>
-      <Name>ActiveTime.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence\ActiveTime.Persistence.csproj">
-      <Project>{7b8576cc-7df6-4fa9-9658-7abef74fe983}</Project>
-      <Name>ActiveTime.Persistence</Name>
+      <Name>ActiveTime.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

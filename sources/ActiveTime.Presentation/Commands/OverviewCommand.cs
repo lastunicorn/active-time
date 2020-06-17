@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,21 +15,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Presentation;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 
-namespace DustInTheWind.ActiveTime.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     internal class OverviewCommand : CommandBase
     {
         private readonly IShellNavigator shellNavigator;
-        
+
         public OverviewCommand(IShellNavigator shellNavigator)
         {
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
             this.shellNavigator = shellNavigator;
         }
-        
+
         public override void Execute(object parameter)
         {
             shellNavigator.Navigate(ShellNames.OverviewShell);

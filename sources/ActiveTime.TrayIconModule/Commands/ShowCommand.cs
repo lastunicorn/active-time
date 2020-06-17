@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Presentation;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 
 namespace DustInTheWind.ActiveTime.TrayIconModule.Commands
 {
@@ -28,8 +28,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Commands
 
         public ShowCommand(IShellNavigator shellNavigator)
         {
-            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
-            this.shellNavigator = shellNavigator;
+            this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
         }
 
         public bool CanExecute(object parameter)

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DustInTheWind.ActiveTime.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     /// <summary>
     /// Static Class that holds all Dependency Properties and Static methods to allow 
@@ -111,8 +111,7 @@ namespace DustInTheWind.ActiveTime.Commands
 
         #endregion
 
-        public static readonly DependencyProperty AlezProperty = DependencyProperty.RegisterAttached(
-            "Alez", typeof(object), typeof(MenuItemClick), new PropertyMetadata(OnSetAlezCallback));
+        public static readonly DependencyProperty AlezProperty = DependencyProperty.RegisterAttached("Alez", typeof(object), typeof(MenuItemClick), new PropertyMetadata(OnSetAlezCallback));
 
         private static void OnSetAlezCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {

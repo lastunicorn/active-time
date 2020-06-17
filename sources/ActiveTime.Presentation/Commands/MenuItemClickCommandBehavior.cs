@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 
-namespace DustInTheWind.ActiveTime.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     /// <summary>
     /// Behavior that allows <see cref="MenuItem"/>s to hook up with <see cref="ICommand"/> objects.

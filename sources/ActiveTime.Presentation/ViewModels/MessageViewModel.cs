@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using ActiveTime.Presentation.Properties;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.Presentation.Properties;
 
-namespace DustInTheWind.ActiveTime.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class MessageViewModel : ViewModelBase, IShell
     {
@@ -28,7 +28,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public string Message
         {
-            get { return message; }
+            get => message;
             private set
             {
                 message = value;
@@ -38,7 +38,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public Dictionary<string, object> NavigationParameters
         {
-            get { return navigationParameters; }
+            get => navigationParameters;
             set
             {
                 navigationParameters = value;

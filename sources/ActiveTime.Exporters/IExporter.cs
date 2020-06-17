@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using DustInTheWind.ActiveTime.Recording;
 
 namespace DustInTheWind.ActiveTime.Exporters
 {
@@ -63,11 +62,11 @@ namespace DustInTheWind.ActiveTime.Exporters
         /// <param name="sw"></param>
         void ExportFooter(StreamWriter sw);
 
-        /// <summary>
-        /// Writes a day record.
-        /// </summary>
-        /// <param name="sw"></param>
-        /// <param name="recordAnalyzer">The records that should be exported.</param>
-        void ExportDayRecord(StreamWriter sw, RecordAnalyzer recordAnalyzer);
+        ///// <summary>
+        ///// Writes a day record.
+        ///// </summary>
+        ///// <param name="sw"></param>
+        ///// <param name="recordAnalyzer">The records that should be exported.</param>
+        //void ExportDayRecord(StreamWriter sw, RecordAnalyzer recordAnalyzer);
     }
 }

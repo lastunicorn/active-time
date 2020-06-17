@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,8 @@
 
 using System;
 using System.IO;
-using DustInTheWind.ActiveTime.Persistence;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Logging;
 
 namespace DustInTheWind.ActiveTime.Logging
 {

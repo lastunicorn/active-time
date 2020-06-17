@@ -71,7 +71,6 @@
     </Compile>
     <Compile Include="Common\Persistence\DayCommentPropertyTests.cs" />
     <Compile Include="Common\Persistence\TimeRecordPropertyTests.cs" />
-    <Compile Include="Common\Services\CommentsServiceTests.cs" />
     <Compile Include="Common\Services\StatusInfoServiceTests\ConstructorTests.cs" />
     <Compile Include="Common\Services\StatusInfoServiceTests\StatusTextTests.cs" />
     <Compile Include="MainGuiModule\ViewModels\CommentsViewModelTests\ConstructorTests.cs" />
@@ -124,9 +123,13 @@
     <Compile Include="TestConstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
+    <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj">
+      <Project>{1786A70F-7015-47DA-98A4-C99F7016CACE}</Project>
+      <Name>ActiveTime.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
-      <Name>ActiveTime.Common</Name>
+      <Name>ActiveTime.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj">
       <Project>{0f05cada-95f8-458d-a52c-de51bff8e453}</Project>
@@ -140,10 +143,6 @@
       <Project>{78A4111D-38DD-439F-ABC1-CD569C70DE9C}</Project>
       <Name>ActiveTime.Persistence.SQLite.AdoNet.Module</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence\ActiveTime.Persistence.csproj">
-      <Project>{7b8576cc-7df6-4fa9-9658-7abef74fe983}</Project>
-      <Name>ActiveTime.Persistence</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
       <Name>ActiveTime.Presentation</Name>
@@ -151,10 +150,6 @@
     <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
       <Name>ActiveTime.Recording.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
-      <Project>{c3078beb-d0db-487b-9a50-dd834fca445b}</Project>
-      <Name>ActiveTime.Recording</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Reminder.Module\ActiveTime.Reminder.Module.csproj">
       <Project>{2b4e4124-2cca-4418-a66b-2c57fb91da74}</Project>

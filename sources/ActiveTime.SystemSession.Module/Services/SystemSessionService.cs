@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,8 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Common.Recording;
 using Microsoft.Win32;
 
 namespace DustInTheWind.ActiveTime.SystemSession.Module.Services
@@ -32,7 +31,6 @@ namespace DustInTheWind.ActiveTime.SystemSession.Module.Services
     internal class SystemSessionService
     {
         private readonly IRecorderService recorderService;
-        private readonly IShellNavigator shellNavigator;
 
         /// <summary>
         /// Specifies if the Recorder was running when the session was locked.
@@ -43,16 +41,10 @@ namespace DustInTheWind.ActiveTime.SystemSession.Module.Services
         /// <summary>
         /// Initializes a new instance of <see cref="SystemSessionService"/> class.
         /// </summary>
-        /// <param name="recorderService"></param>
-        /// <param name="shellNavigator"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public SystemSessionService(IRecorderService recorderService, IShellNavigator shellNavigator)
+        public SystemSessionService(IRecorderService recorderService)
         {
-            if (recorderService == null) throw new ArgumentNullException(nameof(recorderService));
-            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
-
-            this.recorderService = recorderService;
-            this.shellNavigator = shellNavigator;
+            this.recorderService = recorderService ?? throw new ArgumentNullException(nameof(recorderService));
 
             SystemEvents.SessionSwitch += HandleSessionSwitch;
         }

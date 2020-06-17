@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,15 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Common.Presentation;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Recording;
-using DustInTheWind.ActiveTime.Reminder.Module.Inhibitors;
 using DustInTheWind.ActiveTime.Reminder.Module.Reminding;
 using DustInTheWind.ActiveTime.Reminder.Module.Services;
-using DustInTheWind.ActiveTime.Services;
 using Moq;
 using NUnit.Framework;
 

@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,17 +15,17 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Commands;
+using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using DustInTheWind.ActiveTime.Services;
+using DustInTheWind.ActiveTime.Presentation.Commands;
+using DustInTheWind.ActiveTime.Presentation.Services;
 using Microsoft.Practices.Prism.Regions;
 
-namespace DustInTheWind.ActiveTime.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class FrontViewModel : ViewModelBase, INavigationAware
     {
-        private readonly ICurrentDay currentDay;
+        private readonly CurrentDay currentDay;
 
         public CurrentDateViewModel CurrentDateViewModel { get; }
 
@@ -33,7 +33,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public TimeSpan ActiveTime
         {
-            get { return activeTime; }
+            get => activeTime;
             private set
             {
                 activeTime = value;
@@ -45,7 +45,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public TimeSpan TotalTime
         {
-            get { return totalTime; }
+            get => totalTime;
             private set
             {
                 totalTime = value;
@@ -57,7 +57,7 @@ namespace DustInTheWind.ActiveTime.ViewModels
 
         public TimeSpan? BeginTime
         {
-            get { return beginTime; }
+            get => beginTime;
             set
             {
                 beginTime = value;
@@ -87,15 +87,12 @@ namespace DustInTheWind.ActiveTime.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IRegionManager regionManager, ICurrentDay currentDay, IShellNavigator shellNavigator, CurrentDateViewModel currentDateViewModel)
+        public FrontViewModel(IRegionManager regionManager, CurrentDay currentDay, CurrentDateViewModel currentDateViewModel)
         {
             if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
-            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
-            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
-            if (currentDateViewModel == null) throw new ArgumentNullException(nameof(currentDateViewModel));
 
-            this.currentDay = currentDay;
-            CurrentDateViewModel = currentDateViewModel;
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            CurrentDateViewModel = currentDateViewModel ?? throw new ArgumentNullException(nameof(currentDateViewModel));
 
             CommentsCommand = new CommentsCommand(regionManager);
             TimeRecordsCommand = new TimeRecordsCommand(regionManager);

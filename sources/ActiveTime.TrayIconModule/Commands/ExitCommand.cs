@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,8 +27,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Commands
 
         public ExitCommand(IApplicationService applicationService)
         {
-            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
-            this.applicationService = applicationService;
+            this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
         }
 
         public bool CanExecute(object parameter)

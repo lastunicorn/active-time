@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Common.Recording;
 
-namespace DustInTheWind.ActiveTime.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     internal class StopRecorderCommand : CommandBase
     {
@@ -25,8 +25,7 @@ namespace DustInTheWind.ActiveTime.Commands
 
         public StopRecorderCommand(IRecorderService recorder)
         {
-            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
-            this.recorder = recorder;
+            this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
 
             recorder.Started += HandleRecorderStarted;
             recorder.Stopped += HandleRecorderStopped;

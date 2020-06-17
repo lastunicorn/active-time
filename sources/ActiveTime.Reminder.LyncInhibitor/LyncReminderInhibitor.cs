@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,14 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Logging;
-using DustInTheWind.ActiveTime.Reminder.Module.Inhibitors;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Reminder.Module.Reminding;
 using Microsoft.Lync.Model;
 
 namespace DustInTheWind.ActiveTime.Reminder.LyncInhibitor
 {
     /// <summary>
-    /// Stopps the reminder to display messages to the user if the he is not Free on Lync messenger.
+    /// Stops the reminder to display messages to the user if the he is not Free on Lync messenger.
     /// </summary>
     internal class LyncReminderInhibitor : IReminderInhibitor
     {
@@ -47,11 +47,8 @@ namespace DustInTheWind.ActiveTime.Reminder.LyncInhibitor
 
         public LyncReminderInhibitor(ILogger logger, AvailabilityWatcher availabilityWatcher)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
-            if (availabilityWatcher == null) throw new ArgumentNullException(nameof(availabilityWatcher));
-
-            this.logger = logger;
-            this.availabilityWatcher = availabilityWatcher;
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.availabilityWatcher = availabilityWatcher ?? throw new ArgumentNullException(nameof(availabilityWatcher));
         }
     }
 }

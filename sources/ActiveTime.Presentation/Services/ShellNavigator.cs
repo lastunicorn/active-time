@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,11 +17,11 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime.Services
+namespace DustInTheWind.ActiveTime.Presentation.Services
 {
     /// <summary>
     /// 
@@ -51,13 +51,9 @@ namespace DustInTheWind.ActiveTime.Services
         /// </summary>
         public ShellNavigator(IUnityContainer unityContainer, IRegionManager regionManager, DispatcherService dispatcherService)
         {
-            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
-            if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
-            if (dispatcherService == null) throw new ArgumentNullException(nameof(dispatcherService));
-
-            this.unityContainer = unityContainer;
-            this.regionManager = regionManager;
-            this.dispatcherService = dispatcherService;
+            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
+            this.regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            this.dispatcherService = dispatcherService ?? throw new ArgumentNullException(nameof(dispatcherService));
         }
 
         /// <summary>

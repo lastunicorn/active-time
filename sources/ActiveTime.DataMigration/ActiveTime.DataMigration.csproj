@@ -77,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
+      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
+      <Name>ActiveTime.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Persistence.SQLite.AdoNet.Module\ActiveTime.Persistence.SQLite.AdoNet.Module.csproj">
       <Project>{78a4111d-38dd-439f-abc1-cd569c70de9c}</Project>
       <Name>ActiveTime.Persistence.SQLite.AdoNet.Module</Name>
@@ -84,10 +88,6 @@
     <ProjectReference Include="..\ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj">
       <Project>{bfc9b5e5-e55e-4f98-88e5-49f31609eb4c}</Project>
       <Name>ActiveTime.Persistence.LiteDB.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence\ActiveTime.Persistence.csproj">
-      <Project>{7b8576cc-7df6-4fa9-9658-7abef74fe983}</Project>
-      <Name>ActiveTime.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

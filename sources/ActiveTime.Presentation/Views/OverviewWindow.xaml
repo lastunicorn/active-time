@@ -1,6 +1,6 @@
 ﻿<!--
 ActiveTime
-Copyright (C) 2011-2017 Dust in the Wind
+Copyright (C) 2011-2020 Dust in the Wind
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,14 +17,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 -->
 
 <Window
-    x:Class="DustInTheWind.ActiveTime.Views.OverviewWindow"
+    x:Class="DustInTheWind.ActiveTime.Presentation.Views.OverviewWindow"
 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.ViewModels"
-    
+    xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.ViewModels"
+
     Title="Overview"
     Height="500"
     Width="600"

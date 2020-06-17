@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Presentation.Properties;
-using DustInTheWind.ActiveTime.ViewModels;
+using DustInTheWind.ActiveTime.Presentation.Properties;
+using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests

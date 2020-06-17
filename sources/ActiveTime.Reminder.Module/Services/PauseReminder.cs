@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,11 +17,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DustInTheWind.ActiveTime.Common.UI;
-using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
-using DustInTheWind.ActiveTime.Logging;
-using DustInTheWind.ActiveTime.Recording;
-using DustInTheWind.ActiveTime.Reminder.Module.Inhibitors;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Common.Presentation;
+using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Reminder.Module.Reminding;
 
 namespace DustInTheWind.ActiveTime.Reminder.Module.Services
@@ -84,15 +83,10 @@ namespace DustInTheWind.ActiveTime.Reminder.Module.Services
         /// <param name="reminder">It is used to calculate the time when the user should make a pause.</param>
         public PauseReminder(IRecorderService recorderService, IShellNavigator shellNavigator, IReminder reminder, ILogger logger)
         {
-            if (recorderService == null) throw new ArgumentNullException(nameof(recorderService));
-            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
-            if (reminder == null) throw new ArgumentNullException(nameof(reminder));
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
-
-            this.recorderService = recorderService;
-            this.shellNavigator = shellNavigator;
-            this.reminder = reminder;
-            this.logger = logger;
+            this.recorderService = recorderService ?? throw new ArgumentNullException(nameof(recorderService));
+            this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
+            this.reminder = reminder ?? throw new ArgumentNullException(nameof(reminder));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             Inhibitors = new List<IReminderInhibitor>();
 

@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <!--
 ActiveTime
-Copyright (C) 2011-2017 Dust in the Wind
+Copyright (C) 2011-2020 Dust in the Wind
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <Modularity:ModuleInfo
         ModuleName="RecorderModule"
-        Ref="file://ActiveTime.RecorderModule.dll"
+        Ref="file://ActiveTime.RecordingModule.dll"
         ModuleType="DustInTheWind.ActiveTime.Recording.Module.ModuleDefinitions.RecorderModule, ActiveTime.Recording.Module"
         InitializationMode="WhenAvailable">
 
@@ -80,14 +80,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         Ref="file://ActiveTime.ReminderModule.dll"
         ModuleType="DustInTheWind.ActiveTime.Reminder.Module.ModuleDefinitions.ReminderModule, ActiveTime.Reminder.Module"
         InitializationMode="WhenAvailable">
-        
+
         <Modularity:ModuleInfo.DependsOn>
             <sys:String>RecorderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
-        
+
     </Modularity:ModuleInfo>
 
-    <Modularity:ModuleInfo
+    <!--<Modularity:ModuleInfo
         ModuleName="LyncInhibitor"
         Ref="file://ActiveTime.ReminderModule.LyncInhibitor.dll"
         ModuleType="DustInTheWind.ActiveTime.Reminder.LyncInhibitor.ModuleDefinitions.ReminderInhibitorModule, ActiveTime.Reminder.LyncInhibitor"
@@ -97,7 +97,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <sys:String>ReminderModule</sys:String>
         </Modularity:ModuleInfo.DependsOn>
 
-    </Modularity:ModuleInfo>
+    </Modularity:ModuleInfo>-->
 
     <Modularity:ModuleInfo
         ModuleName="TrayIconModule"

@@ -1,4 +1,18 @@
-using System;
+// ActiveTime
+// Copyright (C) 2011-2020 Dust in the Wind
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace DustInTheWind.ActiveTime.Watchman
 {
@@ -7,63 +21,13 @@ namespace DustInTheWind.ActiveTime.Watchman
         /// <summary>
         /// Gets the name of the current instance.
         /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IncompetentGuard"/> class.
-        /// </summary>
-        public IncompetentGuard()
-        {
-            Name = "Incompetent Guard";
-        }
-
-        #region IDisposable Members
-
-        private bool disposed;
+        public string Name { get; } = "Incompetent Guard";
 
         /// <summary>
         /// Releases all resources used by the current instance.
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
-
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        /// <remarks>
-        /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
-        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be disposed.</para>
-        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be disposed.</para>
-        /// </remarks>
-        /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
-        private void Dispose(bool disposing)
-        {
-            // Check to see if Dispose has already been called.
-            if (disposed)
-                return;
-
-            // If disposing equals true, dispose all managed resources.
-            if (disposing)
-            {
-                // Dispose managed resources.
-                // ...
-
-            }
-
-            // Call the appropriate methods to clean up unmanaged resources here.
-            // ...
-
-            disposed = true;
-        }
-
-        ~IncompetentGuard()
-        {
-            Dispose(false);
-        }
-
-        #endregion
     }
 }

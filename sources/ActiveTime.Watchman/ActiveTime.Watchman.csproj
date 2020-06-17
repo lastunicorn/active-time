@@ -46,9 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Common.csproj">
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{c1f39aba-06c0-4e71-a30d-00eb10d4c9e5}</Project>
-      <Name>ActiveTime.Common</Name>
+      <Name>ActiveTime.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2017 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,10 +17,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ActiveTime.Recording;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Recording;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.Presentation
 {
     internal class ReportBuilder
     {
@@ -69,23 +70,23 @@ namespace DustInTheWind.ActiveTime
             foreach (DayComment dayComment in DayComments)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
-                RecordAnalyzer recordAnalyzer = new RecordAnalyzer(timeRecords);
+                DayRecord dayRecord = new DayRecord(timeRecords);
 
                 sb.Append(dayComment.Date.ToDefaultFormat());
 
                 sb.Append(" - active: ");
 
-                TimeSpan totalActiveTime = recordAnalyzer.TotalActiveTime;
+                TimeSpan totalActiveTime = dayRecord.TotalActiveTime;
                 sb.Append(totalActiveTime.ToDefaultFormat());
 
                 sb.Append(" [ ");
 
-                TimeSpan? beginTime = recordAnalyzer.OverallBeginTime;
+                TimeSpan? beginTime = dayRecord.OverallBeginTime;
                 sb.Append(beginTime.ToDefaultFormat());
 
                 sb.Append(" - ");
 
-                TimeSpan? endTime = recordAnalyzer.OverallEndTime;
+                TimeSpan? endTime = dayRecord.OverallEndTime;
                 sb.Append(endTime.ToDefaultFormat());
 
                 sb.Append(" ] ");
@@ -109,9 +110,9 @@ namespace DustInTheWind.ActiveTime
             while (date <= LastDay)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
-                RecordAnalyzer recordAnalyzer = new RecordAnalyzer(timeRecords);
+                DayRecord dayRecord = new DayRecord(timeRecords);
 
-                TimeSpan totalDayActiveTime = recordAnalyzer.TotalActiveTime;
+                TimeSpan totalDayActiveTime = dayRecord.TotalActiveTime;
 
                 totalTime += totalDayActiveTime;
 
