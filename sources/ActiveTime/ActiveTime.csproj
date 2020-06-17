@@ -87,85 +87,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands\AboutCommand.cs" />
-    <Compile Include="Commands\CalendarCommand.cs" />
-    <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="Commands\DecrementDayCommand.cs" />
-    <Compile Include="Commands\ExitCommand.cs" />
-    <Compile Include="Commands\IncrementDayCommand.cs" />
-    <Compile Include="Commands\OverviewCommand.cs" />
-    <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Commands\ResetCommentCommand.cs" />
-    <Compile Include="Commands\SaveCommentCommand.cs" />
-    <Compile Include="Commands\StartRecorderCommand.cs" />
-    <Compile Include="Commands\DeleteCommand.cs" />
-    <Compile Include="Commands\RefreshCommand.cs" />
-    <Compile Include="Commands\StopRecorderCommand.cs" />
-    <Compile Include="Commands\TimeRecordsCommand.cs" />
-    <Compile Include="Commands\CommentsCommand.cs" />
-    <Compile Include="Commands\MenuItemClick.cs" />
-    <Compile Include="Commands\MenuItemClickCommandBehavior.cs" />
-    <Compile Include="Commands\ToggleRecorderCommand.cs" />
-    <Compile Include="Converters\BooleanConverter.cs" />
-    <Compile Include="Converters\RecordConverter.cs" />
-    <Compile Include="Converters\TimeSpanToStringConverter.cs" />
-    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
-    <Compile Include="ReportBuilder.cs" />
-    <Compile Include="Services\ApplicationService.cs" />
-    <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\CurrentDay.cs" />
-    <Compile Include="Services\DispatcherService.cs" />
-    <Compile Include="Services\ICurrentDay.cs" />
-    <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="Properties\Settings.cs" />
-    <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="UnitOfWorkFactory.cs" />
-    <Compile Include="ViewModels\AboutViewModel.cs" />
-    <Compile Include="ViewModels\CalendarViewModel.cs" />
-    <Compile Include="ViewModels\CommentsViewModel.cs" />
-    <Compile Include="ViewModels\CurrentDateViewModel.cs" />
-    <Compile Include="ViewModels\DayRecordsViewModel.cs" />
-    <Compile Include="Services\DayReport.cs" />
-    <Compile Include="ViewModels\FrontViewModel.cs" />
-    <Compile Include="ViewModels\MainMenuViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MessageViewModel.cs" />
-    <Compile Include="ViewModels\OverviewViewModel.cs" />
-    <Compile Include="ViewModels\StatusInfoViewModel.cs" />
-    <Compile Include="Views\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CalendarWindow.xaml.cs">
-      <DependentUpon>CalendarWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CommentsView.xaml.cs">
-      <DependentUpon>CommentsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CurrentDateView.xaml.cs">
-      <DependentUpon>CurrentDateView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DayRecordsView.xaml.cs">
-      <DependentUpon>DayRecordsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FrontView.xaml.cs">
-      <DependentUpon>FrontView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainMenuView.xaml.cs">
-      <DependentUpon>MainMenuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MessageWindow.xaml.cs">
-      <DependentUpon>MessageWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OverviewWindow.xaml.cs">
-      <DependentUpon>OverviewWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StatusInfoView.xaml.cs">
-      <DependentUpon>StatusInfoView.xaml</DependentUpon>
-    </Compile>
     <Resource Include="ModuleCatalog.xaml">
       <SubType>Designer</SubType>
     </Resource>
@@ -174,20 +98,11 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
@@ -219,6 +134,10 @@
       <Project>{7b8576cc-7df6-4fa9-9658-7abef74fe983}</Project>
       <Name>ActiveTime.Persistence</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
+      <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
+      <Name>ActiveTime.Presentation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
       <Project>{c3078beb-d0db-487b-9a50-dd834fca445b}</Project>
       <Name>ActiveTime.Recording</Name>
@@ -233,114 +152,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Styles\ButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\CheckBoxIconTemplates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\DatePickerStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\ListBoxStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\MenuStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\TextBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\LabelStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\CheckBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\Colors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\ScrollBarStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\StatusBarStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\WindowStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AboutWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\CalendarWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CurrentDateView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\DayRecordsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\CommentsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\FrontView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\MainMenuView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\MessageWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\OverviewWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\StatusInfoView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

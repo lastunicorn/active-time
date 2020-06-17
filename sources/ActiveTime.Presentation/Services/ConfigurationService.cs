@@ -14,22 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using ActiveTime.Presentation.Properties;
-using DustInTheWind.ActiveTime.ViewModels;
-using NUnit.Framework;
+using DustInTheWind.ActiveTime.Common.Services;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Services
 {
-    [TestFixture]
-    public class ConstructorTests
+    public class ConfigurationService : IConfigurationService
     {
-        [Test]
-        public void default_value_of_Message()
+        public TimeSpan ReminderPauseInterval
         {
-            MessageViewModel messageViewModel = new MessageViewModel();
+            get { return Settings.Default.Reminder_PauseInterval; }
+            set { Settings.Default.Reminder_PauseInterval = value; }
+        }
 
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
+        public TimeSpan ReminderSnoozeInterval
+        {
+            get { return Settings.Default.Reminder_SnoozeInterval; }
+            set { Settings.Default.Reminder_SnoozeInterval = value; }
         }
     }
 }

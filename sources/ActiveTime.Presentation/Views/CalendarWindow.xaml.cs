@@ -14,22 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Presentation.Properties;
+using System;
+using System.Windows;
+using System.Windows.Input;
 using DustInTheWind.ActiveTime.ViewModels;
-using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Views
 {
-    [TestFixture]
-    public class ConstructorTests
+    /// <summary>
+    /// Interaction logic for CalendarWindow.xaml
+    /// </summary>
+    public partial class CalendarWindow : Window
     {
-        [Test]
-        public void default_value_of_Message()
+        public CalendarWindow(CalendarViewModel viewModel)
         {
-            MessageViewModel messageViewModel = new MessageViewModel();
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
+            InitializeComponent();
+
+            DataContext = viewModel;
+        }
+
+        private void calendar_OnGotMouseCapture(object sender, MouseEventArgs e)
+        {
+            UIElement originalElement = e.OriginalSource as UIElement;
+            originalElement?.ReleaseMouseCapture();
         }
     }
 }

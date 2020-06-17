@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,33 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.TrayIconModule.Views;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
+using DustInTheWind.ActiveTime.Services;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.Commands
 {
-    public class TrayIconModule : IModule
+    public class DecrementDayCommand : CommandBase
     {
-        private TrayIconView trayIconView;
+        private readonly ICurrentDay currentDay;
 
-        private readonly IUnityContainer unityContainer;
-
-        public TrayIconModule(IUnityContainer unityContainer)
+        public DecrementDayCommand(ICurrentDay currentDay)
         {
-            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
+            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
+            this.currentDay = currentDay;
         }
 
-        public void Initialize()
+        public override bool CanExecute(object parameter)
         {
-            trayIconView = unityContainer.Resolve<TrayIconView>();
+            return currentDay.Date != null;
+        }
+
+        public override void Execute(object parameter)
+        {
+            DateTime? date = currentDay.Date;
+
+            if (date == null)
+                return;
+
+            currentDay.Date = date.Value.AddDays(-1);
         }
     }
 }

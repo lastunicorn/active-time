@@ -14,22 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Presentation.Properties;
-using DustInTheWind.ActiveTime.ViewModels;
-using NUnit.Framework;
+using System.Windows;
+using DustInTheWind.ActiveTime.Common.Services;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Services
 {
-    [TestFixture]
-    public class ConstructorTests
+    public class ApplicationService : ApplicationServiceBase
     {
-        [Test]
-        public void default_value_of_Message()
+        protected override void PerformExit()
         {
-            MessageViewModel messageViewModel = new MessageViewModel();
-
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
+            Application.Current.Shutdown();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,22 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Presentation.Properties;
-using DustInTheWind.ActiveTime.ViewModels;
-using NUnit.Framework;
+using System;
+using DustInTheWind.ActiveTime.Services;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Commands
 {
-    [TestFixture]
-    public class ConstructorTests
+    public class RefreshCommand : CommandBase
     {
-        [Test]
-        public void default_value_of_Message()
-        {
-            MessageViewModel messageViewModel = new MessageViewModel();
+        private readonly ICurrentDay currentDay;
 
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
+        public RefreshCommand(ICurrentDay currentDay)
+        {
+            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
+
+            this.currentDay = currentDay;
+        }
+
+        public override void Execute(object parameter)
+        {
+            currentDay.ReloadDayRecord();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,32 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.TrayIconModule.Views;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
+using DustInTheWind.ActiveTime.Recording;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.Commands
 {
-    public class TrayIconModule : IModule
+    public class ToggleRecorderCommand : CommandBase
     {
-        private TrayIconView trayIconView;
+        private readonly IRecorderService recorder;
 
-        private readonly IUnityContainer unityContainer;
-
-        public TrayIconModule(IUnityContainer unityContainer)
+        public ToggleRecorderCommand(IRecorderService recorder)
         {
-            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
+            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
+            this.recorder = recorder;
         }
 
-        public void Initialize()
+        public override void Execute(object parameter)
         {
-            trayIconView = unityContainer.Resolve<TrayIconView>();
+            switch (recorder.State)
+            {
+                case RecorderState.Stopped:
+                    recorder.Start();
+                    break;
+
+                case RecorderState.Running:
+                    recorder.Stop();
+                    break;
+            }
         }
     }
 }

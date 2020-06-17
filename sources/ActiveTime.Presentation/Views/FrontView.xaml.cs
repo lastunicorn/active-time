@@ -14,22 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Presentation.Properties;
+using System;
+using System.Windows;
+using System.Windows.Controls;
 using DustInTheWind.ActiveTime.ViewModels;
-using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Views
 {
-    [TestFixture]
-    public class ConstructorTests
+    /// <summary>
+    /// Interaction logic for MainView.xaml
+    /// </summary>
+    public partial class FrontView : UserControl
     {
-        [Test]
-        public void default_value_of_Message()
-        {
-            MessageViewModel messageViewModel = new MessageViewModel();
+        private readonly FrontViewModel viewModel;
 
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
+        public FrontView(FrontViewModel viewModel)
+        {
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
+            InitializeComponent();
+
+            this.viewModel = viewModel;
+        }
+
+        private void MainView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = viewModel;
+            viewModel.RefreshCommand.Execute(null);
         }
     }
 }

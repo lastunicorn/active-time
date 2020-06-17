@@ -14,22 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Presentation.Properties;
+using System;
+using System.Windows;
+using System.Windows.Controls;
 using DustInTheWind.ActiveTime.ViewModels;
-using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Views
 {
-    [TestFixture]
-    public class ConstructorTests
+    /// <summary>
+    /// Interaction logic for CommentsView.xaml
+    /// </summary>
+    public partial class CommentsView : UserControl
     {
-        [Test]
-        public void default_value_of_Message()
-        {
-            MessageViewModel messageViewModel = new MessageViewModel();
+        private readonly CommentsViewModel viewModel;
 
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
+        public CommentsView(CommentsViewModel viewModel)
+        {
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
+            this.viewModel = viewModel;
+
+            InitializeComponent();
+        }
+
+        private void CommentsView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = viewModel;
         }
     }
 }

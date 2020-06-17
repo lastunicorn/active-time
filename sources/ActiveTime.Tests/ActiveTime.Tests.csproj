@@ -144,6 +144,10 @@
       <Project>{7b8576cc-7df6-4fa9-9658-7abef74fe983}</Project>
       <Name>ActiveTime.Persistence</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
+      <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
+      <Name>ActiveTime.Presentation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
       <Name>ActiveTime.Recording.Module</Name>

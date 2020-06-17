@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011-2017 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,22 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using ActiveTime.Presentation.Properties;
-using DustInTheWind.ActiveTime.ViewModels;
-using NUnit.Framework;
+using System;
+using DustInTheWind.ActiveTime.Common.UI;
+using DustInTheWind.ActiveTime.Common.UI.ShellNavigation;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Commands
 {
-    [TestFixture]
-    public class ConstructorTests
+    public class CalendarCommand : CommandBase
     {
-        [Test]
-        public void default_value_of_Message()
-        {
-            MessageViewModel messageViewModel = new MessageViewModel();
+        private readonly IShellNavigator shellNavigator;
 
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
+        public CalendarCommand(IShellNavigator shellNavigator)
+        {
+            if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
+            this.shellNavigator = shellNavigator;
+        }
+
+        public override void Execute(object parameter)
+        {
+            shellNavigator.Navigate(ShellNames.CalendarShell);
         }
     }
 }
