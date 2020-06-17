@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <exception cref="ArgumentOutOfRangeException">The value is less then zero or greater or equal to 24 hours.</exception>
         public TimeSpan StartTime
         {
-            get { return startTime; }
+            get => startTime;
             set
             {
                 if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
@@ -55,7 +55,7 @@ namespace DustInTheWind.ActiveTime.Recording
         /// <exception cref="ArgumentOutOfRangeException">The value is less then zero or greater or equal to 24 hours.</exception>
         public TimeSpan EndTime
         {
-            get { return endTime; }
+            get => endTime;
             set
             {
                 if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
@@ -66,6 +66,7 @@ namespace DustInTheWind.ActiveTime.Recording
         }
 
         public TimeSpan Interval => endTime - startTime;
+
         public double IntervalInMinutes => (endTime - startTime).TotalMinutes;
 
         /// <summary>

@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.Watchman
         /// Gets a value that specifies the level at which the current instance of the
         /// <see cref="Guard"/> class will have effect.
         /// </summary>
-        public GuardLevel GuardLevel { get; private set; }
+        public GuardLevel GuardLevel { get; }
 
         private readonly IGuard guard;
 
@@ -50,9 +50,8 @@ namespace DustInTheWind.ActiveTime.Watchman
         /// <exception cref="ActiveTimeException"></exception>
         public Guard(string name, GuardLevel guardLevel)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
 
-            Name = name;
             GuardLevel = guardLevel;
 
             switch (guardLevel)
@@ -70,7 +69,7 @@ namespace DustInTheWind.ActiveTime.Watchman
                     break;
 
                 default:
-                    throw new ArgumentException("Invalid guard level.", "guardLevel");
+                    throw new ArgumentException("Invalid guard level.", nameof(guardLevel));
             }
         }
 
