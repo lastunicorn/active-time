@@ -14,11 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Presentation.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
@@ -44,10 +41,6 @@ namespace DustInTheWind.ActiveTime.ModuleDefinitions
 
         public void Initialize()
         {
-            // Register services.
-            unityContainer.RegisterType<ILogger, Logger>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<CurrentDay>(new ContainerControlledLifetimeManager());
-
             // Register views in regions.
             regionManager.RegisterViewWithRegion(RegionNames.MainContentRegion, typeof(FrontView));
 

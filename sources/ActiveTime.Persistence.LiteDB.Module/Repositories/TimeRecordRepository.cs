@@ -31,9 +31,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public TimeRecordRepository(LiteDatabase database)
         {
-            if (database == null) throw new ArgumentNullException(nameof(database));
-
-            this.database = database;
+            this.database = database ?? throw new ArgumentNullException(nameof(database));
         }
 
         public void Add(TimeRecord timeRecord)

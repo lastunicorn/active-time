@@ -17,9 +17,11 @@
 using System;
 using System.Windows;
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Presentation.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
@@ -40,6 +42,10 @@ namespace DustInTheWind.ActiveTime
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+
+            // Register services.
+            Container.RegisterType<ILogger, Logger>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<CurrentDay>(new ContainerControlledLifetimeManager());
 
             // Register WPF related services.
             Container.RegisterType<IApplicationService, ApplicationService>(new ContainerControlledLifetimeManager());

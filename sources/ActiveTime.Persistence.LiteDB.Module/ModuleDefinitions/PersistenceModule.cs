@@ -27,9 +27,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.ModuleDefinitions
 
         public PersistenceModule(IUnityContainer unityContainer)
         {
-            if (unityContainer == null) throw new ArgumentNullException(nameof(unityContainer));
-
-            this.unityContainer = unityContainer;
+            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
         }
 
         public void Initialize()
