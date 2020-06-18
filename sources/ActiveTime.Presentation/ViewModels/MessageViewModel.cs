@@ -16,7 +16,6 @@
 
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Presentation.Properties;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels

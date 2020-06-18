@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels

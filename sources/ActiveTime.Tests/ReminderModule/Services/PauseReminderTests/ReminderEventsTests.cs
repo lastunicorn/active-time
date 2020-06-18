@@ -20,7 +20,6 @@ using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Recording;
 using DustInTheWind.ActiveTime.Reminder.Module.Reminding;
 using DustInTheWind.ActiveTime.Reminder.Module.Services;

@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.Services;
 using Microsoft.Practices.Prism.Regions;

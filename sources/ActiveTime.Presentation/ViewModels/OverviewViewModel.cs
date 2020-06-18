@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Common.UI;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {

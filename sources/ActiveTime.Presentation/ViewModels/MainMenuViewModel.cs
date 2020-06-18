@@ -19,7 +19,6 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels

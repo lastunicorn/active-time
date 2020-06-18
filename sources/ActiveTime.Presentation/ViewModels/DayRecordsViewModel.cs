@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Presentation.Services;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels

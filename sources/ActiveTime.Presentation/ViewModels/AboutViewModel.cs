@@ -18,7 +18,6 @@ using System;
 using System.Timers;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Common.UI;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
