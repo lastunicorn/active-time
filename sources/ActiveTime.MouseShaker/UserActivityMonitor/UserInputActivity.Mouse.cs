@@ -1,17 +1,15 @@
 using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using DustInTheWind.ActiveTime.MouseShaker.WindowsApi;
 
 namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
 {
-
-    /// <summary>
-    /// This class monitors all mouse activities globally (also outside of the application) 
-    /// and provides appropriate events.
-    /// </summary>
-    public static partial class HookManager
+    public static partial class UserInputActivity
     {
         //################################################################
+
         #region Mouse events
 
         private static event MouseEventHandler mouseMove;
@@ -26,7 +24,6 @@ namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
                 EnsureSubscribedToGlobalMouseEvents();
                 mouseMove += value;
             }
-
             remove
             {
                 mouseMove -= value;
@@ -50,10 +47,8 @@ namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
                 EnsureSubscribedToGlobalMouseEvents();
                 mouseMoveExt += value;
             }
-
             remove
             {
-
                 mouseMoveExt -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
@@ -162,8 +157,8 @@ namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
         private static event MouseEventHandler mouseDoubleClick;
 
         //The double click event will not be provided directly from hook.
-        //To fire the double click event wee need to monitor mouse up event and when it occures 
-        //Two times during the time interval which is defined in Windows as a doble click time
+        //To fire the double click event wee need to monitor mouse up event and when it occurs 
+        //Two times during the time interval which is defined in Windows as a double click time
         //we fire this event.
 
         /// <summary>
@@ -189,6 +184,7 @@ namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
                     //We start to monitor mouse up event.
                     MouseUp += OnMouseUp;
                 }
+
                 mouseDoubleClick += value;
             }
             remove
@@ -205,6 +201,7 @@ namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
                         doubleClickTimer = null;
                     }
                 }
+
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
@@ -250,80 +247,127 @@ namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
                 prevClickedButton = e.Button;
             }
         }
+
         #endregion
 
-        //################################################################
-        #region Keyboard events
+        //##############################################################################
 
-        private static event KeyPressEventHandler keyPress;
+        #region Mouse hook processing
 
         /// <summary>
-        /// Occurs when a key is pressed.
+        /// This field is not objectively needed but we need to keep a reference on a delegate which will be 
+        /// passed to unmanaged code. To avoid GC to clean it up.
+        /// When passing delegates to unmanaged code, they must be kept alive by the managed application 
+        /// until it is guaranteed that they will never be called.
         /// </summary>
-        /// <remarks>
-        /// Key events occur in the following order: 
-        /// <list type="number">
-        /// <item>KeyDown</item>
-        /// <item>KeyPress</item>
-        /// <item>KeyUp</item>
-        /// </list>
-        ///The KeyPress event is not raised by noncharacter keys; however, the noncharacter keys do raise the KeyDown and KeyUp events. 
-        ///Use the KeyChar property to sample keystrokes at run time and to consume or modify a subset of common keystrokes. 
-        ///To handle keyboard events only in your application and not enable other applications to receive keyboard events, 
-        /// set the KeyPressEventArgs.Handled property in your form's KeyPress event-handling method to <b>true</b>. 
-        /// </remarks>
-        public static event KeyPressEventHandler KeyPress
+        private static HookProc mouseDelegate;
+
+        private static int mouseHookHandle;
+
+        private static int oldX;
+        private static int oldY;
+
+        private static int MouseHookProc(int code, int wParam, IntPtr lParam)
         {
-            add
+            if (code >= 0)
             {
-                EnsureSubscribedToGlobalKeyboardEvents();
-                keyPress += value;
+                //Marshall the data from callback.
+                MouseLLHookStruct mouseHookStruct = (MouseLLHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseLLHookStruct));
+
+                MouseEventInfo mouseEventInfo = new MouseEventInfo(wParam, mouseHookStruct);
+                MouseEventExtArgs args = new MouseEventExtArgs(mouseEventInfo);
+
+                if (mouseEventInfo.MouseUp)
+                    mouseUp?.Invoke(null, args);
+
+                if (mouseEventInfo.MouseDown)
+                    mouseDown?.Invoke(null, args);
+
+                if (mouseEventInfo.ClickCount > 0)
+                    mouseClick?.Invoke(null, args);
+
+                if (mouseEventInfo.ClickCount > 0)
+                    mouseClickExt?.Invoke(null, args);
+
+                if (mouseEventInfo.ClickCount == 2)
+                    mouseDoubleClick?.Invoke(null, args);
+
+                if (mouseEventInfo.MouseWheelDelta != 0)
+                    mouseWheel?.Invoke(null, args);
+
+                //If someone listens to move and there was a change in coordinates raise move event
+                if (oldX != mouseEventInfo.X || oldY != mouseEventInfo.Y)
+                {
+                    oldX = mouseEventInfo.X;
+                    oldY = mouseEventInfo.Y;
+
+                    mouseMove?.Invoke(null, args);
+                    mouseMoveExt?.Invoke(null, args);
+                }
+
+                if (args.Handled)
+                    return -1;
             }
-            remove
+
+            return User32Library.CallNextHookEx(mouseHookHandle, code, wParam, lParam);
+        }
+
+        private static void EnsureSubscribedToGlobalMouseEvents()
+        {
+            // install Mouse hook only if it is not installed and must be installed
+            if (mouseHookHandle == 0)
             {
-                keyPress -= value;
-                TryUnsubscribeFromGlobalKeyboardEvents();
+                //See comment of this field. To avoid GC to clean it up.
+                mouseDelegate = MouseHookProc;
+                //install hook
+                //mouseHookHandle = SetWindowsHookEx(
+                //    WH_MOUSE_LL,
+                //    mouseDelegate,
+                //    Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]),
+                //    0);
+                mouseHookHandle = User32Library.SetWindowsHookEx(User32Library.WH_MOUSE_LL, mouseDelegate, IntPtr.Zero, 0);
+                //If SetWindowsHookEx fails.
+                if (mouseHookHandle == 0)
+                {
+                    //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
+                    int errorCode = Marshal.GetLastWin32Error();
+                    //do cleanup
+
+                    //Initializes and throws a new instance of the Win32Exception class with the specified error. 
+                    throw new Win32Exception(errorCode);
+                }
             }
         }
 
-        private static event KeyEventHandler keyUp;
-
-        /// <summary>
-        /// Occurs when a key is released. 
-        /// </summary>
-        public static event KeyEventHandler KeyUp
+        private static void TryUnsubscribeFromGlobalMouseEvents()
         {
-            add
-            {
-                EnsureSubscribedToGlobalKeyboardEvents();
-                keyUp += value;
-            }
-            remove
-            {
-                keyUp -= value;
-                TryUnsubscribeFromGlobalKeyboardEvents();
-            }
+            bool noSubscribeIsRegistered = mouseClick == null && mouseDown == null && mouseMove == null &&
+                                           mouseUp == null && mouseClickExt == null && mouseMoveExt == null &&
+                                           mouseWheel == null;
+
+            if (noSubscribeIsRegistered)
+                ForceUnsubscribeFromGlobalMouseEvents();
         }
 
-        private static event KeyEventHandler keyDown;
-
-        /// <summary>
-        /// Occurs when a key is pressed. 
-        /// </summary>
-        public static event KeyEventHandler KeyDown
+        private static void ForceUnsubscribeFromGlobalMouseEvents()
         {
-            add
+            if (mouseHookHandle == 0)
+                return;
+
+            int result = User32Library.UnhookWindowsHookEx(mouseHookHandle);
+
+            mouseHookHandle = 0;
+            mouseDelegate = null;
+
+            if (result == 0)
             {
-                EnsureSubscribedToGlobalKeyboardEvents();
-                keyDown += value;
-            }
-            remove
-            {
-                keyDown -= value;
-                TryUnsubscribeFromGlobalKeyboardEvents();
+                // Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
+                int errorCode = Marshal.GetLastWin32Error();
+
+                // Initializes and throws a new instance of the Win32Exception class with the specified error. 
+                throw new Win32Exception(errorCode);
             }
         }
-
 
         #endregion
     }

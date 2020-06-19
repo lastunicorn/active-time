@@ -8,7 +8,7 @@ namespace DustInTheWind.ActiveTime.MouseShaker.WindowsApi
     /// to this callback function. CallWndProc is a placeholder for the application-defined 
     /// or library-defined function name.
     /// </summary>
-    /// <param name="nCode">
+    /// <param name="code">
     /// [in] Specifies whether the hook procedure must process the message. 
     /// If nCode is HC_ACTION, the hook procedure must process the message. 
     /// If nCode is less than zero, the hook procedure must pass the message to the 
@@ -32,5 +32,5 @@ namespace DustInTheWind.ActiveTime.MouseShaker.WindowsApi
     /// <remarks>
     /// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winui/winui/windowsuserinterface/windowing/hooks/hookreference/hookfunctions/callwndproc.asp
     /// </remarks>
-    internal delegate int HookProc(int nCode, int wParam, IntPtr lParam);
+    internal delegate int HookProc(int code, int wParam, IntPtr lParam);
 }

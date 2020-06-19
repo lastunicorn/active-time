@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
 {
@@ -14,22 +15,18 @@ namespace DustInTheWind.ActiveTime.MouseShaker.UserActivityMonitor
         public bool Handled { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the MouseEventArgs class. 
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class. 
         /// </summary>
-        /// <param name="buttons">One of the MouseButtons values indicating which mouse button was pressed.</param>
-        /// <param name="clicks">The number of times a mouse button was pressed.</param>
-        /// <param name="x">The x-coordinate of a mouse click, in pixels.</param>
-        /// <param name="y">The y-coordinate of a mouse click, in pixels.</param>
-        /// <param name="delta">A signed count of the number of dents the wheel has rotated.</param>
-        public MouseEventExtArgs(MouseButtons buttons, int clicks, int x, int y, int delta)
-            : base(buttons, clicks, x, y, delta)
+        public MouseEventExtArgs(MouseEventInfo mouseEventInfo)
+            : base(mouseEventInfo.Button, mouseEventInfo.ClickCount, mouseEventInfo.X, mouseEventInfo.Y, mouseEventInfo.MouseWheelDelta)
         { }
 
         /// <summary>
-        /// Initializes a new instance of the MouseEventArgs class. 
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class. 
         /// </summary>
         /// <param name="e">An ordinary <see cref="MouseEventArgs"/> argument to be extended.</param>
-        internal MouseEventExtArgs(MouseEventArgs e) : base(e.Button, e.Clicks, e.X, e.Y, e.Delta)
+        internal MouseEventExtArgs(MouseEventArgs e)
+            : base(e.Button, e.Clicks, e.X, e.Y, e.Delta)
         { }
     }
 }

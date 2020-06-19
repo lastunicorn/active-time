@@ -5,8 +5,6 @@ namespace DustInTheWind.ActiveTime.MouseShaker.WindowsApi
 {
     internal class User32Library
     {
-        #region Windows constants
-
         //values from Winuser.h in Microsoft SDK.
         /// <summary>
         /// Windows NT/2000/XP: Installs a hook procedure that monitors low-level mouse input events.
@@ -118,10 +116,6 @@ namespace DustInTheWind.ActiveTime.MouseShaker.WindowsApi
         public const byte VK_SHIFT = 0x10;
         public const byte VK_CAPITAL = 0x14;
         public const byte VK_NUMLOCK = 0x90;
-
-        #endregion
-
-        #region Windows function imports
 
         /// <summary>
         /// The CallNextHookEx function passes the hook information to the next hook procedure in the current hook chain. 
@@ -289,6 +283,10 @@ namespace DustInTheWind.ActiveTime.MouseShaker.WindowsApi
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern short GetKeyState(int vKey);
 
-        #endregion
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern bool GetCursorPos(out Point lpPoint);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern bool SetCursorPos(int x, int y);
     }
 }

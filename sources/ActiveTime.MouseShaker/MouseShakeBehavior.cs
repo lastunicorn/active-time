@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Windows.Forms;
+using DustInTheWind.ActiveTime.MouseShaker.WindowsApi;
 using Timer = System.Timers.Timer;
 
 namespace DustInTheWind.ActiveTime.MouseShaker
@@ -20,7 +19,7 @@ namespace DustInTheWind.ActiveTime.MouseShaker
         {
             random = new Random();
 
-            timer = new Timer(OneMinute);
+            timer = new Timer(OneSecond * 10);
             timer.Elapsed += HandleTimerElapsed;
         }
 
@@ -28,34 +27,35 @@ namespace DustInTheWind.ActiveTime.MouseShaker
         {
             Task.Run(() =>
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     MoveCursor();
-                    Thread.Sleep(50);
+                    Thread.Sleep(20);
                 }
             });
         }
 
         private void MoveCursor()
         {
-            const int delta = 10;
+            const int delta = 30;
 
-            Point mousePosition = Cursor.Position;
-            mousePosition.X += random.Next(-delta, delta + 1);
-            mousePosition.Y += random.Next(-delta, delta + 1);
+            User32Library.GetCursorPos(out Point mousePosition);
 
-            Cursor.Position = mousePosition;
+            int newX = mousePosition.X + random.Next(-delta, delta + 1);
+            int newY = mousePosition.Y + random.Next(-delta, delta + 1);
+
+            User32Library.SetCursorPos(newX, newY);
         }
 
         public void Start()
         {
-            UserActivityMonitor.HookManager.MouseMove += HandleMouseMoved;
+            UserActivityMonitor.UserInputActivity.MouseMove += HandleMouseMoved;
             timer.Start();
         }
 
         public void Stop()
         {
-            UserActivityMonitor.HookManager.MouseMove -= HandleMouseMoved;
+            UserActivityMonitor.UserInputActivity.MouseMove -= HandleMouseMoved;
             timer.Stop();
         }
 
