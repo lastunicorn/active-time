@@ -33,13 +33,7 @@ namespace DustInTheWind.ActiveTime
         {
             base.OnStartup(e);
 
-#if DEBUG
-            const GuardLevel guardLevel = GuardLevel.None;
-#else
-            const GuardLevel guardLevel = GuardLevel.Machine;
-#endif
-
-            if (CreateTheGuard(guardLevel))
+            if (CreateTheGuard())
                 StartApp();
             else
                 Shutdown();
@@ -57,8 +51,10 @@ namespace DustInTheWind.ActiveTime
             bootstrapper.Run();
         }
 
-        private bool CreateTheGuard(GuardLevel guardLevel)
+        private bool CreateTheGuard()
         {
+            GuardLevel guardLevel = CalculateGuardLevel();
+
             try
             {
                 guard = new Guard("DustInTheWind.ActiveTime", guardLevel);
@@ -79,6 +75,15 @@ namespace DustInTheWind.ActiveTime
             }
 
             return true;
+        }
+
+        private static GuardLevel CalculateGuardLevel()
+        {
+#if DEBUG
+            return GuardLevel.None;
+#else
+            return GuardLevel.Machine;
+#endif
         }
 
         private bool disposed;

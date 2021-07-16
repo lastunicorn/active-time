@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Presentation.Commands;
-using DustInTheWind.ActiveTime.Presentation.Services;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
@@ -26,6 +25,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         private readonly CurrentDay currentDay;
 
         private string comment;
+
         public string Comment
         {
             get => comment;
@@ -38,6 +38,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         }
 
         private bool commentTextWrap = true;
+
         public bool CommentTextWrap
         {
             get => commentTextWrap;
@@ -57,7 +58,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
             ResetCommand = new ResetCommentCommand(currentDay);
             SaveCommand = new SaveCommentCommand(currentDay);
-            
+
             currentDay.CommentChanged += HandleCurrentDayCommentChanged;
 
             Comment = currentDay.Comment;

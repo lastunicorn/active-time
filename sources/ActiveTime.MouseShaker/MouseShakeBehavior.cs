@@ -19,7 +19,7 @@ namespace DustInTheWind.ActiveTime.MouseShaker
         {
             random = new Random();
 
-            timer = new Timer(OneSecond * 10);
+            timer = new Timer(OneMinute);
             timer.Elapsed += HandleTimerElapsed;
         }
 

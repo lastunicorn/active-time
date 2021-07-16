@@ -111,10 +111,10 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     </Modularity:ModuleInfo>
 
-    <Modularity:ModuleInfo
+    <!--<Modularity:ModuleInfo
         ModuleName="MouseShakerModule"
         Ref="file://ActiveTime.MouseShaker.dll"
         ModuleType="DustInTheWind.ActiveTime.MouseShaker.MouseShakerModule, ActiveTime.MouseShaker"
-        InitializationMode="WhenAvailable"/>
+        InitializationMode="WhenAvailable"/>-->
 
 </Modularity:ModuleCatalog>

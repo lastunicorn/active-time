@@ -25,9 +25,10 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         public StatusInfoViewModel StatusInfoViewModel { get; }
 
         private string windowTitle;
+
         public string WindowTitle
         {
-            get { return windowTitle; }
+            get => windowTitle;
             set
             {
                 windowTitle = value;
@@ -37,11 +38,8 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel)
         {
-            if (mainMenuViewModel == null) throw new ArgumentNullException(nameof(mainMenuViewModel));
-            if (statusInfoViewModel == null) throw new ArgumentNullException(nameof(statusInfoViewModel));
-
-            MainMenuViewModel = mainMenuViewModel;
-            StatusInfoViewModel = statusInfoViewModel;
+            MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
+            StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
 
             windowTitle = BuildWindowTitle();
         }

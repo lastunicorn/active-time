@@ -51,7 +51,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Application", "A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationApp", "MigrationApp", "{8B32A190-6194-476F-86CA-7450B4FFAF30}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainApp", "MainApp", "{1DBD721E-9DB5-4550-A9B5-057C6628EDCB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ActiveTimeApp", "ActiveTimeApp", "{1DBD721E-9DB5-4550-A9B5-057C6628EDCB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.MouseShaker", "ActiveTime.MouseShaker\ActiveTime.MouseShaker.csproj", "{EB5788C3-9B86-40B2-92E9-5039345D7436}"
 EndProject

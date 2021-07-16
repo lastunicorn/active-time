@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Presentation.Commands;
-using DustInTheWind.ActiveTime.Presentation.Services;
 using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
@@ -68,7 +67,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public TimeSpan? EstimatedEndTime
         {
-            get { return estimatedEndTime; }
+            get => estimatedEndTime;
             set
             {
                 estimatedEndTime = value;

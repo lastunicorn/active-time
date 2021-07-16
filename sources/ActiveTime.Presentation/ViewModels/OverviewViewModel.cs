@@ -25,20 +25,22 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
 
         private string comments;
+
         public string Comments
         {
-            get { return comments; }
+            get => comments;
             private set
             {
                 comments = value;
                 OnPropertyChanged();
             }
         }
-        
+
         private DateTime firstDay;
+
         public DateTime FirstDay
         {
-            get { return firstDay; }
+            get => firstDay;
             set
             {
                 firstDay = value;
@@ -48,9 +50,10 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         }
 
         private DateTime lastDay;
+
         public DateTime LastDay
         {
-            get { return lastDay; }
+            get => lastDay;
             set
             {
                 lastDay = value;
@@ -61,10 +64,9 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public OverviewViewModel(IUnitOfWorkFactory unitOfWorkFactory, ITimeProvider timeProvider)
         {
-            if (unitOfWorkFactory == null) throw new ArgumentNullException(nameof(unitOfWorkFactory));
             if (timeProvider == null) throw new ArgumentNullException(nameof(timeProvider));
 
-            this.unitOfWorkFactory = unitOfWorkFactory;
+            this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
 
             DateTime today = timeProvider.GetDate();
             firstDay = today.AddDays(-29);
@@ -79,7 +81,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             {
                 IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
                 ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
-                
+
                 ReportBuilder reportBuilder = new ReportBuilder(dayCommentRepository, timeRecordRepository)
                 {
                     FirstDay = firstDay,

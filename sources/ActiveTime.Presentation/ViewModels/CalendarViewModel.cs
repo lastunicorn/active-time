@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Presentation.Services;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
@@ -47,7 +46,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         public CalendarViewModel(CurrentDay currentDay)
         {
             this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
-            
+
             Date = currentDay.Date;
 
             currentDay.DateChanged += HandleCurrentDateChanged;
