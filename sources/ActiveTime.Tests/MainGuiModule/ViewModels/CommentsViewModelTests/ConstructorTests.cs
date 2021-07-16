@@ -16,15 +16,14 @@
 
 using System;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Presentation.Services;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using Moq;
 using NUnit.Framework;
+using DayRecord = DustInTheWind.ActiveTime.Common.DayRecord;
 
 namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsViewModelTests
 {
@@ -84,7 +83,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsVi
         {
             DateTime date = new DateTime(2011, 06, 13);
             currentDay.Date = date;
-            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayComment);
+            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayRecord);
 
             CommentsViewModel viewModel = new CommentsViewModel(currentDay);
 

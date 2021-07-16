@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Text;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Recording;
 
 namespace DustInTheWind.ActiveTime.Presentation
 {
@@ -31,7 +30,7 @@ namespace DustInTheWind.ActiveTime.Presentation
         public DateTime FirstDay { get; set; }
         public DateTime LastDay { get; set; }
 
-        public IEnumerable<DayComment> DayComments { get; private set; }
+        public IEnumerable<DayRecord> DayComments { get; private set; }
         public string Text { get; private set; }
 
         public ReportBuilder(IDayCommentRepository dayCommentRepository, ITimeRecordRepository timeRecordRepository)
@@ -67,10 +66,10 @@ namespace DustInTheWind.ActiveTime.Presentation
             sb.AppendLine("--------------------------------------------------");
             sb.AppendLine();
 
-            foreach (DayComment dayComment in DayComments)
+            foreach (DayRecord dayComment in DayComments)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
-                DayRecord dayRecord = new DayRecord(timeRecords);
+                Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
 
                 sb.Append(dayComment.Date.ToDefaultFormat());
 
@@ -110,7 +109,7 @@ namespace DustInTheWind.ActiveTime.Presentation
             while (date <= LastDay)
             {
                 IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
-                DayRecord dayRecord = new DayRecord(timeRecords);
+                Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
 
                 TimeSpan totalDayActiveTime = dayRecord.TotalActiveTime;
 

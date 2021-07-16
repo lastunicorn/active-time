@@ -59,10 +59,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayComment dayComment = CreateDayCommentEntity();
-                dayComment.Id = 0;
+                DayRecord dayRecord = CreateDayCommentEntity();
+                dayRecord.Id = 0;
 
-                dayCommentRepository.Delete(dayComment);
+                dayCommentRepository.Delete(dayRecord);
             });
         }
 
@@ -71,20 +71,20 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayComment dayComment = CreateDayCommentEntity();
-                dayComment.Id = -1;
+                DayRecord dayRecord = CreateDayCommentEntity();
+                dayRecord.Id = -1;
 
-                dayCommentRepository.Delete(dayComment);
+                dayCommentRepository.Delete(dayRecord);
             });
         }
 
         [Test]
         public void deletes_the_sigle_record_from_database()
         {
-            DayComment dayComment = CreateDayCommentEntity();
-            dayCommentRepository.Add(dayComment);
+            DayRecord dayRecord = CreateDayCommentEntity();
+            dayCommentRepository.Add(dayRecord);
 
-            dayCommentRepository.Delete(dayComment);
+            dayCommentRepository.Delete(dayRecord);
 
             DbAssert.AssertDayCommentCount(0);
             //DbAssert.AssertDoesNotExistAnyDayComment();
@@ -93,9 +93,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void if_two_records_in_db_the_deleted_one_does_not_exist()
         {
-            DayComment dayComment1 = CreateDayCommentEntity();
+            DayRecord dayComment1 = CreateDayCommentEntity();
             dayComment1.Date = new DateTime(2011, 06, 13);
-            DayComment dayComment2 = CreateDayCommentEntity();
+            DayRecord dayComment2 = CreateDayCommentEntity();
             dayComment2.Date = new DateTime(2013, 06, 13);
             dayCommentRepository.Add(dayComment1);
             dayCommentRepository.Add(dayComment2);
@@ -109,9 +109,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void if_two_records_in_db_the_not_deleted_one_remains()
         {
-            DayComment dayComment1 = CreateDayCommentEntity();
+            DayRecord dayComment1 = CreateDayCommentEntity();
             dayComment1.Date = new DateTime(2011, 06, 13);
-            DayComment dayComment2 = CreateDayCommentEntity();
+            DayRecord dayComment2 = CreateDayCommentEntity();
             dayComment2.Date = new DateTime(2013, 06, 13);
             dayCommentRepository.Add(dayComment1);
             dayCommentRepository.Add(dayComment2);
@@ -126,16 +126,16 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayComment dayComment = CreateDayCommentEntity();
-                dayComment.Id = 10000;
+                DayRecord dayRecord = CreateDayCommentEntity();
+                dayRecord.Id = 10000;
 
-                dayCommentRepository.Delete(dayComment);
+                dayCommentRepository.Delete(dayRecord);
             });
         }
 
-        private static DayComment CreateDayCommentEntity()
+        private static DayRecord CreateDayCommentEntity()
         {
-            return new DayComment
+            return new DayRecord
             {
                 Id = 0,
                 Date = new DateTime(2014, 04, 30),

@@ -59,10 +59,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayComment dayComment = CreateDayCommentEntity();
-                dayComment.Id = 0;
+                DayRecord dayRecord = CreateDayCommentEntity();
+                dayRecord.Id = 0;
 
-                dayCommentRepository.Update(dayComment);
+                dayCommentRepository.Update(dayRecord);
             });
         }
 
@@ -71,10 +71,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayComment dayComment = CreateDayCommentEntity();
-                dayComment.Id = -1;
+                DayRecord dayRecord = CreateDayCommentEntity();
+                dayRecord.Id = -1;
 
-                dayCommentRepository.Update(dayComment);
+                dayCommentRepository.Update(dayRecord);
             });
         }
 
@@ -83,42 +83,42 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayComment dayComment = CreateDayCommentEntity();
-                dayComment.Id = 10000;
+                DayRecord dayRecord = CreateDayCommentEntity();
+                dayRecord.Id = 10000;
 
-                dayCommentRepository.Update(dayComment);
+                dayCommentRepository.Update(dayRecord);
             });
         }
 
         [Test]
         public void Date_is_updated_correctly()
         {
-            DayComment dayComment = CreateDayCommentEntity();
-            dayCommentRepository.Add(dayComment);
-            dayComment.Date = new DateTime(2018, 05, 02);
+            DayRecord dayRecord = CreateDayCommentEntity();
+            dayCommentRepository.Add(dayRecord);
+            dayRecord.Date = new DateTime(2018, 05, 02);
 
-            dayCommentRepository.Update(dayComment);
+            dayCommentRepository.Update(dayRecord);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayComment);
+            DbAssert.AssertExistsDayCommentEqualTo(dayRecord);
         }
 
         [Test]
         public void Comment_is_updated_correctly()
         {
-            DayComment dayComment = CreateDayCommentEntity();
-            dayCommentRepository.Add(dayComment);
-            dayComment.Comment = "this comment is changed";
+            DayRecord dayRecord = CreateDayCommentEntity();
+            dayCommentRepository.Add(dayRecord);
+            dayRecord.Comment = "this comment is changed";
 
-            dayCommentRepository.Update(dayComment);
+            dayCommentRepository.Update(dayRecord);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayComment);
+            DbAssert.AssertExistsDayCommentEqualTo(dayRecord);
         }
 
         [Test]
         public void record_that_was_not_updated_is_not_changed()
         {
-            DayComment dayComment1 = CreateDayCommentEntity();
-            DayComment dayComment2 = CreateDayCommentEntity();
+            DayRecord dayComment1 = CreateDayCommentEntity();
+            DayRecord dayComment2 = CreateDayCommentEntity();
             dayComment1.Date = new DateTime(2018, 06, 13);
             dayComment1.Date = new DateTime(2020, 06, 13);
             dayCommentRepository.Add(dayComment1);
@@ -130,9 +130,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             DbAssert.AssertExistsDayCommentEqualTo(dayComment2);
         }
 
-        private static DayComment CreateDayCommentEntity()
+        private static DayRecord CreateDayCommentEntity()
         {
-            return new DayComment
+            return new DayRecord
             {
                 Id = 0,
                 Date = new DateTime(2014, 04, 30),

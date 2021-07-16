@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using Moq;
 using NUnit.Framework;
@@ -60,7 +59,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
 
             dayCommentRepository
                 .Setup(x => x.GetByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<DayComment>());
+                .Returns(new List<DayRecord>());
 
             timeProvider = new Mock<ITimeProvider>();
         }

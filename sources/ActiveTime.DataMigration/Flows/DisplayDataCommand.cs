@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ConsoleTools;
 using DustInTheWind.ConsoleTools.MenuControl;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
@@ -98,9 +97,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
             CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
             CustomConsole.WriteLine();
 
-            IList<DayComment> dayComments = unitOfWork.DayCommentRepository.GetAll();
+            IList<DayRecord> dayComments = unitOfWork.DayCommentRepository.GetAll();
 
-            foreach (DayComment dayComment in dayComments)
+            foreach (DayRecord dayComment in dayComments)
                 CustomConsole.WriteLine(dayComment);
 
             CustomConsole.WriteLine();

@@ -18,7 +18,6 @@ using System;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.DataMigration.Migration;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ConsoleTools;
 using DustInTheWind.ConsoleTools.MenuControl;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
@@ -115,9 +114,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
         private void HandleCommentMigrated(object sender, CommentMigratedEventArgs e)
         {
-            DayComment dayComment = e.DayComment;
+            DayRecord dayRecord = e.DayRecord;
 
-            DateTime date = dayComment.Date;
+            DateTime date = dayRecord.Date;
 
             bool isSameMonth = date.Year == previousCommentDate.Year && date.Month == previousCommentDate.Month;
             if (!isSameMonth)

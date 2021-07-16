@@ -21,6 +21,7 @@ using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
+using DayRecord = DustInTheWind.ActiveTime.Common.DayRecord;
 
 namespace DustInTheWind.ActiveTime.Application
 {
@@ -31,7 +32,7 @@ namespace DustInTheWind.ActiveTime.Application
         private readonly IStatusInfoService statusInfoService;
 
         private DateTime? date;
-        private DayComment dayComment;
+        private DayRecord dayRecord;
         private string comment;
 
         public DateTime? Date
@@ -62,7 +63,7 @@ namespace DustInTheWind.ActiveTime.Application
             }
         }
 
-        public bool IsCommentSaved => (dayComment == null && comment == null) || (dayComment != null && dayComment.Comment == comment);
+        public bool IsCommentSaved => (dayRecord == null && comment == null) || (dayRecord != null && dayRecord.Comment == comment);
 
         public DayTimeInterval[] Records { get; private set; }
         public TimeSpan ActiveTime { get; private set; }
@@ -128,7 +129,7 @@ namespace DustInTheWind.ActiveTime.Application
         {
             if (date == null)
             {
-                dayComment = null;
+                dayRecord = null;
                 Comment = null;
                 return;
             }
@@ -137,10 +138,10 @@ namespace DustInTheWind.ActiveTime.Application
             {
                 IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
 
-                dayComment = dayCommentRepository.GetByDate(date.Value)
-                             ?? new DayComment { Date = date.Value };
+                dayRecord = dayCommentRepository.GetByDate(date.Value)
+                             ?? new DayRecord { Date = date.Value };
 
-                Comment = dayComment?.Comment;
+                Comment = dayRecord?.Comment;
             }
         }
 
@@ -174,7 +175,7 @@ namespace DustInTheWind.ActiveTime.Application
 
         private void SetDates(IEnumerable<TimeRecord> timeRecords)
         {
-            DayRecord dayRecord = new DayRecord(timeRecords);
+            Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
 
             Records = dayRecord.AllIntervals.ToArray();
             ActiveTime = dayRecord.TotalActiveTime;
@@ -187,18 +188,18 @@ namespace DustInTheWind.ActiveTime.Application
 
         public void SaveComments()
         {
-            if (dayComment == null)
+            if (dayRecord == null)
                 return;
 
-            dayComment.Comment = comment;
+            dayRecord.Comment = comment;
 
-            logger.Log(dayComment);
+            logger.Log(dayRecord);
 
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
             {
                 IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
 
-                dayCommentRepository.AddOrUpdate(dayComment);
+                dayCommentRepository.AddOrUpdate(dayRecord);
                 unitOfWork.Commit();
             }
 

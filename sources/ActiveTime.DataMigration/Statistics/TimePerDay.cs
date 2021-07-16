@@ -17,7 +17,6 @@
 using System;
 using System.Linq;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Statistics
@@ -70,11 +69,10 @@ namespace DustInTheWind.ActiveTime.DataMigration.Statistics
         {
             get
             {
-
                 if (commentLines == null)
                 {
-                    DayComment dayComment = unitOfWork.DayCommentRepository.GetByDate(Date);
-                    commentLines = dayComment?.Comment?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+                    DayRecord dayRecord = unitOfWork.DayCommentRepository.GetByDate(Date);
+                    commentLines = dayRecord?.Comment?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
                 }
 
                 return commentLines;

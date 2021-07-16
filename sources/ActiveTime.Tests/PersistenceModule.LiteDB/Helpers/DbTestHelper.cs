@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
 using LiteDB;
@@ -33,7 +32,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
                 LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName);
                 timeRecordCollection.Delete(x => true);
 
-                LiteCollection<DayComment> dayCommentCollection = database.GetCollection<DayComment>(DayCommentRepository.CollectionName);
+                LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(DayCommentRepository.CollectionName);
                 dayCommentCollection.Delete(x => true);
             }
         }

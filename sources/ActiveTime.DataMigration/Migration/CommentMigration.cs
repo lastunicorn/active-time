@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {
@@ -55,9 +54,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
         private void MigrateComments()
         {
-            IEnumerable<DayComment> dayComments = sourceUnitOfWork.DayCommentRepository.GetAll();
+            IEnumerable<DayRecord> dayComments = sourceUnitOfWork.DayCommentRepository.GetAll();
 
-            foreach (DayComment dayComment in dayComments)
+            foreach (DayRecord dayComment in dayComments)
             {
                 try
                 {
@@ -72,17 +71,17 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             }
         }
 
-        private void MigrateComment(DayComment dayComment)
+        private void MigrateComment(DayRecord dayRecord)
         {
-            DateTime date = dayComment.Date;
+            DateTime date = dayRecord.Date;
 
-            DayComment destinationRecord = destinationUnitOfWork.DayCommentRepository.GetByDate(date);
+            DayRecord destinationRecord = destinationUnitOfWork.DayCommentRepository.GetByDate(date);
 
             if (destinationRecord != null)
             {
-                bool existsIdenticalRecord = destinationRecord.Date - dayComment.Date > TimeSpan.FromSeconds(-1) &&
-                                             destinationRecord.Date - dayComment.Date < TimeSpan.FromSeconds(1) &&
-                                             destinationRecord.Comment == dayComment.Comment;
+                bool existsIdenticalRecord = destinationRecord.Date - dayRecord.Date > TimeSpan.FromSeconds(-1) &&
+                                             destinationRecord.Date - dayRecord.Date < TimeSpan.FromSeconds(1) &&
+                                             destinationRecord.Comment == dayRecord.Comment;
 
                 if (existsIdenticalRecord)
                 {
@@ -100,21 +99,21 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             else
             {
                 if (!Simulate)
-                    InsertRecordInDestination(dayComment);
+                    InsertRecordInDestination(dayRecord);
 
                 MigratedRecordsCount++;
             }
         }
 
-        private void InsertRecordInDestination(DayComment dayComment)
+        private void InsertRecordInDestination(DayRecord dayRecord)
         {
-            DayComment dayCommentCopy = new DayComment
+            DayRecord dayRecordCopy = new DayRecord
             {
-                Date = dayComment.Date,
-                Comment = dayComment.Comment
+                Date = dayRecord.Date,
+                Comment = dayRecord.Comment
             };
 
-            destinationUnitOfWork.DayCommentRepository.Add(dayCommentCopy);
+            destinationUnitOfWork.DayCommentRepository.Add(dayRecordCopy);
         }
 
         protected virtual void OnCommentMigrated(CommentMigratedEventArgs e)

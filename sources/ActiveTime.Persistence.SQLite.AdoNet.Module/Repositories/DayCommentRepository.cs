@@ -34,18 +34,18 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             this.connection = connection;
         }
 
-        public void Add(DayComment comment)
+        public void Add(DayRecord dayRecord)
         {
-            AddInternal(comment);
+            AddInternal(dayRecord);
         }
 
-        private void AddInternal(DayComment comment)
+        private void AddInternal(DayRecord dayRecord)
         {
             using (DbCommand command = connection.CreateCommand())
             {
                 string sql = string.Format("insert into comments(date,comment) values('{0:yyyy-MM-dd}', '{1}')",
-                    comment.Date,
-                    SqlTextEncode(comment.Comment));
+                    dayRecord.Date,
+                    SqlTextEncode(dayRecord.Comment));
 
                 command.CommandText = sql;
 
@@ -54,18 +54,18 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public void Update(DayComment comment)
+        public void Update(DayRecord dayRecord)
         {
-            UpdateInternal(comment);
+            UpdateInternal(dayRecord);
         }
 
-        private void UpdateInternal(DayComment comment)
+        private void UpdateInternal(DayRecord dayRecord)
         {
             using (DbCommand command = connection.CreateCommand())
             {
                 string sql = string.Format("update comments set comment='{0}' where date='{1:yyyy-MM-dd}'",
-                    SqlTextEncode(comment.Comment),
-                    comment.Date);
+                    SqlTextEncode(dayRecord.Comment),
+                    dayRecord.Date);
 
                 command.CommandText = sql;
 
@@ -74,21 +74,21 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public void AddOrUpdate(DayComment comment)
+        public void AddOrUpdate(DayRecord dayRecord)
         {
-            bool existsRecord = ExistsRecord(comment);
+            bool existsRecord = ExistsRecord(dayRecord);
 
             if (existsRecord)
-                UpdateInternal(comment);
+                UpdateInternal(dayRecord);
             else
-                AddInternal(comment);
+                AddInternal(dayRecord);
         }
 
-        public bool ExistsRecord(DayComment comment)
+        public bool ExistsRecord(DayRecord dayRecord)
         {
             using (DbCommand command = connection.CreateCommand())
             {
-                string sql = string.Format("select count(*) from comments where date='{0:yyyy-MM-dd}'", comment.Date);
+                string sql = string.Format("select count(*) from comments where date='{0:yyyy-MM-dd}'", dayRecord.Date);
 
                 command.CommandText = sql;
 
@@ -99,17 +99,17 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public void Delete(DayComment comment)
+        public void Delete(DayRecord dayRecord)
         {
             throw new NotImplementedException();
         }
 
-        public DayComment GetById(int id)
+        public DayRecord GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public DayComment GetByDate(DateTime date)
+        public DayRecord GetByDate(DateTime date)
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -124,7 +124,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
                 if (!successfullyRead)
                     return null;
 
-                return new DayComment
+                return new DayRecord
                 {
                     Date = date,
                     Comment = (string)reader["comment"]
@@ -132,7 +132,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public List<DayComment> GetByDate(DateTime startDate, DateTime endDate)
+        public List<DayRecord> GetByDate(DateTime startDate, DateTime endDate)
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -154,17 +154,17 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    List<DayComment> dayComments = new List<DayComment>();
+                    List<DayRecord> dayComments = new List<DayRecord>();
 
                     while (dataReader.Read())
                     {
-                        DayComment dayComment = new DayComment
+                        DayRecord dayRecord = new DayRecord
                         {
                             Date = (DateTime)dataReader["date"],
                             Comment = (string)dataReader["comment"]
                         };
 
-                        dayComments.Add(dayComment);
+                        dayComments.Add(dayRecord);
                     }
 
                     return dayComments;
@@ -172,7 +172,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public IList<DayComment> GetAll()
+        public IList<DayRecord> GetAll()
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -180,17 +180,17 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    List<DayComment> dayComments = new List<DayComment>();
+                    List<DayRecord> dayComments = new List<DayRecord>();
 
                     while (dataReader.Read())
                     {
-                        DayComment dayComment = new DayComment
+                        DayRecord dayRecord = new DayRecord
                         {
                             Date = (DateTime)dataReader["date"],
                             Comment = (string)dataReader["comment"]
                         };
 
-                        dayComments.Add(dayComment);
+                        dayComments.Add(dayRecord);
                     }
 
                     return dayComments;

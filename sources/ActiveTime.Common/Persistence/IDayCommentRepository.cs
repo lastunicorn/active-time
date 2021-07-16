@@ -24,52 +24,52 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
         /// <summary>
         /// When implemented in a class, adds a new comment record into the database.
         /// </summary>
-        /// <param name="comment">The <see cref="DayComment"/> object containing the data.</param>
+        /// <param name="dayRecord">The <see cref="DayRecord"/> object containing the data.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        void Add(DayComment comment);
+        void Add(DayRecord dayRecord);
 
         /// <summary>
         ///  When implemented in a class, updates an existing comment into the database.
         /// </summary>
-        /// <param name="comment">The <see cref="DayComment"/> object containing the data.</param>
+        /// <param name="dayRecord">The <see cref="DayRecord"/> object containing the data.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        void Update(DayComment comment);
+        void Update(DayRecord dayRecord);
 
         /// <summary>
         /// If the comment record is new, it is added into the database. If not, the record is updated.
         /// A record is considered new if its id is zero.
         /// </summary>
-        /// <param name="comment">The <see cref="DayComment"/> object containing the data.</param>
+        /// <param name="dayRecord">The <see cref="DayRecord"/> object containing the data.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        void AddOrUpdate(DayComment comment);
+        void AddOrUpdate(DayRecord dayRecord);
 
         /// <summary>
         ///  When implemented in a class, deletes an existing comment record from the database.
         /// </summary>
-        /// <param name="comment">The <see cref="DayComment"/> object containing the data.</param>
+        /// <param name="dayRecord">The <see cref="DayRecord"/> object containing the data.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        void Delete(DayComment comment);
+        void Delete(DayRecord dayRecord);
 
         /// <summary>
         ///  When implemented in a class, returns from the database the comment with the specified id.
         /// </summary>
         /// <param name="id">The id of the comment to return.</param>
-        /// <returns>An instance of <see cref="DayComment"/> containing the comment from the database.</returns>
-        DayComment GetById(int id);
+        /// <returns>An instance of <see cref="DayRecord"/> containing the comment from the database.</returns>
+        DayRecord GetById(int id);
 
         /// <summary>
         ///  When implemented in a class, returns from the database the comment for the specified date.
         /// </summary>
         /// <param name="date">The date of the comment to return.</param>
-        /// <returns>An instance of <see cref="DayComment"/> containing the comment from the database.</returns>
-        DayComment GetByDate(DateTime date);
+        /// <returns>An instance of <see cref="DayRecord"/> containing the comment from the database.</returns>
+        DayRecord GetByDate(DateTime date);
 
-        List<DayComment> GetByDate(DateTime startDate, DateTime endDate);
+        List<DayRecord> GetByDate(DateTime startDate, DateTime endDate);
 
         /// <summary>
         ///  When implemented in a class, returns from the database all the comments.
         /// </summary>
-        /// <returns>A list of <see cref="DayComment"/> containing all the requested comments.</returns>
-        IList<DayComment> GetAll();
+        /// <returns>A list of <see cref="DayRecord"/> containing all the requested comments.</returns>
+        IList<DayRecord> GetAll();
     }
 }

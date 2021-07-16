@@ -16,17 +16,16 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Persistence;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {
     internal class CommentMigratedEventArgs : EventArgs
     {
-        public DayComment DayComment { get; }
+        public DayRecord DayRecord { get; }
 
-        public CommentMigratedEventArgs(DayComment dayComment)
+        public CommentMigratedEventArgs(DayRecord dayRecord)
         {
-            DayComment = dayComment;
+            DayRecord = dayRecord;
         }
     }
 }

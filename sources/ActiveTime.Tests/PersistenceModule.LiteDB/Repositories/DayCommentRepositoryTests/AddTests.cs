@@ -51,29 +51,29 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void sets_the_id_of_the_DayComment_entity()
         {
-            DayComment dayComment = CreateDayCommentEntity();
+            DayRecord dayRecord = CreateDayCommentEntity();
 
-            dayCommentRepository.Add(dayComment);
+            dayCommentRepository.Add(dayRecord);
 
-            Assert.That(dayComment.Id, Is.Not.EqualTo(0));
+            Assert.That(dayRecord.Id, Is.Not.EqualTo(0));
         }
 
         [Test]
         public void saves_the_DayComment_in_the_database()
         {
-            DayComment dayComment = CreateDayCommentEntity();
+            DayRecord dayRecord = CreateDayCommentEntity();
 
-            dayCommentRepository.Add(dayComment);
+            dayCommentRepository.Add(dayRecord);
 
-            DbAssert.AssertDayCommentCount(1, x => x.Id == dayComment.Id);
+            DbAssert.AssertDayCommentCount(1, x => x.Id == dayRecord.Id);
         }
 
         [Test]
         public void saves_two_DayComments_in_the_database()
         {
-            DayComment dayComment1 = CreateDayCommentEntity();
+            DayRecord dayComment1 = CreateDayCommentEntity();
             dayComment1.Date = new DateTime(2014, 06, 13);
-            DayComment dayComment2 = CreateDayCommentEntity();
+            DayRecord dayComment2 = CreateDayCommentEntity();
             dayComment2.Date = new DateTime(2014, 03, 05);
 
             dayCommentRepository.Add(dayComment1);
@@ -88,8 +88,8 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayComment dayComment1 = CreateDayCommentEntity();
-                DayComment dayComment2 = CreateDayCommentEntity();
+                DayRecord dayComment1 = CreateDayCommentEntity();
+                DayRecord dayComment2 = CreateDayCommentEntity();
 
                 dayCommentRepository.Add(dayComment1);
                 dayCommentRepository.Add(dayComment2);
@@ -99,16 +99,16 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void correctly_adds_all_the_fields()
         {
-            DayComment dayComment = CreateDayCommentEntity();
+            DayRecord dayRecord = CreateDayCommentEntity();
 
-            dayCommentRepository.Add(dayComment);
+            dayCommentRepository.Add(dayRecord);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayComment);
+            DbAssert.AssertExistsDayCommentEqualTo(dayRecord);
         }
 
-        private static DayComment CreateDayCommentEntity()
+        private static DayRecord CreateDayCommentEntity()
         {
-            return new DayComment
+            return new DayRecord
             {
                 Id = 0,
                 Date = new DateTime(2014, 04, 30),
