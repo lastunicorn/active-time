@@ -47,7 +47,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         /// </summary>
         public TimeSpan StampingInterval
         {
-            get { return stampingInterval; }
+            get => stampingInterval;
             set
             {
                 lock (stateSynchronizer)
@@ -140,10 +140,10 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         /// <exception cref="ArgumentNullException"></exception>
         public RecorderService(IScribe scribe, IApplicationService applicationService)
         {
-            if (scribe == null) throw new ArgumentNullException(nameof(scribe));
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
 
-            this.scribe = scribe;
+            this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
+
             timer = new Timer(HandleTimerTick);
             stampingInterval = TimeSpan.FromMinutes(1);
 

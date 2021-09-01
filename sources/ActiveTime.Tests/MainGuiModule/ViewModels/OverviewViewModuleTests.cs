@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
@@ -35,7 +36,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         private Mock<IUnitOfWork> unitOfWork;
         private Mock<IDayCommentRepository> dayCommentRepository;
         private Mock<ITimeRecordRepository> timeRecordRepository;
-        private Mock<ITimeProvider> timeProvider;
+        private Mock<ISystemClock> timeProvider;
 
         [SetUp]
         public void SetUp()
@@ -61,14 +62,14 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
                 .Setup(x => x.GetByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<DayRecord>());
 
-            timeProvider = new Mock<ITimeProvider>();
+            timeProvider = new Mock<ISystemClock>();
         }
 
         [Test]
         public void LastDay_is_initialized_with_the_current_day_from_timeProvider()
         {
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(new DateTime(1980, 06, 13));
 
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
@@ -80,7 +81,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         public void FirstDay_is_initialized_with_29_days_before_the_current_day_from_timeProvider()
         {
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(new DateTime(1980, 06, 13));
 
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
@@ -92,7 +93,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         public void calls_GetByDate_with_FirstDay_and_LastDay_values()
         {
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(new DateTime(1980, 06, 13));
 
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
@@ -104,7 +105,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         public void populates_Comments_property()
         {
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(DateTime.Now);
 
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
@@ -116,7 +117,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         public void calls_GetByDate_when_FirsDay_is_set()
         {
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(new DateTime(1980, 06, 13));
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             dayCommentRepository.ResetCalls();
@@ -130,7 +131,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         public void calls_GetByDate_when_LastDay_is_set()
         {
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(new DateTime(1980, 06, 13));
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             dayCommentRepository.ResetCalls();
@@ -145,7 +146,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         {
             bool eventWasRaised = false;
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(DateTime.Now);
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             overviewViewModel.PropertyChanged += (sender, args) =>
@@ -164,7 +165,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
         {
             bool eventWasRaised = false;
             timeProvider
-                .Setup(x => x.GetDate())
+                .Setup(x => x.GetCurrentDate())
                 .Returns(DateTime.Now);
             OverviewViewModel overviewViewModel = new OverviewViewModel(unitOfWorkFactory.Object, timeProvider.Object);
             overviewViewModel.PropertyChanged += (sender, args) =>

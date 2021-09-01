@@ -17,6 +17,7 @@
 using System;
 using System.Windows;
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
@@ -53,7 +54,7 @@ namespace DustInTheWind.ActiveTime
             Container.RegisterType<DispatcherService>(new ContainerControlledLifetimeManager());
 
             // Register business services.
-            Container.RegisterType<ITimeProvider, CurrentTimeProvider>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ISystemClock, SystemClock>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStatusInfoService, StatusInfoService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IConfigurationService, ConfigurationService>();
             Container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>(new ContainerControlledLifetimeManager());

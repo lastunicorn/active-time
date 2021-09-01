@@ -16,8 +16,8 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Recording.Module.Services
 {
@@ -29,19 +29,19 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
     /// </remarks>
     internal class Scribe : IScribe
     {
-        private readonly ITimeProvider timeProvider;
+        private readonly ISystemClock systemClock;
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
         private TimeRecord currentTimeRecord;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scribe"/> class.
         /// </summary>
-        /// <param name="timeProvider"></param>
+        /// <param name="systemClock"></param>
         /// <param name="unitOfWorkFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Scribe(ITimeProvider timeProvider, IUnitOfWorkFactory unitOfWorkFactory)
+        public Scribe(ISystemClock systemClock, IUnitOfWorkFactory unitOfWorkFactory)
         {
-            this.timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
+            this.systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
             this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
         }
 
@@ -50,7 +50,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         /// </summary>
         public void StampNew()
         {
-            DateTime now = timeProvider.GetDateTime();
+            DateTime now = systemClock.GetCurrentTime();
             CreateNewTimeRecordAndSave(now);
         }
 
@@ -81,7 +81,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         /// </summary>
         public void Stamp()
         {
-            DateTime now = timeProvider.GetDateTime();
+            DateTime now = systemClock.GetCurrentTime();
 
             if (currentTimeRecord == null)
             {
@@ -146,7 +146,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
             if (currentTimeRecord == null)
                 return null;
 
-            DateTime now = timeProvider.GetDateTime();
+            DateTime now = systemClock.GetCurrentTime();
 
             bool isSameDay = currentTimeRecord.Date == now.Date;
 

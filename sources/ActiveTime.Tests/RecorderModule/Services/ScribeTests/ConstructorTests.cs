@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Persistence;
@@ -27,13 +28,13 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
     [TestFixture]
     public class ConstructorTests
     {
-        private Mock<ITimeProvider> timeProvider;
+        private Mock<ISystemClock> timeProvider;
         private Mock<IUnitOfWorkFactory> unitOfWorkFactory;
 
         [SetUp]
         public void SetUp()
         {
-            timeProvider = new Mock<ITimeProvider>();
+            timeProvider = new Mock<ISystemClock>();
             unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
         }
 

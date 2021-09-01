@@ -62,11 +62,11 @@
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IDwarf.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
-    <Compile Include="Services\ITimeProvider.cs" />
+    <Compile Include="Infrastructure\ISystemClock.cs" />
     <Compile Include="Services\IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\CurrentTimeProvider.cs" />
+    <Compile Include="Infrastructure\SystemClock.cs" />
     <Compile Include="TimeRecord.cs" />
     <Compile Include="TimeRecordType.cs" />
     <Compile Include="Presentation\ShellNavigation\IShell.cs" />

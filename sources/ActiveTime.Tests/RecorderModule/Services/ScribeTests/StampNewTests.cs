@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Persistence;
@@ -28,7 +29,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
     [TestFixture]
     public class StampNewTests
     {
-        private Mock<ITimeProvider> timeProvider;
+        private Mock<ISystemClock> timeProvider;
         private Mock<IUnitOfWorkFactory> unitOfWorkFactory;
         private Mock<IUnitOfWork> unitOfWork;
         private Mock<ITimeRecordRepository> timeRecordRepository;
@@ -37,7 +38,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         [SetUp]
         public void SetUp()
         {
-            timeProvider = new Mock<ITimeProvider>();
+            timeProvider = new Mock<ISystemClock>();
             unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
             unitOfWork = new Mock<IUnitOfWork>();
             timeRecordRepository = new Mock<ITimeRecordRepository>();
@@ -57,7 +58,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         public void calls_timeProvider()
         {
             DateTime now = DateTime.Now;
-            timeProvider.Setup(x => x.GetDateTime()).Returns(now);
+            timeProvider.Setup(x => x.GetCurrentTime()).Returns(now);
 
             scribe.StampNew();
 
@@ -68,7 +69,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         public void saves_a_new_record_in_repository()
         {
             DateTime now = DateTime.Now;
-            timeProvider.Setup(x => x.GetDateTime()).Returns(now);
+            timeProvider.Setup(x => x.GetCurrentTime()).Returns(now);
             timeRecordRepository.Setup(x => x.Add(It.Is<TimeRecord>(r => r.Id == 0 &&
                                                                    r.RecordType == TimeRecordType.Normal &&
                                                                    r.Date == now.Date &&

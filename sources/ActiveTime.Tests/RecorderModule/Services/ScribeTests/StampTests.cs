@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Persistence;
@@ -28,7 +29,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
     [TestFixture]
     public class StampTests
     {
-        private Mock<ITimeProvider> timeProvider;
+        private Mock<ISystemClock> timeProvider;
         private Mock<IUnitOfWorkFactory> unitOfWorkFactory;
         private Mock<IUnitOfWork> unitOfWork;
         private Mock<ITimeRecordRepository> timeRecordRepository;
@@ -37,7 +38,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         [SetUp]
         public void SetUp()
         {
-            timeProvider = new Mock<ITimeProvider>();
+            timeProvider = new Mock<ISystemClock>();
             unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
             unitOfWork = new Mock<IUnitOfWork>();
             timeRecordRepository = new Mock<ITimeRecordRepository>();
@@ -58,7 +59,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
         {
             TimeRecord actualTimeRecord = null;
             DateTime currentTime = new DateTime(1980, 05, 13, 12, 59, 00);
-            timeProvider.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetCurrentTime())
                 .Returns(currentTime);
             timeRecordRepository.Setup(x => x.Add(It.IsAny<TimeRecord>()))
                 .Callback<TimeRecord>(timeRecord => actualTimeRecord = timeRecord);
@@ -79,7 +80,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
             DateTime secondDateTime = new DateTime(1980, 06, 13, 12, 30, 10);
             TimeRecord actualTimeRecord = null;
             StampNew(firstDateTime);
-            timeProvider.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetCurrentTime())
                 .Returns(secondDateTime);
             timeRecordRepository.Setup(x => x.Update(It.IsAny<TimeRecord>()))
                 .Callback<TimeRecord>(a => actualTimeRecord = a);
@@ -99,7 +100,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
             DateTime secondDateTime = new DateTime(1980, 06, 14, 02, 30, 10);
             TimeRecord actualTimeRecord = null;
             StampNew(firstDateTime);
-            timeProvider.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetCurrentTime())
                 .Returns(secondDateTime);
             int callsCount = 0;
             timeRecordRepository.Setup(x => x.Update(It.IsAny<TimeRecord>()))
@@ -125,7 +126,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
             DateTime secondDateTime = new DateTime(1980, 06, 14, 02, 30, 10);
             TimeRecord actualTimeRecord = null;
             StampNew(firstDateTime);
-            timeProvider.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetCurrentTime())
                 .Returns(secondDateTime);
             timeRecordRepository.Setup(x => x.Add(It.IsAny<TimeRecord>()))
                 .Callback<TimeRecord>(timeRecord => actualTimeRecord = timeRecord);
@@ -142,7 +143,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.RecorderModule.Services.ScribeTests
 
         private void StampNew(DateTime dateTime)
         {
-            timeProvider.Setup(x => x.GetDateTime())
+            timeProvider.Setup(x => x.GetCurrentTime())
                 .Returns(dateTime);
 
             scribe.StampNew();

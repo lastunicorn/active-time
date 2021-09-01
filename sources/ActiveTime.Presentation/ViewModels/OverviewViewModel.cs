@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 
@@ -62,13 +63,13 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             }
         }
 
-        public OverviewViewModel(IUnitOfWorkFactory unitOfWorkFactory, ITimeProvider timeProvider)
+        public OverviewViewModel(IUnitOfWorkFactory unitOfWorkFactory, ISystemClock systemClock)
         {
-            if (timeProvider == null) throw new ArgumentNullException(nameof(timeProvider));
+            if (systemClock == null) throw new ArgumentNullException(nameof(systemClock));
 
             this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
 
-            DateTime today = timeProvider.GetDate();
+            DateTime today = systemClock.GetCurrentDate();
             firstDay = today.AddDays(-29);
             lastDay = today;
 
