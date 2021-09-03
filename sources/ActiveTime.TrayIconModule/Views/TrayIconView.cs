@@ -28,9 +28,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
 
         public TrayIconView(TrayIconPresenter presenter)
         {
-            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
-
-            this.presenter = presenter;
+            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             
@@ -47,12 +45,12 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
 
         public bool Visible
         {
-            set { notifyIcon1.Visible = value; }
+            set => notifyIcon1.Visible = value;
         }
 
         public Icon Icon
         {
-            set { notifyIcon1.Icon = value; }
+            set => notifyIcon1.Icon = value;
         }
         
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
