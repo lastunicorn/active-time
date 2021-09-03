@@ -46,6 +46,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <views:StatusInfoView DockPanel.Dock="Bottom" DataContext="{Binding StatusInfoViewModel}"/>
 
+        <views:FrontView  DataContext="{Binding FrontViewModel}"/>
+
         <!--<ContentControl regions:RegionManager.RegionName="{x:Static presentation:RegionNames.MainContentRegion}" Focusable="False"/>-->
 
     </DockPanel>

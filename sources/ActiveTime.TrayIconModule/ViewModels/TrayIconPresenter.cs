@@ -16,7 +16,9 @@
 
 using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Application.UseCases.PresentTray;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Logging;
@@ -24,7 +26,6 @@ using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Recording.Module.Services;
 using DustInTheWind.ActiveTime.TrayGui.Commands;
 using DustInTheWind.ActiveTime.TrayGui.Views;
 using MediatR;
@@ -46,25 +47,30 @@ namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
         }
 
         public ICommand ShowCommand { get; }
+
         public ICommand StartRecorderCommand { get; }
+
         public ICommand StopRecorderCommand { get; }
+
         public ICommand AboutCommand { get; }
+
         public ICommand ExitCommand { get; }
 
         private readonly Icon iconOn;
         private readonly Icon iconOff;
 
         private readonly IShellNavigator shellNavigator;
+        private readonly IMediator mediator;
 
         public TrayIconPresenter(IApplicationService applicationService, IShellNavigator shellNavigator,
             IMediator mediator, ILogger logger, EventBus eventBus)
         {
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
-            if (mediator == null) throw new ArgumentNullException(nameof(mediator));
             if (logger == null) throw new ArgumentNullException(nameof(logger));
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
             this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             iconOn = Properties.Resources.tray_on;
             iconOff = Properties.Resources.tray_off;
@@ -83,12 +89,12 @@ namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
 
         private void HandleRecorderStarted(EventParameters parameters)
         {
-            RefreshView();
+            SetIconOn();
         }
 
         private void HandleRecorderStopped(EventParameters parameters)
         {
-            RefreshView();
+            SetIconOff();
         }
 
         private void HandleApplicationServiceExiting(object sender, EventArgs e)
@@ -96,27 +102,21 @@ namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
             Hide();
         }
 
-        private void RefreshView()
-        {
-            switch (recorderTimer.State)
-            {
-                case RecorderState.Stopped:
-                    SetIconOff();
-                    break;
-
-                case RecorderState.Running:
-                    SetIconOn();
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         private void Initialize()
         {
-            RefreshView();
+            _ = RefreshView();
             Show();
+        }
+
+        private async Task RefreshView()
+        {
+            PresentTrayRequest request = new PresentTrayRequest();
+            PresentTrayResponse response = await mediator.Send(request);
+
+            if (response.IsRecorderRunning)
+                SetIconOn();
+            else
+                SetIconOff();
         }
 
         private void SetIconOn()

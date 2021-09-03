@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
@@ -13,54 +14,51 @@ namespace DustInTheWind.ActiveTime.Application.UseCases.ToggleRecorder
         private readonly IUnitOfWork unitOfWork;
         private readonly ScribeEx scribeEx;
         private readonly EventBus eventBus;
+        private readonly ScheduledJobs scheduledJobs;
 
-        public ToggleRecorderUseCase(IUnitOfWork unitOfWork, ScribeEx scribeEx, EventBus eventBus)
+        public ToggleRecorderUseCase(IUnitOfWork unitOfWork, ScribeEx scribeEx, EventBus eventBus, ScheduledJobs scheduledJobs)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             this.scribeEx = scribeEx ?? throw new ArgumentNullException(nameof(scribeEx));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
         }
 
         public Task<Unit> Handle(ToggleRecorderRequest request, CancellationToken cancellationToken)
         {
-            // todo: get the recorder state somehow.
+            IJob recorderJob = scheduledJobs.Get("Recorder");
 
-            //switch (recorder.State)
-            //{
-            //    case RecorderState.Stopped:
-            //        Start();
-            //        break;
+            switch (recorderJob.State)
+            {
+                case JobState.Stopped:
+                    Start(recorderJob);
+                    break;
 
-            //    case RecorderState.Running:
-            //        Stop();
-            //        break;
-            //}
+                case JobState.Running:
+                    Stop(recorderJob);
+                    break;
+            }
+
+            unitOfWork.Commit();
+            unitOfWork.Dispose();
 
             return Task.FromResult(Unit.Value);
         }
 
-        private void Start()
+        private void Start(IJob recorderJob)
         {
             scribeEx.StampNew();
+            recorderJob.Start();
 
-            // todo: start timer
-
-            // todo: raise "recorder started" event
-            eventBus.Raise("Recorder.Started");
-
-            unitOfWork.Commit();
-
+            eventBus.Raise(EventNames.Recorder.Started);
         }
 
-        private void Stop()
+        private void Stop(IJob recorderJob)
         {
             scribeEx.Stamp();
+            recorderJob.Stop();
 
-            // todo: stop timer
-            // todo: raise "recorder stopped" event
-            eventBus.Raise("Recorder.Stopped");
-
-            unitOfWork.Commit();
+            eventBus.Raise(EventNames.Recorder.Stopped);
         }
     }
 }

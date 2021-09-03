@@ -6,16 +6,17 @@ namespace DustInTheWind.ActiveTime
 {
     internal class AutofacUnitOfWorkFactory : IUnitOfWorkFactory
     {
-        private readonly ILifetimeScope container;
+        private readonly ILifetimeScope context;
 
-        public AutofacUnitOfWorkFactory(ILifetimeScope container)
+        public AutofacUnitOfWorkFactory(ILifetimeScope context)
         {
-            this.container = container ?? throw new ArgumentNullException(nameof(container));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public IUnitOfWork CreateNew()
         {
-            return container.Resolve<IUnitOfWork>();
+            ILifetimeScope newContext = context.BeginLifetimeScope();
+            return newContext.Resolve<IUnitOfWork>();
         }
     }
 }

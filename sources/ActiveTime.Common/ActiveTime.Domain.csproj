@@ -63,7 +63,6 @@
     <Compile Include="Recording\DayTimeInterval.cs" />
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\DayRecord.cs" />
-    <Compile Include="Recording\RecorderState.cs" />
     <Compile Include="Recording\ScribeEx.cs" />
     <Compile Include="Services\Dwarfs.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />

@@ -18,6 +18,6 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
 {
     public class Constants
     {
-        public const string DatabaseFileName = @"ActiveTime.LiteDB.db";
+        public const string DatabaseFileName = @"Filename=ActiveTime.LiteDB.db; Connection=Shared;";
     }
 }

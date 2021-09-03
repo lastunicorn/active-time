@@ -26,21 +26,15 @@ namespace DustInTheWind.ActiveTime.Presentation.Views
     /// </summary>
     public partial class FrontView : UserControl
     {
-        private readonly FrontViewModel viewModel;
-
-        public FrontView(FrontViewModel viewModel)
+        public FrontView()
         {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
             InitializeComponent();
-
-            this.viewModel = viewModel;
         }
 
-        private void MainView_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            DataContext = viewModel;
-            viewModel.RefreshCommand.Execute(null);
-        }
+        //private void MainView_OnLoaded(object sender, RoutedEventArgs e)
+        //{
+        //    DataContext = viewModel;
+        //    viewModel.RefreshCommand.Execute(null);
+        //}
     }
 }

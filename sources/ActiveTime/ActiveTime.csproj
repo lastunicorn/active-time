@@ -57,10 +57,19 @@
     <Reference Include="MediatR.Extensions.Autofac.DependencyInjection, Version=7.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MediatR.Extensions.Autofac.DependencyInjection.7.3.0\lib\netstandard2.0\MediatR.Extensions.Autofac.DependencyInjection.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="MediatR.Extensions.Microsoft.DependencyInjection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.Extensions.Microsoft.DependencyInjection.9.0.0\lib\netstandard2.0\MediatR.Extensions.Microsoft.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=5.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.5.0.2\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
@@ -91,8 +100,8 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -110,8 +119,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bootstrapper2.cs" />
+    <Compile Include="BootstrapperWithAutofac.cs" />
     <Compile Include="AutofacUnitOfWorkFactory.cs" />
+    <Compile Include="BootstrapperWithMicrosoftDi.cs" />
+    <Compile Include="MicrosoftDiWindowFactory.cs" />
     <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
     <Compile Include="Properties\Settings.cs" />
   </ItemGroup>
@@ -158,6 +169,10 @@
     <ProjectReference Include="..\ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj">
       <Project>{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}</Project>
       <Name>ActiveTime.Persistence.LiteDB.Module</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Persistence.SQLite.AdoNet.Module\ActiveTime.Persistence.SQLite.AdoNet.Module.csproj">
+      <Project>{78a4111d-38dd-439f-abc1-cd569c70de9c}</Project>
+      <Name>ActiveTime.Persistence.SQLite.AdoNet.Module</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>

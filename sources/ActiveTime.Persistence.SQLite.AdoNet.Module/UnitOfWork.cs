@@ -63,7 +63,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
         private void OpenDatabaseAndTransaction()
         {
             if (disposed)
-                throw new ObjectDisposedException("UnitOfWork");
+                throw new ObjectDisposedException(nameof(UnitOfWork));
 
             if (connection == null)
             {
@@ -118,7 +118,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
         public void Commit()
         {
             if (disposed)
-                throw new ObjectDisposedException("UnitOfWork");
+                throw new ObjectDisposedException(nameof(UnitOfWork));
 
             if (transaction == null)
                 return;
@@ -132,7 +132,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
         public void Rollback()
         {
             if (disposed)
-                throw new ObjectDisposedException("UnitOfWork");
+                throw new ObjectDisposedException(nameof(UnitOfWork));
 
             if (transaction == null)
                 return;
@@ -166,6 +166,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
 
                 if (connection != null)
                 {
+                    connection.Close();
                     connection.Dispose();
                     connection = null;
                 }

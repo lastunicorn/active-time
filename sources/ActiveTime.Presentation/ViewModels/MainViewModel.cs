@@ -22,7 +22,10 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
     public class MainViewModel : ViewModelBase
     {
         public MainMenuViewModel MainMenuViewModel { get; }
+        
         public StatusInfoViewModel StatusInfoViewModel { get; }
+        
+        public FrontViewModel FrontViewModel { get; }
 
         private string windowTitle;
 
@@ -36,10 +39,11 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             }
         }
 
-        public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel)
+        public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel)
         {
             MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
             StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
+            FrontViewModel = frontViewModel ?? throw new ArgumentNullException(nameof(frontViewModel));
 
             windowTitle = BuildWindowTitle();
         }

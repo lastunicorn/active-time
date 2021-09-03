@@ -44,6 +44,9 @@
     <Compile Include="UseCases\PresentApplicationStatus\PresentApplicationStatusRequest.cs" />
     <Compile Include="UseCases\PresentApplicationStatus\PresentApplicationStatusResponse.cs" />
     <Compile Include="UseCases\PresentApplicationStatus\PresentApplicationStatusUseCase.cs" />
+    <Compile Include="UseCases\PresentTray\PresentTrayRequest.cs" />
+    <Compile Include="UseCases\PresentTray\PresentTrayResponse.cs" />
+    <Compile Include="UseCases\PresentTray\PresentTrayUseCase.cs" />
     <Compile Include="UseCases\Stamp\StampRequest.cs" />
     <Compile Include="UseCases\Stamp\StampUseCase.cs" />
     <Compile Include="UseCases\StartRecording\StartRecordingRequest.cs" />

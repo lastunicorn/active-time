@@ -36,7 +36,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public void Add(DayRecord dayRecord)
         {
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             bool exists = dayCommentCollection
                 .Find(x =>
@@ -60,7 +60,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
             if (dayRecord.Id <= 0)
                 throw new PersistenceException("The id of the comment record should be a positive integer.");
 
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             bool exists = dayCommentCollection
                 .Find(x => x.Id == dayRecord.Id)
@@ -74,7 +74,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public void AddOrUpdate(DayRecord dayRecord)
         {
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             DayRecord existingDayRecord = dayCommentCollection
                 .Find(x => x.Date == dayRecord.Date)
@@ -98,7 +98,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
             if (dayRecord.Id <= 0)
                 throw new PersistenceException("The id of the comment record should be a positive integer.");
 
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             bool exists = dayCommentCollection
                 .Find(x => x.Id == dayRecord.Id)
@@ -107,12 +107,12 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
             if (!exists)
                 throw new PersistenceException("There is no record with the specified id to update.");
 
-            dayCommentCollection.Delete(x => x.Id == dayRecord.Id);
+            dayCommentCollection.Delete(dayRecord.Id);
         }
 
         public DayRecord GetById(int id)
         {
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             return dayCommentCollection
                 .Find(x => x.Id == id)
@@ -121,7 +121,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public DayRecord GetByDate(DateTime date)
         {
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             return dayCommentCollection
                 .Find(x => x.Date == date)
@@ -130,7 +130,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public List<DayRecord> GetByDate(DateTime startDate, DateTime endDate)
         {
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             return dayCommentCollection
                 .Find(x => x.Date >= startDate && x.Date <= endDate)
@@ -139,7 +139,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public IList<DayRecord> GetAll()
         {
-            LiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
 
             return dayCommentCollection
                 .FindAll()

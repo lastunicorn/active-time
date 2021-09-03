@@ -7,16 +7,16 @@ namespace DustInTheWind.ActiveTime
 {
     internal class AutofacWindowFactory : IWindowFactory
     {
-        private readonly ILifetimeScope container;
+        private readonly IComponentContext context;
 
-        public AutofacWindowFactory(ILifetimeScope container)
+        public AutofacWindowFactory(IComponentContext context)
         {
-            this.container = container ?? throw new ArgumentNullException(nameof(container));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public Window Create(Type type)
         {
-            return (Window)container.Resolve(type);
+            return (Window)context.Resolve(type);
         }
     }
 }

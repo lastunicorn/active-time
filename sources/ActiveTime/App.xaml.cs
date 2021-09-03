@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime
     public partial class App : IDisposable
     {
         private Guard guard;
-        private Bootstrapper2 bootstrapper;
+        private BootstrapperWithAutofac bootstrapper;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -47,7 +47,7 @@ namespace DustInTheWind.ActiveTime
 
         private void StartApp()
         {
-            bootstrapper = new Bootstrapper2();
+            bootstrapper = new BootstrapperWithAutofac();
             bootstrapper.Run();
         }
 

@@ -36,7 +36,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public void Add(TimeRecord timeRecord)
         {
-            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
             bool exists = timeRecordCollection
                 .Find(x =>
@@ -62,7 +62,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
             bool exists = timeRecordCollection
                 .Find(x => x.Id == timeRecord.Id)
@@ -81,7 +81,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
             if (timeRecord.Id <= 0)
                 throw new PersistenceException("The id of the time record should be a positive integer.");
 
-            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
             bool exists = timeRecordCollection
                 .Find(x => x.Id == timeRecord.Id)
@@ -90,12 +90,12 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
             if (!exists)
                 throw new PersistenceException("There is no record with the specified id to update.");
 
-            timeRecordCollection.Delete(x => x.Id == timeRecord.Id);
+            timeRecordCollection.Delete(timeRecord.Id);
         }
 
         public TimeRecord GetById(int id)
         {
-            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
             return timeRecordCollection
                 .Find(x => x.Id == id)
                 .FirstOrDefault();
@@ -103,14 +103,14 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 
         public IEnumerable<TimeRecord> GetByDate(DateTime date)
         {
-            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
             return timeRecordCollection
                 .Find(x => x.Date == date);
         }
 
         public IEnumerable<TimeRecord> GetAll()
         {
-            LiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
             return timeRecordCollection
                 .FindAll();
         }

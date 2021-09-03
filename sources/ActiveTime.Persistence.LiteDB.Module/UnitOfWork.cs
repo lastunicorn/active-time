@@ -25,19 +25,20 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
     {
         public const string ConnectionString = Constants.DatabaseFileName;
 
+        private bool isDisposed;
+
         private LiteDatabase database;
-        private LiteTransaction transaction;
 
         private TimeRecordRepository timeRecordRepository;
         public ITimeRecordRepository TimeRecordRepository
         {
             get
             {
+                if (isDisposed)
+                    throw new ObjectDisposedException(nameof(UnitOfWork));
+
                 if (timeRecordRepository == null)
-                {
-                    OpenDatabaseAndTransaction();
                     timeRecordRepository = new TimeRecordRepository(database);
-                }
 
                 return timeRecordRepository;
             }
@@ -48,57 +49,47 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
         {
             get
             {
+                if (isDisposed)
+                    throw new ObjectDisposedException(nameof(UnitOfWork));
+
                 if (dayCommentRepository == null)
-                {
-                    OpenDatabaseAndTransaction();
                     dayCommentRepository = new DayCommentRepository(database);
-                }
 
                 return dayCommentRepository;
             }
         }
 
-        private void OpenDatabaseAndTransaction()
+        public UnitOfWork()
         {
-            if (disposed)
-                throw new ObjectDisposedException(nameof(UnitOfWork));
-
-            if (database == null)
-                database = new LiteDatabase(ConnectionString);
-
-            if (transaction == null)
-                transaction = database.BeginTrans();
+            database = new LiteDatabase(ConnectionString);
+            database.BeginTrans();
         }
 
         public void Commit()
         {
-            if (disposed)
+            if (isDisposed)
                 throw new ObjectDisposedException(nameof(UnitOfWork));
 
-            if (transaction == null)
-                return;
-
-            transaction.Commit();
-
-            transaction.Dispose();
-            transaction = null;
+            if (database != null)
+            {
+                database.Commit();
+                database.Dispose();
+                database = null;
+            }
         }
 
         public void Rollback()
         {
-            if (disposed)
+            if (isDisposed)
                 throw new ObjectDisposedException(nameof(UnitOfWork));
 
-            if (transaction == null)
-                return;
-
-            transaction.Rollback();
-
-            transaction.Dispose();
-            transaction = null;
+            if (database != null)
+            {
+                database.Rollback();
+                database.Dispose();
+                database = null;
+            }
         }
-
-        private bool disposed;
 
         public void Dispose()
         {
@@ -108,17 +99,11 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
 
         private void Dispose(bool disposing)
         {
-            if (disposed)
+            if (isDisposed)
                 return;
 
             if (disposing)
             {
-                if (transaction != null)
-                {
-                    transaction.Dispose();
-                    transaction = null;
-                }
-
                 if (database != null)
                 {
                     database.Dispose();
@@ -126,7 +111,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
                 }
             }
 
-            disposed = true;
+            isDisposed = true;
         }
 
         ~UnitOfWork()

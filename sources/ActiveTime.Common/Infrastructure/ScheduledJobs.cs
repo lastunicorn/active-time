@@ -19,7 +19,14 @@ namespace DustInTheWind.ActiveTime.Common.Infrastructure
         {
             if (jobId == null) throw new ArgumentNullException(nameof(jobId));
 
-            return jobs.FirstOrDefault(x => x.Id == jobId);
+            try
+            {
+                return jobs.First(x => x.Id == jobId);
+            }
+            catch (Exception ex)
+            {
+                throw new ActiveTimeException($"There is no job with the id {jobId}.", ex);
+            }
         }
     }
 }
