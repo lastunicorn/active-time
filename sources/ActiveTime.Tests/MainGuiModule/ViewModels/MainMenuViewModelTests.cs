@@ -19,6 +19,7 @@ using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 
@@ -38,8 +39,9 @@ namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels
             applicationService = new Mock<IApplicationService>();
             shellNavigator = new Mock<IShellNavigator>();
             recorderService = new Mock<IRecorderService>();
+            Mock<IMediator> mediator = new Mock<IMediator>();
 
-            mainMenuViewModel = new MainMenuViewModel(applicationService.Object, shellNavigator.Object, recorderService.Object);
+            mainMenuViewModel = new MainMenuViewModel(applicationService.Object, shellNavigator.Object, recorderService.Object, mediator.Object);
         }
 
         [Test]

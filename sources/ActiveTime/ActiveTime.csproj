@@ -48,6 +48,10 @@
       <HintPath>..\packages\DustInTheWind.WindTools.1.0.0.34313\lib\net461\DustInTheWind.WindTools.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MediatR, Version=9.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.9.0.0\lib\net461\MediatR.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
@@ -128,6 +132,10 @@
     <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
       <Name>ActiveTime.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
+      <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
+      <Name>ActiveTime.Recording.Module</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Watchman.csproj">
       <Project>{02ef6444-a390-457d-908c-26b3b9eb09ae}</Project>

@@ -1,0 +1,34 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Recording;
+using MediatR;
+
+namespace DustInTheWind.ActiveTime.Application.UseCases.StartRecording
+{
+    public class StartRecordingUseCase : IRequestHandler<StartRecordingRequest>
+    {
+        private readonly IUnitOfWork unitOfWork;
+        private readonly ScribeEx scribeEx;
+
+        public StartRecordingUseCase(IUnitOfWork unitOfWork, ScribeEx scribeEx)
+        {
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            this.scribeEx = scribeEx ?? throw new ArgumentNullException(nameof(scribeEx));
+        }
+
+        public Task<Unit> Handle(StartRecordingRequest request, CancellationToken cancellationToken)
+        {
+            scribeEx.StampNew();
+            
+            // todo: start timer
+            // todo: raise "recorder started" event
+            
+            unitOfWork.Commit();
+
+            return Task.FromResult(Unit.Value);
+        }
+    }
+}

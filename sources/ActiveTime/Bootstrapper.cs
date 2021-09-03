@@ -24,6 +24,8 @@ using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Presentation.Services;
+using DustInTheWind.ActiveTime.Recording.Module.Services;
+using MediatR;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
@@ -59,6 +61,12 @@ namespace DustInTheWind.ActiveTime
             Container.RegisterType<IConfigurationService, ConfigurationService>();
             Container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>(new ContainerControlledLifetimeManager());
             Container.RegisterType<Dwarfs>(new ContainerControlledLifetimeManager());
+
+            Container.RegisterType<RecorderTimer>(new ContainerControlledLifetimeManager());
+
+
+            Container.RegisterType<IMediator>(new InjectionFactory(x => new Mediator(t => new UnityServiceLocator(x))));
+
 
             IShellNavigator shellNavigator = Container.Resolve<IShellNavigator>();
         }

@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="ActiveTimeException.cs" />
     <Compile Include="DayRecord.cs" />
+    <Compile Include="InMemoryState.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="Persistence\ITimeRecordRepository.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\DayRecord.cs" />
     <Compile Include="Recording\RecorderState.cs" />
+    <Compile Include="Recording\ScribeEx.cs" />
     <Compile Include="Services\Dwarfs.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IDwarf.cs" />

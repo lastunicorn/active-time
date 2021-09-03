@@ -8,8 +8,9 @@
 
 **steps**:
 
-- Create new `TimeRecord` starting with current time and add it to repository.
-- Start the the `RecorderTimer`.
+- Get current time from system clock.
+- Create new `TimeRecord` starting with current time.
+- Start the `RecorderTimer`.
 - Raise the `RecorderStarted` event.
 
 ## Stamp

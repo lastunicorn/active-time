@@ -20,6 +20,7 @@ using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Presentation.Commands;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
@@ -31,16 +32,17 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         public ICommand StopCommand { get; }
         public ICommand AboutCommand { get; }
 
-        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder)
+        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder, IMediator mediator)
         {
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
             if (recorder == null) throw new ArgumentNullException(nameof(recorder));
+            if (mediator == null) throw new ArgumentNullException(nameof(mediator));
 
             OverviewCommand = new OverviewCommand(shellNavigator);
             ExitCommand = new ExitCommand(applicationService);
-            StartCommand = new StartRecorderCommand(recorder);
-            StopCommand = new StopRecorderCommand(recorder);
+            StartCommand = new StartRecorderCommand(recorder, mediator);
+            StopCommand = new StopRecorderCommand(recorder, mediator);
             AboutCommand = new AboutCommand(shellNavigator);
         }
     }

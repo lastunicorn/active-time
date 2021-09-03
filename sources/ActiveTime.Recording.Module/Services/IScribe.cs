@@ -21,8 +21,11 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
     public interface IScribe
     {
         void Stamp();
+        
         void StampNew();
+        
         void DeleteCurrentTimeRecord();
+        
         TimeSpan? CalculateTimeFromLastStamp();
     }
 }

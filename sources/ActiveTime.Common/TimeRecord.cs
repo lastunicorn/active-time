@@ -50,6 +50,25 @@ namespace DustInTheWind.ActiveTime.Common
         /// </summary>
         public virtual TimeRecordType RecordType { get; set; }
 
+        public TimeRecord()
+        {
+        }
+
+        public TimeRecord(DateTime now)
+        {
+            RecordType = TimeRecordType.Normal;
+            Date = now.Date;
+            StartTime = now.TimeOfDay;
+            EndTime = now.TimeOfDay;
+        }
+
+        public void EndAtMidnight()
+        {
+            long ticks = TimeSpan.FromDays(1).Ticks;
+            TimeSpan endOfDay = TimeSpan.FromTicks(ticks - 1);
+            EndTime = endOfDay;
+        }
+
         /// <summary>
         /// Compares the business keys.
         /// </summary>
@@ -59,13 +78,11 @@ namespace DustInTheWind.ActiveTime.Common
         {
             if (this == obj) return true;
 
-            TimeRecord timeRecord = obj as TimeRecord;
-
-            return timeRecord != null &&
-                Date == timeRecord.Date &&
-                StartTime == timeRecord.StartTime &&
-                EndTime == timeRecord.EndTime &&
-                RecordType == timeRecord.RecordType;
+            return obj is TimeRecord timeRecord &&
+                   Date == timeRecord.Date &&
+                   StartTime == timeRecord.StartTime &&
+                   EndTime == timeRecord.EndTime &&
+                   RecordType == timeRecord.RecordType;
         }
 
         public override string ToString()

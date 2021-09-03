@@ -15,17 +15,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
 using DustInTheWind.ActiveTime.Common.Recording;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     internal class StartRecorderCommand : CommandBase
     {
         private readonly IRecorderService recorder;
+        private readonly IMediator mediator;
 
-        public StartRecorderCommand(IRecorderService recorder)
+        public StartRecorderCommand(IRecorderService recorder, IMediator mediator)
         {
             this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             recorder.Started += HandleRecorderStarted;
             recorder.Stopped += HandleRecorderStopped;
@@ -48,7 +52,8 @@ namespace DustInTheWind.ActiveTime.Presentation.Commands
 
         public override void Execute(object parameter)
         {
-            recorder.Start();
+            StartRecordingRequest request = new StartRecordingRequest();
+            mediator.Send(request);
         }
     }
 }
