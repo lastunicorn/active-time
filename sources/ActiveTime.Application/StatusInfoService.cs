@@ -29,20 +29,10 @@ namespace DustInTheWind.ActiveTime.Application
         /// The default Text of the status.
         /// </summary>
         public const string DefaultStatusText = "Ready";
-
-        /// <summary>
-        /// The default time in milliseconds after which the status text will be reset to its default value.
-        /// </summary>
         private const int DefaultStatusTimeout = 5000;
 
-        /// <summary>
-        /// Timer used to reset the status Text.
-        /// </summary>
-        private readonly Timer timerStatus;
-
-        /// <summary>
-        /// The text representing the status.
-        /// </summary>
+        private bool isDisposed;
+        private readonly Timer timer;
         private string statusText;
 
         /// <summary>
@@ -78,7 +68,7 @@ namespace DustInTheWind.ActiveTime.Application
         public StatusInfoService()
         {
             statusText = DefaultStatusText;
-            timerStatus = new Timer(HandleTimerElapsed);
+            timer = new Timer(HandleTimerElapsed);
         }
 
         /// <summary>
@@ -101,15 +91,13 @@ namespace DustInTheWind.ActiveTime.Application
             StatusText = text;
 
             if (timeout > 0)
-                timerStatus.Change(timeout, -1);
+                timer.Change(timeout, -1);
         }
 
         public void SetStatus(string text)
         {
             SetStatus(text, DefaultStatusTimeout);
         }
-
-        private bool isDisposed;
 
         public void Dispose()
         {
@@ -124,7 +112,7 @@ namespace DustInTheWind.ActiveTime.Application
 
             if (disposing)
             {
-                timerStatus.Dispose();
+                timer.Dispose();
             }
 
             isDisposed = true;

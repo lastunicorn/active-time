@@ -23,7 +23,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
     xmlns:regions="http://www.codeplex.com/CompositeWPF"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Converters"
     xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Presentation.Views"
@@ -194,26 +193,26 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Content="Time Records"
                 MinWidth="75"
                 Margin="0,0,5,0"
-                cmd:Click.Command="{Binding TimeRecordsCommand}"/>
+                Command="{Binding TimeRecordsCommand}"/>
 
             <Button
                 Content="Comments"
                 MinWidth="75"
                 Margin="0,0,5,0"
-                cmd:Click.Command="{Binding CommentsCommand}"/>
+                Command="{Binding CommentsCommand}"/>
 
             <Button
                 Content="Refresh"
                 Margin="0,0,5,0"
-                cmd:Click.Command="{Binding RefreshCommand}"
+                Command="{Binding RefreshCommand}"
                 MinWidth="75" />
 
         </StackPanel>
 
         <!-- Content -->
 
-        <ContentControl
-            regions:RegionManager.RegionName="{x:Static presentation:RegionNames.RecordsRegion}"/>
+        <!--<ContentControl
+            regions:RegionManager.RegionName="{x:Static presentation:RegionNames.RecordsRegion}"/>-->
 
     </DockPanel>
 

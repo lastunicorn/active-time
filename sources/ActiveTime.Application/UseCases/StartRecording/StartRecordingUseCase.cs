@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using MediatR;
@@ -12,11 +13,13 @@ namespace DustInTheWind.ActiveTime.Application.UseCases.StartRecording
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly ScribeEx scribeEx;
+        private readonly EventBus eventBus;
 
-        public StartRecordingUseCase(IUnitOfWork unitOfWork, ScribeEx scribeEx)
+        public StartRecordingUseCase(IUnitOfWork unitOfWork, ScribeEx scribeEx, EventBus eventBus)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             this.scribeEx = scribeEx ?? throw new ArgumentNullException(nameof(scribeEx));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task<Unit> Handle(StartRecordingRequest request, CancellationToken cancellationToken)
@@ -24,7 +27,8 @@ namespace DustInTheWind.ActiveTime.Application.UseCases.StartRecording
             scribeEx.StampNew();
             
             // todo: start timer
-            // todo: raise "recorder started" event
+
+            eventBus.Raise(EventNames.Recorder.Started);
             
             unitOfWork.Commit();
 

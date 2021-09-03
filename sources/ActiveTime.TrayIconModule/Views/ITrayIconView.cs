@@ -16,11 +16,12 @@
 
 using System.Drawing;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.Views
+namespace DustInTheWind.ActiveTime.TrayGui.Views
 {
     public interface ITrayIconView
     {
         Icon Icon { set; }
+
         bool Visible { set; }
     }
 }

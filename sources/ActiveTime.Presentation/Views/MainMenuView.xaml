@@ -24,7 +24,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:commands="clr-namespace:DustInTheWind.ActiveTime.Presentation.Commands"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.ViewModels"
 
     mc:Ignorable="d"
@@ -35,18 +34,18 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Menu Height="Auto">
 
         <MenuItem Header="_File">
-            <MenuItem Header="_Overview" commands:MenuItemClick.Command="{Binding OverviewCommand}" />
+            <MenuItem Header="_Overview" Command="{Binding OverviewCommand}" />
             <Separator Margin="0" />
-            <MenuItem Header="E_xit" commands:MenuItemClick.Command="{Binding ExitCommand}" />
+            <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
         </MenuItem>
 
         <MenuItem Header="_Recorder">
-            <MenuItem Header="St_art" commands:MenuItemClick.Command="{Binding StartCommand}" />
-            <MenuItem Header="St_op" commands:MenuItemClick.Command="{Binding StopCommand}" />
+            <MenuItem Header="St_art" Command="{Binding StartCommand}" />
+            <MenuItem Header="St_op" Command="{Binding StopCommand}" />
         </MenuItem>
 
         <MenuItem Header="_Help">
-            <MenuItem Header="_About" commands:MenuItemClick.Command="{Binding AboutCommand}" />
+            <MenuItem Header="_About" Command="{Binding AboutCommand}" />
         </MenuItem>
 
     </Menu>

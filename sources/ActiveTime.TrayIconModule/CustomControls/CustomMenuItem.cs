@@ -18,7 +18,7 @@ using System;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.CustomControls
+namespace DustInTheWind.ActiveTime.TrayGui.CustomControls
 {
     internal class CustomMenuItem : ToolStripMenuItem
     {
@@ -26,7 +26,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.CustomControls
 
         public ICommand Command
         {
-            get { return command; }
+            get => command;
             set
             {
                 if (command != null)

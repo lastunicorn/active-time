@@ -17,9 +17,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
 
 namespace DustInTheWind.ActiveTime.Presentation.Services
 {
@@ -31,28 +30,18 @@ namespace DustInTheWind.ActiveTime.Presentation.Services
     /// </remarks>
     public class ShellNavigator : IShellNavigator
     {
-        private readonly IUnityContainer unityContainer;
-        private readonly IRegionManager regionManager;
+        private readonly IWindowFactory windowFactory;
         private readonly DispatcherService dispatcherService;
 
-        /// <summary>
-        /// The list of shell info objects indexed by the shell's name.
-        /// These objects are used to create shells.
-        /// </summary>
         private readonly Dictionary<string, ShellInfo> shellInfos = new Dictionary<string, ShellInfo>();
-
-        /// <summary>
-        /// The list of existing shells.
-        /// </summary>
         private readonly Dictionary<string, Window> windows = new Dictionary<string, Window>();
 
         /// <summary>
         /// Initialize a new instance of the <see cref="ShellNavigator"/> class.
         /// </summary>
-        public ShellNavigator(IUnityContainer unityContainer, IRegionManager regionManager, DispatcherService dispatcherService)
+        public ShellNavigator(IWindowFactory windowFactory, DispatcherService dispatcherService)
         {
-            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
-            this.regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            this.windowFactory = windowFactory ?? throw new ArgumentNullException(nameof(windowFactory));
             this.dispatcherService = dispatcherService ?? throw new ArgumentNullException(nameof(dispatcherService));
         }
 
@@ -89,22 +78,19 @@ namespace DustInTheWind.ActiveTime.Presentation.Services
                 CreateNewShell(shellInfos[shellName]);
                 NavigateInternal(shellName, parameters);
             }
+            else
+            {
+                throw new ArgumentException("Invalid shell name.", nameof(shellName));
+            }
         }
 
-        /// <summary>
-        /// Creates a new shell using the provided <see cref="ShellInfo"/> object.
-        /// </summary>
-        /// <param name="shellInfo">The <see cref="ShellInfo"/> object containing the information about the shell that needs to be created.</param>
         private void CreateNewShell(ShellInfo shellInfo)
         {
             Window window = null;
 
             dispatcherService.Dispatch(() =>
             {
-                window = (Window)unityContainer.Resolve(shellInfo.ShellType);
-
-                RegionManager.SetRegionManager(window, regionManager);
-                RegionManager.UpdateRegions();
+                window = windowFactory.Create(shellInfo.ShellType);
 
                 bool existsOwnerWindow = !string.IsNullOrEmpty(shellInfo.OwnerName) && windows.ContainsKey(shellInfo.OwnerName);
 
@@ -113,11 +99,9 @@ namespace DustInTheWind.ActiveTime.Presentation.Services
             });
 
             window.Closed += (s, e) =>
-                {
-                    windows.Remove(shellInfo.ShellName);
-                    RegionManager.SetRegionManager(window, null);
-                    RegionManager.UpdateRegions();
-                };
+            {
+                windows.Remove(shellInfo.ShellName);
+            };
 
             windows.Add(shellInfo.ShellName, window);
         }

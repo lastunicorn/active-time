@@ -20,7 +20,6 @@ using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ActiveTime.Recording.Module.Services;
 using Moq;
 using NUnit.Framework;
 

@@ -16,18 +16,17 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common.Presentation;
-using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     public class CommentsCommand : CommandBase
     {
-        private readonly IRegionManager regionManager;
+        //private readonly IRegionManager regionManager;
 
-        public CommentsCommand(IRegionManager regionManager)
-        {
-            this.regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
-        }
+        //public CommentsCommand(IRegionManager regionManager)
+        //{
+        //    this.regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+        //}
 
         public override void Execute(object parameter)
         {
@@ -35,18 +34,18 @@ namespace DustInTheWind.ActiveTime.Presentation.Commands
             //ClearRegion(RegionNames.RecordsRegion);
             //regionManager.Regions.Remove(RegionNames.RecordsRegion);
 
-            regionManager.RequestNavigate(RegionNames.RecordsRegion, ViewNames.CommentsView);
+            //regionManager.RequestNavigate(RegionNames.RecordsRegion, ViewNames.CommentsView);
         }
 
-        private void ClearRegion(string regionName)
-        {
-            IRegion mainContentRegion = regionManager.Regions[regionName];
-            IViewsCollection activeViewsInRegion = mainContentRegion.ActiveViews;
+        //private void ClearRegion(string regionName)
+        //{
+        //    IRegion mainContentRegion = regionManager.Regions[regionName];
+        //    IViewsCollection activeViewsInRegion = mainContentRegion.ActiveViews;
 
-            foreach (object view in activeViewsInRegion)
-            {
-                mainContentRegion.Remove(view);
-            }
-        }
+        //    foreach (object view in activeViewsInRegion)
+        //    {
+        //        mainContentRegion.Remove(view);
+        //    }
+        //}
     }
 }

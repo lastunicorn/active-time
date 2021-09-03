@@ -100,11 +100,6 @@
     <Compile Include="PersistenceModule.LiteDB\Repositories\TimeRecordRepositoryTests\DeleteTests.cs" />
     <Compile Include="PersistenceModule.LiteDB\Repositories\TimeRecordRepositoryTests\UpdateTests.cs" />
     <Compile Include="PersistenceModule.LiteDB\UnitOfWorkTests.cs" />
-    <Compile Include="RecorderModule\Services\RecorderServiceTests\ConstructorTests.cs" />
-    <Compile Include="RecorderModule\Services\RecorderServiceTests\InternalTimerTests.cs" />
-    <Compile Include="RecorderModule\Services\RecorderServiceTests\GetTimeFromLastStopTests.cs" />
-    <Compile Include="RecorderModule\Services\RecorderServiceTests\StopTests.cs" />
-    <Compile Include="RecorderModule\Services\RecorderServiceTests\StartTests.cs" />
     <Compile Include="Common\Recording\RecordTests.cs" />
     <Compile Include="Common\Persistence\TimeRecordEqualsTests.cs" />
     <Compile Include="Common\Persistence\DayCommentEqualsTests.cs" />
@@ -150,14 +145,6 @@
     <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
       <Name>ActiveTime.Presentation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
-      <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
-      <Name>ActiveTime.Recording.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Reminder.Module\ActiveTime.Reminder.Module.csproj">
-      <Project>{2b4e4124-2cca-4418-a66b-2c57fb91da74}</Project>
-      <Name>ActiveTime.Reminder.Module</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime\ActiveTime.csproj">
       <Project>{16baedc7-838b-4b8d-9bf4-07eb8515d999}</Project>

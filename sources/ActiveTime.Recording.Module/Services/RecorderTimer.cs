@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Stamp;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Recording;
 using MediatR;
 
@@ -10,7 +11,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
     /// <summary>
     /// Periodically calls the scribe to update the time of the current record in the database.
     /// </summary>
-    public class RecorderTimer : IDisposable
+    public class RecorderJob : IJob, IDisposable
     {
         private readonly IMediator mediator;
 
@@ -20,10 +21,12 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         private DateTime? lastStopTime;
         private TimeSpan stampingInterval;
 
+        public string Id { get; } = "Recorder";
+
         /// <summary>
-        /// Gets the state of the current recorder service.
+        /// Gets the state of the current recorder job.
         /// </summary>
-        public RecorderState State { get; private set; }
+        public JobState State { get; private set; }
 
         /// <summary>
         /// Gets or sets the interval of time to wait between two stamping actions.
@@ -38,7 +41,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
                 {
                     stampingInterval = value;
 
-                    if (State == RecorderState.Running)
+                    if (State == JobState.Running)
                         timer.Change(stampingInterval, stampingInterval);
                 }
             }
@@ -117,10 +120,10 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecorderService"/> class.
+        /// Initializes a new instance of the <see cref="RecorderJob"/> class.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        public RecorderTimer(IMediator mediator)
+        public RecorderJob(IMediator mediator)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
@@ -134,7 +137,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         }
 
         /// <summary>
-        /// Starts the current instance of the RecorderService. The action is performed
+        /// Starts the current instance of the <see cref="RecorderJob"/>. The action is performed
         /// only if the instance is stopped.
         /// </summary>
         /// <remarks>
@@ -144,11 +147,11 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         {
             switch (State)
             {
-                case RecorderState.Stopped:
+                case JobState.Stopped:
                     StartWithEvents();
                     break;
 
-                case RecorderState.Running:
+                case JobState.Running:
                     break;
             }
         }
@@ -158,14 +161,14 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
             lock (stateSynchronizer)
             {
                 timer.Change(stampingInterval, stampingInterval);
-                State = RecorderState.Running;
+                State = JobState.Running;
             }
 
             OnStarted(EventArgs.Empty);
         }
 
         /// <summary>
-        /// Stops the current instance of the RecorderService. The action is performed
+        /// Stops the current instance of the <see cref="RecorderJob"/>. The action is performed
         /// only if the service is started.
         /// </summary>
         /// <remarks>
@@ -175,10 +178,10 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         {
             switch (State)
             {
-                case RecorderState.Stopped:
+                case JobState.Stopped:
                     break;
 
-                case RecorderState.Running:
+                case JobState.Running:
                     StopWithEvents();
                     break;
             }
@@ -192,7 +195,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
                 timer.Change(-1, -1);
 
                 lastStopTime = DateTime.Now;
-                State = RecorderState.Stopped;
+                State = JobState.Stopped;
             }
 
             OnStopped(EventArgs.Empty);
@@ -234,7 +237,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
             isDisposed = true;
         }
 
-        ~RecorderTimer()
+        ~RecorderJob()
         {
             Dispose(false);
         }

@@ -18,11 +18,12 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using DustInTheWind.ActiveTime.TrayIconModule.ViewModels;
+using DustInTheWind.ActiveTime.TrayGui.ViewModels;
+using DustInTheWind.ActiveTime.TrayGui.Views;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.Views
+namespace DustInTheWind.ActiveTime.TrayGui.Views
 {
-    partial class TrayIconView : Component, ITrayIconView
+    public partial class TrayIconView : Component, ITrayIconView
     {
         private readonly TrayIconPresenter presenter;
 

@@ -18,7 +18,6 @@ using System;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
-using DustInTheWind.ActiveTime.Recording;
 using Moq;
 using NUnit.Framework;
 

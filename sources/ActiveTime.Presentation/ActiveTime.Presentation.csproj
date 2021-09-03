@@ -38,12 +38,6 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Prism.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\ExternalLibraries\Prism\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
@@ -68,8 +62,6 @@
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\IncrementDayCommand.cs" />
-    <Compile Include="Commands\MenuItemClick.cs" />
-    <Compile Include="Commands\MenuItemClickCommandBehavior.cs" />
     <Compile Include="Commands\OverviewCommand.cs" />
     <Compile Include="Commands\RefreshCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
@@ -99,6 +91,7 @@
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\DayReport.cs" />
     <Compile Include="Services\DispatcherService.cs" />
+    <Compile Include="Services\IWindowFactory.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="ViewModelBase.cs" />
@@ -260,6 +253,10 @@
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
+      <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
+      <Name>ActiveTime.Recording.Module</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

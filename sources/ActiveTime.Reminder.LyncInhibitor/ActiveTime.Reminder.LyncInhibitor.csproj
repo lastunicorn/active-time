@@ -55,10 +55,6 @@
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Reminder.Module\ActiveTime.Reminder.Module.csproj">
-      <Project>{2b4e4124-2cca-4418-a66b-2c57fb91da74}</Project>
-      <Name>ActiveTime.Reminder.Module</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

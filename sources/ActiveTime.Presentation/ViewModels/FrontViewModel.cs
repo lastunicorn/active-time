@@ -17,11 +17,10 @@
 using System;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Presentation.Commands;
-using Microsoft.Practices.Prism.Regions;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
-    public class FrontViewModel : ViewModelBase, INavigationAware
+    public class FrontViewModel : ViewModelBase
     {
         private readonly CurrentDay currentDay;
 
@@ -85,15 +84,13 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(IRegionManager regionManager, CurrentDay currentDay, CurrentDateViewModel currentDateViewModel)
+        public FrontViewModel(CurrentDay currentDay, CurrentDateViewModel currentDateViewModel)
         {
-            if (regionManager == null) throw new ArgumentNullException(nameof(regionManager));
-
             this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
             CurrentDateViewModel = currentDateViewModel ?? throw new ArgumentNullException(nameof(currentDateViewModel));
 
-            CommentsCommand = new CommentsCommand(regionManager);
-            TimeRecordsCommand = new TimeRecordsCommand(regionManager);
+            CommentsCommand = new CommentsCommand();
+            TimeRecordsCommand = new TimeRecordsCommand();
             RefreshCommand = new RefreshCommand(currentDay);
             DeleteCommand = new DeleteCommand();
             DecrementDayCommand = new DecrementDayCommand(currentDay);
@@ -115,17 +112,17 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             EstimatedEndTime = currentDay.EstimatedEndTime;
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-        }
+        //public void OnNavigatedTo(NavigationContext navigationContext)
+        //{
+        //}
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
+        //public bool IsNavigationTarget(NavigationContext navigationContext)
+        //{
+        //    return true;
+        //}
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-        }
+        //public void OnNavigatedFrom(NavigationContext navigationContext)
+        //{
+        //}
     }
 }

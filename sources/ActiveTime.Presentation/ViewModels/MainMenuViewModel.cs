@@ -16,10 +16,13 @@
 
 using System;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Presentation.Commands;
+using DustInTheWind.ActiveTime.Recording.Module.Services;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
@@ -27,22 +30,28 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
     public class MainMenuViewModel : ViewModelBase
     {
         public ICommand OverviewCommand { get; }
+        
         public ICommand ExitCommand { get; }
+        
         public ICommand StartCommand { get; }
+        
         public ICommand StopCommand { get; }
+        
         public ICommand AboutCommand { get; }
 
-        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator, IRecorderService recorder, IMediator mediator)
+        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator,
+            IMediator mediator, ILogger logger, EventBus eventBus)
         {
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
-            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
             if (mediator == null) throw new ArgumentNullException(nameof(mediator));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
             OverviewCommand = new OverviewCommand(shellNavigator);
             ExitCommand = new ExitCommand(applicationService);
-            StartCommand = new StartRecorderCommand(recorder, mediator);
-            StopCommand = new StopRecorderCommand(recorder, mediator);
+            StartCommand = new StartRecorderCommand(mediator, logger, eventBus);
+            StopCommand = new StopRecorderCommand(mediator, logger, eventBus);
             AboutCommand = new AboutCommand(shellNavigator);
         }
     }

@@ -23,7 +23,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Converters"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.ViewModels"
 
@@ -86,7 +85,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Content="Reset"
                 Margin="0,0,5,0"
                 MinWidth="75"
-                cmd:Click.Command="{Binding ResetCommand}"
+                Command="{Binding ResetCommand}"
                 IsCancel="True"
                 TabIndex="1" />
 
@@ -94,7 +93,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Content="Save"
                 Margin="0,0,5,0"
                 MinWidth="75"
-                cmd:Click.Command="{Binding SaveCommand}"
+                Command="{Binding SaveCommand}"
                 IsDefault="True"
                 TabIndex="0" />
 

@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
@@ -66,18 +67,22 @@ namespace DustInTheWind.ActiveTime.Application
         public bool IsCommentSaved => (dayRecord == null && comment == null) || (dayRecord != null && dayRecord.Comment == comment);
 
         public DayTimeInterval[] Records { get; private set; }
+        
         public TimeSpan ActiveTime { get; private set; }
+        
         public TimeSpan TotalTime { get; private set; }
+        
         public TimeSpan? BeginTime { get; private set; }
+        
         public TimeSpan? EstimatedEndTime { get; private set; }
 
         public event EventHandler DateChanged;
         public event EventHandler CommentChanged;
         public event EventHandler DatesChanged;
 
-        public CurrentDay(IUnitOfWorkFactory unitOfWorkFactory, ILogger logger, IRecorderService recorder, IStatusInfoService statusInfoService)
+        public CurrentDay(IUnitOfWorkFactory unitOfWorkFactory, ILogger logger, EventBus eventBus, IStatusInfoService statusInfoService)
         {
-            if (recorder == null) throw new ArgumentNullException(nameof(recorder));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
             this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -85,30 +90,30 @@ namespace DustInTheWind.ActiveTime.Application
 
             date = DateTime.Today;
 
-            recorder.Started += HandleRecorderStarted;
-            recorder.Stopped += HandleRecorderStopped;
-            recorder.Stamping += HandleRecorderStamping;
-            recorder.Stamped += HandleRecorderStamped;
+            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
+            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+            eventBus.Subscribe(EventNames.Recorder.Stamping, HandleRecorderStamping);
+            eventBus.Subscribe(EventNames.Recorder.Stamped, HandleRecorderStamped);
         }
 
-        private void HandleRecorderStarted(object sender, EventArgs e)
+        private void HandleRecorderStarted(EventParameters parameters)
         {
             UpdateDayRecordFromRepository();
             statusInfoService.SetStatus("Recorder started.");
         }
 
-        private void HandleRecorderStopped(object sender, EventArgs e)
+        private void HandleRecorderStopped(EventParameters parameters)
         {
             UpdateDayRecordFromRepository();
             statusInfoService.SetStatus("Recorder stopped.");
         }
 
-        private void HandleRecorderStamping(object sender, EventArgs e)
+        private void HandleRecorderStamping(EventParameters parameters)
         {
             statusInfoService.SetStatus("Updating the current record's time.");
         }
 
-        private void HandleRecorderStamped(object sender, EventArgs e)
+        private void HandleRecorderStamped(EventParameters parameters)
         {
             statusInfoService.SetStatus("Current record's time has been updated.");
             UpdateDayRecordFromRepository();

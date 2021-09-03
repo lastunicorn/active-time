@@ -15,31 +15,25 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Application.UseCases.ToggleRecorder;
 using DustInTheWind.ActiveTime.Common.Recording;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     public class ToggleRecorderCommand : CommandBase
     {
-        private readonly IRecorderService recorder;
+        private readonly IMediator mediator;
 
-        public ToggleRecorderCommand(IRecorderService recorder)
+        public ToggleRecorderCommand(IMediator mediator)
         {
-            this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         public override void Execute(object parameter)
         {
-            switch (recorder.State)
-            {
-                case RecorderState.Stopped:
-                    recorder.Start();
-                    break;
-
-                case RecorderState.Running:
-                    recorder.Stop();
-                    break;
-            }
+            ToggleRecorderRequest request = new ToggleRecorderRequest();
+            mediator.Send(request);
         }
     }
 }

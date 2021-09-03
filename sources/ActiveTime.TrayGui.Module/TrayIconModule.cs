@@ -15,26 +15,25 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.TrayIconModule.Views;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
+using Autofac;
+using DustInTheWind.ActiveTime.TrayGui.Views;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.ModuleDefinitions
+namespace DustInTheWind.ActiveTime.TrayGui.Module
 {
-    public class TrayIconModule : IModule
+    public class TrayIconModule
     {
         private TrayIconView trayIconView;
 
-        private readonly IUnityContainer unityContainer;
+        private readonly ILifetimeScope container;
 
-        public TrayIconModule(IUnityContainer unityContainer)
+        public TrayIconModule(ILifetimeScope container)
         {
-            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
+            this.container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public void Initialize()
         {
-            trayIconView = unityContainer.Resolve<TrayIconView>();
+            trayIconView = container.Resolve<TrayIconView>();
         }
     }
 }

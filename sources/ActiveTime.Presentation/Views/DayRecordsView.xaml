@@ -82,7 +82,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 </DataTemplate>
             </ListBox.ItemTemplate>-->
 
-            <ListBox.ContextMenu>
+            <!-- todo: bring back the context menu -->
+            <!--<ListBox.ContextMenu>
                 <ContextMenu Opened="contextMenuRecords_Opened">
                     <MenuItem Header="New" Click="menuItemNew_Click" IsEnabled="False"/>
                     <Separator Margin="0"/>
@@ -96,7 +97,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                         commands:MenuItemClick.CommandParameter="{Binding ElementName=listBox1, Path=SelectedItem, UpdateSourceTrigger=Explicit}"/>
 
                 </ContextMenu>
-            </ListBox.ContextMenu>
+            </ListBox.ContextMenu>-->
 
         </ListBox>
 

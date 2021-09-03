@@ -15,45 +15,67 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.StopRecording;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Logging;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     internal class StopRecorderCommand : CommandBase
     {
-        private readonly IRecorderService recorder;
         private readonly IMediator mediator;
+        private readonly ILogger logger;
 
-        public StopRecorderCommand(IRecorderService recorder, IMediator mediator)
+        public StopRecorderCommand(IMediator mediator, ILogger logger, EventBus eventBus)
         {
-            this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            recorder.Started += HandleRecorderStarted;
-            recorder.Stopped += HandleRecorderStopped;
+            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
+            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
         }
 
-        private void HandleRecorderStarted(object sender, EventArgs e)
+        private void HandleRecorderStarted(EventParameters parameters)
         {
             OnCanExecuteChanged();
         }
 
-        private void HandleRecorderStopped(object sender, EventArgs e)
+        private void HandleRecorderStopped(EventParameters parameters)
         {
             OnCanExecuteChanged();
         }
 
         public override bool CanExecute(object parameter)
         {
-            return recorder.State == RecorderState.Running;
+            // todo: check the recorder timer state.
+
+            return true;
         }
 
         public override void Execute(object parameter)
         {
-            StopRecordingRequest request = new StopRecordingRequest();
-            mediator.Send(request);
+            _ = StopRecording(parameter);
+        }
+
+        private async Task StopRecording(object parameter)
+        {
+            StopRecordingRequest request = new StopRecordingRequest
+            {
+                DeleteLastRecord = parameter is bool && (bool)parameter
+            };
+
+            try
+            {
+                await mediator.Send(request);
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR: " + ex);
+            }
         }
     }
 }

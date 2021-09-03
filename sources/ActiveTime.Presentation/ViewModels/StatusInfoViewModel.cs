@@ -15,9 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Services;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.UseCases.PresentApplicationStatus;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Presentation.Commands;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
@@ -26,7 +28,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
     /// </summary>
     public class StatusInfoViewModel : ViewModelBase
     {
-        private readonly IStatusInfoService statusInfoService;
+        private readonly IMediator mediator;
         private string statusText;
         private bool isRecorderStarted;
 
@@ -52,33 +54,42 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public ToggleRecorderCommand ToggleRecorderCommand { get; }
 
-        public StatusInfoViewModel(IStatusInfoService statusInfoService, IRecorderService recorderService)
+        public StatusInfoViewModel(IMediator mediator, EventBus eventBus)
         {
-            this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
-            this.statusInfoService.StatusTextChanged += HandleStatusTextChanged;
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            ToggleRecorderCommand = new ToggleRecorderCommand(recorderService);
+            ToggleRecorderCommand = new ToggleRecorderCommand(mediator);
 
-            recorderService.Started += HandleRecorderServiceStarted;
-            recorderService.Stopped += HandleRecorderServiceStopped;
+            eventBus.Subscribe("Recorder.Started", HandleRecorderServiceStarted);
+            eventBus.Subscribe("Recorder.Stopped", HandleRecorderServiceStopped);
+            eventBus.Subscribe("Application.StatusChanged", HandleStatusTextChanged);
 
-            statusText = this.statusInfoService.StatusText;
-            isRecorderStarted = recorderService.State == RecorderState.Running;
+            _ = Load();
         }
 
-        private void HandleStatusTextChanged(object s, EventArgs e)
+        private async Task Load()
         {
-            StatusText = statusInfoService.StatusText;
+            PresentApplicationStatusRequest request = new PresentApplicationStatusRequest();
+            PresentApplicationStatusResponse response = await mediator.Send(request);
+
+            IsRecorderStarted = response.IsRecorderStarted;
+            StatusText = response.StatusText;
         }
 
-        private void HandleRecorderServiceStopped(object sender, EventArgs e)
+        private void HandleStatusTextChanged(EventParameters parameters)
         {
-            IsRecorderStarted = false;
+            StatusText = parameters.Get<string>("StatusText");
         }
 
-        private void HandleRecorderServiceStarted(object sender, EventArgs e)
+        private void HandleRecorderServiceStarted(EventParameters parameters)
         {
             IsRecorderStarted = true;
+        }
+
+        private void HandleRecorderServiceStopped(EventParameters parameters)
+        {
+            IsRecorderStarted = false;
         }
     }
 }

@@ -19,7 +19,7 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.Commands
+namespace DustInTheWind.ActiveTime.TrayGui.Commands
 {
     internal class AboutCommand : ICommand
     {

@@ -46,9 +46,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public AboutViewModel(IApplicationService applicationService)
         {
-            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
-
-            this.applicationService = applicationService;
+            this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
 
             WindowClosed = new RelayCommand(HandleWindowClosed);
 

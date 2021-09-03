@@ -14,9 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.Views
+using DustInTheWind.ActiveTime.TrayGui.CustomControls;
+
+namespace DustInTheWind.ActiveTime.TrayGui.Views
 {
-    partial class TrayIconView
+    public partial class TrayIconView
     {
         /// <summary>
         /// Required designer variable.
@@ -46,16 +48,16 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
         {
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemShow = new DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem();
+            this.toolStripMenuItemShow = new CustomMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemStart = new DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem();
-            this.toolStripMenuItemStop = new DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem();
-            this.toolStripMenuItemStopAndDelete = new DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem();
+            this.toolStripMenuItemStart = new CustomMenuItem();
+            this.toolStripMenuItemStop = new CustomMenuItem();
+            this.toolStripMenuItemStopAndDelete = new CustomMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemExit = new DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem();
+            this.toolStripMenuItemExit = new CustomMenuItem();
             this.toolStripTextBoxShow = new System.Windows.Forms.ToolStripTextBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.toolStripMenuItemAbout = new DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem();
+            this.toolStripMenuItemAbout = new CustomMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1.SuspendLayout();
             // 
@@ -146,14 +148,14 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.Views
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxShow;
-        private DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem toolStripMenuItemExit;
-        private DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem toolStripMenuItemShow;
+        private CustomMenuItem toolStripMenuItemExit;
+        private CustomMenuItem toolStripMenuItemShow;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem toolStripMenuItemStop;
-        private DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem toolStripMenuItemStart;
+        private CustomMenuItem toolStripMenuItemStop;
+        private CustomMenuItem toolStripMenuItemStart;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem toolStripMenuItemStopAndDelete;
-        private DustInTheWind.ActiveTime.TrayIconModule.CustomControls.CustomMenuItem toolStripMenuItemAbout;
+        private CustomMenuItem toolStripMenuItemStopAndDelete;
+        private CustomMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

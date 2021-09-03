@@ -17,16 +17,21 @@
 using System;
 using System.Drawing;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.TrayIconModule.Commands;
-using DustInTheWind.ActiveTime.TrayIconModule.Views;
+using DustInTheWind.ActiveTime.Recording.Module.Services;
+using DustInTheWind.ActiveTime.TrayGui.Commands;
+using DustInTheWind.ActiveTime.TrayGui.Views;
+using MediatR;
 
-namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
+namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
 {
-    internal class TrayIconPresenter
+    public class TrayIconPresenter
     {
         private ITrayIconView view;
 
@@ -49,37 +54,39 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
         private readonly Icon iconOn;
         private readonly Icon iconOff;
 
-        private readonly IRecorderService recorder;
         private readonly IShellNavigator shellNavigator;
 
-        public TrayIconPresenter(IRecorderService recorder, IApplicationService applicationService, IShellNavigator shellNavigator)
+        public TrayIconPresenter(IApplicationService applicationService, IShellNavigator shellNavigator,
+            IMediator mediator, ILogger logger, EventBus eventBus)
         {
             if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+            if (mediator == null) throw new ArgumentNullException(nameof(mediator));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
             this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
 
             iconOn = Properties.Resources.tray_on;
             iconOff = Properties.Resources.tray_off;
 
             ShowCommand = new ShowCommand(shellNavigator);
-            StartRecorderCommand = new StartRecorderCommand(recorder);
-            StopRecorderCommand = new StopRecorderCommand(recorder);
+            StartRecorderCommand = new StartRecorderCommand(mediator, logger, eventBus);
+            StopRecorderCommand = new StopRecorderCommand(mediator, logger, eventBus);
             AboutCommand = new AboutCommand(shellNavigator);
             ExitCommand = new ExitCommand(applicationService);
 
             applicationService.Exiting += HandleApplicationServiceExiting;
 
-            recorder.Started += HandleRecorderStarted;
-            recorder.Stopped += HandleRecorderStopped;
+            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
+            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
         }
 
-        private void HandleRecorderStarted(object sender, EventArgs e)
+        private void HandleRecorderStarted(EventParameters parameters)
         {
             RefreshView();
         }
 
-        private void HandleRecorderStopped(object sender, EventArgs e)
+        private void HandleRecorderStopped(EventParameters parameters)
         {
             RefreshView();
         }
@@ -91,7 +98,7 @@ namespace DustInTheWind.ActiveTime.TrayIconModule.ViewModels
 
         private void RefreshView()
         {
-            switch (recorder.State)
+            switch (recorderTimer.State)
             {
                 case RecorderState.Stopped:
                     SetIconOff();
