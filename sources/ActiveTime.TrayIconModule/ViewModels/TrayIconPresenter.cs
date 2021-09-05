@@ -15,21 +15,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.PresentTray;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.TrayGui.Commands;
-using DustInTheWind.ActiveTime.TrayGui.Views;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Presentation.Tray.Commands;
+using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels
 {
     public class TrayIconPresenter
     {

@@ -44,9 +44,13 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="EventBus.cs" />
-    <Compile Include="EventParameters.cs" />
+    <Compile Include="EventModel\EventBus.cs" />
+    <Compile Include="EventModel\EventParameters.cs" />
+    <Compile Include="JobModel\IJob.cs" />
+    <Compile Include="JobModel\JobState.cs" />
+    <Compile Include="JobModel\ScheduledJobs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

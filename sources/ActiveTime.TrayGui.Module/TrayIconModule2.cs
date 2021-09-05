@@ -1,7 +1,7 @@
 ﻿using System;
-using DustInTheWind.ActiveTime.TrayGui.Views;
+using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 
-namespace DustInTheWind.ActiveTime.TrayGui.Module
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Module
 {
     public class TrayIconModule2
     {

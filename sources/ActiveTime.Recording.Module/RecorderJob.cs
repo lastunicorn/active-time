@@ -2,11 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Stamp;
-using DustInTheWind.ActiveTime.Common.Jobs;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Recording.Module.Services
+namespace DustInTheWind.ActiveTime.Jobs
 {
     /// <summary>
     /// Periodically calls the scribe to update the time of the current record in the database.
@@ -18,7 +17,6 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
         private bool isDisposed;
         private readonly object stateSynchronizer = new object();
         private readonly Timer timer;
-        private DateTime? lastStopTime;
         private TimeSpan stampingInterval;
 
         public string Id { get; } = "Recorder";
@@ -47,78 +45,6 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
             }
         }
 
-        #region Event Started
-
-        /// <summary>
-        /// Event raised when the Recorder is started.
-        /// </summary>
-        public event EventHandler Started;
-
-        /// <summary>
-        /// Raises the <see cref="Started"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnStarted(EventArgs e)
-        {
-            Started?.Invoke(this, e);
-        }
-
-        #endregion
-
-        #region Event Stopped
-
-        /// <summary>
-        /// Event raised when the Recorder is stopped.
-        /// </summary>
-        public event EventHandler Stopped;
-
-        /// <summary>
-        /// Raises the <see cref="Stopped"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnStopped(EventArgs e)
-        {
-            Stopped?.Invoke(this, e);
-        }
-
-        #endregion
-
-        #region Event Stamping
-
-        /// <summary>
-        /// Event raised immediately before a new stamping is initiated.
-        /// </summary>
-        public event EventHandler Stamping;
-
-        /// <summary>
-        /// Raises the <see cref="Stamping"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnStamping(EventArgs e)
-        {
-            Stamping?.Invoke(this, e);
-        }
-
-        #endregion
-
-        #region Event Stamped
-
-        /// <summary>
-        /// Event raised after a stamping was finished.
-        /// </summary>
-        public event EventHandler Stamped;
-
-        /// <summary>
-        /// Raises the <see cref="Stamped"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnStamped(EventArgs e)
-        {
-            Stamped?.Invoke(this, e);
-        }
-
-        #endregion
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RecorderJob"/> class.
         /// </summary>
@@ -133,7 +59,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
 
         private void HandleTimerTick(object o)
         {
-            _ = StampWithEvents();
+            _ = Execute();
         }
 
         /// <summary>
@@ -148,7 +74,7 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
             switch (State)
             {
                 case JobState.Stopped:
-                    StartWithEvents();
+                    DoStart();
                     break;
 
                 case JobState.Running:
@@ -156,15 +82,13 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
             }
         }
 
-        private void StartWithEvents()
+        private void DoStart()
         {
             lock (stateSynchronizer)
             {
                 timer.Change(stampingInterval, stampingInterval);
                 State = JobState.Running;
             }
-
-            OnStarted(EventArgs.Empty);
         }
 
         /// <summary>
@@ -182,40 +106,24 @@ namespace DustInTheWind.ActiveTime.Recording.Module.Services
                     break;
 
                 case JobState.Running:
-                    StopWithEvents();
+                    DoStop();
                     break;
             }
         }
 
-        private void StopWithEvents()
+        private void DoStop()
         {
             lock (stateSynchronizer)
             {
-                // Stop timer
                 timer.Change(-1, -1);
-
-                lastStopTime = DateTime.Now;
                 State = JobState.Stopped;
             }
-
-            OnStopped(EventArgs.Empty);
         }
 
-        private async Task StampWithEvents()
+        private async Task Execute()
         {
-            OnStamping(EventArgs.Empty);
-
             StampRequest stampRequest = new StampRequest();
             await mediator.Send(stampRequest);
-
-            OnStamped(EventArgs.Empty);
-        }
-
-        public TimeSpan? CalculateTimeFromLastStop()
-        {
-            return lastStopTime == null
-                ? null
-                : DateTime.Now - lastStopTime;
         }
 
         public void Dispose()

@@ -18,7 +18,7 @@ using System;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Common.Services;
 
-namespace DustInTheWind.ActiveTime.TrayGui.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 {
     public class ExitCommand : ICommand
     {

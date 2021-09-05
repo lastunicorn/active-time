@@ -16,11 +16,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
-using DustInTheWind.ActiveTime.TrayGui.ViewModels;
+using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 
-namespace DustInTheWind.ActiveTime.TrayGui.Views
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Views
 {
     public partial class TrayIconView : Component, ITrayIconView
     {

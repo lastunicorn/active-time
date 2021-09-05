@@ -181,17 +181,17 @@
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
       <Name>ActiveTime.Presentation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
+    <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Jobs.csproj">
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
-      <Name>ActiveTime.Recording.Module</Name>
+      <Name>ActiveTime.Jobs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.TrayGui.Module\ActiveTime.TrayGui.Module.csproj">
+    <ProjectReference Include="..\ActiveTime.TrayGui.Module\ActiveTime.Presentation.Tray.Module.csproj">
       <Project>{A364757B-F010-4365-85BD-BAA9CFF7684A}</Project>
-      <Name>ActiveTime.TrayGui.Module</Name>
+      <Name>ActiveTime.Presentation.Tray.Module</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.TrayIconModule\ActiveTime.TrayGui.csproj">
+    <ProjectReference Include="..\ActiveTime.TrayIconModule\ActiveTime.Presentation.Tray.csproj">
       <Project>{D993640F-730C-472F-8625-80365A397D19}</Project>
-      <Name>ActiveTime.TrayGui</Name>
+      <Name>ActiveTime.Presentation.Tray</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Watchman.csproj">
       <Project>{02ef6444-a390-457d-908c-26b3b9eb09ae}</Project>

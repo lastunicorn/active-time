@@ -1,4 +1,4 @@
-﻿namespace DustInTheWind.ActiveTime.TrayGui.Views
+﻿namespace DustInTheWind.ActiveTime.Presentation.Tray.Views
 {
     public enum TrayIconState
     {

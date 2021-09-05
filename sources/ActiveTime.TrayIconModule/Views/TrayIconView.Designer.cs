@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.TrayGui.CustomControls;
+using DustInTheWind.ActiveTime.Presentation.Tray.CustomControls;
 
-namespace DustInTheWind.ActiveTime.TrayGui.Views
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Views
 {
     public partial class TrayIconView
     {

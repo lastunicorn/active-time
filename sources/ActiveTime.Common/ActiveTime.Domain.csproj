@@ -48,9 +48,6 @@
     <Compile Include="DayRecord.cs" />
     <Compile Include="EventNames.cs" />
     <Compile Include="InMemoryState.cs" />
-    <Compile Include="Jobs\IJob.cs" />
-    <Compile Include="Jobs\JobState.cs" />
-    <Compile Include="Jobs\ScheduledJobs.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="Persistence\ITimeRecordRepository.cs" />

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DustInTheWind.ActiveTime.Common.Jobs
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
 {
     public class ScheduledJobs
     {
@@ -25,7 +25,7 @@ namespace DustInTheWind.ActiveTime.Common.Jobs
             }
             catch (Exception ex)
             {
-                throw new ActiveTimeException($"There is no job with the id {jobId}.", ex);
+                throw new Exception($"There is no job with the id {jobId}.", ex);
             }
         }
     }

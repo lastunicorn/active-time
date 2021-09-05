@@ -150,9 +150,9 @@
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
       <Name>ActiveTime.Presentation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime\ActiveTime.csproj">
+    <ProjectReference Include="..\ActiveTime\ActiveTime.Bootstrapper.csproj">
       <Project>{16baedc7-838b-4b8d-9bf4-07eb8515d999}</Project>
-      <Name>ActiveTime</Name>
+      <Name>ActiveTime.Bootstrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

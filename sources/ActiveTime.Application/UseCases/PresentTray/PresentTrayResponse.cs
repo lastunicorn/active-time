@@ -1,4 +1,4 @@
-﻿using DustInTheWind.ActiveTime.Common.Jobs;
+﻿using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.PresentTray
 {

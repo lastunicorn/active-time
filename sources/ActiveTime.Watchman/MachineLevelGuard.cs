@@ -22,6 +22,8 @@ namespace DustInTheWind.ActiveTime.Watchman
 {
     public class MachineLevelGuard : IGuard
     {
+        private bool isDisposed;
+
         /// <summary>
         /// Gets the name of the current instance.
         /// </summary>
@@ -50,14 +52,10 @@ namespace DustInTheWind.ActiveTime.Watchman
 
             if (!access)
             {
-                string errorMessage = string.Format("Another instance with the name '{0}' already exists.", Name);
+                string errorMessage = $"Another instance with the name '{Name}' already exists.";
                 throw new ActiveTimeException(errorMessage);
             }
         }
-
-        #region IDisposable Members
-
-        private bool disposed;
 
         /// <summary>
         /// Releases all resources used by the current instance.
@@ -73,14 +71,14 @@ namespace DustInTheWind.ActiveTime.Watchman
         /// </summary>
         /// <remarks>
         /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
-        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be disposed.</para>
-        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be disposed.</para>
+        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be isDisposed.</para>
+        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be isDisposed.</para>
         /// </remarks>
         /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
         private void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.
-            if (disposed)
+            if (isDisposed)
                 return;
 
             // If disposing equals true, dispose all managed resources.
@@ -89,21 +87,18 @@ namespace DustInTheWind.ActiveTime.Watchman
                 // Dispose managed resources.
                 // ...
 
-                if (mutex != null)
-                    mutex.Close();
+                mutex?.Close();
             }
 
             // Call the appropriate methods to clean up unmanaged resources here.
             // ...
 
-            disposed = true;
+            isDisposed = true;
         }
 
         ~MachineLevelGuard()
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }

@@ -18,7 +18,7 @@ using System;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace DustInTheWind.ActiveTime.TrayGui.CustomControls
+namespace DustInTheWind.ActiveTime.Presentation.Tray.CustomControls
 {
     internal class CustomMenuItem : ToolStripMenuItem
     {

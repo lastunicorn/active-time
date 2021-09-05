@@ -22,6 +22,7 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DayRecord = DustInTheWind.ActiveTime.Common.DayRecord;
 
 namespace DustInTheWind.ActiveTime.Application

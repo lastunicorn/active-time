@@ -3,7 +3,6 @@ using System.Reflection;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Presentation;
@@ -11,15 +10,16 @@ using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.System;
-using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
 using DustInTheWind.ActiveTime.Presentation.Services;
+using DustInTheWind.ActiveTime.Presentation.Tray.Module;
+using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
+using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 using DustInTheWind.ActiveTime.Presentation.Views;
-using DustInTheWind.ActiveTime.Recording.Module.Services;
-using DustInTheWind.ActiveTime.TrayGui.Module;
-using DustInTheWind.ActiveTime.TrayGui.ViewModels;
-using DustInTheWind.ActiveTime.TrayGui.Views;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime
 {
     internal class BootstrapperWithMicrosoftDi
     {
-        private IServiceProvider serviceProvider;
+        private readonly IServiceProvider serviceProvider;
 
         public BootstrapperWithMicrosoftDi()
         {

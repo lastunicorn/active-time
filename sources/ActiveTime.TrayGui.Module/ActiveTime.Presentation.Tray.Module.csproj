@@ -7,8 +7,8 @@
     <ProjectGuid>{A364757B-F010-4365-85BD-BAA9CFF7684A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.ActiveTime.TrayGui.Module</RootNamespace>
-    <AssemblyName>ActiveTime.TrayGui.Module</AssemblyName>
+    <RootNamespace>DustInTheWind.ActiveTime.Presentation.Tray.Module</RootNamespace>
+    <AssemblyName>ActiveTime.Presentation.Tray.Module</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
@@ -33,12 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Shared.cs">
@@ -49,13 +43,9 @@
     <Compile Include="TrayIconModule2.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
-      <Project>{ad1501fe-d309-47d4-a774-f82b8e7cfbcb}</Project>
-      <Name>ActiveTime.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.TrayIconModule\ActiveTime.TrayGui.csproj">
+    <ProjectReference Include="..\ActiveTime.TrayIconModule\ActiveTime.Presentation.Tray.csproj">
       <Project>{D993640F-730C-472F-8625-80365A397D19}</Project>
-      <Name>ActiveTime.TrayGui</Name>
+      <Name>ActiveTime.Presentation.Tray</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

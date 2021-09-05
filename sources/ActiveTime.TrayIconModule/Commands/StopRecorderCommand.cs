@@ -19,12 +19,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.UseCases.StopRecording;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Logging;
-using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.TrayGui.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 {
     public class StopRecorderCommand : ICommand
     {

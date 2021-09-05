@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime", "ActiveTime\ActiveTime.csproj", "{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Bootstrapper", "ActiveTime\ActiveTime.Bootstrapper.csproj", "{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D993640F-730C-472F-8625-80365A397D19} = {D993640F-730C-472F-8625-80365A397D19}
 		{78A4111D-38DD-439F-ABC1-CD569C70DE9C} = {78A4111D-38DD-439F-ABC1-CD569C70DE9C}
@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Tests", "ActiveT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Domain", "ActiveTime.Common\ActiveTime.Domain.csproj", "{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.TrayGui", "ActiveTime.TrayIconModule\ActiveTime.TrayGui.csproj", "{D993640F-730C-472F-8625-80365A397D19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Presentation.Tray", "ActiveTime.TrayIconModule\ActiveTime.Presentation.Tray.csproj", "{D993640F-730C-472F-8625-80365A397D19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Persistence.SQLite.AdoNet.Module", "ActiveTime.Persistence.SQLite.AdoNet.Module\ActiveTime.Persistence.SQLite.AdoNet.Module.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
 EndProject
@@ -41,9 +41,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationApp", "MigrationAp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ActiveTimeApp", "ActiveTimeApp", "{1DBD721E-9DB5-4550-A9B5-057C6628EDCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.TrayGui.Module", "ActiveTime.TrayGui.Module\ActiveTime.TrayGui.Module.csproj", "{A364757B-F010-4365-85BD-BAA9CFF7684A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Presentation.Tray.Module", "ActiveTime.TrayGui.Module\ActiveTime.Presentation.Tray.Module.csproj", "{A364757B-F010-4365-85BD-BAA9CFF7684A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Recording.Module", "ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj", "{CC12E02C-99C8-4DDA-9F68-3CF670D13958}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Jobs", "ActiveTime.Recording.Module\ActiveTime.Jobs.csproj", "{CC12E02C-99C8-4DDA-9F68-3CF670D13958}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Infrastructure", "ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj", "{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}"
 EndProject
@@ -240,7 +240,6 @@ Global
 		{9D813167-EE59-4936-812C-1A8238B69510} = {1DBD721E-9DB5-4550-A9B5-057C6628EDCB}
 		{1786A70F-7015-47DA-98A4-C99F7016CACE} = {1DBD721E-9DB5-4550-A9B5-057C6628EDCB}
 		{A364757B-F010-4365-85BD-BAA9CFF7684A} = {1DBD721E-9DB5-4550-A9B5-057C6628EDCB}
-		{CC12E02C-99C8-4DDA-9F68-3CF670D13958} = {1DBD721E-9DB5-4550-A9B5-057C6628EDCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF0F3084-E2E8-456E-A22A-C5F72F47A9E7}
