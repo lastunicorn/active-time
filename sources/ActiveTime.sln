@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.TrayGui.Module",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Recording.Module", "ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj", "{CC12E02C-99C8-4DDA-9F68-3CF670D13958}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Infrastructure", "ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj", "{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +215,18 @@ Global
 		{CC12E02C-99C8-4DDA-9F68-3CF670D13958}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CC12E02C-99C8-4DDA-9F68-3CF670D13958}.Release|x86.ActiveCfg = Release|Any CPU
 		{CC12E02C-99C8-4DDA-9F68-3CF670D13958}.Release|x86.Build.0 = Release|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Debug|x86.Build.0 = Debug|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Release|x86.ActiveCfg = Release|Any CPU
+		{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

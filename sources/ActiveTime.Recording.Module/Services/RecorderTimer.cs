@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Stamp;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Recording;
 using MediatR;
 

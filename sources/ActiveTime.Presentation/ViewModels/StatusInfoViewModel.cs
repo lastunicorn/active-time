@@ -17,7 +17,8 @@
 using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.PresentApplicationStatus;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using MediatR;
 
@@ -29,6 +30,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
     public class StatusInfoViewModel : ViewModelBase
     {
         private readonly IMediator mediator;
+        private readonly ILogger logger;
         private string statusText;
         private bool isRecorderStarted;
 
@@ -54,10 +56,11 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public ToggleRecorderCommand ToggleRecorderCommand { get; }
 
-        public StatusInfoViewModel(IMediator mediator, EventBus eventBus)
+        public StatusInfoViewModel(IMediator mediator, EventBus eventBus, ILogger logger)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             ToggleRecorderCommand = new ToggleRecorderCommand(mediator);
 
@@ -70,11 +73,18 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         private async Task Load()
         {
-            PresentApplicationStatusRequest request = new PresentApplicationStatusRequest();
-            PresentApplicationStatusResponse response = await mediator.Send(request);
+            try
+            {
+                PresentApplicationStatusRequest request = new PresentApplicationStatusRequest();
+                PresentApplicationStatusResponse response = await mediator.Send(request);
 
-            IsRecorderStarted = response.IsRecorderStarted;
-            StatusText = response.StatusText;
+                IsRecorderStarted = response.IsRecorderStarted;
+                StatusText = response.StatusText;
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR: " + ex);
+            }
         }
 
         private void HandleStatusTextChanged(EventParameters parameters)

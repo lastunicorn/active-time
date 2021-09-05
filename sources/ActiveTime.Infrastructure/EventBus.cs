@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
-namespace DustInTheWind.ActiveTime.Common.Infrastructure
+namespace DustInTheWind.ActiveTime.Infrastructure
 {
     public class EventBus
     {

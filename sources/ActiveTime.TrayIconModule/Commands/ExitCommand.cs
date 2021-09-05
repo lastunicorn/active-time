@@ -20,7 +20,7 @@ using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.TrayGui.Commands
 {
-    internal class ExitCommand : ICommand
+    public class ExitCommand : ICommand
     {
         private readonly IApplicationService applicationService;
         public event EventHandler CanExecuteChanged;

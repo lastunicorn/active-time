@@ -43,6 +43,9 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -57,7 +60,6 @@
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\CalendarCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="Commands\CommentsCommand.cs" />
     <Compile Include="Commands\DecrementDayCommand.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
@@ -69,7 +71,6 @@
     <Compile Include="Commands\SaveCommentCommand.cs" />
     <Compile Include="Commands\StartRecorderCommand.cs" />
     <Compile Include="Commands\StopRecorderCommand.cs" />
-    <Compile Include="Commands\TimeRecordsCommand.cs" />
     <Compile Include="Commands\ToggleRecorderCommand.cs" />
     <Compile Include="Converters\BooleanConverter.cs" />
     <Compile Include="Converters\RecordConverter.cs" />
@@ -103,9 +104,11 @@
     <Compile Include="ViewModels\FrontViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowTitle.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\OverviewViewModel.cs" />
     <Compile Include="ViewModels\StatusInfoViewModel.cs" />
+    <Compile Include="ViewModels\TimeReportViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,9 @@
     </Compile>
     <Compile Include="Views\StatusInfoView.xaml.cs">
       <DependentUpon>StatusInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TimeReportView.xaml.cs">
+      <DependentUpon>TimeReportView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\TimeReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -253,6 +263,10 @@
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
+      <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
+      <Name>ActiveTime.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>

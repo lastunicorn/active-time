@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Reflection;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
@@ -27,33 +26,13 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         
         public FrontViewModel FrontViewModel { get; }
 
-        private string windowTitle;
-
-        public string WindowTitle
-        {
-            get => windowTitle;
-            set
-            {
-                windowTitle = value;
-                OnPropertyChanged();
-            }
-        }
+        public MainWindowTitle WindowTitle { get; } = new MainWindowTitle();
 
         public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel)
         {
             MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
             StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
             FrontViewModel = frontViewModel ?? throw new ArgumentNullException(nameof(frontViewModel));
-
-            windowTitle = BuildWindowTitle();
-        }
-
-        private static string BuildWindowTitle()
-        {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            AssemblyName assemblyName = assembly.GetName();
-
-            return $"ActiveTime {assemblyName.Version.ToString(3)}";
         }
     }
 }

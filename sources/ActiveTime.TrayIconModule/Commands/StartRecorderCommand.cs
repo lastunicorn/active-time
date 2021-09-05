@@ -19,18 +19,29 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Logging;
-using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Recording.Module.Services;
+using DustInTheWind.ActiveTime.Infrastructure;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.TrayGui.Commands
 {
-    internal class StartRecorderCommand : ICommand
+    public class StartRecorderCommand : ICommand
     {
         private readonly IMediator mediator;
         private readonly ILogger logger;
+        
+        private JobState recorderState = JobState.Stopped;
+
+        public JobState RecorderState
+        {
+            get => recorderState;
+            set
+            {
+                recorderState = value;
+                OnCanExecuteChanged();
+            }
+        }
 
         public event EventHandler CanExecuteChanged;
 
@@ -46,19 +57,17 @@ namespace DustInTheWind.ActiveTime.TrayGui.Commands
 
         private void HandleRecorderStarted(EventParameters parameters)
         {
-            OnCanExecuteChanged();
+            RecorderState = JobState.Running;
         }
 
         private void HandleRecorderStopped(EventParameters parameters)
         {
-            OnCanExecuteChanged();
+            RecorderState = JobState.Stopped;
         }
 
         public bool CanExecute(object parameter)
         {
-            // todo: check the recorder timer state.
-
-            return true;
+            return RecorderState == JobState.Stopped;
         }
 
         public void Execute(object parameter)

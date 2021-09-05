@@ -1,14 +1,19 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using System.Windows.Documents;
 using Autofac;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Common.System;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
 using DustInTheWind.ActiveTime.Presentation.Services;
@@ -18,6 +23,7 @@ using DustInTheWind.ActiveTime.Recording.Module.Services;
 using DustInTheWind.ActiveTime.TrayGui.Module;
 using DustInTheWind.ActiveTime.TrayGui.ViewModels;
 using DustInTheWind.ActiveTime.TrayGui.Views;
+using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
 
 namespace DustInTheWind.ActiveTime
@@ -39,7 +45,7 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             // GUI - Tray Icon
-            containerBuilder.RegisterType<TrayIconModule>().AsSelf();
+            containerBuilder.RegisterType<TrayIconModule>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<TrayIconView>().AsSelf();
             containerBuilder.RegisterType<TrayIconPresenter>().AsSelf();
 
@@ -50,10 +56,16 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<StatusInfoViewModel>().AsSelf();
             containerBuilder.RegisterType<FrontViewModel>().AsSelf();
             containerBuilder.RegisterType<CurrentDateViewModel>().AsSelf();
-            
+            containerBuilder.RegisterType<TimeReportViewModel>().AsSelf();
+            containerBuilder.RegisterType<CommentsViewModel>().AsSelf();
+            containerBuilder.RegisterType<DayRecordsViewModel>().AsSelf();
+
             containerBuilder.RegisterType<CalendarWindow>().AsSelf();
             containerBuilder.RegisterType<CalendarViewModel>().AsSelf();
-            
+
+            containerBuilder.RegisterType<OverviewWindow>().AsSelf();
+            containerBuilder.RegisterType<OverviewViewModel>().AsSelf();
+
             containerBuilder.RegisterType<AboutWindow>().AsSelf();
             containerBuilder.RegisterType<AboutViewModel>().AsSelf();
 
@@ -85,6 +97,13 @@ namespace DustInTheWind.ActiveTime
             // MediatR
             Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
             containerBuilder.RegisterMediatR(useCasesAssembly);
+
+            //containerBuilder.Register<ServiceFactory>(outerContext =>
+            //{
+            //    var innerContext = outerContext.Resolve<IComponentContext>();
+
+            //    return serviceType => innerContext.Resolve(serviceType);
+            //});
         }
 
         public void Run()

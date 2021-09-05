@@ -2,9 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Infrastructure;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.StartRecording
@@ -26,17 +27,26 @@ namespace DustInTheWind.ActiveTime.Application.UseCases.StartRecording
 
         public Task<Unit> Handle(StartRecordingRequest request, CancellationToken cancellationToken)
         {
-            scribeEx.StampNew();
-
-            IJob recorderJob = scheduledJobs.Get("Recorder");
-            recorderJob.Start();
+            CreateNewRecord();
+            StartRecorder();
 
             unitOfWork.Commit();
             unitOfWork.Dispose();
 
-            eventBus.Raise(EventNames.Recorder.Started);
-
             return Task.FromResult(Unit.Value);
+        }
+
+        private void CreateNewRecord()
+        {
+            scribeEx.StampNew();
+        }
+
+        private void StartRecorder()
+        {
+            IJob recorderJob = scheduledJobs.Get("Recorder");
+            recorderJob.Start();
+
+            eventBus.Raise(EventNames.Recorder.Started);
         }
     }
 }

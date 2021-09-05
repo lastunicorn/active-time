@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="ViewModels\TrayIconPresenter.cs" />
     <Compile Include="Views\ITrayIconView.cs" />
+    <Compile Include="Views\TrayIconState.cs" />
     <Compile Include="Views\TrayIconView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -97,6 +98,10 @@
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
+      <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
+      <Name>ActiveTime.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Recording.Module.csproj">
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>

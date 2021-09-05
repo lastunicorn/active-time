@@ -24,7 +24,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Presentation.Views"
-    xmlns:presentation="clr-namespace:DustInTheWind.ActiveTime.Common.Presentation;assembly=ActiveTime.Common"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.ViewModels"
 
     Title="{Binding Path=WindowTitle}"
@@ -47,8 +46,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <views:StatusInfoView DockPanel.Dock="Bottom" DataContext="{Binding StatusInfoViewModel}"/>
 
         <views:FrontView  DataContext="{Binding FrontViewModel}"/>
-
-        <!--<ContentControl regions:RegionManager.RegionName="{x:Static presentation:RegionNames.MainContentRegion}" Focusable="False"/>-->
 
     </DockPanel>
 

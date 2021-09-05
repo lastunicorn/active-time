@@ -2,9 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Infrastructure;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.StopRecording
@@ -26,20 +27,29 @@ namespace DustInTheWind.ActiveTime.Application.UseCases.StopRecording
 
         public Task<Unit> Handle(StopRecordingRequest request, CancellationToken cancellationToken)
         {
-            if (request.DeleteLastRecord)
-                scribeEx.DeleteCurrentTimeRecord();
-            else
-                scribeEx.Stamp();
-
-            IJob recorderJob = scheduledJobs.Get("Recorder");
-            recorderJob.Stop();
+            CompleteCurrentRecord(request);
+            StopRecorder();
 
             unitOfWork.Commit();
             unitOfWork.Dispose();
 
-            eventBus.Raise(EventNames.Recorder.Stopped);
-
             return Task.FromResult(Unit.Value);
+        }
+
+        private void CompleteCurrentRecord(StopRecordingRequest request)
+        {
+            if (request.DeleteLastRecord)
+                scribeEx.DeleteCurrentTimeRecord();
+            else
+                scribeEx.Stamp();
+        }
+
+        private void StopRecorder()
+        {
+            IJob recorderJob = scheduledJobs.Get("Recorder");
+            recorderJob.Stop();
+
+            eventBus.Raise(EventNames.Recorder.Stopped);
         }
     }
 }

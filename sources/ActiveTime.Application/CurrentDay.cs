@@ -17,11 +17,11 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DayRecord = DustInTheWind.ActiveTime.Common.DayRecord;
 
 namespace DustInTheWind.ActiveTime.Application

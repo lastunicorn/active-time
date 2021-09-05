@@ -14,10 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows;
 using System.Windows.Controls;
-using DustInTheWind.ActiveTime.Presentation.ViewModels;
 
 namespace DustInTheWind.ActiveTime.Presentation.Views
 {
@@ -26,39 +23,9 @@ namespace DustInTheWind.ActiveTime.Presentation.Views
     /// </summary>
     public partial class DayRecordsView : UserControl
     {
-        private readonly DayRecordsViewModel viewModel;
-
-        public DayRecordsView(DayRecordsViewModel viewModel)
+        public DayRecordsView()
         {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            this.viewModel = viewModel;
-
             InitializeComponent();
-        }
-
-        private void menuItemNew_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void menuItemMerge_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void menuItemSplit_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void contextMenuRecords_Opened(object sender, RoutedEventArgs e)
-        {
-            //menuItemDelete.upDate
-        }
-
-        private void MainView_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            DataContext = viewModel;
         }
     }
 }

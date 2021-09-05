@@ -16,46 +16,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.Reporting;
 
 namespace DustInTheWind.ActiveTime.Presentation
 {
     internal class ReportBuilder
     {
-        private readonly IDayCommentRepository dayCommentRepository;
-        private readonly ITimeRecordRepository timeRecordRepository;
+        private readonly OverviewReport overviewReport;
 
-        public DateTime FirstDay { get; set; }
-        public DateTime LastDay { get; set; }
-
-        public IEnumerable<DayRecord> DayComments { get; private set; }
-        public string Text { get; private set; }
-
-        public ReportBuilder(IDayCommentRepository dayCommentRepository, ITimeRecordRepository timeRecordRepository)
+        public ReportBuilder(OverviewReport overviewReport)
         {
-            if (dayCommentRepository == null) throw new ArgumentNullException(nameof(dayCommentRepository));
-            if (timeRecordRepository == null) throw new ArgumentNullException(nameof(timeRecordRepository));
-
-            this.dayCommentRepository = dayCommentRepository;
-            this.timeRecordRepository = timeRecordRepository;
+            this.overviewReport = overviewReport ?? throw new ArgumentNullException(nameof(overviewReport));
         }
 
         public string Build()
-        {
-            RetrieveComments();
-            Stringify();
-
-            return Text;
-        }
-
-        private void RetrieveComments()
-        {
-            DayComments = dayCommentRepository.GetByDate(FirstDay, LastDay);
-        }
-
-        private void Stringify()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Average hours per day: ");
@@ -66,10 +43,9 @@ namespace DustInTheWind.ActiveTime.Presentation
             sb.AppendLine("--------------------------------------------------");
             sb.AppendLine();
 
-            foreach (DayRecord dayComment in DayComments)
+            foreach (DayRecord dayComment in overviewReport.DayRecords)
             {
-                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(dayComment.Date);
-                Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
+                Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(dayComment.TimeRecords);
 
                 sb.Append(dayComment.Date.ToDefaultFormat());
 
@@ -97,18 +73,20 @@ namespace DustInTheWind.ActiveTime.Presentation
                 sb.AppendLine();
             }
 
-            Text = sb.ToString();
+            return sb.ToString();
         }
 
         private TimeSpan CalculateHours()
         {
-            DateTime date = FirstDay;
+            DateTime date = overviewReport.FirstDay;
             TimeSpan totalTime = TimeSpan.Zero;
             int dayCount = 0;
 
-            while (date <= LastDay)
+            while (date <= overviewReport.LastDay)
             {
-                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date);
+                DayRecord dayRec = overviewReport.DayRecords.FirstOrDefault(x => x.Date == date);
+                List<TimeRecord> timeRecords = dayRec?.TimeRecords ?? new List<TimeRecord>();
+
                 Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
 
                 TimeSpan totalDayActiveTime = dayRecord.TotalActiveTime;

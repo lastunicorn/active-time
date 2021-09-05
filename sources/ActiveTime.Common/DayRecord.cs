@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 
 namespace DustInTheWind.ActiveTime.Common
 {
@@ -37,6 +38,8 @@ namespace DustInTheWind.ActiveTime.Common
         /// Gets or sets the comment text.
         /// </summary>
         public string Comment { get; set; }
+
+        public List<TimeRecord> TimeRecords { get; set; }
 
         /// <summary>
         /// Compares the business keys.

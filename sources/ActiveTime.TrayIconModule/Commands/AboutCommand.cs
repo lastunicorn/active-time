@@ -21,7 +21,7 @@ using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 
 namespace DustInTheWind.ActiveTime.TrayGui.Commands
 {
-    internal class AboutCommand : ICommand
+    public class AboutCommand : ICommand
     {
         private readonly IShellNavigator shellNavigator;
         public event EventHandler CanExecuteChanged;

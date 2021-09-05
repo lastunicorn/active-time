@@ -16,18 +16,12 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Common.Infrastructure
+namespace DustInTheWind.ActiveTime.Common.System
 {
-    public class SystemClock : ISystemClock
+    public interface ISystemClock
     {
-        public DateTime GetCurrentTime()
-        {
-            return DateTime.Now;
-        }
+        DateTime GetCurrentTime();
 
-        public DateTime GetCurrentDate()
-        {
-            return DateTime.Today;
-        }
+        DateTime GetCurrentDate();
     }
 }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A364757B-F010-4365-85BD-BAA9CFF7684A}</ProjectGuid>
+    <ProjectGuid>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.ActiveTime.TrayGui.Module</RootNamespace>
-    <AssemblyName>ActiveTime.TrayGui.Module</AssemblyName>
+    <RootNamespace>DustInTheWind.ActiveTime.Infrastructure</RootNamespace>
+    <AssemblyName>ActiveTime.Infrastructure</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
@@ -44,24 +44,9 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
+    <Compile Include="EventBus.cs" />
+    <Compile Include="EventParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrayIconModule.cs" />
-    <Compile Include="TrayIconModule2.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
-      <Project>{ad1501fe-d309-47d4-a774-f82b8e7cfbcb}</Project>
-      <Name>ActiveTime.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.TrayIconModule\ActiveTime.TrayGui.csproj">
-      <Project>{D993640F-730C-472F-8625-80365A397D19}</Project>
-      <Name>ActiveTime.TrayGui</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Autofac">
-      <Version>6.2.0</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

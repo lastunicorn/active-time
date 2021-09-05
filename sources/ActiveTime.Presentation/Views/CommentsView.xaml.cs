@@ -14,10 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows;
 using System.Windows.Controls;
-using DustInTheWind.ActiveTime.Presentation.ViewModels;
 
 namespace DustInTheWind.ActiveTime.Presentation.Views
 {
@@ -26,20 +23,9 @@ namespace DustInTheWind.ActiveTime.Presentation.Views
     /// </summary>
     public partial class CommentsView : UserControl
     {
-        private readonly CommentsViewModel viewModel;
-
-        public CommentsView(CommentsViewModel viewModel)
+        public CommentsView()
         {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            this.viewModel = viewModel;
-
             InitializeComponent();
-        }
-
-        private void CommentsView_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            DataContext = viewModel;
         }
     }
 }

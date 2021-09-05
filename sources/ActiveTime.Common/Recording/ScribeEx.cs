@@ -1,7 +1,6 @@
 ﻿using System;
-using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Common.System;
 
 namespace DustInTheWind.ActiveTime.Common.Recording
 {

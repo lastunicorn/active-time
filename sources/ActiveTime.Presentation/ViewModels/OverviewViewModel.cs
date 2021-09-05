@@ -15,15 +15,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
-using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Services;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.UseCases.PresentOverview;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Common.System;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public sealed class OverviewViewModel : ViewModelBase
     {
-        private readonly IUnitOfWorkFactory unitOfWorkFactory;
+        private readonly IMediator mediator;
+        private readonly ILogger logger;
 
         private string comments;
 
@@ -46,7 +49,8 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             {
                 firstDay = value;
                 OnPropertyChanged();
-                PopulateComments();
+
+                _ = PopulateComments();
             }
         }
 
@@ -59,36 +63,40 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             {
                 lastDay = value;
                 OnPropertyChanged();
-                PopulateComments();
+
+                _ = PopulateComments();
             }
         }
 
-        public OverviewViewModel(IUnitOfWorkFactory unitOfWorkFactory, ISystemClock systemClock)
+        public OverviewViewModel(ISystemClock systemClock, IMediator mediator, ILogger logger)
         {
             if (systemClock == null) throw new ArgumentNullException(nameof(systemClock));
 
-            this.unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             DateTime today = systemClock.GetCurrentDate();
             firstDay = today.AddDays(-29);
             lastDay = today;
 
-            PopulateComments();
+            _ = PopulateComments();
         }
 
-        private void PopulateComments()
+        private async Task PopulateComments()
         {
-            using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
-            {
-                IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
-                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+            Comments = "Loading...";
 
-                ReportBuilder reportBuilder = new ReportBuilder(dayCommentRepository, timeRecordRepository)
-                {
-                    FirstDay = firstDay,
-                    LastDay = lastDay
-                };
+            try
+            {
+                PresentOverviewRequest request = new PresentOverviewRequest();
+                PresentOverviewResponse response = await mediator.Send(request);
+
+                ReportBuilder reportBuilder = new ReportBuilder(response.Report);
                 Comments = reportBuilder.Build();
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR: " + ex);
             }
         }
     }

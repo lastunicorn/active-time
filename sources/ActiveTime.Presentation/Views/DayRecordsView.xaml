@@ -31,24 +31,48 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     mc:Ignorable="d" 
     d:DesignHeight="300"
     d:DesignWidth="300"
-    Loaded="MainView_OnLoaded"
     d:DataContext="{d:DesignInstance viewModels:DayRecordsViewModel}">
 
-    <Grid Margin="0">
+    <DockPanel
+        Margin="0"
+        Focusable="False">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        <ScrollViewer
+            DockPanel.Dock="Bottom"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto"
+            Margin="0">
 
-        <Label
-            Grid.Row="0"
-            Content="Records:"
-            Margin="0" />
+            <ItemsControl
+                ItemsSource="{Binding Records}">
 
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel
+                            Orientation="Horizontal"
+                            IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type common:DayTimeInterval}">
+                        <Rectangle
+                            Height="30"
+                            Fill="{StaticResource RecordBarActive}"
+                            Width="{Binding IntervalInMinutes}"/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type common:Break}">
+                        <Rectangle
+                            Height="30"
+                            Fill="{StaticResource RecordBarInactive}"
+                            Width="{Binding IntervalInMinutes}"/>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+
+            </ItemsControl>
+        </ScrollViewer>
         <ListBox
-            Grid.Row="1"
             ItemsSource="{Binding Path=Records}"
             SelectionMode="Extended"
             Margin="0 0 0 5">
@@ -101,41 +125,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         </ListBox>
 
-        <ScrollViewer
-            Grid.Row="2"
-            HorizontalScrollBarVisibility="Auto"
-            VerticalScrollBarVisibility="Auto"
-            Margin="0">
-            
-            <ItemsControl
-                ItemsSource="{Binding Records}">
-
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel
-                            Orientation="Horizontal"
-                            IsItemsHost="True"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type common:DayTimeInterval}">
-                        <Rectangle
-                            Height="30"
-                            Fill="{StaticResource RecordBarActive}"
-                            Width="{Binding IntervalInMinutes}"/>
-                    </DataTemplate>
-
-                    <DataTemplate DataType="{x:Type common:Break}">
-                        <Rectangle
-                            Height="30"
-                            Fill="{StaticResource RecordBarInactive}"
-                            Width="{Binding IntervalInMinutes}"/>
-                    </DataTemplate>
-                </ItemsControl.Resources>
-                
-            </ItemsControl>
-        </ScrollViewer>
-    </Grid>
+    </DockPanel>
 
 </UserControl>

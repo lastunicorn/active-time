@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DustInTheWind.ActiveTime.Common.Infrastructure
+namespace DustInTheWind.ActiveTime.Common.Jobs
 {
     public class ScheduledJobs
     {

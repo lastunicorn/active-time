@@ -15,23 +15,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Persistence;
-using Microsoft.Practices.Unity;
 
-namespace DustInTheWind.ActiveTime
+namespace DustInTheWind.ActiveTime.Common.System
 {
-    public class UnitOfWorkFactory : IUnitOfWorkFactory
+    public class SystemClock : ISystemClock
     {
-        private readonly IUnityContainer unityContainer;
-
-        public UnitOfWorkFactory(IUnityContainer unityContainer)
+        public DateTime GetCurrentTime()
         {
-            this.unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
+            return DateTime.Now;
         }
 
-        public IUnitOfWork CreateNew()
+        public DateTime GetCurrentDate()
         {
-            return unityContainer.Resolve<IUnitOfWork>();
+            return DateTime.Today;
         }
     }
 }

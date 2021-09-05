@@ -24,16 +24,16 @@ namespace DustInTheWind.ActiveTime.TrayGui.Module
     {
         private TrayIconView trayIconView;
 
-        private readonly ILifetimeScope container;
+        private readonly IComponentContext context;
 
-        public TrayIconModule(ILifetimeScope container)
+        public TrayIconModule(IComponentContext context)
         {
-            this.container = container ?? throw new ArgumentNullException(nameof(container));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Initialize()
         {
-            trayIconView = container.Resolve<TrayIconView>();
+            trayIconView = context.Resolve<TrayIconView>();
         }
     }
 }

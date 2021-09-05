@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DustInTheWind.ActiveTime.Common.Infrastructure
+namespace DustInTheWind.ActiveTime.Infrastructure
 {
     public class EventParameters
     {

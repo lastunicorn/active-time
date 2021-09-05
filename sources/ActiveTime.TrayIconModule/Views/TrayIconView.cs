@@ -19,7 +19,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using DustInTheWind.ActiveTime.TrayGui.ViewModels;
-using DustInTheWind.ActiveTime.TrayGui.Views;
 
 namespace DustInTheWind.ActiveTime.TrayGui.Views
 {
@@ -49,9 +48,27 @@ namespace DustInTheWind.ActiveTime.TrayGui.Views
             set => notifyIcon1.Visible = value;
         }
 
-        public Icon Icon
+        public TrayIconState IconState
         {
-            set => notifyIcon1.Icon = value;
+            set
+            {
+                switch (value)
+                {
+                    case TrayIconState.On:
+                        notifyIcon1.Icon = Properties.Resources.tray_on;
+                        break;
+                    
+                    case TrayIconState.Off:
+                        notifyIcon1.Icon = Properties.Resources.tray_off;
+                        break;
+                    
+                    case TrayIconState.Unknown:
+                    default:
+                        // todo: create an unknown state icon
+                        notifyIcon1.Icon = Properties.Resources.tray_off;
+                        break;
+                }
+            }
         }
         
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)

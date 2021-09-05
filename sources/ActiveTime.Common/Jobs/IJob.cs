@@ -1,4 +1,4 @@
-﻿namespace DustInTheWind.ActiveTime.Common.Infrastructure
+﻿namespace DustInTheWind.ActiveTime.Common.Jobs
 {
     public interface IJob
     {

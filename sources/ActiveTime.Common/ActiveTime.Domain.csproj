@@ -47,12 +47,10 @@
     <Compile Include="ActiveTimeException.cs" />
     <Compile Include="DayRecord.cs" />
     <Compile Include="EventNames.cs" />
-    <Compile Include="Infrastructure\EventBus.cs" />
-    <Compile Include="Infrastructure\EventParameters.cs" />
-    <Compile Include="Infrastructure\IJob.cs" />
-    <Compile Include="Infrastructure\JobState.cs" />
-    <Compile Include="Infrastructure\ScheduledJobs.cs" />
     <Compile Include="InMemoryState.cs" />
+    <Compile Include="Jobs\IJob.cs" />
+    <Compile Include="Jobs\JobState.cs" />
+    <Compile Include="Jobs\ScheduledJobs.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Persistence\IDayCommentRepository.cs" />
     <Compile Include="Persistence\ITimeRecordRepository.cs" />
@@ -64,15 +62,16 @@
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\DayRecord.cs" />
     <Compile Include="Recording\ScribeEx.cs" />
+    <Compile Include="Reporting\OverviewReport.cs" />
     <Compile Include="Services\Dwarfs.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IDwarf.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
-    <Compile Include="Infrastructure\ISystemClock.cs" />
     <Compile Include="Services\IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Infrastructure\SystemClock.cs" />
+    <Compile Include="System\ISystemClock.cs" />
+    <Compile Include="System\SystemClock.cs" />
     <Compile Include="TimeRecord.cs" />
     <Compile Include="TimeRecordType.cs" />
     <Compile Include="Presentation\ShellNavigation\IShell.cs" />

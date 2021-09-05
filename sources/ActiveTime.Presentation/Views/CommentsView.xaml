@@ -29,7 +29,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     mc:Ignorable="d" 
     d:DesignHeight="300"
     d:DesignWidth="300"
-    Loaded="CommentsView_OnLoaded"
     Focusable="False"
     d:DataContext="{d:DesignInstance viewModels:CommentsViewModel }">
 
@@ -39,44 +38,12 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Margin="0" Focusable="False">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <Label
-            Grid.Row="0"
-            Content="Comment:"
-            Margin="0 0 0 0" />
-
-        <TextBox
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="0 0 0 5"
-            Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
-            AcceptsReturn="True"
-            HorizontalScrollBarVisibility="Auto"
-            VerticalScrollBarVisibility="Auto"
-            TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}">
-
-            <TextBox.InputBindings>
-                <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>
-            </TextBox.InputBindings>
-
-        </TextBox>
-
-        <CheckBox
-            Grid.Row="2"
-            Content="Wrap"
-            Margin="0 0 0 5"
-            IsChecked="{Binding Path=CommentTextWrap}"/>
+    <DockPanel
+        Margin="0"
+        Focusable="False">
 
         <StackPanel
-            Grid.Row="3"
+            DockPanel.Dock="Bottom"
             Margin="0"
             Orientation="Horizontal"
             FlowDirection="RightToLeft">
@@ -99,6 +66,26 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         </StackPanel>
 
-    </Grid>
+        <CheckBox
+            DockPanel.Dock="Bottom"
+            Content="Wrap"
+            Margin="0 0 0 5"
+            IsChecked="{Binding Path=CommentTextWrap}"/>
+
+        <TextBox
+            Margin="0 0 0 5"
+            Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
+            AcceptsReturn="True"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto"
+            TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}">
+
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>
+            </TextBox.InputBindings>
+
+        </TextBox>
+
+    </DockPanel>
 
 </UserControl>

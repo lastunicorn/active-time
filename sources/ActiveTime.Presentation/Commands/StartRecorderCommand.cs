@@ -18,8 +18,8 @@ using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Infrastructure;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Jobs;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.PresentTray
@@ -21,7 +21,7 @@ namespace DustInTheWind.ActiveTime.Application.UseCases.PresentTray
 
             PresentTrayResponse response = new PresentTrayResponse
             {
-                IsRecorderRunning = recordingJob.State == JobState.Running
+                RecorderState = recordingJob.State
             };
 
             return Task.FromResult(response);

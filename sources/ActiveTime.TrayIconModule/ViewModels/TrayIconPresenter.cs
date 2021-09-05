@@ -17,15 +17,14 @@
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.UseCases.PresentTray;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
+using DustInTheWind.ActiveTime.Common.Jobs;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.TrayGui.Commands;
 using DustInTheWind.ActiveTime.TrayGui.Views;
 using MediatR;
@@ -46,18 +45,15 @@ namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
             }
         }
 
-        public ICommand ShowCommand { get; }
+        public ShowCommand ShowCommand { get; }
 
-        public ICommand StartRecorderCommand { get; }
+        public StartRecorderCommand StartRecorderCommand { get; }
 
-        public ICommand StopRecorderCommand { get; }
+        public StopRecorderCommand StopRecorderCommand { get; }
 
-        public ICommand AboutCommand { get; }
+        public AboutCommand AboutCommand { get; }
 
-        public ICommand ExitCommand { get; }
-
-        private readonly Icon iconOn;
-        private readonly Icon iconOff;
+        public ExitCommand ExitCommand { get; }
 
         private readonly IShellNavigator shellNavigator;
         private readonly IMediator mediator;
@@ -71,9 +67,6 @@ namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
 
             this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-
-            iconOn = Properties.Resources.tray_on;
-            iconOff = Properties.Resources.tray_off;
 
             ShowCommand = new ShowCommand(shellNavigator);
             StartRecorderCommand = new StartRecorderCommand(mediator, logger, eventBus);
@@ -113,22 +106,25 @@ namespace DustInTheWind.ActiveTime.TrayGui.ViewModels
             PresentTrayRequest request = new PresentTrayRequest();
             PresentTrayResponse response = await mediator.Send(request);
 
-            if (response.IsRecorderRunning)
+            if (response.RecorderState == JobState.Running)
                 SetIconOn();
             else
                 SetIconOff();
+
+            StartRecorderCommand.RecorderState = response.RecorderState;
+            StopRecorderCommand.RecorderState = response.RecorderState;
         }
 
         private void SetIconOn()
         {
             if (View != null)
-                View.Icon = iconOn;
+                View.IconState = TrayIconState.On;
         }
 
         private void SetIconOff()
         {
             if (View != null)
-                View.Icon = iconOff;
+                View.IconState = TrayIconState.Off;
         }
 
         private void Show()

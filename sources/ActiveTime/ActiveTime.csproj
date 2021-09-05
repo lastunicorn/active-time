@@ -123,7 +123,6 @@
     <Compile Include="AutofacUnitOfWorkFactory.cs" />
     <Compile Include="BootstrapperWithMicrosoftDi.cs" />
     <Compile Include="MicrosoftDiWindowFactory.cs" />
-    <Compile Include="ModuleDefinitions\MainGuiModule.cs" />
     <Compile Include="Properties\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +160,10 @@
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
+      <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
+      <Name>ActiveTime.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj">
       <Project>{0f05cada-95f8-458d-a52c-de51bff8e453}</Project>

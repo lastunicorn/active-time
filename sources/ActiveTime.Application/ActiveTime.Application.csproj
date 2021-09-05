@@ -44,6 +44,9 @@
     <Compile Include="UseCases\PresentApplicationStatus\PresentApplicationStatusRequest.cs" />
     <Compile Include="UseCases\PresentApplicationStatus\PresentApplicationStatusResponse.cs" />
     <Compile Include="UseCases\PresentApplicationStatus\PresentApplicationStatusUseCase.cs" />
+    <Compile Include="UseCases\PresentOverview\PresentOverviewRequest.cs" />
+    <Compile Include="UseCases\PresentOverview\PresentOverviewUseCase.cs" />
+    <Compile Include="UseCases\PresentOverview\PresentOverviewResponse.cs" />
     <Compile Include="UseCases\PresentTray\PresentTrayRequest.cs" />
     <Compile Include="UseCases\PresentTray\PresentTrayResponse.cs" />
     <Compile Include="UseCases\PresentTray\PresentTrayUseCase.cs" />
@@ -60,6 +63,10 @@
     <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
       <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
       <Name>ActiveTime.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
+      <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
+      <Name>ActiveTime.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -14,14 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Drawing;
-
 namespace DustInTheWind.ActiveTime.TrayGui.Views
 {
     public interface ITrayIconView
     {
-        Icon Icon { set; }
-
         bool Visible { set; }
+        TrayIconState IconState { set; }
     }
 }

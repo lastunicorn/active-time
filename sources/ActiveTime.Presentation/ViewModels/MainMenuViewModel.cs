@@ -16,13 +16,11 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common.Infrastructure;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Presentation.Commands;
-using DustInTheWind.ActiveTime.Recording.Module.Services;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels

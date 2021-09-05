@@ -1,6 +1,4 @@
-﻿using DustInTheWind.ActiveTime.Common;
-
-namespace DustInTheWind.ActiveTime.Application
+﻿namespace DustInTheWind.ActiveTime.Common
 {
     public class InMemoryState
     {

@@ -22,107 +22,34 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class FrontViewModel : ViewModelBase
     {
-        private readonly CurrentDay currentDay;
-
         public CurrentDateViewModel CurrentDateViewModel { get; }
+        public TimeReportViewModel TimeReportViewModel { get; }
+        public CommentsViewModel CommentsViewModel { get; }
+        public DayRecordsViewModel DayRecordsViewModel { get; }
 
-        private TimeSpan activeTime;
-
-        public TimeSpan ActiveTime
-        {
-            get => activeTime;
-            private set
-            {
-                activeTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan totalTime;
-
-        public TimeSpan TotalTime
-        {
-            get => totalTime;
-            private set
-            {
-                totalTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan? beginTime;
-
-        public TimeSpan? BeginTime
-        {
-            get => beginTime;
-            set
-            {
-                beginTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan? estimatedEndTime;
-
-        public TimeSpan? EstimatedEndTime
-        {
-            get => estimatedEndTime;
-            set
-            {
-                estimatedEndTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public CommentsCommand CommentsCommand { get; }
-        public TimeRecordsCommand TimeRecordsCommand { get; }
         public RefreshCommand RefreshCommand { get; }
         public DeleteCommand DeleteCommand { get; }
         public DecrementDayCommand DecrementDayCommand { get; }
         public IncrementDayCommand IncrementDayCommand { get; }
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
-        public FrontViewModel(CurrentDay currentDay, CurrentDateViewModel currentDateViewModel)
+        public FrontViewModel(CurrentDay currentDay, CurrentDateViewModel currentDateViewModel, TimeReportViewModel timeReportViewModel,
+            CommentsViewModel commentsViewModel, DayRecordsViewModel dayRecordsViewModel)
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
-            CurrentDateViewModel = currentDateViewModel ?? throw new ArgumentNullException(nameof(currentDateViewModel));
+            if (currentDay == null) throw new ArgumentNullException(nameof(currentDay));
 
-            CommentsCommand = new CommentsCommand();
-            TimeRecordsCommand = new TimeRecordsCommand();
+            CurrentDateViewModel = currentDateViewModel ?? throw new ArgumentNullException(nameof(currentDateViewModel));
+            TimeReportViewModel = timeReportViewModel ?? throw new ArgumentNullException(nameof(timeReportViewModel));
+            CommentsViewModel = commentsViewModel ?? throw new ArgumentNullException(nameof(commentsViewModel));
+            DayRecordsViewModel = dayRecordsViewModel ?? throw new ArgumentNullException(nameof(dayRecordsViewModel));
+
             RefreshCommand = new RefreshCommand(currentDay);
             DeleteCommand = new DeleteCommand();
             DecrementDayCommand = new DecrementDayCommand(currentDay);
             IncrementDayCommand = new IncrementDayCommand(currentDay);
-
-            currentDay.DatesChanged += HandleCurrentDayDatesChanged;
         }
-
-        private void HandleCurrentDayDatesChanged(object sender, EventArgs eventArgs)
-        {
-            UpdateDisplayedData();
-        }
-
-        private void UpdateDisplayedData()
-        {
-            ActiveTime = currentDay.ActiveTime;
-            TotalTime = currentDay.TotalTime;
-            BeginTime = currentDay.BeginTime;
-            EstimatedEndTime = currentDay.EstimatedEndTime;
-        }
-
-        //public void OnNavigatedTo(NavigationContext navigationContext)
-        //{
-        //}
-
-        //public bool IsNavigationTarget(NavigationContext navigationContext)
-        //{
-        //    return true;
-        //}
-
-        //public void OnNavigatedFrom(NavigationContext navigationContext)
-        //{
-        //}
     }
 }
