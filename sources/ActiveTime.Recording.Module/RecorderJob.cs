@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Stamp;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
 
@@ -19,7 +20,7 @@ namespace DustInTheWind.ActiveTime.Jobs
         private readonly Timer timer;
         private TimeSpan stampingInterval;
 
-        public string Id { get; } = "Recorder";
+        public string Id { get; } = JobNames.Recorder;
 
         /// <summary>
         /// Gets the state of the current recorder job.

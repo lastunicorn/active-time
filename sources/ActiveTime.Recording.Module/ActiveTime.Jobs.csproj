@@ -52,12 +52,20 @@
       <Project>{1786A70F-7015-47DA-98A4-C99F7016CACE}</Project>
       <Name>ActiveTime.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
+      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
+      <Name>ActiveTime.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
       <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
       <Name>ActiveTime.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="MediatR">
+      <Version>9.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y "$(TargetDir)*.dll" "$(SolutionDir)ActiveTime\bin\$(ConfigurationName)"</PostBuildEvent>

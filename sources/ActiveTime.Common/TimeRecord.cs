@@ -69,6 +69,17 @@ namespace DustInTheWind.ActiveTime.Common
             EndTime = endOfDay;
         }
 
+        public static TimeRecord NewFromMidnight(DateTime now)
+        {
+            return new TimeRecord
+            {
+                RecordType = TimeRecordType.Normal,
+                Date = now.Date,
+                StartTime = TimeSpan.Zero,
+                EndTime = now.TimeOfDay
+            };
+        }
+
         /// <summary>
         /// Compares the business keys.
         /// </summary>

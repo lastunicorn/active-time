@@ -35,3 +35,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("bfc9b5e5-e55e-4f98-88e5-49f31609eb4c")]
 
 [assembly: InternalsVisibleTo("ActiveTime.Tests")]
+[assembly: InternalsVisibleTo("ActiveTime.Tests.Integration")]

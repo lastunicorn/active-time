@@ -45,3 +45,4 @@ using System.Windows;
 )]
 
 [assembly: InternalsVisibleTo("ActiveTime.Tests")]
+[assembly: InternalsVisibleTo("ActiveTime.Tests.Unit")]

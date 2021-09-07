@@ -1,11 +1,17 @@
 ﻿using System;
-using DustInTheWind.ActiveTime.Application;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentCurrentDateInfo;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class TimeReportViewModel : ViewModelBase
     {
-        private readonly CurrentDay currentDay;
+        private readonly IMediator mediator;
+        private readonly ILogger logger;
 
         private TimeSpan activeTime;
 
@@ -55,24 +61,38 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             }
         }
 
-        public TimeReportViewModel(CurrentDay currentDay)
+        public TimeReportViewModel(IMediator mediator, EventBus eventBus, ILogger logger)
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
-            
-            currentDay.DatesChanged += HandleCurrentDayDatesChanged;
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            eventBus.Subscribe(EventNames.Application.CurrentDateChanged, HandleCurrentDateChanged);
+
+            _ = Initialize();
         }
 
-        private void HandleCurrentDayDatesChanged(object sender, EventArgs eventArgs)
+        private void HandleCurrentDateChanged(EventParameters parameters)
         {
-            UpdateDisplayedData();
+            _ = Initialize();
         }
 
-        private void UpdateDisplayedData()
+        private async Task Initialize()
         {
-            ActiveTime = currentDay.ActiveTime;
-            TotalTime = currentDay.TotalTime;
-            BeginTime = currentDay.BeginTime;
-            EstimatedEndTime = currentDay.EstimatedEndTime;
+            try
+            {
+                PresentCurrentDateInfoRequest request = new PresentCurrentDateInfoRequest();
+                PresentCurrentDateInfoResponse response = await mediator.Send(request);
+
+                ActiveTime = response.ActiveTime;
+                TotalTime = response.TotalTime;
+                BeginTime = response.BeginTime;
+                EstimatedEndTime = response.EstimatedEndTime;
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR: " + ex);
+            }
         }
     }
 }

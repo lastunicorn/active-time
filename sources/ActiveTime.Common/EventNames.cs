@@ -18,6 +18,7 @@
         public static class Application
         {
             public const string StatusChanged = "Application.StatusChanged";
+            public const string CurrentDateChanged = "Application.CurrentDateChanged";
         }
     }
 }

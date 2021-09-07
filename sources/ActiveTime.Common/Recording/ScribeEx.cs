@@ -64,7 +64,10 @@ namespace DustInTheWind.ActiveTime.Common.Recording
                 else
                 {
                     currentTimeRecord.EndAtMidnight();
-                    CreateNewTimeRecord(now);
+
+                    TimeRecord newTimeRecord = TimeRecord.NewFromMidnight(now);
+                    unitOfWork.TimeRecordRepository.Add(newTimeRecord);
+                    inMemoryState.CurrentTimeRecordId = newTimeRecord.Id;
                 }
             }
         }
