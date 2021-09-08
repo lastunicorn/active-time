@@ -61,7 +61,6 @@
     <Compile Include="TimeAssertion.cs" />
     <Compile Include="Presentation\ViewModels\CommentsViewModelTests\ConstructorTests.cs" />
     <Compile Include="Presentation\ViewModels\CommentsViewModelTests\PropertyChangedTests.cs" />
-    <Compile Include="Presentation\ViewModels\MainMenuViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\MessageWindowViewModelTests\ConstructorTests.cs" />
     <Compile Include="Presentation\ViewModels\MessageWindowViewModelTests\NavigationParameters.cs" />
     <Compile Include="Presentation\ViewModels\OverviewViewModuleTests.cs" />

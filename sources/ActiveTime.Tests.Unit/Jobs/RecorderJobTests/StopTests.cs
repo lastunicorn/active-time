@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Jobs;
 using MediatR;
@@ -26,13 +27,16 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
     public class StopTests
     {
         private Mock<IMediator> mediator;
+        private Mock<ITimer> timer;
         private RecorderJob recorderJob;
 
         [SetUp]
         public void SetUp()
         {
             mediator = new Mock<IMediator>();
-            recorderJob = new RecorderJob(mediator.Object);
+            timer = new Mock<ITimer>();
+
+            recorderJob = new RecorderJob(mediator.Object, timer.Object);
         }
 
         [Test]

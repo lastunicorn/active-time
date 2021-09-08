@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Application.UseCases.Stamp;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Jobs;
 using MediatR;
 using Moq;
@@ -28,17 +29,20 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
     public class InternalTimerTests
     {
         private Mock<IMediator> mediator;
+        private Mock<ITimer> timer;
         private TimeAssertion timeAssertion;
 
         [SetUp]
         public void SetUp()
         {
             timeAssertion = new TimeAssertion();
-            mediator = new Mock<IMediator>();
 
+            mediator = new Mock<IMediator>();
             mediator
                 .Setup(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()))
                 .Callback<IRequest<MediatR.Unit>, CancellationToken>((request, cancellationToken) => timeAssertion.Signal());
+
+            timer = new Mock<ITimer>();
         }
 
         [TearDown]
@@ -48,16 +52,16 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
         }
 
         [Test]
-        public void HavingRecorderJobIntervalConfiguredToStampAt100Millisecond_WhenStarted_ThenStampRequestIsSentAfter100Millisecond()
+        public void HavingRecorderJobRunning_WhenTimerIsTriggered_ThenStampRequestIsSentToMediator()
         {
-            RecorderJob recorderJob = new RecorderJob(mediator.Object);
-            recorderJob.StampingInterval = TimeSpan.FromMilliseconds(100);
+            RecorderJob recorderJob = new RecorderJob(mediator.Object, timer.Object);
+            recorderJob.Start();
 
-            TimeSpan expected = TimeSpan.FromMilliseconds(100);
-            timeAssertion.Run(expected, () =>
-            {
-                recorderJob.Start();
-            });
+            mediator.Invocations.Clear();
+
+            timer.Raise(x => x.Tick += null, EventArgs.Empty);
+
+            mediator.Verify(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

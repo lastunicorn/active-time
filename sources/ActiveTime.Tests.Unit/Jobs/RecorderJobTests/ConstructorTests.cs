@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Jobs;
 using MediatR;
 using Moq;
@@ -26,32 +27,39 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
     public class ConstructorTests
     {
         private Mock<IMediator> mediator;
+        private Mock<ITimer> timer;
 
         [SetUp]
         public void SetUp()
         {
             mediator = new Mock<IMediator>();
+            timer = new Mock<ITimer>();
         }
 
         [Test]
         public void HavingNullMediator_WhenNewInstanceIsCreated_ThenThrows()
         {
-            Assert.Throws<ArgumentNullException>(() => new RecorderJob(null));
+            Assert.Throws<ArgumentNullException>(() => new RecorderJob(null, timer.Object));
         }
 
         [Test]
-        public void HavingAllNeededDependencies_WhenNewInstanceIsCreated_ThenInstanceCreatedSuccessfully()
+        public void HavingNullTimer_WhenNewInstanceIsCreated_ThenThrows()
         {
-            new RecorderJob(mediator.Object);
+            Assert.Throws<ArgumentNullException>(() => new RecorderJob(mediator.Object, null));
+        }
+
+        [Test]
+        public void HavingAllNeededDependencies_WhenNewInstanceIsCreated_ThenInstanceIsSuccessfullyCreated()
+        {
+            new RecorderJob(mediator.Object, timer.Object);
         }
 
         [Test]
         public void WhenNewInstanceIsCreated_ThenStampingIntervalIsInitializedTo1Minute()
         {
-            RecorderJob recorderJob = new RecorderJob(mediator.Object);
+            new RecorderJob(mediator.Object, timer.Object);
 
-            TimeSpan expected = TimeSpan.FromMinutes(1);
-            Assert.That(recorderJob.StampingInterval, Is.EqualTo(expected));
+            timer.VerifySet(x => x.Interval = TimeSpan.FromMinutes(1));
         }
     }
 }

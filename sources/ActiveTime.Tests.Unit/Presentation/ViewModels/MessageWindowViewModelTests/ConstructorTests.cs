@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.MessageWin
     public class ConstructorTests
     {
         [Test]
-        public void default_value_of_Message()
+        public void WhenCreatingANewInstance_ThenDefaultMessageIsSet()
         {
             MessageViewModel messageViewModel = new MessageViewModel();
 
