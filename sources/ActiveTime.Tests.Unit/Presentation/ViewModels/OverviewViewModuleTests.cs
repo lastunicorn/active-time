@@ -25,7 +25,7 @@ using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.MainGuiModule.ViewModels
+namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
 {
     /// <summary>
     /// Contains unit tests for the initialization of a new <see cref="OverviewViewModuleTests"/> object.

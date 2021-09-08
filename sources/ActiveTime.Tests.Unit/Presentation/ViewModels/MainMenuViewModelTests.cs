@@ -24,7 +24,7 @@ using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.MainGuiModule.ViewModels
+namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
 {
     [TestFixture]
     public class MainMenuViewModelTests
