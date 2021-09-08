@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using DustInTheWind.ActiveTime.Application.UseCases.Stamp;
 using DustInTheWind.ActiveTime.Jobs;
@@ -23,59 +22,42 @@ using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
 {
     [TestFixture]
     public class InternalTimerTests
     {
         private Mock<IMediator> mediator;
-        private ManualResetEvent manualResetEvent;
-
-        /// <summary>
-        /// Time interval in milliseconds that is used in tests for the StampingInterval of the RecorderService.
-        /// This value is used by the RecorderService to configure its internal timer.
-        /// </summary>
-        private const int StampingInterval = 100;
-
-        /// <summary>
-        /// Time in milliseconds that is used in tests to wait for the internal timer to do its job.
-        /// </summary>
-        private const int TimeoutMilliseconds = 200;
+        private TimeAssertion timeAssertion;
 
         [SetUp]
         public void SetUp()
         {
+            timeAssertion = new TimeAssertion();
             mediator = new Mock<IMediator>();
 
             mediator
                 .Setup(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()))
-                .Callback<StampRequest>(x => manualResetEvent.Set());
+                .Callback<IRequest<MediatR.Unit>, CancellationToken>((request, cancellationToken) => timeAssertion.Signal());
+        }
 
-            manualResetEvent = new ManualResetEvent(false);
+        [TearDown]
+        public void TearDown()
+        {
+            timeAssertion.Dispose();
         }
 
         [Test]
-        public void InternalTimer_stamps_at_correct_time_interval()
+        public void HavingRecorderJobIntervalConfiguredToStampAt100Millisecond_WhenStarted_ThenStampRequestIsSentAfter100Millisecond()
         {
             RecorderJob recorderJob = new RecorderJob(mediator.Object);
-            recorderJob.StampingInterval = TimeSpan.FromMilliseconds(StampingInterval);
+            recorderJob.StampingInterval = TimeSpan.FromMilliseconds(100);
 
-            AssertTimeInterval(StampingInterval, "Job did not fired.", () =>
+            TimeSpan expected = TimeSpan.FromMilliseconds(100);
+            timeAssertion.Run(expected, () =>
             {
                 recorderJob.Start();
             });
-        }
-
-        private void AssertTimeInterval(int expectedMillis, string message, Action action)
-        {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            action();
-            manualResetEvent.WaitOne(TimeoutMilliseconds);
-
-            long actualMillis = stopwatch.ElapsedMilliseconds;
-
-            Assert.That(actualMillis, Is.EqualTo(expectedMillis).Within(20), () => message);
         }
     }
 }

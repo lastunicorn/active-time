@@ -22,7 +22,7 @@ using DustInTheWind.ActiveTime.Common.System;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Domain.Recording.ScribeTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
 {
     [TestFixture]
     public class ConstructorTests

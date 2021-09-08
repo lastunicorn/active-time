@@ -20,7 +20,7 @@ using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
 {
     [TestFixture]
     public class StopTests

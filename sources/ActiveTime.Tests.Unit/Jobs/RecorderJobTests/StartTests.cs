@@ -22,7 +22,7 @@ using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
 {
     [TestFixture]
     public class StartTests
@@ -38,15 +38,15 @@ namespace DustInTheWind.ActiveTime.UnitTests.Jobs.RecorderJobTests
         }
 
         [Test]
-        public void stamps_a_new_record()
+        public void HavingRecorderJob_WhenStarted_ThenSendsAStampRequest()
         {
             recorderJob.Start();
 
-            mediator.Verify(x => x.Send(It.IsAny<IRequest<StampRequest>>(), It.IsAny<CancellationToken>()), Times.Once);
+            mediator.Verify(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
-        public void Start_changes_state_to_Running()
+        public void HavingRecorderJob_WhenStarted_ThenStatusIsRunning()
         {
             recorderJob.Start();
 

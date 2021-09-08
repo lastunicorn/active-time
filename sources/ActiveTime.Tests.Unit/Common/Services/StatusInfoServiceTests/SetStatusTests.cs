@@ -18,7 +18,7 @@ using System.Threading;
 using DustInTheWind.ActiveTime.Application;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Common.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests
 {
     [TestFixture]
     public class SetStatusTests
@@ -33,7 +33,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Common.Services.StatusInfoServiceTe
         }
 
         [Test]
-        public void sets_correct_status_text()
+        public void HavingAnInstance_WhenSetStatusToSpecificText_ThenStatusTextContainsThatText()
         {
             statusInfoService.SetStatus(Text);
 

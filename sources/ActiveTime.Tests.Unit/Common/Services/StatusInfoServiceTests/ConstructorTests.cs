@@ -17,15 +17,13 @@
 using DustInTheWind.ActiveTime.Application;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Common.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests
 {
     [TestFixture]
     public class ConstructorTests
     {
-        private const string Text = "same test text";
-
         [Test]
-        public void successfully_instanciated()
+        public void successfully_instantiated()
         {
             new StatusInfoService();
         }

@@ -20,7 +20,7 @@ using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
 {
     [TestFixture]
     public class ConstructorTests
@@ -34,19 +34,19 @@ namespace DustInTheWind.ActiveTime.UnitTests.Jobs.RecorderJobTests
         }
 
         [Test]
-        public void throws_if_mediator_is_null()
+        public void HavingNullMediator_WhenNewInstanceIsCreated_ThenThrows()
         {
             Assert.Throws<ArgumentNullException>(() => new RecorderJob(null));
         }
 
         [Test]
-        public void successfully_called()
+        public void HavingAllNeededDependencies_WhenNewInstanceIsCreated_ThenInstanceCreatedSuccessfully()
         {
             new RecorderJob(mediator.Object);
         }
 
         [Test]
-        public void StampingInterval_initial_value_is_1min()
+        public void WhenNewInstanceIsCreated_ThenStampingIntervalIsInitializedTo1Minute()
         {
             RecorderJob recorderJob = new RecorderJob(mediator.Object);
 

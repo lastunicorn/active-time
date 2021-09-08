@@ -18,7 +18,7 @@ using System;
 using DustInTheWind.ActiveTime.Common;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Common.Persistence
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Persistence
 {
     [TestFixture]
     public class DayCommentPropertyTests

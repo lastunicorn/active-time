@@ -18,7 +18,7 @@ using System;
 using DustInTheWind.ActiveTime.Common.Recording;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Common.Recording
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Recording
 {
     [TestFixture]
     public class RecordTests

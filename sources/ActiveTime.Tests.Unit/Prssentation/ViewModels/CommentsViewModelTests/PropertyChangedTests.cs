@@ -19,15 +19,13 @@ using System.Linq.Expressions;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
-using DustInTheWind.ActiveTime.Presentation.Services;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsViewModelTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.MainGuiModule.ViewModels.CommentsViewModelTests
 {
     [TestFixture]
     public class PropertyChangedTests

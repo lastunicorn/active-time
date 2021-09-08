@@ -25,7 +25,7 @@ using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.CommentsViewModelTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.MainGuiModule.ViewModels.CommentsViewModelTests
 {
     [TestFixture]
     public class ConstructorTests

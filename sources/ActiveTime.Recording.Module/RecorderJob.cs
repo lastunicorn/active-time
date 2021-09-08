@@ -60,7 +60,7 @@ namespace DustInTheWind.ActiveTime.Jobs
 
         private void HandleTimerTick(object o)
         {
-            _ = Execute();
+            _ = Stamp();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace DustInTheWind.ActiveTime.Jobs
             switch (State)
             {
                 case JobState.Stopped:
-                    DoStart();
+                    _ = DoStart();
                     break;
 
                 case JobState.Running:
@@ -83,13 +83,15 @@ namespace DustInTheWind.ActiveTime.Jobs
             }
         }
 
-        private void DoStart()
+        private async Task DoStart()
         {
             lock (stateSynchronizer)
             {
                 timer.Change(stampingInterval, stampingInterval);
                 State = JobState.Running;
             }
+
+            await Stamp();
         }
 
         /// <summary>
@@ -121,7 +123,7 @@ namespace DustInTheWind.ActiveTime.Jobs
             }
         }
 
-        private async Task Execute()
+        private async Task Stamp()
         {
             StampRequest stampRequest = new StampRequest();
             await mediator.Send(stampRequest);

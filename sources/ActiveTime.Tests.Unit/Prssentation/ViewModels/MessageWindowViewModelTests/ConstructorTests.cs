@@ -18,7 +18,7 @@ using DustInTheWind.ActiveTime.Presentation.Properties;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.MainGuiModule.ViewModels.MessageWindowViewModelTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.MainGuiModule.ViewModels.MessageWindowViewModelTests
 {
     [TestFixture]
     public class ConstructorTests

@@ -7,7 +7,7 @@ using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.Application.Miscellaneous
+namespace DustInTheWind.ActiveTime.Tests.Unit.Application.Miscellaneous
 {
     [TestFixture]
     public class PresentApplicationStatusUseCaseTests
