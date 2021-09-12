@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Converters"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.ViewModels"
+    xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls"
 
     mc:Ignorable="d"
     d:DesignHeight="450"
@@ -29,7 +30,29 @@
 
         <!-- Active Time -->
 
-        <Border
+        <customControls:HighlightPanel
+            Grid.Row="0"
+            Margin="0 0 0 1">
+
+            <StackPanel
+                Orientation="Vertical"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+                <TextBlock
+                    Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                    FontSize="25" />
+
+                <TextBlock
+                    Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
+                    Foreground="DarkGray"
+                    TextAlignment="Center" />
+
+            </StackPanel>
+
+        </customControls:HighlightPanel>
+
+        <!--<Border
             Grid.Row="0"
             BorderThickness="1"
             Padding="0 6 0 6"
@@ -66,7 +89,7 @@
 
             </StackPanel>
 
-        </Border>
+        </Border>-->
 
         <!-- Start/End Time -->
 

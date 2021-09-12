@@ -23,29 +23,29 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 
 namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
 {
-    public class DayCommentRepository : IDayCommentRepository
+    public class DateRecordRepository : IDateRecordRepository
     {
         private readonly DbConnection connection;
 
-        public DayCommentRepository(DbConnection connection)
+        public DateRecordRepository(DbConnection connection)
         {
             if (connection == null) throw new ArgumentNullException(nameof(connection));
 
             this.connection = connection;
         }
 
-        public void Add(DayRecord dayRecord)
+        public void Add(DateRecord dateRecord)
         {
-            AddInternal(dayRecord);
+            AddInternal(dateRecord);
         }
 
-        private void AddInternal(DayRecord dayRecord)
+        private void AddInternal(DateRecord dateRecord)
         {
             using (DbCommand command = connection.CreateCommand())
             {
                 string sql = string.Format("insert into comments(date,comment) values('{0:yyyy-MM-dd}', '{1}')",
-                    dayRecord.Date,
-                    SqlTextEncode(dayRecord.Comment));
+                    dateRecord.Date,
+                    SqlTextEncode(dateRecord.Comment));
 
                 command.CommandText = sql;
 
@@ -54,18 +54,18 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public void Update(DayRecord dayRecord)
+        public void Update(DateRecord dateRecord)
         {
-            UpdateInternal(dayRecord);
+            UpdateInternal(dateRecord);
         }
 
-        private void UpdateInternal(DayRecord dayRecord)
+        private void UpdateInternal(DateRecord dateRecord)
         {
             using (DbCommand command = connection.CreateCommand())
             {
                 string sql = string.Format("update comments set comment='{0}' where date='{1:yyyy-MM-dd}'",
-                    SqlTextEncode(dayRecord.Comment),
-                    dayRecord.Date);
+                    SqlTextEncode(dateRecord.Comment),
+                    dateRecord.Date);
 
                 command.CommandText = sql;
 
@@ -74,21 +74,21 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public void AddOrUpdate(DayRecord dayRecord)
+        public void AddOrUpdate(DateRecord dateRecord)
         {
-            bool existsRecord = ExistsRecord(dayRecord);
+            bool existsRecord = ExistsRecord(dateRecord);
 
             if (existsRecord)
-                UpdateInternal(dayRecord);
+                UpdateInternal(dateRecord);
             else
-                AddInternal(dayRecord);
+                AddInternal(dateRecord);
         }
 
-        public bool ExistsRecord(DayRecord dayRecord)
+        public bool ExistsRecord(DateRecord dateRecord)
         {
             using (DbCommand command = connection.CreateCommand())
             {
-                string sql = string.Format("select count(*) from comments where date='{0:yyyy-MM-dd}'", dayRecord.Date);
+                string sql = string.Format("select count(*) from comments where date='{0:yyyy-MM-dd}'", dateRecord.Date);
 
                 command.CommandText = sql;
 
@@ -99,17 +99,17 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public void Delete(DayRecord dayRecord)
+        public void Delete(DateRecord dateRecord)
         {
             throw new NotImplementedException();
         }
 
-        public DayRecord GetById(int id)
+        public DateRecord GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public DayRecord GetByDate(DateTime date)
+        public DateRecord GetByDate(DateTime date)
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -124,7 +124,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
                 if (!successfullyRead)
                     return null;
 
-                return new DayRecord
+                return new DateRecord
                 {
                     Date = date,
                     Comment = (string)reader["comment"]
@@ -132,7 +132,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public List<DayRecord> GetByDate(DateTime startDate, DateTime endDate)
+        public List<DateRecord> GetByDate(DateTime startDate, DateTime endDate)
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -154,17 +154,17 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    List<DayRecord> dayComments = new List<DayRecord>();
+                    List<DateRecord> dayComments = new List<DateRecord>();
 
                     while (dataReader.Read())
                     {
-                        DayRecord dayRecord = new DayRecord
+                        DateRecord dateRecord = new DateRecord
                         {
                             Date = (DateTime)dataReader["date"],
                             Comment = (string)dataReader["comment"]
                         };
 
-                        dayComments.Add(dayRecord);
+                        dayComments.Add(dateRecord);
                     }
 
                     return dayComments;
@@ -172,7 +172,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
             }
         }
 
-        public IList<DayRecord> GetAll()
+        public IList<DateRecord> GetAll()
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -180,17 +180,17 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
 
                 using (DbDataReader dataReader = command.ExecuteReader())
                 {
-                    List<DayRecord> dayComments = new List<DayRecord>();
+                    List<DateRecord> dayComments = new List<DateRecord>();
 
                     while (dataReader.Read())
                     {
-                        DayRecord dayRecord = new DayRecord
+                        DateRecord dateRecord = new DateRecord
                         {
                             Date = (DateTime)dataReader["date"],
                             Comment = (string)dataReader["comment"]
                         };
 
-                        dayComments.Add(dayRecord);
+                        dayComments.Add(dateRecord);
                     }
 
                     return dayComments;

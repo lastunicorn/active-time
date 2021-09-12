@@ -45,18 +45,18 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
             }
         }
 
-        private DayCommentRepository dayCommentRepository;
-        public IDayCommentRepository DayCommentRepository
+        private DateRecordRepository dateRecordRepository;
+        public IDateRecordRepository DateRecordRepository
         {
             get
             {
-                if (dayCommentRepository == null)
+                if (dateRecordRepository == null)
                 {
                     OpenDatabaseAndTransaction();
-                    dayCommentRepository = new DayCommentRepository(connection);
+                    dateRecordRepository = new DateRecordRepository(connection);
                 }
 
-                return dayCommentRepository;
+                return dateRecordRepository;
             }
         }
 

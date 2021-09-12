@@ -8,21 +8,10 @@
 
 **steps**:
 
-- Get current time from system clock.
-- Create new `TimeRecord` starting with current time.
-- Start the `RecorderTimer`.
-- Raise the `RecorderStarted` event.
-
-## Stamp
-
-**actor**: `RecorderTimer`
-
-**action**: Timer rings
-
-**steps**:
-
-- Retrieve the last `TimeRecord` from the repository.
-- Update the `EndDate` of the `TimeRecord` to be the current time.
+- Use `Scribe` to stamp a new record.
+- Start the `RecorderJob`.
+- Raise the `Recorder.Started` event.
+- Set status text to "Recorder started.".
 
 ## Stop Recording
 
@@ -32,8 +21,23 @@
 
 **steps**:
 
-- Stop the the `RecorderTimer`.
-- Raise the `RecorderStopped` event.
+- If "DeleteLastRecord" was requested, use `Scribe` to delete the current record.
+- If "DeleteLastRecord" was not requested, use `Scribe` to stamp current record.
+- Stop the the `RecorderJob`.
+- Raise the `Recorder.Stopped` event.
+- Set status text to "Recorder stopped.".
+
+## Stamp
+
+**actor**: `RecorderJob`
+
+**action**: Recorder Job is executed
+
+**steps**:
+
+- Set status text to "Updating record.".
+- Use `Scribe` to stamp current record.
+- Set status text to "Updated record.".
 
 ## Present Information for Current Date 
 

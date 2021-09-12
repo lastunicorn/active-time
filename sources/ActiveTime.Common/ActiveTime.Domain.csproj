@@ -45,12 +45,12 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="ActiveTimeException.cs" />
-    <Compile Include="DayRecord.cs" />
+    <Compile Include="DateRecord.cs" />
     <Compile Include="EventNames.cs" />
     <Compile Include="InMemoryState.cs" />
     <Compile Include="JobNames.cs" />
     <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Persistence\IDayCommentRepository.cs" />
+    <Compile Include="Persistence\IDateRecordRepository.cs" />
     <Compile Include="Persistence\ITimeRecordRepository.cs" />
     <Compile Include="Persistence\IUnitOfWork.cs" />
     <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
@@ -59,7 +59,7 @@
     <Compile Include="Recording\DayTimeInterval.cs" />
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\DayRecord.cs" />
-    <Compile Include="Recording\ScribeEx.cs" />
+    <Compile Include="Recording\Scribe.cs" />
     <Compile Include="Reporting\OverviewReport.cs" />
     <Compile Include="Services\Dwarfs.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />

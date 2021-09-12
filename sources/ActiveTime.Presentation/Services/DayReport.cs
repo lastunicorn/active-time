@@ -24,10 +24,10 @@ namespace DustInTheWind.ActiveTime.Presentation.Services
         public DateTime Date { get; set; }
         public string Comment { get; set; }
 
-        public DayReport(DayRecord dayRecord)
+        public DayReport(DateRecord dateRecord)
         {
-            Date = dayRecord.Date;
-            Comment = dayRecord.Comment;
+            Date = dateRecord.Date;
+            Comment = dateRecord.Comment;
         }
     }
 }

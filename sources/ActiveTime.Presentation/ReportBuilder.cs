@@ -43,7 +43,7 @@ namespace DustInTheWind.ActiveTime.Presentation
             sb.AppendLine("--------------------------------------------------");
             sb.AppendLine();
 
-            foreach (DayRecord dayComment in overviewReport.DayRecords)
+            foreach (DateRecord dayComment in overviewReport.DayRecords)
             {
                 Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(dayComment.TimeRecords);
 
@@ -84,8 +84,8 @@ namespace DustInTheWind.ActiveTime.Presentation
 
             while (date <= overviewReport.LastDay)
             {
-                DayRecord dayRec = overviewReport.DayRecords.FirstOrDefault(x => x.Date == date);
-                List<TimeRecord> timeRecords = dayRec?.TimeRecords ?? new List<TimeRecord>();
+                DateRecord dateRec = overviewReport.DayRecords.FirstOrDefault(x => x.Date == date);
+                List<TimeRecord> timeRecords = dateRec?.TimeRecords ?? new List<TimeRecord>();
 
                 Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
 

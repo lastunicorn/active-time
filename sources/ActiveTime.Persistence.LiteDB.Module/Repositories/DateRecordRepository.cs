@@ -23,123 +23,123 @@ using LiteDB;
 
 namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
 {
-    internal class DayCommentRepository : IDayCommentRepository
+    internal class DateRecordRepository : IDateRecordRepository
     {
         public const string CollectionName = "DayComment";
 
         private readonly LiteDatabase database;
 
-        public DayCommentRepository(LiteDatabase database)
+        public DateRecordRepository(LiteDatabase database)
         {
             this.database = database ?? throw new ArgumentNullException(nameof(database));
         }
 
-        public void Add(DayRecord dayRecord)
+        public void Add(DateRecord dateRecord)
         {
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
             bool exists = dayCommentCollection
                 .Find(x =>
-                    x.Date == dayRecord.Date &&
-                    x.Comment == dayRecord.Comment)
+                    x.Date == dateRecord.Date &&
+                    x.Comment == dateRecord.Comment)
                 .Any();
 
             if (exists)
             {
-                string errorMessage = string.Format("Error adding the comment record '{0}' into the database.", dayRecord);
+                string errorMessage = string.Format("Error adding the comment record '{0}' into the database.", dateRecord);
                 throw new PersistenceException(errorMessage);
             }
 
-            dayCommentCollection.Insert(dayRecord);
+            dayCommentCollection.Insert(dateRecord);
         }
 
-        public void Update(DayRecord dayRecord)
+        public void Update(DateRecord dateRecord)
         {
-            if (dayRecord == null) throw new ArgumentNullException(nameof(dayRecord));
+            if (dateRecord == null) throw new ArgumentNullException(nameof(dateRecord));
 
-            if (dayRecord.Id <= 0)
+            if (dateRecord.Id <= 0)
                 throw new PersistenceException("The id of the comment record should be a positive integer.");
 
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
             bool exists = dayCommentCollection
-                .Find(x => x.Id == dayRecord.Id)
+                .Find(x => x.Id == dateRecord.Id)
                 .Any();
 
             if (!exists)
                 throw new PersistenceException("There is no record with the specified id to update.");
 
-            dayCommentCollection.Update(dayRecord);
+            dayCommentCollection.Update(dateRecord);
         }
 
-        public void AddOrUpdate(DayRecord dayRecord)
+        public void AddOrUpdate(DateRecord dateRecord)
         {
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
-            DayRecord existingDayRecord = dayCommentCollection
-                .Find(x => x.Date == dayRecord.Date)
+            DateRecord existingDateRecord = dayCommentCollection
+                .Find(x => x.Date == dateRecord.Date)
                 .FirstOrDefault();
 
-            if (existingDayRecord == null)
+            if (existingDateRecord == null)
             {
-                dayCommentCollection.Insert(dayRecord);
+                dayCommentCollection.Insert(dateRecord);
             }
             else
             {
-                existingDayRecord.Comment = dayRecord.Comment;
-                dayCommentCollection.Update(existingDayRecord);
+                existingDateRecord.Comment = dateRecord.Comment;
+                dayCommentCollection.Update(existingDateRecord);
             }
         }
 
-        public void Delete(DayRecord dayRecord)
+        public void Delete(DateRecord dateRecord)
         {
-            if (dayRecord == null) throw new ArgumentNullException(nameof(dayRecord));
+            if (dateRecord == null) throw new ArgumentNullException(nameof(dateRecord));
 
-            if (dayRecord.Id <= 0)
+            if (dateRecord.Id <= 0)
                 throw new PersistenceException("The id of the comment record should be a positive integer.");
 
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
             bool exists = dayCommentCollection
-                .Find(x => x.Id == dayRecord.Id)
+                .Find(x => x.Id == dateRecord.Id)
                 .Any();
 
             if (!exists)
                 throw new PersistenceException("There is no record with the specified id to update.");
 
-            dayCommentCollection.Delete(dayRecord.Id);
+            dayCommentCollection.Delete(dateRecord.Id);
         }
 
-        public DayRecord GetById(int id)
+        public DateRecord GetById(int id)
         {
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
             return dayCommentCollection
                 .Find(x => x.Id == id)
                 .FirstOrDefault();
         }
 
-        public DayRecord GetByDate(DateTime date)
+        public DateRecord GetByDate(DateTime date)
         {
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
             return dayCommentCollection
                 .Find(x => x.Date == date)
                 .FirstOrDefault();
         }
 
-        public List<DayRecord> GetByDate(DateTime startDate, DateTime endDate)
+        public List<DateRecord> GetByDate(DateTime startDate, DateTime endDate)
         {
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
             return dayCommentCollection
                 .Find(x => x.Date >= startDate && x.Date <= endDate)
                 .ToList();
         }
 
-        public IList<DayRecord> GetAll()
+        public IList<DateRecord> GetAll()
         {
-            ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(CollectionName);
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(CollectionName);
 
             return dayCommentCollection
                 .FindAll()

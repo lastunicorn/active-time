@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.UseCases.PresentApplicationStatus;
+using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationStatus;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;

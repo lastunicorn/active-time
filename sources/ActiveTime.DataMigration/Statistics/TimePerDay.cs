@@ -71,8 +71,8 @@ namespace DustInTheWind.ActiveTime.DataMigration.Statistics
             {
                 if (commentLines == null)
                 {
-                    DayRecord dayRecord = unitOfWork.DayCommentRepository.GetByDate(Date);
-                    commentLines = dayRecord?.Comment?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
+                    DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(Date);
+                    commentLines = dateRecord?.Comment?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
                 }
 
                 return commentLines;

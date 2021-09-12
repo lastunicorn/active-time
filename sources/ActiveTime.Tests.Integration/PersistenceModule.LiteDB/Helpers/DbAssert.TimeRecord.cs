@@ -18,12 +18,11 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
 using LiteDB;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers
 {
     public partial class DbAssert
     {

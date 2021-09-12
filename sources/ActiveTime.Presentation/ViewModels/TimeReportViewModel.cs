@@ -67,7 +67,9 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            eventBus.Subscribe(EventNames.Application.CurrentDateChanged, HandleCurrentDateChanged);
+            eventBus.Subscribe(EventNames.Recorder.Started, HandleCurrentDateChanged);
+            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleCurrentDateChanged);
+            eventBus.Subscribe(EventNames.Recorder.Stamped, HandleCurrentDateChanged);
 
             _ = Initialize();
         }

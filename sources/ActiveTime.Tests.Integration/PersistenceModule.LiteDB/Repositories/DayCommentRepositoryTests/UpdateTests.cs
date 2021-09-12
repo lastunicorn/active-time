@@ -18,20 +18,19 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
-using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers;
+using DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers;
 using LiteDB;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories.DayCommentRepositoryTests
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Repositories.DayCommentRepositoryTests
 {
     [TestFixture]
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class UpdateTests
     {
         private LiteDatabase database;
-        private DayCommentRepository dayCommentRepository;
+        private DateRecordRepository dateRecordRepository;
 
         [SetUp]
         public void SetUp()
@@ -39,7 +38,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             DbTestHelper.ClearDatabase();
 
             database = new LiteDatabase(DbTestHelper.ConnectionString);
-            dayCommentRepository = new DayCommentRepository(database);
+            dateRecordRepository = new DateRecordRepository(database);
         }
 
         [TearDown]
@@ -51,7 +50,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void throws_if_received_entity_is_null()
         {
-            Assert.Throws<ArgumentNullException>(() => dayCommentRepository.Update(null));
+            Assert.Throws<ArgumentNullException>(() => dateRecordRepository.Update(null));
         }
 
         [Test]
@@ -59,10 +58,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayRecord dayRecord = CreateDayCommentEntity();
-                dayRecord.Id = 0;
+                DateRecord dateRecord = CreateDayCommentEntity();
+                dateRecord.Id = 0;
 
-                dayCommentRepository.Update(dayRecord);
+                dateRecordRepository.Update(dateRecord);
             });
         }
 
@@ -71,10 +70,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayRecord dayRecord = CreateDayCommentEntity();
-                dayRecord.Id = -1;
+                DateRecord dateRecord = CreateDayCommentEntity();
+                dateRecord.Id = -1;
 
-                dayCommentRepository.Update(dayRecord);
+                dateRecordRepository.Update(dateRecord);
             });
         }
 
@@ -83,56 +82,56 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayRecord dayRecord = CreateDayCommentEntity();
-                dayRecord.Id = 10000;
+                DateRecord dateRecord = CreateDayCommentEntity();
+                dateRecord.Id = 10000;
 
-                dayCommentRepository.Update(dayRecord);
+                dateRecordRepository.Update(dateRecord);
             });
         }
 
         [Test]
         public void Date_is_updated_correctly()
         {
-            DayRecord dayRecord = CreateDayCommentEntity();
-            dayCommentRepository.Add(dayRecord);
-            dayRecord.Date = new DateTime(2018, 05, 02);
+            DateRecord dateRecord = CreateDayCommentEntity();
+            dateRecordRepository.Add(dateRecord);
+            dateRecord.Date = new DateTime(2018, 05, 02);
 
-            dayCommentRepository.Update(dayRecord);
+            dateRecordRepository.Update(dateRecord);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayRecord);
+            DbAssert.AssertExistsDayCommentEqualTo(dateRecord);
         }
 
         [Test]
         public void Comment_is_updated_correctly()
         {
-            DayRecord dayRecord = CreateDayCommentEntity();
-            dayCommentRepository.Add(dayRecord);
-            dayRecord.Comment = "this comment is changed";
+            DateRecord dateRecord = CreateDayCommentEntity();
+            dateRecordRepository.Add(dateRecord);
+            dateRecord.Comment = "this comment is changed";
 
-            dayCommentRepository.Update(dayRecord);
+            dateRecordRepository.Update(dateRecord);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayRecord);
+            DbAssert.AssertExistsDayCommentEqualTo(dateRecord);
         }
 
         [Test]
         public void record_that_was_not_updated_is_not_changed()
         {
-            DayRecord dayComment1 = CreateDayCommentEntity();
-            DayRecord dayComment2 = CreateDayCommentEntity();
-            dayComment1.Date = new DateTime(2018, 06, 13);
-            dayComment1.Date = new DateTime(2020, 06, 13);
-            dayCommentRepository.Add(dayComment1);
-            dayCommentRepository.Add(dayComment2);
-            dayComment1.Comment = "this comment is changed";
+            DateRecord dateComment1 = CreateDayCommentEntity();
+            DateRecord dateComment2 = CreateDayCommentEntity();
+            dateComment1.Date = new DateTime(2018, 06, 13);
+            dateComment1.Date = new DateTime(2020, 06, 13);
+            dateRecordRepository.Add(dateComment1);
+            dateRecordRepository.Add(dateComment2);
+            dateComment1.Comment = "this comment is changed";
 
-            dayCommentRepository.Update(dayComment1);
+            dateRecordRepository.Update(dateComment1);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayComment2);
+            DbAssert.AssertExistsDayCommentEqualTo(dateComment2);
         }
 
-        private static DayRecord CreateDayCommentEntity()
+        private static DateRecord CreateDayCommentEntity()
         {
-            return new DayRecord
+            return new DateRecord
             {
                 Id = 0,
                 Date = new DateTime(2014, 04, 30),

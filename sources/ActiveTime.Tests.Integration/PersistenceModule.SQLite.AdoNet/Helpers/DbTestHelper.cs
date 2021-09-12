@@ -17,7 +17,7 @@
 using System.Data.SQLite;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.SQLite.AdoNet.Helpers
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet.Helpers
 {
     public class DbTestHelper
     {

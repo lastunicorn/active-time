@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
@@ -63,7 +63,7 @@ namespace DustInTheWind.ActiveTime
 
             // Register services.
             serviceCollection.AddTransient<ISystemClock, SystemClock>();
-            serviceCollection.AddTransient<ScribeEx>();
+            serviceCollection.AddTransient<Scribe>();
             serviceCollection.AddTransient<IConfigurationService, ConfigurationService>();
             //serviceCollection.AddTransient<IUnitOfWorkFactory, AutofacUnitOfWorkFactory>();
             serviceCollection.AddSingleton<Dwarfs>();

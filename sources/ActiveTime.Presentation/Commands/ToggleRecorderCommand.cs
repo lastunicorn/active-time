@@ -15,8 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application.UseCases.ToggleRecorder;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands

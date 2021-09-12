@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Application.UseCases.PresentOverview;
+using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.System;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;

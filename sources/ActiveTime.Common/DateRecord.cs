@@ -22,7 +22,7 @@ namespace DustInTheWind.ActiveTime.Common
     /// <summary>
     /// Represents an interval of time within a day.
     /// </summary>
-    public class DayRecord
+    public class DateRecord
     {
         /// <summary>
         /// Gets or sets an integer value that uniquely identifies the comment.
@@ -50,7 +50,7 @@ namespace DustInTheWind.ActiveTime.Common
         {
             if (this == obj) return true;
 
-            return obj is DayRecord dayComment && Date == dayComment.Date;
+            return obj is DateRecord dayComment && Date == dayComment.Date;
         }
 
         public override string ToString()

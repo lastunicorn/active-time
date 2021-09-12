@@ -21,11 +21,11 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {
     internal class CommentMigratedEventArgs : EventArgs
     {
-        public DayRecord DayRecord { get; }
+        public DateRecord DateRecord { get; }
 
-        public CommentMigratedEventArgs(DayRecord dayRecord)
+        public CommentMigratedEventArgs(DateRecord dateRecord)
         {
-            DayRecord = dayRecord;
+            DateRecord = dateRecord;
         }
     }
 }

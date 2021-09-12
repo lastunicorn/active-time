@@ -23,30 +23,30 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Persistence
     [TestFixture]
     public class DayCommentPropertyTests
     {
-        private DayRecord dayRecord;
+        private DateRecord dateRecord;
 
         [SetUp]
         public void SetUp()
         {
-            dayRecord = new DayRecord();
+            dateRecord = new DateRecord();
         }
 
         [Test]
         public void TestDate_GetSet()
         {
             DateTime date = new DateTime(2011, 06, 13);
-            dayRecord.Date = date;
+            dateRecord.Date = date;
 
-            Assert.That(dayRecord.Date, Is.EqualTo(date));
+            Assert.That(dateRecord.Date, Is.EqualTo(date));
         }
 
         [Test]
         public void TestComment_GetSet()
         {
             string comment = "this is a comment";
-            dayRecord.Comment = comment;
+            dateRecord.Comment = comment;
 
-            Assert.That(dayRecord.Comment, Is.SameAs(comment));
+            Assert.That(dateRecord.Comment, Is.SameAs(comment));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace DustInTheWind.ActiveTime.Logging
     {
         private const string LogDirectory = "Logs";
 
-        public void Log(DayRecord value)
+        public void Log(DateRecord value)
         {
             string message = string.Format("{0} - {1:yyyy MM dd} - {2}", value.Id, value.Date, value.Comment);
             DateTime now = DateTime.Now;

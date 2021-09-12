@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.UseCases.PresentTray;
+using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;

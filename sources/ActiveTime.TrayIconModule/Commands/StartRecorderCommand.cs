@@ -17,7 +17,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;

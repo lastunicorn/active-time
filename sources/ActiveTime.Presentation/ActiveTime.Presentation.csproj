@@ -53,6 +53,8 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
+    <Compile Include="CustomControls\HighlightPanel.cs" />
+    <Compile Include="ICommandFactory.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\CalendarCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
@@ -63,8 +65,8 @@
     <Compile Include="Commands\OverviewCommand.cs" />
     <Compile Include="Commands\RefreshCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Commands\ResetCommentCommand.cs" />
-    <Compile Include="Commands\SaveCommentCommand.cs" />
+    <Compile Include="Commands\ResetCommentsCommand.cs" />
+    <Compile Include="Commands\SaveCommentsCommand.cs" />
     <Compile Include="Commands\StartRecorderCommand.cs" />
     <Compile Include="Commands\StopRecorderCommand.cs" />
     <Compile Include="Commands\ToggleRecorderCommand.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Services\ShellNavigator.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="ViewModelBase.cs" />
+    <Compile Include="IViewModelFactory.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\CalendarViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
@@ -176,6 +179,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\ScrollBarStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\HighlightPanelStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -270,6 +277,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

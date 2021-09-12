@@ -18,20 +18,19 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
-using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers;
+using DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers;
 using LiteDB;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories.DayCommentRepositoryTests
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Repositories.DayCommentRepositoryTests
 {
     [TestFixture]
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class DeleteTests
     {
         private LiteDatabase database;
-        private DayCommentRepository dayCommentRepository;
+        private DateRecordRepository dateRecordRepository;
 
         [SetUp]
         public void SetUp()
@@ -39,7 +38,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             DbTestHelper.ClearDatabase();
 
             database = new LiteDatabase(DbTestHelper.ConnectionString);
-            dayCommentRepository = new DayCommentRepository(database);
+            dateRecordRepository = new DateRecordRepository(database);
         }
 
         [TearDown]
@@ -51,7 +50,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void throws_if_DayComment_is_null()
         {
-            Assert.Throws<ArgumentNullException>(() => dayCommentRepository.Delete(null));
+            Assert.Throws<ArgumentNullException>(() => dateRecordRepository.Delete(null));
         }
 
         [Test]
@@ -59,10 +58,10 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayRecord dayRecord = CreateDayCommentEntity();
-                dayRecord.Id = 0;
+                DateRecord dateRecord = CreateDayCommentEntity();
+                dateRecord.Id = 0;
 
-                dayCommentRepository.Delete(dayRecord);
+                dateRecordRepository.Delete(dateRecord);
             });
         }
 
@@ -71,20 +70,20 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayRecord dayRecord = CreateDayCommentEntity();
-                dayRecord.Id = -1;
+                DateRecord dateRecord = CreateDayCommentEntity();
+                dateRecord.Id = -1;
 
-                dayCommentRepository.Delete(dayRecord);
+                dateRecordRepository.Delete(dateRecord);
             });
         }
 
         [Test]
         public void deletes_the_sigle_record_from_database()
         {
-            DayRecord dayRecord = CreateDayCommentEntity();
-            dayCommentRepository.Add(dayRecord);
+            DateRecord dateRecord = CreateDayCommentEntity();
+            dateRecordRepository.Add(dateRecord);
 
-            dayCommentRepository.Delete(dayRecord);
+            dateRecordRepository.Delete(dateRecord);
 
             DbAssert.AssertDayCommentCount(0);
             //DbAssert.AssertDoesNotExistAnyDayComment();
@@ -93,32 +92,32 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void if_two_records_in_db_the_deleted_one_does_not_exist()
         {
-            DayRecord dayComment1 = CreateDayCommentEntity();
-            dayComment1.Date = new DateTime(2011, 06, 13);
-            DayRecord dayComment2 = CreateDayCommentEntity();
-            dayComment2.Date = new DateTime(2013, 06, 13);
-            dayCommentRepository.Add(dayComment1);
-            dayCommentRepository.Add(dayComment2);
+            DateRecord dateComment1 = CreateDayCommentEntity();
+            dateComment1.Date = new DateTime(2011, 06, 13);
+            DateRecord dateComment2 = CreateDayCommentEntity();
+            dateComment2.Date = new DateTime(2013, 06, 13);
+            dateRecordRepository.Add(dateComment1);
+            dateRecordRepository.Add(dateComment2);
 
-            dayCommentRepository.Delete(dayComment1);
+            dateRecordRepository.Delete(dateComment1);
 
-            DbAssert.AssertDayCommentCount(0, x=>x.Id == dayComment1.Id);
+            DbAssert.AssertDayCommentCount(0, x=>x.Id == dateComment1.Id);
             //DbAssert.AssertDoesNotExistDayComment(dayComment1.Id);
         }
 
         [Test]
         public void if_two_records_in_db_the_not_deleted_one_remains()
         {
-            DayRecord dayComment1 = CreateDayCommentEntity();
-            dayComment1.Date = new DateTime(2011, 06, 13);
-            DayRecord dayComment2 = CreateDayCommentEntity();
-            dayComment2.Date = new DateTime(2013, 06, 13);
-            dayCommentRepository.Add(dayComment1);
-            dayCommentRepository.Add(dayComment2);
+            DateRecord dateComment1 = CreateDayCommentEntity();
+            dateComment1.Date = new DateTime(2011, 06, 13);
+            DateRecord dateComment2 = CreateDayCommentEntity();
+            dateComment2.Date = new DateTime(2013, 06, 13);
+            dateRecordRepository.Add(dateComment1);
+            dateRecordRepository.Add(dateComment2);
 
-            dayCommentRepository.Delete(dayComment1);
+            dateRecordRepository.Delete(dateComment1);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayComment2);
+            DbAssert.AssertExistsDayCommentEqualTo(dateComment2);
         }
 
         [Test]
@@ -126,16 +125,16 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayRecord dayRecord = CreateDayCommentEntity();
-                dayRecord.Id = 10000;
+                DateRecord dateRecord = CreateDayCommentEntity();
+                dateRecord.Id = 10000;
 
-                dayCommentRepository.Delete(dayRecord);
+                dateRecordRepository.Delete(dateRecord);
             });
         }
 
-        private static DayRecord CreateDayCommentEntity()
+        private static DateRecord CreateDayCommentEntity()
         {
-            return new DayRecord
+            return new DateRecord
             {
                 Id = 0,
                 Date = new DateTime(2014, 04, 30),

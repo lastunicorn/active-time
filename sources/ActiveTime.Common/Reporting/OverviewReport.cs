@@ -9,6 +9,6 @@ namespace DustInTheWind.ActiveTime.Common.Reporting
 
         public DateTime LastDay { get; set; }
 
-        public List<DayRecord> DayRecords { get; set; }
+        public List<DateRecord> DayRecords { get; set; }
     }
 }

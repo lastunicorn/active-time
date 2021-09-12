@@ -114,9 +114,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
 
         private void HandleCommentMigrated(object sender, CommentMigratedEventArgs e)
         {
-            DayRecord dayRecord = e.DayRecord;
+            DateRecord dateRecord = e.DateRecord;
 
-            DateTime date = dayRecord.Date;
+            DateTime date = dateRecord.Date;
 
             bool isSameMonth = date.Year == previousCommentDate.Year && date.Month == previousCommentDate.Month;
             if (!isSameMonth)

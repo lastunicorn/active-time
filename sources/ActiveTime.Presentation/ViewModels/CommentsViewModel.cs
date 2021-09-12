@@ -15,25 +15,30 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
+using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Presentation.Commands;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class CommentsViewModel : ViewModelBase
     {
-        private readonly CurrentDay currentDay;
+        private readonly IMediator mediator;
 
-        private string comment;
+        private string comments;
 
-        public string Comment
+        public string Comments
         {
-            get => comment;
+            get => comments;
             set
             {
-                comment = value;
+                comments = value;
                 OnPropertyChanged();
-                currentDay.Comment = value;
+
+                _ = ChangeComments(value);
             }
         }
 
@@ -49,26 +54,35 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             }
         }
 
-        public ResetCommentCommand ResetCommand { get; }
-        public SaveCommentCommand SaveCommand { get; }
+        public ResetCommentsCommand ResetCommentsCommand { get; }
 
-        public CommentsViewModel(CurrentDay currentDay)
+        public SaveCommentsCommand SaveCommentsCommand { get; }
+
+        public CommentsViewModel(IMediator mediator, ResetCommentsCommand resetCommentsCommand, SaveCommentsCommand saveCommentsCommand)
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            ResetCommentsCommand = resetCommentsCommand ?? throw new ArgumentNullException(nameof(resetCommentsCommand));
+            SaveCommentsCommand = saveCommentsCommand ?? throw new ArgumentNullException(nameof(saveCommentsCommand));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            ResetCommand = new ResetCommentCommand(currentDay);
-            SaveCommand = new SaveCommentCommand(currentDay);
-
-            currentDay.CommentChanged += HandleCurrentDayCommentChanged;
-
-            Comment = currentDay.Comment;
-
-            currentDay.ReloadComments();
+            _ = Initialize();
         }
 
-        private void HandleCurrentDayCommentChanged(object sender, EventArgs e)
+        private async Task Initialize()
         {
-            Comment = currentDay.Comment;
+            PresentCommentsRequest request = new PresentCommentsRequest();
+            PresentCommentsResponse response = await mediator.Send(request);
+
+            Comments = response.Comments;
+        }
+
+        private async Task ChangeComments(string value)
+        {
+            ChangeCommentsRequest request = new ChangeCommentsRequest
+            {
+                Comments = value
+            };
+
+            await mediator.Send(request);
         }
     }
 }

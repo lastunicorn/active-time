@@ -15,23 +15,24 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Presentation.Services;
+using DustInTheWind.ActiveTime.Application.Miscellaneous.Refresh;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     public class RefreshCommand : CommandBase
     {
-        private readonly CurrentDay currentDay;
+        private readonly IMediator mediator;
 
-        public RefreshCommand(CurrentDay currentDay)
+        public RefreshCommand(IMediator mediator)
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         public override void Execute(object parameter)
         {
-            currentDay.ReloadDayRecord();
+            RefreshRequest request = new RefreshRequest();
+            mediator.Send(request).Wait();
         }
     }
 }

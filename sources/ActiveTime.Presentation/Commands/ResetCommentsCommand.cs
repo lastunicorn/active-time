@@ -15,35 +15,46 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Presentation.Services;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Comments.ResetComments;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
-    public class ResetCommentCommand : CommandBase
+    public class ResetCommentsCommand : CommandBase
     {
-        private readonly CurrentDay currentDay;
+        private readonly IMediator mediator;
 
-        public ResetCommentCommand(CurrentDay currentDay)
+        public ResetCommentsCommand(IMediator mediator, EventBus eventBus)
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            currentDay.CommentChanged += HandleCurrentDayCommentChanged;
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
+            eventBus.Subscribe(EventNames.CurrentDate.CommentChanged, HandleCurrentDayCommentChanged);
         }
 
-        private void HandleCurrentDayCommentChanged(object sender, EventArgs e)
+        private void HandleCurrentDayCommentChanged(EventParameters parameters)
         {
             OnCanExecuteChanged();
         }
 
         public override bool CanExecute(object parameter)
         {
-            return !currentDay.IsCommentSaved;
+            return true;
         }
 
         public override void Execute(object parameter)
         {
-            currentDay.ReloadComments();
+            _ = ResetComments();
+        }
+
+        private async Task ResetComments()
+        {
+            ResetCommentsRequest request = new ResetCommentsRequest();
+            await mediator.Send(request);
         }
     }
 }

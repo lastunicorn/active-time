@@ -10,13 +10,13 @@ namespace DustInTheWind.ActiveTime.Common.Recording
     /// <remarks>
     /// The current record can be obtained in two ways: 1) from the database or 2) by creating a new one.
     /// </remarks>
-    public class ScribeEx
+    public class Scribe
     {
         private readonly ISystemClock systemClock;
         private readonly IUnitOfWork unitOfWork;
         private readonly InMemoryState inMemoryState;
 
-        public ScribeEx(ISystemClock systemClock, IUnitOfWork unitOfWork, InMemoryState inMemoryState)
+        public Scribe(ISystemClock systemClock, IUnitOfWork unitOfWork, InMemoryState inMemoryState)
         {
             this.systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));

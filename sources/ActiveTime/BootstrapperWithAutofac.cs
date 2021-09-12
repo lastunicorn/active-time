@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Windows.Documents;
 using Autofac;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Application.UseCases.StartRecording;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Persistence;
@@ -12,11 +12,14 @@ using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Common.System;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.Logging;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
+using DustInTheWind.ActiveTime.Presentation;
+using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.Services;
 using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
@@ -69,11 +72,19 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<AboutWindow>().AsSelf();
             containerBuilder.RegisterType<AboutViewModel>().AsSelf();
 
+            // GUI - Commands
+            containerBuilder.RegisterType<RefreshCommand>().AsSelf();
+            containerBuilder.RegisterType<DeleteCommand>().AsSelf();
+            containerBuilder.RegisterType<DecrementDayCommand>().AsSelf();
+            containerBuilder.RegisterType<IncrementDayCommand>().AsSelf();
+
             // GUI - Services
             containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();
             containerBuilder.RegisterType<ApplicationService>().As<IApplicationService>().SingleInstance();
             containerBuilder.RegisterType<ShellNavigator>().As<IShellNavigator>().SingleInstance();
             containerBuilder.RegisterType<DispatcherService>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<ViewModelFactory>().As<IViewModelFactory>();
+            containerBuilder.RegisterType<CommandFactory>().As<ICommandFactory>();
 
             // Register singleton services.
             containerBuilder.RegisterType<Logger>().As<ILogger>().SingleInstance();
@@ -85,10 +96,11 @@ namespace DustInTheWind.ActiveTime
 
             // Register services.
             containerBuilder.RegisterType<SystemClock>().As<ISystemClock>();
-            containerBuilder.RegisterType<ScribeEx>().AsSelf();
+            containerBuilder.RegisterType<Scribe>().AsSelf();
             containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>();
             containerBuilder.RegisterType<AutofacUnitOfWorkFactory>().As<IUnitOfWorkFactory>();
             containerBuilder.RegisterType<Dwarfs>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<Timer>().As<ITimer>();
 
             // Jobs
             containerBuilder.RegisterType<ScheduledJobs>().AsSelf().SingleInstance();

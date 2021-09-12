@@ -54,9 +54,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
         private void MigrateComments()
         {
-            IEnumerable<DayRecord> dayComments = sourceUnitOfWork.DayCommentRepository.GetAll();
+            IEnumerable<DateRecord> dayComments = sourceUnitOfWork.DateRecordRepository.GetAll();
 
-            foreach (DayRecord dayComment in dayComments)
+            foreach (DateRecord dayComment in dayComments)
             {
                 try
                 {
@@ -71,17 +71,17 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             }
         }
 
-        private void MigrateComment(DayRecord dayRecord)
+        private void MigrateComment(DateRecord dateRecord)
         {
-            DateTime date = dayRecord.Date;
+            DateTime date = dateRecord.Date;
 
-            DayRecord destinationRecord = destinationUnitOfWork.DayCommentRepository.GetByDate(date);
+            DateRecord destinationRecord = destinationUnitOfWork.DateRecordRepository.GetByDate(date);
 
             if (destinationRecord != null)
             {
-                bool existsIdenticalRecord = destinationRecord.Date - dayRecord.Date > TimeSpan.FromSeconds(-1) &&
-                                             destinationRecord.Date - dayRecord.Date < TimeSpan.FromSeconds(1) &&
-                                             destinationRecord.Comment == dayRecord.Comment;
+                bool existsIdenticalRecord = destinationRecord.Date - dateRecord.Date > TimeSpan.FromSeconds(-1) &&
+                                             destinationRecord.Date - dateRecord.Date < TimeSpan.FromSeconds(1) &&
+                                             destinationRecord.Comment == dateRecord.Comment;
 
                 if (existsIdenticalRecord)
                 {
@@ -99,21 +99,21 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
             else
             {
                 if (!Simulate)
-                    InsertRecordInDestination(dayRecord);
+                    InsertRecordInDestination(dateRecord);
 
                 MigratedRecordsCount++;
             }
         }
 
-        private void InsertRecordInDestination(DayRecord dayRecord)
+        private void InsertRecordInDestination(DateRecord dateRecord)
         {
-            DayRecord dayRecordCopy = new DayRecord
+            DateRecord dateRecordCopy = new DateRecord
             {
-                Date = dayRecord.Date,
-                Comment = dayRecord.Comment
+                Date = dateRecord.Date,
+                Comment = dateRecord.Comment
             };
 
-            destinationUnitOfWork.DayCommentRepository.Add(dayRecordCopy);
+            destinationUnitOfWork.DateRecordRepository.Add(dateRecordCopy);
         }
 
         protected virtual void OnCommentMigrated(CommentMigratedEventArgs e)

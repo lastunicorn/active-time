@@ -44,18 +44,18 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
             }
         }
 
-        private DayCommentRepository dayCommentRepository;
-        public IDayCommentRepository DayCommentRepository
+        private DateRecordRepository dateRecordRepository;
+        public IDateRecordRepository DateRecordRepository
         {
             get
             {
                 if (isDisposed)
                     throw new ObjectDisposedException(nameof(UnitOfWork));
 
-                if (dayCommentRepository == null)
-                    dayCommentRepository = new DayCommentRepository(database);
+                if (dateRecordRepository == null)
+                    dateRecordRepository = new DateRecordRepository(database);
 
-                return dayCommentRepository;
+                return dateRecordRepository;
             }
         }
 

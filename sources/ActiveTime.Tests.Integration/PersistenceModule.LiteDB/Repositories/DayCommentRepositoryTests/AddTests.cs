@@ -18,19 +18,18 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
-using DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers;
+using DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers;
 using LiteDB;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositories.DayCommentRepositoryTests
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Repositories.DayCommentRepositoryTests
 {
     [TestFixture]
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
     public class AddTests
     {
-        private DayCommentRepository dayCommentRepository;
+        private DateRecordRepository dateRecordRepository;
         private LiteDatabase database;
 
         [SetUp]
@@ -39,7 +38,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
             DbTestHelper.ClearDatabase();
 
             database = new LiteDatabase(DbTestHelper.ConnectionString);
-            dayCommentRepository = new DayCommentRepository(database);
+            dateRecordRepository = new DateRecordRepository(database);
         }
 
         [TearDown]
@@ -51,36 +50,36 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         [Test]
         public void sets_the_id_of_the_DayComment_entity()
         {
-            DayRecord dayRecord = CreateDayCommentEntity();
+            DateRecord dateRecord = CreateDayCommentEntity();
 
-            dayCommentRepository.Add(dayRecord);
+            dateRecordRepository.Add(dateRecord);
 
-            Assert.That(dayRecord.Id, Is.Not.EqualTo(0));
+            Assert.That(dateRecord.Id, Is.Not.EqualTo(0));
         }
 
         [Test]
         public void saves_the_DayComment_in_the_database()
         {
-            DayRecord dayRecord = CreateDayCommentEntity();
+            DateRecord dateRecord = CreateDayCommentEntity();
 
-            dayCommentRepository.Add(dayRecord);
+            dateRecordRepository.Add(dateRecord);
 
-            DbAssert.AssertDayCommentCount(1, x => x.Id == dayRecord.Id);
+            DbAssert.AssertDayCommentCount(1, x => x.Id == dateRecord.Id);
         }
 
         [Test]
         public void saves_two_DayComments_in_the_database()
         {
-            DayRecord dayComment1 = CreateDayCommentEntity();
-            dayComment1.Date = new DateTime(2014, 06, 13);
-            DayRecord dayComment2 = CreateDayCommentEntity();
-            dayComment2.Date = new DateTime(2014, 03, 05);
+            DateRecord dateComment1 = CreateDayCommentEntity();
+            dateComment1.Date = new DateTime(2014, 06, 13);
+            DateRecord dateComment2 = CreateDayCommentEntity();
+            dateComment2.Date = new DateTime(2014, 03, 05);
 
-            dayCommentRepository.Add(dayComment1);
-            dayCommentRepository.Add(dayComment2);
+            dateRecordRepository.Add(dateComment1);
+            dateRecordRepository.Add(dateComment2);
 
-            DbAssert.AssertDayCommentCount(1, x => x.Id == dayComment1.Id);
-            DbAssert.AssertDayCommentCount(1, x => x.Id == dayComment2.Id);
+            DbAssert.AssertDayCommentCount(1, x => x.Id == dateComment1.Id);
+            DbAssert.AssertDayCommentCount(1, x => x.Id == dateComment2.Id);
         }
 
         [Test]
@@ -88,27 +87,27 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Repositori
         {
             Assert.Throws<PersistenceException>(() =>
             {
-                DayRecord dayComment1 = CreateDayCommentEntity();
-                DayRecord dayComment2 = CreateDayCommentEntity();
+                DateRecord dateComment1 = CreateDayCommentEntity();
+                DateRecord dateComment2 = CreateDayCommentEntity();
 
-                dayCommentRepository.Add(dayComment1);
-                dayCommentRepository.Add(dayComment2);
+                dateRecordRepository.Add(dateComment1);
+                dateRecordRepository.Add(dateComment2);
             });
         }
 
         [Test]
         public void correctly_adds_all_the_fields()
         {
-            DayRecord dayRecord = CreateDayCommentEntity();
+            DateRecord dateRecord = CreateDayCommentEntity();
 
-            dayCommentRepository.Add(dayRecord);
+            dateRecordRepository.Add(dateRecord);
 
-            DbAssert.AssertExistsDayCommentEqualTo(dayRecord);
+            DbAssert.AssertExistsDayCommentEqualTo(dateRecord);
         }
 
-        private static DayRecord CreateDayCommentEntity()
+        private static DateRecord CreateDayCommentEntity()
         {
-            return new DayRecord
+            return new DateRecord
             {
                 Id = 0,
                 Date = new DateTime(2014, 04, 30),

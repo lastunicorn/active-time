@@ -97,9 +97,9 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
             CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
             CustomConsole.WriteLine();
 
-            IList<DayRecord> dayComments = unitOfWork.DayCommentRepository.GetAll();
+            IList<DateRecord> dayComments = unitOfWork.DateRecordRepository.GetAll();
 
-            foreach (DayRecord dayComment in dayComments)
+            foreach (DateRecord dayComment in dayComments)
                 CustomConsole.WriteLine(dayComment);
 
             CustomConsole.WriteLine();

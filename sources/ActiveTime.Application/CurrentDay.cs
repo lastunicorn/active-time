@@ -22,7 +22,6 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
-using DayRecord = DustInTheWind.ActiveTime.Common.DayRecord;
 
 namespace DustInTheWind.ActiveTime.Application
 {
@@ -33,7 +32,7 @@ namespace DustInTheWind.ActiveTime.Application
         private readonly IStatusInfoService statusInfoService;
 
         private DateTime? date;
-        private DayRecord dayRecord;
+        private DateRecord dateRecord;
         private string comment;
 
         public DateTime? Date
@@ -64,7 +63,7 @@ namespace DustInTheWind.ActiveTime.Application
             }
         }
 
-        public bool IsCommentSaved => (dayRecord == null && comment == null) || (dayRecord != null && dayRecord.Comment == comment);
+        public bool IsCommentSaved => (dateRecord == null && comment == null) || (dateRecord != null && dateRecord.Comment == comment);
 
         public DayTimeInterval[] Records { get; private set; }
         
@@ -92,30 +91,21 @@ namespace DustInTheWind.ActiveTime.Application
 
             eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
             eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
-            eventBus.Subscribe(EventNames.Recorder.Stamping, HandleRecorderStamping);
             eventBus.Subscribe(EventNames.Recorder.Stamped, HandleRecorderStamped);
         }
 
         private void HandleRecorderStarted(EventParameters parameters)
         {
             UpdateDayRecordFromRepository();
-            statusInfoService.SetStatus("Recorder started.");
         }
 
         private void HandleRecorderStopped(EventParameters parameters)
         {
             UpdateDayRecordFromRepository();
-            statusInfoService.SetStatus("Recorder stopped.");
-        }
-
-        private void HandleRecorderStamping(EventParameters parameters)
-        {
-            statusInfoService.SetStatus("Updating the current record's time.");
         }
 
         private void HandleRecorderStamped(EventParameters parameters)
         {
-            statusInfoService.SetStatus("Current record's time has been updated.");
             UpdateDayRecordFromRepository();
         }
 
@@ -127,26 +117,25 @@ namespace DustInTheWind.ActiveTime.Application
         public void ReloadDayRecord()
         {
             UpdateDayRecordFromRepository();
-            statusInfoService.SetStatus("Refreshed.");
         }
 
         private void UpdateCommentsFromRepository()
         {
             if (date == null)
             {
-                dayRecord = null;
+                dateRecord = null;
                 Comment = null;
                 return;
             }
 
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
             {
-                IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
+                IDateRecordRepository dateRecordRepository = unitOfWork.DateRecordRepository;
 
-                dayRecord = dayCommentRepository.GetByDate(date.Value)
-                             ?? new DayRecord { Date = date.Value };
+                dateRecord = dateRecordRepository.GetByDate(date.Value)
+                             ?? new DateRecord { Date = date.Value };
 
-                Comment = dayRecord?.Comment;
+                Comment = dateRecord?.Comment;
             }
         }
 
@@ -160,9 +149,7 @@ namespace DustInTheWind.ActiveTime.Application
 
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
             {
-                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
-
-                IEnumerable<TimeRecord> timeRecords = timeRecordRepository.GetByDate(date.Value);
+                IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(date.Value);
                 SetDates(timeRecords);
             }
         }
@@ -193,18 +180,18 @@ namespace DustInTheWind.ActiveTime.Application
 
         public void SaveComments()
         {
-            if (dayRecord == null)
+            if (dateRecord == null)
                 return;
 
-            dayRecord.Comment = comment;
+            dateRecord.Comment = comment;
 
-            logger.Log(dayRecord);
+            logger.Log(dateRecord);
 
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.CreateNew())
             {
-                IDayCommentRepository dayCommentRepository = unitOfWork.DayCommentRepository;
+                IDateRecordRepository dateRecordRepository = unitOfWork.DateRecordRepository;
 
-                dayCommentRepository.AddOrUpdate(dayRecord);
+                dateRecordRepository.AddOrUpdate(dateRecord);
                 unitOfWork.Commit();
             }
 

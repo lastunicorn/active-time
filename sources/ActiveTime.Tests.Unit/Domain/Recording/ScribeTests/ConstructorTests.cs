@@ -42,25 +42,25 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
         [Test]
         public void Constructor()
         {
-            new ScribeEx(systemClock.Object, unitOfWork.Object, inMemoryState);
+            new Scribe(systemClock.Object, unitOfWork.Object, inMemoryState);
         }
 
         [Test]
         public void Constructor_with_null_unitOfWork()
         {
-            Assert.Throws<ArgumentNullException>(() => new ScribeEx(systemClock.Object, null, inMemoryState));
+            Assert.Throws<ArgumentNullException>(() => new Scribe(systemClock.Object, null, inMemoryState));
         }
 
         [Test]
         public void Constructor_with_null_timeProvider()
         {
-            Assert.Throws<ArgumentNullException>(() => new ScribeEx(null, unitOfWork.Object, inMemoryState));
+            Assert.Throws<ArgumentNullException>(() => new Scribe(null, unitOfWork.Object, inMemoryState));
         }
 
         [Test]
         public void Constructor_with_null_inMemoryState()
         {
-            Assert.Throws<ArgumentNullException>(() => new ScribeEx(systemClock.Object, unitOfWork.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new Scribe(systemClock.Object, unitOfWork.Object, null));
         }
     }
 }

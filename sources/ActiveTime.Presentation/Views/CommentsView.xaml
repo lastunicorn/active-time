@@ -52,7 +52,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Content="Reset"
                 Margin="0,0,5,0"
                 MinWidth="75"
-                Command="{Binding ResetCommand}"
+                Command="{Binding ResetCommentsCommand}"
                 IsCancel="True"
                 TabIndex="1" />
 
@@ -60,7 +60,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 Content="Save"
                 Margin="0,0,5,0"
                 MinWidth="75"
-                Command="{Binding SaveCommand}"
+                Command="{Binding SaveCommentsCommand}"
                 IsDefault="True"
                 TabIndex="0" />
 
@@ -74,14 +74,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <TextBox
             Margin="0 0 0 5"
-            Text="{Binding Path=Comment, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding Path=Comments, UpdateSourceTrigger=PropertyChanged}"
             AcceptsReturn="True"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
             TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}">
 
             <TextBox.InputBindings>
-                <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Control"/>
+                <KeyBinding Command="{Binding SaveCommentsCommand}" Key="S" Modifiers="Control"/>
             </TextBox.InputBindings>
 
         </TextBox>

@@ -16,13 +16,17 @@
 
 using System;
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class CurrentDateViewModel : ViewModelBase
     {
+        private readonly IMediator mediator;
         private readonly CurrentDay currentDay;
 
         private DateTime? date;
@@ -43,12 +47,17 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         }
 
         public CalendarCommand CalendarCommand { get; }
+
         public DecrementDayCommand DecrementDayCommand { get; }
+
         public IncrementDayCommand IncrementDayCommand { get; }
 
-        public CurrentDateViewModel(CurrentDay currentDay, IShellNavigator shellNavigator)
+        public CurrentDateViewModel(IMediator mediator, EventBus eventBus, CurrentDay currentDay, IShellNavigator shellNavigator)
         {
-            this.currentDay = currentDay;
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
 
             CalendarCommand = new CalendarCommand(shellNavigator);
             DecrementDayCommand = new DecrementDayCommand(currentDay);
@@ -56,12 +65,12 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
             Date = currentDay.Date;
 
-            currentDay.DateChanged += HandleCurrentDateChanged;
+            eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
         }
 
-        private void HandleCurrentDateChanged(object sender, EventArgs e)
+        private void HandleCurrentDateChanged(EventParameters parameters)
         {
-            Date = currentDay.Date;
+            Date = parameters.Get<DateTime>("Date");
         }
     }
 }

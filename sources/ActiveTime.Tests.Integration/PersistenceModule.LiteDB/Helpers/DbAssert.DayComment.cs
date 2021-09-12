@@ -22,11 +22,11 @@ using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
 using LiteDB;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers
 {
     public partial class DbAssert
     {
-        public static void AssertDayCommentCount(int expectedCount, Expression<Func<DayRecord, bool>> predicate = null)
+        public static void AssertDayCommentCount(int expectedCount, Expression<Func<DateRecord, bool>> predicate = null)
         {
             long actualCount = ReadDayCommentCount(predicate);
 
@@ -37,22 +37,22 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
             }
         }
 
-        private static long ReadDayCommentCount(Expression<Func<DayRecord, bool>> predicate)
+        private static long ReadDayCommentCount(Expression<Func<DateRecord, bool>> predicate)
         {
             using (LiteDatabase database = new LiteDatabase(DbTestHelper.ConnectionString))
             {
                 if (predicate == null)
                     predicate = x => true;
 
-                return database.GetCollection<DayRecord>(DayCommentRepository.CollectionName)
+                return database.GetCollection<DateRecord>(DateRecordRepository.CollectionName)
                     .Find(predicate)
                     .Count();
             }
         }
 
-        public static void AssertExistsDayCommentEqualTo(DayRecord expectedRecord)
+        public static void AssertExistsDayCommentEqualTo(DateRecord expectedRecord)
         {
-            DayRecord actualRecord = GetDayCommentById(expectedRecord.Id);
+            DateRecord actualRecord = GetDayCommentById(expectedRecord.Id);
 
             if (actualRecord == null)
             {
@@ -67,11 +67,11 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
             }
         }
 
-        private static DayRecord GetDayCommentById(int id)
+        private static DateRecord GetDayCommentById(int id)
         {
             using (LiteDatabase database = new LiteDatabase(DbTestHelper.ConnectionString))
             {
-                return database.GetCollection<DayRecord>(DayCommentRepository.CollectionName)
+                return database.GetCollection<DateRecord>(DateRecordRepository.CollectionName)
                     .Find(x => x.Id == id)
                     .FirstOrDefault();
             }

@@ -16,12 +16,13 @@
 
 using System;
 using System.Linq.Expressions;
-using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Common.Logging;
-using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Services;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 
@@ -35,13 +36,21 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.CommentsVi
         [SetUp]
         public void SetUp()
         {
-            Mock<IUnitOfWorkFactory> unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
-            Mock<ILogger> logger = new Mock<ILogger>();
-            EventBus eventBus = new EventBus();
-            Mock<IStatusInfoService> statusInfoService = new Mock<IStatusInfoService>();
-            CurrentDay currentDay = new CurrentDay(unitOfWorkFactory.Object, logger.Object, eventBus, statusInfoService.Object);
+            Mock<IMediator> mediator = new Mock<IMediator>();
 
-            viewModel = new CommentsViewModel(currentDay);
+            PresentCommentsResponse presentCommentsResponse = new PresentCommentsResponse
+            {
+                Comments = "ha ha ha"
+            };
+            mediator
+                .Setup(x => x.Send(It.IsAny<PresentCommentsRequest>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(presentCommentsResponse));
+
+            EventBus eventBus = new EventBus();
+            ResetCommentsCommand resetCommentsCommand = new ResetCommentsCommand(mediator.Object, eventBus);
+            SaveCommentsCommand saveCommentsCommand = new SaveCommentsCommand(mediator.Object, eventBus);
+
+            viewModel = new CommentsViewModel(mediator.Object, resetCommentsCommand, saveCommentsCommand);
         }
 
         #region CommentTextWrap Property
@@ -76,7 +85,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.CommentsVi
 
         #endregion
 
-        #region Comment Property
+        #region Comments Property
 
         [Test]
         public void Comment_raises_PropertyChanged_event()
@@ -84,7 +93,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.CommentsVi
             bool eventWasCalled = false;
             viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
 
-            viewModel.Comment = "some comment";
+            viewModel.Comments = "some comment";
 
             Assert.That(eventWasCalled, Is.True);
         }
@@ -95,14 +104,14 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.CommentsVi
             string propertyName = null;
             viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
 
-            viewModel.Comment = "some comment";
+            viewModel.Comments = "some comment";
 
-            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.Comment)));
+            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.Comments)));
         }
 
         #endregion
 
-        private string GetNameOfMember<T>(Expression<Func<T>> action)
+        private static string GetNameOfMember<T>(Expression<Func<T>> action)
         {
             return ((MemberExpression)action.Body).Member.Name;
         }

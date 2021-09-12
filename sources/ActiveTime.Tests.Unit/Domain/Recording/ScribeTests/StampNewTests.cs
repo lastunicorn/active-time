@@ -31,7 +31,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
         private Mock<ISystemClock> systemClock;
         private Mock<IUnitOfWork> unitOfWork;
         private Mock<ITimeRecordRepository> timeRecordRepository;
-        private ScribeEx scribe;
+        private Scribe scribe;
 
         [SetUp]
         public void SetUp()
@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
 
             InMemoryState inMemoryState = new InMemoryState();
 
-            scribe = new ScribeEx(systemClock.Object, unitOfWork.Object, inMemoryState);
+            scribe = new Scribe(systemClock.Object, unitOfWork.Object, inMemoryState);
         }
 
         [Test]

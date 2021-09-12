@@ -122,8 +122,10 @@
     <Compile Include="BootstrapperWithAutofac.cs" />
     <Compile Include="AutofacUnitOfWorkFactory.cs" />
     <Compile Include="BootstrapperWithMicrosoftDi.cs" />
+    <Compile Include="CommandFactory.cs" />
     <Compile Include="MicrosoftDiWindowFactory.cs" />
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="ViewModelFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

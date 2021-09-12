@@ -19,7 +19,7 @@ using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
 using LiteDB;
 
-namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers
 {
     internal class DbTestHelper
     {
@@ -32,7 +32,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.PersistenceModule.LiteDB.Helpers
                 ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName);
                 timeRecordCollection.DeleteAll();
 
-                ILiteCollection<DayRecord> dayCommentCollection = database.GetCollection<DayRecord>(DayCommentRepository.CollectionName);
+                ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(DateRecordRepository.CollectionName);
                 dayCommentCollection.DeleteAll();
             }
         }

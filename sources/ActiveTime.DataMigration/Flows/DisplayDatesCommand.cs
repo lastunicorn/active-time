@@ -102,11 +102,11 @@ namespace DustInTheWind.ActiveTime.DataMigration.Flows
             CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
             CustomConsole.WriteLine();
 
-            IList<DayRecord> dayComments = unitOfWork.DayCommentRepository.GetAll();
+            IList<DateRecord> dayComments = unitOfWork.DateRecordRepository.GetAll();
 
             DateTime previousDate = DateTime.MinValue;
 
-            foreach (DayRecord dayComment in dayComments)
+            foreach (DateRecord dayComment in dayComments)
             {
                 DateTime date = dayComment.Date;
 

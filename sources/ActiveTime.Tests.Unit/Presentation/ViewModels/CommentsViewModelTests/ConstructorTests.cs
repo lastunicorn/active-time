@@ -15,13 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Logging;
-using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Services;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 
@@ -30,64 +30,65 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.CommentsVi
     [TestFixture]
     public class ConstructorTests
     {
-        private Mock<IDayCommentRepository> dayCommentRepositoryMock;
-        private CurrentDay currentDay;
+        private Mock<IMediator> mediator;
+        private EventBus eventBus;
+        private ResetCommentsCommand resetCommentsCommand;
+        private SaveCommentsCommand saveCommentsCommand;
 
         [SetUp]
         public void SetUp()
         {
-            dayCommentRepositoryMock = new Mock<IDayCommentRepository>();
-
-            Mock<IUnitOfWorkFactory> unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
-            Mock<ILogger> logger = new Mock<ILogger>();
-            EventBus eventBus = new EventBus();
-            Mock<IStatusInfoService> statusInfoService = new Mock<IStatusInfoService>();
-            currentDay = new CurrentDay(unitOfWorkFactory.Object, logger.Object, eventBus, statusInfoService.Object);
-        }
-
-        [Test]
-        public void throws_if_currentDayComment_is_null()
-        {
-            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(null));
+            mediator = new Mock<IMediator>();
+            eventBus = new EventBus();
+            resetCommentsCommand = new ResetCommentsCommand(mediator.Object, eventBus);
+            saveCommentsCommand = new SaveCommentsCommand(mediator.Object, eventBus);
         }
 
         [Test]
         public void successfully_instantiated()
         {
-            new CommentsViewModel(currentDay);
+            new CommentsViewModel(mediator.Object, resetCommentsCommand, saveCommentsCommand);
         }
 
         [Test]
-        public void Constructor_clears_Comment_if_Date_from_stateService_is_null()
+        public void throws_if_mediator_is_null()
         {
-            currentDay.Date = null;
-
-            CommentsViewModel viewModel = new CommentsViewModel(currentDay);
-
-            Assert.That(viewModel.Comment, Is.Null);
+            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(null, resetCommentsCommand, saveCommentsCommand));
         }
 
         [Test]
-        public void Constructor_updates_CurrentDayComment()
+        public void throws_if_resetCommentsCommand_is_null()
         {
-            DateTime date = new DateTime(2011, 06, 13);
-            currentDay.Date = date;
-
-            new CommentsViewModel(currentDay);
-
-            dayCommentRepositoryMock.VerifyAll();
+            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(mediator.Object, null, saveCommentsCommand));
         }
 
         [Test]
-        public void Constructor_clears_Comment_if_retrieved_DayComment_is_null()
+        public void throws_if_saveCommentsCommand_is_null()
         {
-            DateTime date = new DateTime(2011, 06, 13);
-            currentDay.Date = date;
-            dayCommentRepositoryMock.Setup(x => x.GetByDate(date)).Returns(null as DayRecord);
+            Assert.Throws<ArgumentNullException>(() => new CommentsViewModel(mediator.Object, resetCommentsCommand, null));
+        }
 
-            CommentsViewModel viewModel = new CommentsViewModel(currentDay);
+        [Test]
+        public void Constructor_sends_PresentCommentsRequest_to_mediator()
+        {
+            CommentsViewModel viewModel = new CommentsViewModel(mediator.Object, resetCommentsCommand, saveCommentsCommand);
 
-            Assert.That(viewModel.Comment, Is.Null);
+            mediator.Verify(x => x.Send(It.IsAny<PresentCommentsRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        public void Constructor_initializes_Comment_with_value_returned_in_the_response()
+        {
+            PresentCommentsResponse presentCommentsResponse = new PresentCommentsResponse
+            {
+                Comments = "ha ha ha"
+            };
+            mediator
+                .Setup(x => x.Send(It.IsAny<PresentCommentsRequest>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(presentCommentsResponse));
+            CommentsViewModel viewModel = new CommentsViewModel(mediator.Object, resetCommentsCommand, saveCommentsCommand);
+
+            Assert.That(viewModel.Comments, Is.EqualTo("ha ha ha"));
         }
     }
 }

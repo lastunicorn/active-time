@@ -51,7 +51,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ModuleDefinitions\PersistenceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\DayCommentRepository.cs" />
+    <Compile Include="Repositories\DateRecordRepository.cs" />
     <Compile Include="Repositories\TimeRecordRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>

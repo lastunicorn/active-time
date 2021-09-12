@@ -21,9 +21,11 @@ namespace DustInTheWind.ActiveTime.Common.Persistence
     public interface IUnitOfWork : IDisposable
     {
         ITimeRecordRepository TimeRecordRepository { get; }
-        IDayCommentRepository DayCommentRepository { get; }
-        
+
+        IDateRecordRepository DateRecordRepository { get; }
+
         void Commit();
+
         void Rollback();
     }
 }
