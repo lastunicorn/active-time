@@ -15,17 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
+using DustInTheWind.ActiveTime.Application.CurrentDate.PresentCalendar;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class CalendarViewModel : ViewModelBase
     {
-        private readonly CurrentDay currentDay;
+        private readonly IMediator mediator;
 
-        private DateTime? date;
+        private DateTime date;
 
-        public DateTime? Date
+        public DateTime Date
         {
             get => date;
             set
@@ -36,25 +41,44 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
                 date = value;
                 OnPropertyChanged();
 
-                currentDay.Date = value;
+                if (!IsInitializeMode)
+                    UpdateDate(value).Wait();
             }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarViewModel"/> class.
         /// </summary>
-        public CalendarViewModel(CurrentDay currentDay)
+        public CalendarViewModel(IMediator mediator, EventBus eventBus)
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            Date = currentDay.Date;
+            _ = Initialize();
 
-            currentDay.DateChanged += HandleCurrentDateChanged;
+            eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
         }
 
-        private void HandleCurrentDateChanged(object sender, EventArgs e)
+        private void HandleCurrentDateChanged(EventParameters parameters)
         {
-            Date = currentDay.Date;
+            RunInInitializeMode(() => Date = parameters.Get<DateTime>("Date"));
+        }
+
+        private async Task Initialize()
+        {
+            PresentCalendarRequest request = new PresentCalendarRequest();
+            PresentCalendarResponse response = await mediator.Send(request);
+
+            RunInInitializeMode(() => Date = response.Date);
+        }
+
+        private async Task UpdateDate(DateTime? value)
+        {
+            ChangeDateRequest request = new ChangeDateRequest
+            {
+                Date = value
+            };
+            await mediator.Send(request);
         }
     }
 }

@@ -15,23 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Presentation;
-using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 
-namespace DustInTheWind.ActiveTime.Presentation.Commands
+namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentCalendar
 {
-    internal class OverviewCommand : CommandBase
+    public class PresentCalendarResponse
     {
-        private readonly IShellNavigator shellNavigator;
-
-        public OverviewCommand(IShellNavigator shellNavigator)
-        {
-            this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
-        }
-
-        public override void Execute(object parameter)
-        {
-            shellNavigator.Navigate(ShellNames.OverviewShell);
-        }
+        public DateTime Date { get; set; }
     }
 }

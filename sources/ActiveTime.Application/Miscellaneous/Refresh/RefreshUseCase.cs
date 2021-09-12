@@ -17,24 +17,27 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Miscellaneous.Refresh
 {
     internal class RefreshUseCase : IRequestHandler<RefreshRequest>
     {
+        private readonly EventBus eventBus;
         private readonly IStatusInfoService statusInfoService;
 
-        public RefreshUseCase(IStatusInfoService statusInfoService)
+        public RefreshUseCase(EventBus eventBus, IStatusInfoService statusInfoService)
         {
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
         }
 
         public Task<Unit> Handle(RefreshRequest request, CancellationToken cancellationToken)
         {
-            // todo: raise an event
-
+            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged);
             statusInfoService.SetStatus("Refreshed.");
 
             return Task.FromResult(Unit.Value);

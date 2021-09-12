@@ -53,10 +53,16 @@
     <Compile Include="CurrentDate\DecrementDate\DecrementDateUseCase.cs" />
     <Compile Include="CurrentDate\IncrementDate\IncrementDateRequest.cs" />
     <Compile Include="CurrentDate\IncrementDate\IncrementDateUseCase.cs" />
+    <Compile Include="CurrentDate\PresentCalendar\PresentCalendarRequest.cs" />
+    <Compile Include="CurrentDate\PresentCalendar\PresentCalendarResponse.cs" />
+    <Compile Include="CurrentDate\PresentCalendar\PresentCalendarUseCase.cs" />
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateRequest.cs" />
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateResponse.cs" />
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateUseCase.cs" />
     <Compile Include="CurrentDay.cs" />
+    <Compile Include="TimeRecords\PresentTimeRecords\PresentTimeRecordsRequest.cs" />
+    <Compile Include="TimeRecords\PresentTimeRecords\PresentTimeRecordsResponse.cs" />
+    <Compile Include="TimeRecords\PresentTimeRecords\PresentTimeRecordsUseCase.cs" />
     <Compile Include="TimeReport\PresentTimeReport\PresentTimeReportRequest.cs" />
     <Compile Include="TimeReport\PresentTimeReport\PresentTimeReportResponse.cs" />
     <Compile Include="TimeReport\PresentTimeReport\PresentTimeReportUseCase.cs" />

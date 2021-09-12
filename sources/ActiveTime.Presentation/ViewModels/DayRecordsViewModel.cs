@@ -15,14 +15,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.TimeRecords.PresentTimeRecords;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 {
     public class DayRecordsViewModel : ViewModelBase
     {
-        private readonly CurrentDay currentDayRecord;
+        private readonly IMediator mediator;
 
         private DayTimeInterval[] records;
 
@@ -39,19 +43,27 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="DayRecordsViewModel"/> class.
         /// </summary>
-        public DayRecordsViewModel(CurrentDay currentDayRecord)
+        public DayRecordsViewModel(IMediator mediator, EventBus eventBus)
         {
-            this.currentDayRecord = currentDayRecord ?? throw new ArgumentNullException(nameof(currentDayRecord));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            Records = currentDayRecord.Records;
+            _ = Initialize();
 
-            currentDayRecord.DatesChanged += HandleCurrentDayDatesChanged;
-            currentDayRecord.ReloadDayRecord();
+            eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
         }
 
-        private void HandleCurrentDayDatesChanged(object sender, EventArgs eventArgs)
+        private void HandleCurrentDateChanged(EventParameters parameters)
         {
-            Records = currentDayRecord.Records;
+            _ = Initialize();
+        }
+
+        private async Task Initialize()
+        {
+            PresentTimeRecordsRequest request = new PresentTimeRecordsRequest();
+            PresentTimeRecordsResponse response = await mediator.Send(request);
+
+            Records = response.Records;
         }
     }
 }
