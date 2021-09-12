@@ -17,9 +17,9 @@
 using System;
 using DustInTheWind.ActiveTime.Common.Recording;
 
-namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentCurrentDateInfo
+namespace DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport
 {
-    public class PresentCurrentDateInfoResponse
+    public class PresentTimeReportResponse
     {
         public DayTimeInterval[] Records { get; set; }
 

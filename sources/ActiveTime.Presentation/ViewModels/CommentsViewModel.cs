@@ -16,7 +16,6 @@
 
 using System;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Presentation.Commands;

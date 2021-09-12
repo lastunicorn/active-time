@@ -28,13 +28,13 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
     public class MainMenuViewModel : ViewModelBase
     {
         public ICommand OverviewCommand { get; }
-        
+
         public ICommand ExitCommand { get; }
-        
+
         public ICommand StartCommand { get; }
-        
+
         public ICommand StopCommand { get; }
-        
+
         public ICommand AboutCommand { get; }
 
         public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator,

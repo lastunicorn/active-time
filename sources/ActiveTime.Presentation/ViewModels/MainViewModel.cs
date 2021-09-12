@@ -21,9 +21,9 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
     public class MainViewModel : ViewModelBase
     {
         public MainMenuViewModel MainMenuViewModel { get; }
-        
+
         public StatusInfoViewModel StatusInfoViewModel { get; }
-        
+
         public FrontViewModel FrontViewModel { get; }
 
         public MainWindowTitle WindowTitle { get; } = new MainWindowTitle();

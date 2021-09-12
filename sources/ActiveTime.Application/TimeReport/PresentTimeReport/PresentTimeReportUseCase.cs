@@ -23,32 +23,32 @@ using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentCurrentDateInfo
+namespace DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport
 {
-    public class PresentCurrentDateInfoUseCase : IRequestHandler<PresentCurrentDateInfoRequest, PresentCurrentDateInfoResponse>
+    public class PresentTimeReportUseCase : IRequestHandler<PresentTimeReportRequest, PresentTimeReportResponse>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly InMemoryState inMemoryState;
 
-        public PresentCurrentDateInfoUseCase(IUnitOfWork unitOfWork, InMemoryState inMemoryState)
+        public PresentTimeReportUseCase(IUnitOfWork unitOfWork, InMemoryState inMemoryState)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
         }
 
-        public Task<PresentCurrentDateInfoResponse> Handle(PresentCurrentDateInfoRequest request, CancellationToken cancellationToken)
+        public Task<PresentTimeReportResponse> Handle(PresentTimeReportRequest request, CancellationToken cancellationToken)
         {
             IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(inMemoryState.CurrentDate);
-            PresentCurrentDateInfoResponse response = CreateResponse(timeRecords);
+            PresentTimeReportResponse response = CreateResponse(timeRecords);
 
             return Task.FromResult(response);
         }
 
-        private static PresentCurrentDateInfoResponse CreateResponse(IEnumerable<TimeRecord> timeRecords)
+        private static PresentTimeReportResponse CreateResponse(IEnumerable<TimeRecord> timeRecords)
         {
             DayRecord dayRecord = new DayRecord(timeRecords);
 
-            return new PresentCurrentDateInfoResponse
+            return new PresentTimeReportResponse
             {
                 Records = dayRecord.AllIntervals.ToArray(),
                 ActiveTime = dayRecord.TotalActiveTime,

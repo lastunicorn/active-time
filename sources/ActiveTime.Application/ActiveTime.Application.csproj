@@ -57,9 +57,9 @@
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateResponse.cs" />
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateUseCase.cs" />
     <Compile Include="CurrentDay.cs" />
-    <Compile Include="Miscellaneous\PresentCurrentDateInfo\PresentCurrentDateInfoRequest.cs" />
-    <Compile Include="Miscellaneous\PresentCurrentDateInfo\PresentCurrentDateInfoResponse.cs" />
-    <Compile Include="Miscellaneous\PresentCurrentDateInfo\PresentCurrentDateInfoUseCase.cs" />
+    <Compile Include="TimeReport\PresentTimeReport\PresentTimeReportRequest.cs" />
+    <Compile Include="TimeReport\PresentTimeReport\PresentTimeReportResponse.cs" />
+    <Compile Include="TimeReport\PresentTimeReport\PresentTimeReportUseCase.cs" />
     <Compile Include="Miscellaneous\Refresh\RefreshRequest.cs" />
     <Compile Include="Miscellaneous\Refresh\RefreshUseCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
