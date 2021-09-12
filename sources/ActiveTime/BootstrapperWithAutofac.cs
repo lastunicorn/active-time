@@ -88,11 +88,9 @@ namespace DustInTheWind.ActiveTime
 
             // Register singleton services.
             containerBuilder.RegisterType<Logger>().As<ILogger>().SingleInstance();
-            containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<InMemoryState>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<StatusInfoService>().As<IStatusInfoService>().SingleInstance();
-            containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
 
             // Register services.
             containerBuilder.RegisterType<SystemClock>().As<ISystemClock>();

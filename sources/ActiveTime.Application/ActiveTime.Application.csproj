@@ -59,7 +59,6 @@
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateRequest.cs" />
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateResponse.cs" />
     <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateUseCase.cs" />
-    <Compile Include="CurrentDay.cs" />
     <Compile Include="TimeRecords\PresentTimeRecords\PresentTimeRecordsRequest.cs" />
     <Compile Include="TimeRecords\PresentTimeRecords\PresentTimeRecordsResponse.cs" />
     <Compile Include="TimeRecords\PresentTimeRecords\PresentTimeRecordsUseCase.cs" />
