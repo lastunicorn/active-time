@@ -15,33 +15,35 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Presentation.Services;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.CurrentDate.IncrementDate;
+using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
-    public class IncrementDayCommand : CommandBase
+    public class IncrementDateCommand : CommandBase
     {
-        private readonly CurrentDay currentDay;
+        private readonly IMediator mediator;
 
-        public IncrementDayCommand(CurrentDay currentDay)
+        public IncrementDateCommand(IMediator mediator)
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         public override bool CanExecute(object parameter)
         {
-            return currentDay.Date != null;
+            return true;
         }
 
         public override void Execute(object parameter)
         {
-            DateTime? date = currentDay.Date;
+            _ = IncrementDate();
+        }
 
-            if (date == null)
-                return;
-
-            currentDay.Date = date.Value.AddDays(1);
+        private async Task IncrementDate()
+        {
+            IncrementDateRequest request = new IncrementDateRequest();
+            await mediator.Send(request);
         }
     }
 }

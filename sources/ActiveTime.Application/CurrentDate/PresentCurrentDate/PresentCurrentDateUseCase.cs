@@ -15,35 +15,30 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
+using DustInTheWind.ActiveTime.Common;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.Commands
+namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentCurrentDate
 {
-    public class DecrementDayCommand : CommandBase
+    internal class PresentCurrentDateUseCase : IRequestHandler<PresentCurrentDateRequest, PresentCurrentDateResponse>
     {
-        private readonly IMediator mediator;
+        private readonly InMemoryState inMemoryState;
 
-        public DecrementDayCommand(IMediator mediator)
+        public PresentCurrentDateUseCase(InMemoryState inMemoryState)
         {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
         }
 
-        public override bool CanExecute(object parameter)
+        public Task<PresentCurrentDateResponse> Handle(PresentCurrentDateRequest request, CancellationToken cancellationToken)
         {
-            return true;
-        }
+            PresentCurrentDateResponse response = new PresentCurrentDateResponse
+            {
+                Date = inMemoryState.CurrentDate
+            };
 
-        public override void Execute(object parameter)
-        {
-            _ = IncrementDate();
-        }
-
-        private async Task IncrementDate()
-        {
-            DecrementDateRequest request = new DecrementDateRequest();
-            await mediator.Send(request);
+            return Task.FromResult(response);
         }
     }
 }

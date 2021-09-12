@@ -38,23 +38,15 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentCurrentDateI
 
         public Task<PresentCurrentDateInfoResponse> Handle(PresentCurrentDateInfoRequest request, CancellationToken cancellationToken)
         {
-            if (inMemoryState.CurrentDate == null)
-            {
-                PresentCurrentDateInfoResponse response = CreateEmptyResponse();
-                return Task.FromResult(response);
-            }
-            else
-            {
-                IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(inMemoryState.CurrentDate.Value);
-                PresentCurrentDateInfoResponse response = CreateResponse(timeRecords);
+            IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(inMemoryState.CurrentDate);
+            PresentCurrentDateInfoResponse response = CreateResponse(timeRecords);
 
-                return Task.FromResult(response);
-            }
+            return Task.FromResult(response);
         }
 
         private static PresentCurrentDateInfoResponse CreateResponse(IEnumerable<TimeRecord> timeRecords)
         {
-            Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
+            DayRecord dayRecord = new DayRecord(timeRecords);
 
             return new PresentCurrentDateInfoResponse
             {
@@ -63,18 +55,6 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentCurrentDateI
                 TotalTime = dayRecord.TotalTime,
                 BeginTime = dayRecord.OverallBeginTime ?? TimeSpan.Zero,
                 EstimatedEndTime = dayRecord.EstimatedEndTime ?? TimeSpan.Zero
-            };
-        }
-
-        private static PresentCurrentDateInfoResponse CreateEmptyResponse()
-        {
-            return new PresentCurrentDateInfoResponse
-            {
-                Records = new DayTimeInterval[0],
-                ActiveTime = TimeSpan.Zero,
-                TotalTime = TimeSpan.Zero,
-                BeginTime = TimeSpan.Zero,
-                EstimatedEndTime = TimeSpan.Zero
             };
         }
     }

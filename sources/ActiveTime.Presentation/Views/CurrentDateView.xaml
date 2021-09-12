@@ -67,7 +67,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <Button
                 Grid.Column="1"
                 Content="&gt;&gt;"
-                Command="{Binding IncrementDayCommand}"
+                Command="{Binding IncrementDateCommand}"
                 MinHeight="40"/>
         </Grid>
 

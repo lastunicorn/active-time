@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -21,11 +22,26 @@ namespace DustInTheWind.ActiveTime.Presentation
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
+        protected bool IsInitializeMode { get; private set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void RunInInitializeMode(Action action)
+        {
+            IsInitializeMode = true;
+            try
+            {
+                action();
+            }
+            finally
+            {
+                IsInitializeMode = false;
+            }
         }
     }
 }

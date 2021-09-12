@@ -36,14 +36,14 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public DecrementDayCommand DecrementDayCommand { get; }
 
-        public IncrementDayCommand IncrementDayCommand { get; }
+        public IncrementDateCommand IncrementDateCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontViewModel"/> class.
         /// </summary>
         public FrontViewModel(CurrentDateViewModel currentDateViewModel, TimeReportViewModel timeReportViewModel,
             CommentsViewModel commentsViewModel, DayRecordsViewModel dayRecordsViewModel, RefreshCommand refreshCommand,
-            DeleteCommand deleteCommand, DecrementDayCommand decrementDayCommand, IncrementDayCommand incrementDayCommand)
+            DeleteCommand deleteCommand, DecrementDayCommand decrementDayCommand, IncrementDateCommand incrementDateCommand)
         {
             CurrentDateViewModel = currentDateViewModel ?? throw new ArgumentNullException(nameof(currentDateViewModel));
             TimeReportViewModel = timeReportViewModel ?? throw new ArgumentNullException(nameof(timeReportViewModel));
@@ -53,7 +53,7 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             RefreshCommand = refreshCommand ?? throw new ArgumentNullException(nameof(refreshCommand));
             DeleteCommand = deleteCommand ?? throw new ArgumentNullException(nameof(deleteCommand));
             DecrementDayCommand = decrementDayCommand ?? throw new ArgumentNullException(nameof(decrementDayCommand));
-            IncrementDayCommand = incrementDayCommand ?? throw new ArgumentNullException(nameof(incrementDayCommand));
+            IncrementDateCommand = incrementDateCommand ?? throw new ArgumentNullException(nameof(incrementDateCommand));
         }
     }
 }

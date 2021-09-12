@@ -33,7 +33,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding DecrementDayCommand}" Key="PageUp" Modifiers="Control"/>
-        <KeyBinding Command="{Binding IncrementDayCommand}" Key="PageDown" Modifiers="Control"/>
+        <KeyBinding Command="{Binding IncrementDateCommand}" Key="PageDown" Modifiers="Control"/>
     </UserControl.InputBindings>
 
     <DockPanel Margin="8">

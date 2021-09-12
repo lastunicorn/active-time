@@ -61,7 +61,7 @@
     <Compile Include="Commands\DecrementDayCommand.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
-    <Compile Include="Commands\IncrementDayCommand.cs" />
+    <Compile Include="Commands\IncrementDateCommand.cs" />
     <Compile Include="Commands\OverviewCommand.cs" />
     <Compile Include="Commands\RefreshCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />

@@ -47,6 +47,15 @@
     <Compile Include="Comments\ResetComments\ResetCommentsUseCase.cs" />
     <Compile Include="Comments\SaveComments\SaveCommentsRequest.cs" />
     <Compile Include="Comments\SaveComments\SaveCommentsUseCase.cs" />
+    <Compile Include="CurrentDate\ChangeDate\ChangeDateRequest.cs" />
+    <Compile Include="CurrentDate\ChangeDate\ChangeDateUseCase.cs" />
+    <Compile Include="CurrentDate\DecrementDate\DecrementDateRequest.cs" />
+    <Compile Include="CurrentDate\DecrementDate\DecrementDateUseCase.cs" />
+    <Compile Include="CurrentDate\IncrementDate\IncrementDateRequest.cs" />
+    <Compile Include="CurrentDate\IncrementDate\IncrementDateUseCase.cs" />
+    <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateRequest.cs" />
+    <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateResponse.cs" />
+    <Compile Include="CurrentDate\PresentCurrentDate\PresentCurrentDateUseCase.cs" />
     <Compile Include="CurrentDay.cs" />
     <Compile Include="Miscellaneous\PresentCurrentDateInfo\PresentCurrentDateInfoRequest.cs" />
     <Compile Include="Miscellaneous\PresentCurrentDateInfo\PresentCurrentDateInfoResponse.cs" />

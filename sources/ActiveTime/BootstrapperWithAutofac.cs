@@ -76,7 +76,7 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<RefreshCommand>().AsSelf();
             containerBuilder.RegisterType<DeleteCommand>().AsSelf();
             containerBuilder.RegisterType<DecrementDayCommand>().AsSelf();
-            containerBuilder.RegisterType<IncrementDayCommand>().AsSelf();
+            containerBuilder.RegisterType<IncrementDateCommand>().AsSelf();
 
             // GUI - Services
             containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();

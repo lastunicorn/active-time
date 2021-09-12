@@ -15,9 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application;
+using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
+using DustInTheWind.ActiveTime.Application.CurrentDate.PresentCurrentDate;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using MediatR;
@@ -27,7 +28,6 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
     public class CurrentDateViewModel : ViewModelBase
     {
         private readonly IMediator mediator;
-        private readonly CurrentDay currentDay;
 
         private DateTime? date;
 
@@ -42,7 +42,8 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
                 date = value;
                 OnPropertyChanged();
 
-                currentDay.Date = value;
+                if (!IsInitializeMode)
+                    UpdateDate(value).Wait();
             }
         }
 
@@ -50,27 +51,44 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
 
         public DecrementDayCommand DecrementDayCommand { get; }
 
-        public IncrementDayCommand IncrementDayCommand { get; }
+        public IncrementDateCommand IncrementDateCommand { get; }
 
-        public CurrentDateViewModel(IMediator mediator, EventBus eventBus, CurrentDay currentDay, IShellNavigator shellNavigator)
+        public CurrentDateViewModel(IMediator mediator, EventBus eventBus,
+            CalendarCommand calendarCommand, DecrementDayCommand decrementDayCommand, IncrementDateCommand incrementDateCommand)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
 
-            CalendarCommand = new CalendarCommand(shellNavigator);
-            DecrementDayCommand = new DecrementDayCommand(currentDay);
-            IncrementDayCommand = new IncrementDayCommand(currentDay);
-
-            Date = currentDay.Date;
+            CalendarCommand = calendarCommand ?? throw new ArgumentNullException(nameof(calendarCommand));
+            DecrementDayCommand = decrementDayCommand ?? throw new ArgumentNullException(nameof(decrementDayCommand));
+            IncrementDateCommand = incrementDateCommand ?? throw new ArgumentNullException(nameof(incrementDateCommand));
 
             eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+
+            _ = Initialize();
         }
 
         private void HandleCurrentDateChanged(EventParameters parameters)
         {
-            Date = parameters.Get<DateTime>("Date");
+            RunInInitializeMode(() => Date = parameters.Get<DateTime>("Date"));
+        }
+
+        private async Task Initialize()
+        {
+            PresentCurrentDateRequest request = new PresentCurrentDateRequest();
+            PresentCurrentDateResponse response = await mediator.Send(request);
+
+            RunInInitializeMode(() => Date = response.Date);
+        }
+
+        private async Task UpdateDate(DateTime? value)
+        {
+            ChangeDateRequest request = new ChangeDateRequest
+            {
+                Date = value
+            };
+            await mediator.Send(request);
         }
     }
 }
