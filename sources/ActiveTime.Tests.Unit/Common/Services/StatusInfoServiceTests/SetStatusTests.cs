@@ -16,6 +16,8 @@
 
 using System.Threading;
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
+using Moq;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests
@@ -24,20 +26,25 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceT
     public class SetStatusTests
     {
         private StatusInfoService statusInfoService;
+        private Mock<ApplicationStatus> applicationStatus;
         private const string Text = "same test text";
 
         [SetUp]
         public void SetUp()
         {
             statusInfoService = new StatusInfoService();
+            applicationStatus = new Mock<ApplicationStatus>();
         }
 
         [Test]
         public void HavingAnInstance_WhenSetStatusToSpecificText_ThenStatusTextContainsThatText()
         {
-            statusInfoService.SetStatus(Text);
+            applicationStatus
+                .Setup(x => x.Text)
+                .Returns("this is the text");
+            statusInfoService.SetStatus(applicationStatus.Object);
 
-            Assert.That(statusInfoService.StatusText, Is.EqualTo(Text));
+            Assert.That(statusInfoService.StatusText, Is.EqualTo("this is the text"));
         }
 
         [Test]

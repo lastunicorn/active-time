@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
@@ -39,9 +40,9 @@ namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
 
         public Task<Unit> Handle(StampRequest request, CancellationToken cancellationToken)
         {
-            statusInfoService.SetStatus("Updating the current record's time.");
+            statusInfoService.SetStatus(ApplicationStatus.Create<StampingStatus>());
             scribe.Stamp();
-            statusInfoService.SetStatus("Current record's time has been updated.");
+            statusInfoService.SetStatus(ApplicationStatus.Create<StampedStatus>());
 
             unitOfWork.Commit();
 

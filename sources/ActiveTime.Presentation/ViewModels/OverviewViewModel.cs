@@ -18,7 +18,6 @@ using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
 using DustInTheWind.ActiveTime.Common.Logging;
-using DustInTheWind.ActiveTime.Common.System;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels
@@ -50,7 +49,8 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
                 firstDay = value;
                 OnPropertyChanged();
 
-                _ = PopulateComments();
+                if (!IsInitializeMode)
+                    _ = PopulateComments();
             }
         }
 
@@ -64,40 +64,47 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
                 lastDay = value;
                 OnPropertyChanged();
 
-                _ = PopulateComments();
+                if (!IsInitializeMode)
+                    _ = PopulateComments();
             }
         }
 
-        public OverviewViewModel(ISystemClock systemClock, IMediator mediator, ILogger logger)
+        public OverviewViewModel(IMediator mediator, ILogger logger)
         {
-            if (systemClock == null) throw new ArgumentNullException(nameof(systemClock));
-
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            DateTime today = systemClock.GetCurrentDate();
-            firstDay = today.AddDays(-29);
-            lastDay = today;
-
+            Comments = "Loading...";
             _ = PopulateComments();
         }
 
         private async Task PopulateComments()
         {
-            Comments = "Loading...";
-
             try
             {
                 PresentOverviewRequest request = new PresentOverviewRequest();
                 PresentOverviewResponse response = await mediator.Send(request);
 
-                ReportBuilder reportBuilder = new ReportBuilder(response.Report);
-                Comments = reportBuilder.Build();
+                RunInInitializeMode(() => DisplayResponse(response));
             }
             catch (Exception ex)
             {
                 logger.Log("ERROR: " + ex);
             }
+        }
+
+        private void DisplayResponse(PresentOverviewResponse response)
+        {
+            FirstDay = response.FirstDay;
+            LastDay = response.LastDay;
+
+            ReportBuilder reportBuilder = new ReportBuilder
+            {
+                FirstDay = response.FirstDay,
+                LastDay = response.LastDay,
+                DayRecords = response.DayRecords
+            };
+            Comments = reportBuilder.Build();
         }
     }
 }

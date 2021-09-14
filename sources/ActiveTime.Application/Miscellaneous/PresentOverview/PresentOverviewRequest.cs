@@ -21,8 +21,8 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
 {
     public class PresentOverviewRequest : IRequest<PresentOverviewResponse>
     {
-        public DateTime FirstDay { get; set; }
+        public DateTime? FirstDay { get; set; }
 
-        public DateTime LastDay { get; set; }
+        public DateTime? LastDay { get; set; }
     }
 }

@@ -14,12 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Common.Reporting;
+using System;
+using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Common;
 
 namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
 {
     public class PresentOverviewResponse
     {
-        public OverviewReport Report { get; set; }
+        public DateTime FirstDay { get; set; }
+
+        public DateTime LastDay { get; set; }
+
+        public List<DateRecord> DayRecords { get; set; }
     }
 }

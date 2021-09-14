@@ -15,10 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
-using DustInTheWind.ActiveTime.Common.System;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using MediatR;
 using Moq;
@@ -29,50 +31,77 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
     [TestFixture]
     public class OverviewViewModuleTests
     {
-        private Mock<ISystemClock> systemClock;
         private Mock<IMediator> mediator;
         private Mock<ILogger> logger;
 
         [SetUp]
         public void SetUp()
         {
-            systemClock = new Mock<ISystemClock>();
             mediator = new Mock<IMediator>();
             logger = new Mock<ILogger>();
         }
 
         [Test]
-        public void WhenOverviewViewModelIsInstantiated_ThenFirstDayIsInitializedWith29DaysBeforeSystemClock()
+        public void WhenOverviewViewModelIsInstantiated_ThenPresentOverviewRequestIsSentToMediator()
         {
-            systemClock
-                .Setup(x => x.GetCurrentDate())
-                .Returns(new DateTime(1980, 06, 13));
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(systemClock.Object, mediator.Object, logger.Object);
+            mediator.Verify(x => x.Send(It.IsAny<PresentOverviewRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        public void WhenOverviewViewModelIsInstantiated_ThenFirstDayIsInitializedFromTheResponse()
+        {
+            PresentOverviewResponse response = new PresentOverviewResponse
+            {
+                FirstDay = new DateTime(1980, 05, 15),
+                LastDay = new DateTime(1980, 06, 13)
+            };
+
+            mediator
+                .Setup(x => x.Send(It.IsAny<PresentOverviewRequest>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(response));
+
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
+            Thread.Sleep(50);
 
             Assert.AreEqual(new DateTime(1980, 05, 15), overviewViewModel.FirstDay);
         }
 
         [Test]
-        public void WhenOverviewViewModelIsInstantiated_ThenFirstDayIsInitializedWithCurrentDateSystemClock()
+        public void WhenOverviewViewModelIsInstantiated_ThenLastDayIsInitializedFromTheResponse()
         {
-            systemClock
-                .Setup(x => x.GetCurrentDate())
-                .Returns(new DateTime(1980, 06, 13));
+            PresentOverviewResponse response = new PresentOverviewResponse
+            {
+                FirstDay = new DateTime(1980, 05, 15),
+                LastDay = new DateTime(1980, 06, 13)
+            };
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(systemClock.Object, mediator.Object, logger.Object);
+            mediator
+                .Setup(x => x.Send(It.IsAny<PresentOverviewRequest>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(response));
+
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
+            Thread.Sleep(50);
 
             Assert.AreEqual(new DateTime(1980, 06, 13), overviewViewModel.LastDay);
         }
 
         [Test]
-        public void WhenOverviewViewModelIsInstantiated_ThenCommentsNotNull()
+        public void WhenOverviewViewModelIsInstantiated_ThenCommentsIsNotNull()
         {
-            systemClock
-                .Setup(x => x.GetCurrentDate())
-                .Returns(DateTime.Now);
+            PresentOverviewResponse response = new PresentOverviewResponse
+            {
+                FirstDay = new DateTime(1980, 05, 15),
+                LastDay = new DateTime(1980, 06, 13),
+                DayRecords = new List<DateRecord>()
+            };
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(systemClock.Object, mediator.Object, logger.Object);
+            mediator
+                .Setup(x => x.Send(It.IsAny<PresentOverviewRequest>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(response));
+
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
 
             Assert.IsNotNull(overviewViewModel.Comments);
         }
@@ -80,10 +109,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
         [Test]
         public void HavingOverviewViewModelInstance_WhenFirsDayIsSet_ThenPresentOverviewRequestIsSentToMediator()
         {
-            systemClock
-                .Setup(x => x.GetCurrentDate())
-                .Returns(new DateTime(1980, 06, 13));
-            OverviewViewModel overviewViewModel = new OverviewViewModel(systemClock.Object, mediator.Object, logger.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
             mediator.Invocations.Clear();
 
             overviewViewModel.FirstDay = new DateTime(2000, 06, 13);
@@ -94,10 +120,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
         [Test]
         public void HavingOverviewViewModelInstance_WhenLastDayIsSet_ThenPresentOverviewRequestIsSentToMediator()
         {
-            systemClock
-                .Setup(x => x.GetCurrentDate())
-                .Returns(new DateTime(1980, 06, 13));
-            OverviewViewModel overviewViewModel = new OverviewViewModel(systemClock.Object, mediator.Object, logger.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
             mediator.Invocations.Clear();
 
             overviewViewModel.LastDay = new DateTime(2000, 06, 13);
@@ -109,11 +132,8 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
         public void HavingOverviewViewModelInstance_WhenSettingFirstDay_ThenPropertyChangedEventIsRaised()
         {
             bool eventWasRaised = false;
-            systemClock
-                .Setup(x => x.GetCurrentDate())
-                .Returns(DateTime.Now);
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(systemClock.Object, mediator.Object, logger.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
 
             overviewViewModel.PropertyChanged += (sender, args) =>
             {
@@ -130,11 +150,8 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
         public void HavingOverviewViewModelInstance_WhenSettingLastDay_ThenPropertyChangedEventIsRaised()
         {
             bool eventWasRaised = false;
-            systemClock
-                .Setup(x => x.GetCurrentDate())
-                .Returns(DateTime.Now);
 
-            OverviewViewModel overviewViewModel = new OverviewViewModel(systemClock.Object, mediator.Object, logger.Object);
+            OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
 
             overviewViewModel.PropertyChanged += (sender, args) =>
             {

@@ -1,4 +1,6 @@
-﻿namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
+﻿using System.Threading.Tasks;
+
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
 {
     public interface IJob
     {
@@ -6,8 +8,8 @@
 
         JobState State { get; }
 
-        void Start();
+        Task Start();
 
-        void Stop();
+        Task Stop();
     }
 }

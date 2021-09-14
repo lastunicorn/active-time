@@ -16,6 +16,7 @@
 
 using System;
 using System.Threading;
+using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Application
@@ -97,6 +98,11 @@ namespace DustInTheWind.ActiveTime.Application
         public void SetStatus(string text)
         {
             SetStatus(text, DefaultStatusTimeout);
+        }
+
+        public void SetStatus(ApplicationStatus applicationStatus)
+        {
+            SetStatus(applicationStatus.Text, DefaultStatusTimeout);
         }
 
         public void Dispose()

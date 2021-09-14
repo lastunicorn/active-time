@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
@@ -50,7 +51,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording.StartRecording
             scribe.StampNew();
             scheduledJobs.Start(JobNames.Recorder);
             eventBus.Raise(EventNames.Recorder.Started);
-            statusInfoService.SetStatus("Recorder started.");
+            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStartedStatus>());
 
             unitOfWork.Commit();
             unitOfWork.Dispose();

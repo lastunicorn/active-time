@@ -45,6 +45,13 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="ActiveTimeException.cs" />
+    <Compile Include="ApplicationStatuses\ApplicationStatus.cs" />
+    <Compile Include="ApplicationStatuses\ReadyStatus.cs" />
+    <Compile Include="ApplicationStatuses\RecorderStartedStatus.cs" />
+    <Compile Include="ApplicationStatuses\RecorderStoppedStatus.cs" />
+    <Compile Include="ApplicationStatuses\RefreshedStatus.cs" />
+    <Compile Include="ApplicationStatuses\StampedStatus.cs" />
+    <Compile Include="ApplicationStatuses\StampingStatus.cs" />
     <Compile Include="DateRecord.cs" />
     <Compile Include="EventNames.cs" />
     <Compile Include="InMemoryState.cs" />
@@ -60,7 +67,6 @@
     <Compile Include="Recording\Record.cs" />
     <Compile Include="Recording\DayRecord.cs" />
     <Compile Include="Recording\Scribe.cs" />
-    <Compile Include="Reporting\OverviewReport.cs" />
     <Compile Include="Services\Dwarfs.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IDwarf.cs" />
@@ -81,7 +87,9 @@
     <Compile Include="Presentation\ShellNames.cs" />
     <Compile Include="Presentation\ViewNames.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Reporting\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

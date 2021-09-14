@@ -50,6 +50,8 @@
     <Compile Include="JobModel\IJob.cs" />
     <Compile Include="JobModel\JobBase.cs" />
     <Compile Include="JobModel\JobState.cs" />
+    <Compile Include="JobModel\OneTimeJob.cs" />
+    <Compile Include="JobModel\PeriodicalJob.cs" />
     <Compile Include="JobModel\ScheduledJobs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timer.cs" />

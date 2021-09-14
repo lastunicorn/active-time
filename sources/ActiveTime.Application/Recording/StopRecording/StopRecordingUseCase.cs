@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
@@ -54,7 +55,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording.StopRecording
 
             scheduledJobs.Stop(JobNames.Recorder);
             eventBus.Raise(EventNames.Recorder.Stopped);
-            statusInfoService.SetStatus("Recorder stopped.");
+            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStoppedStatus>());
 
             unitOfWork.Commit();
             unitOfWork.Dispose();

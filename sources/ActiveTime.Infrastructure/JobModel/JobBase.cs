@@ -6,8 +6,8 @@ namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
     public abstract class JobBase : IJob, IDisposable
     {
         private bool isDisposed;
-        private readonly object stateSynchronizer = new object();
-        private readonly ITimer timer;
+        protected readonly object StateSynchronizer = new object();
+        protected readonly ITimer Timer;
 
         public abstract string Id { get; }
 
@@ -16,27 +16,10 @@ namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
         /// </summary>
         public JobState State { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the interval of time to wait between two stamping actions.
-        /// A stamp consists in updating the time record in the persistence layer (usually the database).
-        /// </summary>
-        public TimeSpan RunInterval
-        {
-            get => timer.Interval;
-            set
-            {
-                lock (stateSynchronizer)
-                {
-                    timer.Interval = value;
-                }
-            }
-        }
-
         protected JobBase(ITimer timer)
         {
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            Timer = timer ?? throw new ArgumentNullException(nameof(timer));
 
-            timer.Interval = TimeSpan.FromMinutes(1);
             timer.Tick += HandleTimerTick;
         }
 
@@ -45,53 +28,64 @@ namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
             _ = Execute();
         }
 
-        public void Start()
+        public async Task Start()
         {
-            switch (State)
+            if (State == JobState.Stopped)
             {
-                case JobState.Stopped:
-                    _ = DoStart();
-                    break;
-
-                case JobState.Running:
-                    break;
+                DoStart();
+                await OnStarted();
             }
         }
 
-        private async Task DoStart()
+        protected virtual Task OnStarted()
         {
-            lock (stateSynchronizer)
+            return Task.CompletedTask;
+        }
+
+        private void DoStart()
+        {
+            lock (StateSynchronizer)
             {
-                timer.Start();
+                Timer.Start();
                 State = JobState.Running;
             }
-
-            await Execute();
         }
 
-        public void Stop()
+        public Task Stop()
         {
-            switch (State)
-            {
-                case JobState.Stopped:
-                    break;
+            if (State == JobState.Running)
+                DoStop();
 
-                case JobState.Running:
-                    DoStop();
-                    break;
-            }
+            return Task.CompletedTask;
         }
 
         private void DoStop()
         {
-            lock (stateSynchronizer)
+            lock (StateSynchronizer)
             {
-                timer.Stop();
+                Timer.Stop();
                 State = JobState.Stopped;
             }
         }
 
-        protected abstract Task Execute();
+        protected async Task Execute()
+        {
+            await OnExecuting();
+            await DoExecute();
+            await OnExecuted();
+        }
+
+        protected virtual Task OnExecuting()
+        {
+            return Task.CompletedTask;
+        }
+
+        protected virtual Task OnExecuted()
+        {
+            return Task.CompletedTask;
+        }
+
+        protected abstract Task DoExecute();
 
         public void Dispose()
         {
@@ -106,7 +100,7 @@ namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
 
             if (disposing)
             {
-                timer.Dispose();
+                Timer.Dispose();
             }
 
             isDisposed = true;

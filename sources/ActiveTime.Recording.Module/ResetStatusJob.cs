@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Recording.Stamp;
+using DustInTheWind.ActiveTime.Application.Miscellaneous.ResetStatus;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
@@ -8,26 +8,21 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Jobs
 {
-    /// <summary>
-    /// Periodically calls the scribe to update the time of the current record in the database.
-    /// </summary>
-    public class RecorderJob : PeriodicalJob
+    public class ResetStatusJob : OneTimeJob
     {
         private readonly IMediator mediator;
 
-        public override string Id { get; } = JobNames.Recorder;
+        public override string Id { get; } = JobNames.ResetStatus;
 
-        public RecorderJob(IMediator mediator, ITimer timer)
+        public ResetStatusJob(IMediator mediator, ITimer timer)
             : base(timer)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-
-            RunInterval = TimeSpan.FromMinutes(1);
         }
 
         protected override async Task DoExecute()
         {
-            StampRequest stampRequest = new StampRequest();
+            ResetStatusRequest stampRequest = new ResetStatusRequest();
             await mediator.Send(stampRequest);
         }
     }

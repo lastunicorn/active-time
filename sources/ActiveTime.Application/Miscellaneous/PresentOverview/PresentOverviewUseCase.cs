@@ -21,7 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Common.Reporting;
+using DustInTheWind.ActiveTime.Common.System;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
@@ -29,22 +29,36 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
     public class PresentOverviewUseCase : IRequestHandler<PresentOverviewRequest, PresentOverviewResponse>
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly ISystemClock systemClock;
 
-        public PresentOverviewUseCase(IUnitOfWork unitOfWork)
+        public PresentOverviewUseCase(IUnitOfWork unitOfWork, ISystemClock systemClock)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            this.systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
         }
 
         public Task<PresentOverviewResponse> Handle(PresentOverviewRequest request, CancellationToken cancellationToken)
         {
+            DateTime firstDay;
+            DateTime lastDay;
+
+            if (request.FirstDay == null || request.LastDay == null)
+            {
+                DateTime today = systemClock.GetCurrentDate();
+                firstDay = today.AddDays(-29);
+                lastDay = today;
+            }
+            else
+            {
+                firstDay = request.FirstDay.Value;
+                lastDay = request.LastDay.Value;
+            }
+
             PresentOverviewResponse response = new PresentOverviewResponse
             {
-                Report = new OverviewReport
-                {
-                    FirstDay = request.FirstDay,
-                    LastDay = request.LastDay,
-                    DayRecords = RetrieveDayRecords(request.FirstDay, request.LastDay)
-                }
+                FirstDay = firstDay,
+                LastDay = lastDay,
+                DayRecords = RetrieveDayRecords(firstDay, lastDay)
             };
 
             return Task.FromResult(response);

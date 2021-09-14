@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 
 namespace DustInTheWind.ActiveTime.Common.Services
 {
@@ -42,5 +43,7 @@ namespace DustInTheWind.ActiveTime.Common.Services
         void SetStatus(string text, int timeout);
 
         void SetStatus(string text);
+
+        void SetStatus(ApplicationStatus applicationStatus);
     }
 }

@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
@@ -38,7 +39,7 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.Refresh
         public Task<Unit> Handle(RefreshRequest request, CancellationToken cancellationToken)
         {
             eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged);
-            statusInfoService.SetStatus("Refreshed.");
+            statusInfoService.SetStatus(ApplicationStatus.Create<RefreshedStatus>());
 
             return Task.FromResult(Unit.Value);
         }

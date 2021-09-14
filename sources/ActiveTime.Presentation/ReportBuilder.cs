@@ -19,18 +19,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Reporting;
 
 namespace DustInTheWind.ActiveTime.Presentation
 {
     internal class ReportBuilder
     {
-        private readonly OverviewReport overviewReport;
+        public DateTime FirstDay { get; set; }
 
-        public ReportBuilder(OverviewReport overviewReport)
-        {
-            this.overviewReport = overviewReport ?? throw new ArgumentNullException(nameof(overviewReport));
-        }
+        public DateTime LastDay { get; set; }
+
+        public List<DateRecord> DayRecords { get; set; }
 
         public string Build()
         {
@@ -43,34 +41,37 @@ namespace DustInTheWind.ActiveTime.Presentation
             sb.AppendLine("--------------------------------------------------");
             sb.AppendLine();
 
-            foreach (DateRecord dayComment in overviewReport.DayRecords)
+            if (DayRecords != null)
             {
-                Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(dayComment.TimeRecords);
+                foreach (DateRecord dayComment in DayRecords)
+                {
+                    Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(dayComment.TimeRecords);
 
-                sb.Append(dayComment.Date.ToDefaultFormat());
+                    sb.Append(dayComment.Date.ToDefaultFormat());
 
-                sb.Append(" - active: ");
+                    sb.Append(" - active: ");
 
-                TimeSpan totalActiveTime = dayRecord.TotalActiveTime;
-                sb.Append(totalActiveTime.ToDefaultFormat());
+                    TimeSpan totalActiveTime = dayRecord.TotalActiveTime;
+                    sb.Append(totalActiveTime.ToDefaultFormat());
 
-                sb.Append(" [ ");
+                    sb.Append(" [ ");
 
-                TimeSpan? beginTime = dayRecord.OverallBeginTime;
-                sb.Append(beginTime.ToDefaultFormat());
+                    TimeSpan? beginTime = dayRecord.OverallBeginTime;
+                    sb.Append(beginTime.ToDefaultFormat());
 
-                sb.Append(" - ");
+                    sb.Append(" - ");
 
-                TimeSpan? endTime = dayRecord.OverallEndTime;
-                sb.Append(endTime.ToDefaultFormat());
+                    TimeSpan? endTime = dayRecord.OverallEndTime;
+                    sb.Append(endTime.ToDefaultFormat());
 
-                sb.Append(" ] ");
+                    sb.Append(" ] ");
 
-                sb.AppendLine();
-                sb.Append(dayComment.Comment);
-                sb.AppendLine();
-                sb.AppendLine("--------------------------------------------------");
-                sb.AppendLine();
+                    sb.AppendLine();
+                    sb.Append(dayComment.Comment);
+                    sb.AppendLine();
+                    sb.AppendLine("--------------------------------------------------");
+                    sb.AppendLine();
+                }
             }
 
             return sb.ToString();
@@ -78,13 +79,13 @@ namespace DustInTheWind.ActiveTime.Presentation
 
         private TimeSpan CalculateHours()
         {
-            DateTime date = overviewReport.FirstDay;
+            DateTime date = FirstDay;
             TimeSpan totalTime = TimeSpan.Zero;
             int dayCount = 0;
 
-            while (date <= overviewReport.LastDay)
+            while (date <= LastDay)
             {
-                DateRecord dateRec = overviewReport.DayRecords.FirstOrDefault(x => x.Date == date);
+                DateRecord dateRec = DayRecords?.FirstOrDefault(x => x.Date == date);
                 List<TimeRecord> timeRecords = dateRec?.TimeRecords ?? new List<TimeRecord>();
 
                 Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
