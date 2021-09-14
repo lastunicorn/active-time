@@ -179,6 +179,14 @@
       <Project>{78a4111d-38dd-439f-abc1-cd569c70de9c}</Project>
       <Name>ActiveTime.Persistence.SQLite.AdoNet.Module</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj">
+      <Project>{e6cdcae9-01f6-445b-b322-4a6b2167fbc7}</Project>
+      <Name>ActiveTime.Presentation.CustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj">
+      <Project>{7ecbe36a-b824-435c-8a2d-bcbc2d512eb9}</Project>
+      <Name>ActiveTime.Presentation.Styles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
       <Name>ActiveTime.Presentation</Name>

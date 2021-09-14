@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Converters"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.ViewModels"
-    xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls"
+    xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls;assembly=ActiveTime.Presentation.CustomControls"
 
     mc:Ignorable="d"
     d:DesignHeight="450"

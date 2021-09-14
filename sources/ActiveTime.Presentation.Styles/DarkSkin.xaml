@@ -1,0 +1,18 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/ButtonStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/CheckBoxStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/DatePickerStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/LabelStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/ListBoxStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/MenuStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/ScrollBarStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/StatusBarStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/TextBoxStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/WindowStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/HighlightPanelStyles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

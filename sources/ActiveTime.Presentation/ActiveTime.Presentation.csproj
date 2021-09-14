@@ -53,7 +53,6 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="CustomControls\HighlightPanel.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\CalendarCommand.cs" />
@@ -88,7 +87,6 @@
     <Compile Include="ReportBuilder.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\DayReport.cs" />
     <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\IWindowFactory.cs" />
     <Compile Include="Services\ShellNavigator.cs" />
@@ -146,62 +144,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\ButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\CheckBoxIconTemplates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\CheckBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\Colors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\DatePickerStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\LabelStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\ListBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\MenuStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\ScrollBarStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\HighlightPanelStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\StatusBarStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\TextBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\DarkSkin.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\WindowStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -270,6 +212,10 @@
     <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
       <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
       <Name>ActiveTime.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj">
+      <Project>{E6CDCAE9-01F6-445B-B322-4A6B2167FBC7}</Project>
+      <Name>ActiveTime.Presentation.CustomControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

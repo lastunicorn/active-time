@@ -2,7 +2,7 @@
 
 namespace DustInTheWind.ActiveTime.Presentation.CustomControls
 {
-    internal class HighlightPanel : ContentControl
+    public class HighlightPanel : ContentControl
     {
     }
 }
