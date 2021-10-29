@@ -23,39 +23,56 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Comments.SaveComments
 {
-    internal class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>
+    internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
 
-        public SaveCommentsUseCase(IUnitOfWork unitOfWork, InMemoryState inMemoryState)
+        public SaveCommentsUseCase(IUnitOfWork unitOfWork, CurrentDay currentDay)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
         public Task<Unit> Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
         {
-            DateTime? currentDate = inMemoryState.CurrentDate;
-
-            if (currentDate != null)
+            try
             {
-                DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(currentDate.Value) ?? CreateDateRecord(currentDate.Value);
-                dateRecord.Comment = inMemoryState.Comments;
-            }
+                DateTime currentDate = currentDay.Date;
+                DateRecord dateRecord = GetOrCreateDateRecordFromDb(currentDate);
+                dateRecord.Comment = currentDay.Comments;
 
-            return Task.FromResult(Unit.Value);
+                unitOfWork.Commit();
+
+                currentDay.AcceptModifications();
+
+                return Task.FromResult(Unit.Value);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
-        private DateRecord CreateDateRecord(DateTime date)
+        private DateRecord GetOrCreateDateRecordFromDb(DateTime date)
         {
-            DateRecord dateRecord = new DateRecord
+            DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(date);
+
+            if (dateRecord == null)
             {
-                Date = date
-            };
-            unitOfWork.DateRecordRepository.Add(dateRecord);
+                dateRecord = new DateRecord
+                {
+                    Date = date
+                };
+                unitOfWork.DateRecordRepository.Add(dateRecord);
+            }
 
             return dateRecord;
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

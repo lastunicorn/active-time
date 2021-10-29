@@ -57,7 +57,7 @@ namespace DustInTheWind.ActiveTime
             // Register singleton services.
             serviceCollection.AddSingleton<ILogger, Logger>();
             serviceCollection.AddSingleton<EventBus>();
-            serviceCollection.AddSingleton<InMemoryState>();
+            serviceCollection.AddSingleton<CurrentDay>();
             serviceCollection.AddSingleton<IStatusInfoService, StatusInfoService>();
 
             // Register services.

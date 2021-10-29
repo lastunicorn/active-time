@@ -19,36 +19,60 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments
 {
-    internal class ResetCommentsUseCase : IRequestHandler<ResetCommentsRequest>
+    internal sealed class ResetCommentsUseCase : IRequestHandler<ResetCommentsRequest>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly InMemoryState inMemoryState;
+        private readonly EventBus eventBus;
+        private readonly CurrentDay currentDay;
 
-        public ResetCommentsUseCase(IUnitOfWork unitOfWork, InMemoryState inMemoryState)
+        public ResetCommentsUseCase(IUnitOfWork unitOfWork, EventBus eventBus, CurrentDay currentDay)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
         public Task<Unit> Handle(ResetCommentsRequest request, CancellationToken cancellationToken)
         {
-            DateTime? currentDate = inMemoryState.CurrentDate;
-
-            if (currentDate == null)
+            try
             {
-                inMemoryState.Comments = null;
-            }
-            else
-            {
-                DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(currentDate.Value);
-                inMemoryState.Comments = dateRecord?.Comment;
-            }
+                DateTime currentDate = currentDay.Date;
 
-            return Task.FromResult(Unit.Value);
+                DateRecord dateRecord = RetrieveDateRecordFromDb(currentDate);
+                SetCommentOnCurrentDay(dateRecord?.Comment);
+                RaiseCommentChangedEvent();
+
+                return Task.FromResult(Unit.Value);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        private DateRecord RetrieveDateRecordFromDb(DateTime currentDate)
+        {
+            return unitOfWork.DateRecordRepository.GetByDate(currentDate);
+        }
+
+        private void SetCommentOnCurrentDay(string comments)
+        {
+            currentDay.ResetComments(comments);
+        }
+
+        private void RaiseCommentChangedEvent()
+        {
+            eventBus.Raise(EventNames.CurrentDate.CommentChanged);
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

@@ -18,24 +18,38 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Comments.ChangeComments
 {
     internal class ChangeCommentsUseCase : IRequestHandler<ChangeCommentsRequest>
     {
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
+        private readonly EventBus eventBus;
 
-        public ChangeCommentsUseCase(InMemoryState inMemoryState)
+        public ChangeCommentsUseCase(CurrentDay currentDay, EventBus eventBus)
         {
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task<Unit> Handle(ChangeCommentsRequest request, CancellationToken cancellationToken)
         {
-            inMemoryState.Comments = request.Comments;
+            SetCommentsOnCurrentDay(request.Comments);
+            RaiseCommentChangedEvent();
 
             return Task.FromResult(Unit.Value);
+        }
+
+        private void SetCommentsOnCurrentDay(string comments)
+        {
+            currentDay.Comments = comments;
+        }
+
+        private void RaiseCommentChangedEvent()
+        {
+            eventBus.Raise(EventNames.CurrentDate.CommentChanged);
         }
     }
 }

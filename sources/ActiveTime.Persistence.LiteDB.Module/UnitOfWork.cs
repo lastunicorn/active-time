@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
 using LiteDB;
@@ -24,6 +25,8 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
     public class UnitOfWork : IUnitOfWork
     {
         public const string ConnectionString = Constants.DatabaseFileName;
+
+        private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
 
         private bool isDisposed;
 
@@ -61,6 +64,8 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
 
         public UnitOfWork()
         {
+            Semaphore.Wait();
+
             database = new LiteDatabase(ConnectionString);
             database.BeginTrans();
         }
@@ -70,12 +75,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
             if (isDisposed)
                 throw new ObjectDisposedException(nameof(UnitOfWork));
 
-            if (database != null)
-            {
-                database.Commit();
-                database.Dispose();
-                database = null;
-            }
+            database?.Commit();
         }
 
         public void Rollback()
@@ -83,12 +83,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
             if (isDisposed)
                 throw new ObjectDisposedException(nameof(UnitOfWork));
 
-            if (database != null)
-            {
-                database.Rollback();
-                database.Dispose();
-                database = null;
-            }
+            database?.Rollback();
         }
 
         public void Dispose()
@@ -108,6 +103,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
                 {
                     database.Dispose();
                     database = null;
+                    Semaphore.Release();
                 }
             }
 

@@ -51,9 +51,27 @@ namespace DustInTheWind.ActiveTime.Presentation.ViewModels
             _ = Initialize();
 
             eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
+            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+            eventBus.Subscribe(EventNames.Recorder.Stamped, HandleRecorderStamped);
         }
 
         private void HandleCurrentDateChanged(EventParameters parameters)
+        {
+            _ = Initialize();
+        }
+
+        private void HandleRecorderStarted(EventParameters parameters)
+        {
+            _ = Initialize();
+        }
+
+        private void HandleRecorderStopped(EventParameters parameters)
+        {
+            _ = Initialize();
+        }
+
+        private void HandleRecorderStamped(EventParameters parameters)
         {
             _ = Initialize();
         }

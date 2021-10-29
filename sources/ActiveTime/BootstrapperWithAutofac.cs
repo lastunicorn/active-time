@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Reflection;
-using System.Windows.Documents;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
@@ -17,7 +19,7 @@ using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.Logging;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
+using DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module;
 using DustInTheWind.ActiveTime.Presentation;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.Services;
@@ -28,9 +30,131 @@ using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Views;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using Timer = DustInTheWind.ActiveTime.Infrastructure.Timer;
 
 namespace DustInTheWind.ActiveTime
 {
+
+    //internal class SomeViewModel
+    //{
+    //    private readonly IMediator mediator;
+
+    //    public RelayCommand Action1 { get; }
+
+    //    public SomeViewModel(IMediator mediator)
+    //    {
+    //        this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
+    //        Action1 = new RelayCommand(DoAction1);
+    //    }
+
+    //    private void DoAction1()
+    //    {
+    //        Action1Request request = new Action1Request();
+    //        mediator.Send(request);
+    //    }
+    //}
+
+    //public class Action1Request : IRequest
+    //{
+    //}
+
+    //public class Action1RequestHandler : IRequestHandler<Action1Request>
+    //{
+    //    public Task<Unit> Handle(Action1Request request, CancellationToken cancellationToken)
+    //    {
+    //        return Task.FromResult(Unit.Value);
+    //    }
+    //}
+
+
+
+
+
+
+    //public sealed class CustomRequestHandler : IRequestHandler<CustomRequest>, IDisposable
+    //{
+    //    private readonly IDisposableResource disposableResource;
+
+    //    public CustomRequestHandler(IDisposableResource disposableResource)
+    //    {
+    //        this.disposableResource = disposableResource ?? throw new ArgumentNullException(nameof(disposableResource));
+    //    }
+
+    //    public Task<Unit> Handle(CustomRequest request, CancellationToken cancellationToken)
+    //    {
+    //        return Task.FromResult(Unit.Value);
+    //    }
+
+    //    public void Dispose()
+    //    {
+    //        disposableResource?.Dispose();
+    //    }
+    //}
+
+    //public interface IDisposableResource : IDisposable
+    //{
+    //}
+
+    //public class CustomRequest : IRequest
+    //{
+    //}
+
+
+
+
+
+
+
+    //    internal class SomeViewModel
+    //    {
+    //        private readonly IMediator mediator;
+
+    //        public RelayCommand Action1 { get; }
+
+    //        public RelayCommand Action2 { get; }
+
+    //        public SomeViewModel(IMediator mediator)
+    //        {
+    //            this.mediator = mediator;
+
+    //            Action1 = new RelayCommand(DoAction1);
+    //            Action2 = new RelayCommand(DoAction2);
+    //        }
+
+    //        private void DoAction1()
+    //        {
+    //            Action1Request request = new Action1Request();
+    //            mediator.Send(request);
+    //        }
+
+    //        private void DoAction2()
+    //        {
+    //            Action2Request request = new Action2Request();
+    //            mediator.Send(request);
+    //        }
+    //    }
+
+    //    public class Action1Request : IRequest { }
+
+    //    public class Action1RequestHandler : IRequestHandler<Action1Request>
+    //    {
+    //        public Task<Unit> Handle(Action1Request request, CancellationToken cancellationToken)
+    //        {
+    //            return Task.FromResult(Unit.Value);
+    //        }
+    //    }
+
+    //    public class Action2Request : IRequest { }
+
+    //    public class Action2RequestHandler : IRequestHandler<Action2Request>
+    //    {
+    //        public Task<Unit> Handle(Action2Request request, CancellationToken cancellationToken)
+    //        {
+    //            return Task.FromResult(Unit.Value);
+    //        }
+    //    }
+
     internal class BootstrapperWithAutofac
     {
         private readonly IContainer container;
@@ -77,6 +201,9 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<DeleteCommand>().AsSelf();
             containerBuilder.RegisterType<DecrementDayCommand>().AsSelf();
             containerBuilder.RegisterType<IncrementDateCommand>().AsSelf();
+            containerBuilder.RegisterType<CalendarCommand>().AsSelf();
+            containerBuilder.RegisterType<ResetCommentsCommand>().AsSelf();
+            containerBuilder.RegisterType<SaveCommentsCommand>().AsSelf();
 
             // GUI - Services
             containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();
@@ -89,7 +216,7 @@ namespace DustInTheWind.ActiveTime
             // Register singleton services.
             containerBuilder.RegisterType<Logger>().As<ILogger>().SingleInstance();
             containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<InMemoryState>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<StatusInfoService>().As<IStatusInfoService>().SingleInstance();
 
             // Register services.
@@ -108,12 +235,12 @@ namespace DustInTheWind.ActiveTime
             Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
             containerBuilder.RegisterMediatR(useCasesAssembly);
 
-            //containerBuilder.Register<ServiceFactory>(outerContext =>
-            //{
-            //    var innerContext = outerContext.Resolve<IComponentContext>();
+            containerBuilder.Register<ServiceFactory>(outerContext =>
+            {
+                ILifetimeScope parentLifetimeScope = outerContext.Resolve<ILifetimeScope>();
 
-            //    return serviceType => innerContext.Resolve(serviceType);
-            //});
+                return serviceType => parentLifetimeScope.BeginLifetimeScope().Resolve(serviceType);
+            });
         }
 
         public void Run()

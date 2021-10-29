@@ -26,7 +26,7 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder
 {
-    public class ToggleRecorderUseCase : IRequestHandler<ToggleRecorderRequest>
+    public sealed class ToggleRecorderUseCase : IRequestHandler<ToggleRecorderRequest>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly Scribe scribe;
@@ -43,23 +43,30 @@ namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder
 
         public Task<Unit> Handle(ToggleRecorderRequest request, CancellationToken cancellationToken)
         {
-            IJob recorderJob = scheduledJobs.Get(JobNames.Recorder);
-
-            switch (recorderJob.State)
+            try
             {
-                case JobState.Stopped:
-                    Start(recorderJob);
-                    break;
+                IJob recorderJob = scheduledJobs.Get(JobNames.Recorder);
 
-                case JobState.Running:
-                    Stop(recorderJob);
-                    break;
+                switch (recorderJob.State)
+                {
+                    case JobState.Stopped:
+                        Start(recorderJob);
+                        break;
+
+                    case JobState.Running:
+                        Stop(recorderJob);
+                        break;
+                }
+
+                unitOfWork.Commit();
+                unitOfWork.Dispose();
+
+                return Task.FromResult(Unit.Value);
             }
-
-            unitOfWork.Commit();
-            unitOfWork.Dispose();
-
-            return Task.FromResult(Unit.Value);
+            finally
+            {
+                Dispose();
+            }
         }
 
         private void Start(IJob recorderJob)
@@ -76,6 +83,11 @@ namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder
             scribe.Stamp();
 
             eventBus.Raise(EventNames.Recorder.Stopped);
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

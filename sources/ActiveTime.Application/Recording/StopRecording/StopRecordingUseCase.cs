@@ -28,7 +28,7 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Recording.StopRecording
 {
-    internal class StopRecordingUseCase : IRequestHandler<StopRecordingRequest>
+    internal sealed class StopRecordingUseCase : IRequestHandler<StopRecordingRequest>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly Scribe scribe;
@@ -48,19 +48,31 @@ namespace DustInTheWind.ActiveTime.Application.Recording.StopRecording
 
         public Task<Unit> Handle(StopRecordingRequest request, CancellationToken cancellationToken)
         {
-            if (request.DeleteLastRecord)
-                scribe.DeleteCurrentTimeRecord();
-            else
-                scribe.Stamp();
+            try
+            {
+                if (request.DeleteLastRecord)
+                    scribe.DeleteCurrentTimeRecord();
+                else
+                    scribe.Stamp();
 
-            scheduledJobs.Stop(JobNames.Recorder);
-            eventBus.Raise(EventNames.Recorder.Stopped);
-            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStoppedStatus>());
+                scheduledJobs.Stop(JobNames.Recorder);
+                eventBus.Raise(EventNames.Recorder.Stopped);
+                statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStoppedStatus>());
 
-            unitOfWork.Commit();
-            unitOfWork.Dispose();
+                unitOfWork.Commit();
+                unitOfWork.Dispose();
 
-            return Task.FromResult(Unit.Value);
+                return Task.FromResult(Unit.Value);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

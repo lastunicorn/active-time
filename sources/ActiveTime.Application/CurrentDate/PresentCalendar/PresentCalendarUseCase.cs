@@ -24,18 +24,18 @@ namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentCalendar
 {
     internal class PresentCalendarUseCase : IRequestHandler<PresentCalendarRequest, PresentCalendarResponse>
     {
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
 
-        public PresentCalendarUseCase(InMemoryState inMemoryState)
+        public PresentCalendarUseCase(CurrentDay currentDay)
         {
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
         public Task<PresentCalendarResponse> Handle(PresentCalendarRequest request, CancellationToken cancellationToken)
         {
             PresentCalendarResponse response = new PresentCalendarResponse
             {
-                Date = inMemoryState.CurrentDate
+                Date = currentDay.Date
             };
 
             return Task.FromResult(response);

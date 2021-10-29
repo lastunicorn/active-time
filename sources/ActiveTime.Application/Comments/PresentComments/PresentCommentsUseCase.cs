@@ -18,27 +18,57 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Common.Persistence;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Comments.PresentComments
 {
-    internal class PresentCommentsUseCase : IRequestHandler<PresentCommentsRequest, PresentCommentsResponse>
+    internal sealed class PresentCommentsUseCase : IRequestHandler<PresentCommentsRequest, PresentCommentsResponse>, IDisposable
     {
-        private readonly InMemoryState inMemoryState;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly CurrentDay currentDay;
 
-        public PresentCommentsUseCase(InMemoryState inMemoryState)
+        public PresentCommentsUseCase(IUnitOfWork unitOfWork, CurrentDay currentDay)
         {
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
         public Task<PresentCommentsResponse> Handle(PresentCommentsRequest request, CancellationToken cancellationToken)
         {
-            PresentCommentsResponse response = new PresentCommentsResponse
+            try
             {
-                Comments = inMemoryState.Comments
-            };
+                string comments = RetrieveComments();
 
-            return Task.FromResult(response);
+                PresentCommentsResponse response = new PresentCommentsResponse
+                {
+                    Comments = comments
+                };
+
+                return Task.FromResult(response);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        private string RetrieveComments()
+        {
+            if (currentDay.AreCommentsLoaded)
+                return currentDay.Comments;
+
+            DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(currentDay.Date);
+            string comments = dateRecord?.Comment;
+
+            currentDay.Comments = comments;
+
+            return comments;
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

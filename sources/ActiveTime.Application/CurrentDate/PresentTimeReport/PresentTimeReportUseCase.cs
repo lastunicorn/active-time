@@ -25,23 +25,30 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport
 {
-    public class PresentTimeReportUseCase : IRequestHandler<PresentTimeReportRequest, PresentTimeReportResponse>
+    public sealed class PresentTimeReportUseCase : IRequestHandler<PresentTimeReportRequest, PresentTimeReportResponse>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
 
-        public PresentTimeReportUseCase(IUnitOfWork unitOfWork, InMemoryState inMemoryState)
+        public PresentTimeReportUseCase(IUnitOfWork unitOfWork, CurrentDay currentDay)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
         public Task<PresentTimeReportResponse> Handle(PresentTimeReportRequest request, CancellationToken cancellationToken)
         {
-            IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(inMemoryState.CurrentDate);
-            PresentTimeReportResponse response = CreateResponse(timeRecords);
+            try
+            {
+                IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(currentDay.Date);
+                PresentTimeReportResponse response = CreateResponse(timeRecords);
 
-            return Task.FromResult(response);
+                return Task.FromResult(response);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
         private static PresentTimeReportResponse CreateResponse(IEnumerable<TimeRecord> timeRecords)
@@ -56,6 +63,11 @@ namespace DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport
                 BeginTime = dayRecord.OverallBeginTime ?? TimeSpan.Zero,
                 EstimatedEndTime = dayRecord.EstimatedEndTime ?? TimeSpan.Zero
             };
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

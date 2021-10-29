@@ -14,13 +14,13 @@ namespace DustInTheWind.ActiveTime.Common.Recording
     {
         private readonly ISystemClock systemClock;
         private readonly IUnitOfWork unitOfWork;
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
 
-        public Scribe(ISystemClock systemClock, IUnitOfWork unitOfWork, InMemoryState inMemoryState)
+        public Scribe(ISystemClock systemClock, IUnitOfWork unitOfWork, CurrentDay currentDay)
         {
             this.systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
         {
             TimeRecord newTimeRecord = new TimeRecord(now);
             unitOfWork.TimeRecordRepository.Add(newTimeRecord);
-            inMemoryState.CurrentTimeRecordId = newTimeRecord.Id;
+            currentDay.TimeRecordId = newTimeRecord.Id;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace DustInTheWind.ActiveTime.Common.Recording
 
                     TimeRecord newTimeRecord = TimeRecord.NewFromMidnight(now);
                     unitOfWork.TimeRecordRepository.Add(newTimeRecord);
-                    inMemoryState.CurrentTimeRecordId = newTimeRecord.Id;
+                    currentDay.TimeRecordId = newTimeRecord.Id;
                 }
             }
         }
@@ -85,15 +85,15 @@ namespace DustInTheWind.ActiveTime.Common.Recording
 
             unitOfWork.TimeRecordRepository.Delete(currentTimeRecord);
 
-            inMemoryState.CurrentTimeRecordId = null;
+            currentDay.TimeRecordId = null;
         }
 
         private TimeRecord RetrieveCurrentTimeRecord()
         {
-            if (inMemoryState.CurrentTimeRecordId == null)
+            if (currentDay.TimeRecordId == null)
                 return null;
 
-            int currentTimeRecordId = inMemoryState.CurrentTimeRecordId.Value;
+            int currentTimeRecordId = currentDay.TimeRecordId.Value;
             return unitOfWork.TimeRecordRepository.GetById(currentTimeRecordId);
         }
     }

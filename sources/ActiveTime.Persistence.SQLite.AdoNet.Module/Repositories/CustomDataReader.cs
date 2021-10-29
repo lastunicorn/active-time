@@ -26,9 +26,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
 
         public CustomDataReader(DbDataReader dataReader)
         {
-            if (dataReader == null) throw new ArgumentNullException(nameof(dataReader));
-
-            this.dataReader = dataReader;
+            this.dataReader = dataReader ?? throw new ArgumentNullException(nameof(dataReader));
         }
 
         public int ReadInt32FromCurrentTimeRecord(string fieldName)

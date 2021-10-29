@@ -17,35 +17,42 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.CurrentDate.IncrementDate;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate
 {
-    internal class DecrementDateUseCase : IRequestHandler<IncrementDateRequest>
+    internal class DecrementDateUseCase : IRequestHandler<DecrementDateRequest>
     {
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
         private readonly EventBus eventBus;
 
-        public DecrementDateUseCase(InMemoryState inMemoryState, EventBus eventBus)
+        public DecrementDateUseCase(CurrentDay currentDay, EventBus eventBus)
         {
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
-        public Task<Unit> Handle(IncrementDateRequest request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(DecrementDateRequest request, CancellationToken cancellationToken)
         {
-            DateTime currentDate = inMemoryState.CurrentDate;
+            DateTime currentDate = currentDay.Date;
 
             if (currentDate <= DateTime.MinValue.Date)
                 throw new ActiveTimeException("This is already the first day of the known universe. There is no yesterday.");
 
-            inMemoryState.CurrentDate = currentDate.Date.AddDays(-1);
-            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged);
+            currentDay.DecrementDate();
+            RaiseCurrentDateChangedEvent();
 
             return Task.FromResult(Unit.Value);
+        }
+
+        private void RaiseCurrentDateChangedEvent()
+        {
+            EventParameters eventParameters = new EventParameters();
+            eventParameters.Add("Date", currentDay.Date);
+
+            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged, eventParameters);
         }
     }
 }

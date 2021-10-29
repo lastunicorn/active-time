@@ -25,7 +25,7 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
 {
-    public class StampUseCase : IRequestHandler<StampRequest>
+    public sealed class StampUseCase : IRequestHandler<StampRequest>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly Scribe scribe;
@@ -40,13 +40,25 @@ namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
 
         public Task<Unit> Handle(StampRequest request, CancellationToken cancellationToken)
         {
-            statusInfoService.SetStatus(ApplicationStatus.Create<StampingStatus>());
-            scribe.Stamp();
-            statusInfoService.SetStatus(ApplicationStatus.Create<StampedStatus>());
+            try
+            {
+                statusInfoService.SetStatus(ApplicationStatus.Create<StampingStatus>());
+                scribe.Stamp();
+                statusInfoService.SetStatus(ApplicationStatus.Create<StampedStatus>());
 
-            unitOfWork.Commit();
+                unitOfWork.Commit();
 
-            return Task.FromResult(Unit.Value);
+                return Task.FromResult(Unit.Value);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

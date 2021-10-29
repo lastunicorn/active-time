@@ -26,7 +26,7 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
 {
-    public class PresentOverviewUseCase : IRequestHandler<PresentOverviewRequest, PresentOverviewResponse>
+    public sealed class PresentOverviewUseCase : IRequestHandler<PresentOverviewRequest, PresentOverviewResponse>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly ISystemClock systemClock;
@@ -39,29 +39,36 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
 
         public Task<PresentOverviewResponse> Handle(PresentOverviewRequest request, CancellationToken cancellationToken)
         {
-            DateTime firstDay;
-            DateTime lastDay;
-
-            if (request.FirstDay == null || request.LastDay == null)
+            try
             {
-                DateTime today = systemClock.GetCurrentDate();
-                firstDay = today.AddDays(-29);
-                lastDay = today;
+                DateTime firstDay;
+                DateTime lastDay;
+
+                if (request.FirstDay == null || request.LastDay == null)
+                {
+                    DateTime today = systemClock.GetCurrentDate();
+                    firstDay = today.AddDays(-29);
+                    lastDay = today;
+                }
+                else
+                {
+                    firstDay = request.FirstDay.Value;
+                    lastDay = request.LastDay.Value;
+                }
+
+                PresentOverviewResponse response = new PresentOverviewResponse
+                {
+                    FirstDay = firstDay,
+                    LastDay = lastDay,
+                    DayRecords = RetrieveDayRecords(firstDay, lastDay)
+                };
+
+                return Task.FromResult(response);
             }
-            else
+            finally
             {
-                firstDay = request.FirstDay.Value;
-                lastDay = request.LastDay.Value;
+                Dispose();
             }
-
-            PresentOverviewResponse response = new PresentOverviewResponse
-            {
-                FirstDay = firstDay,
-                LastDay = lastDay,
-                DayRecords = RetrieveDayRecords(firstDay, lastDay)
-            };
-
-            return Task.FromResult(response);
         }
 
         private List<DateRecord> RetrieveDayRecords(DateTime firstDay, DateTime lastDay)
@@ -76,6 +83,11 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
             }
 
             return dayRecords;
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

@@ -29,32 +29,32 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
     {
         private Mock<ISystemClock> systemClock;
         private Mock<IUnitOfWork> unitOfWork;
-        private InMemoryState inMemoryState;
+        private CurrentDay currentDay;
 
         [SetUp]
         public void SetUp()
         {
             systemClock = new Mock<ISystemClock>();
             unitOfWork = new Mock<IUnitOfWork>();
-            inMemoryState = new InMemoryState();
+            currentDay = new CurrentDay();
         }
 
         [Test]
         public void Constructor()
         {
-            new Scribe(systemClock.Object, unitOfWork.Object, inMemoryState);
+            new Scribe(systemClock.Object, unitOfWork.Object, currentDay);
         }
 
         [Test]
         public void Constructor_with_null_unitOfWork()
         {
-            Assert.Throws<ArgumentNullException>(() => new Scribe(systemClock.Object, null, inMemoryState));
+            Assert.Throws<ArgumentNullException>(() => new Scribe(systemClock.Object, null, currentDay));
         }
 
         [Test]
         public void Constructor_with_null_timeProvider()
         {
-            Assert.Throws<ArgumentNullException>(() => new Scribe(null, unitOfWork.Object, inMemoryState));
+            Assert.Throws<ArgumentNullException>(() => new Scribe(null, unitOfWork.Object, currentDay));
         }
 
         [Test]

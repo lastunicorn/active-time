@@ -9,30 +9,46 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.TimeRecords.PresentTimeRecords
 {
-    internal class PresentTimeRecordsUseCase : IRequestHandler<PresentTimeRecordsRequest, PresentTimeRecordsResponse>
+    internal class PresentTimeRecordsUseCase : IRequestHandler<PresentTimeRecordsRequest, PresentTimeRecordsResponse>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
 
-        public PresentTimeRecordsUseCase(IUnitOfWork unitOfWork, InMemoryState inMemoryState)
+        public PresentTimeRecordsUseCase(IUnitOfWork unitOfWork, CurrentDay currentDay)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
         public Task<PresentTimeRecordsResponse> Handle(PresentTimeRecordsRequest request, CancellationToken cancellationToken)
         {
-            DateTime currentDate = inMemoryState.CurrentDate;
-            IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(currentDate);
-
-            DayRecord dayRecord = new DayRecord(timeRecords);
-
-            PresentTimeRecordsResponse response = new PresentTimeRecordsResponse
+            try
             {
-                Records = dayRecord.AllIntervals.ToArray()
-            };
+                DateTime currentDate = currentDay.Date;
+                DayRecord dayRecord = CreateDayRecord(currentDate);
 
-            return Task.FromResult(response);
+                PresentTimeRecordsResponse response = new PresentTimeRecordsResponse
+                {
+                    Records = dayRecord.AllIntervals.ToArray()
+                };
+
+                return Task.FromResult(response);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        private DayRecord CreateDayRecord(DateTime currentDate)
+        {
+            IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetByDate(currentDate);
+            return new DayRecord(timeRecords);
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

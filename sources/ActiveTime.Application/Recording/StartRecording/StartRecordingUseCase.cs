@@ -28,7 +28,7 @@ using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Recording.StartRecording
 {
-    public class StartRecordingUseCase : IRequestHandler<StartRecordingRequest>
+    public sealed class StartRecordingUseCase : IRequestHandler<StartRecordingRequest>, IDisposable
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly Scribe scribe;
@@ -48,15 +48,27 @@ namespace DustInTheWind.ActiveTime.Application.Recording.StartRecording
 
         public Task<Unit> Handle(StartRecordingRequest request, CancellationToken cancellationToken)
         {
-            scribe.StampNew();
-            scheduledJobs.Start(JobNames.Recorder);
-            eventBus.Raise(EventNames.Recorder.Started);
-            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStartedStatus>());
+            try
+            {
+                scribe.StampNew();
+                scheduledJobs.Start(JobNames.Recorder);
+                eventBus.Raise(EventNames.Recorder.Started);
+                statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStartedStatus>());
 
-            unitOfWork.Commit();
-            unitOfWork.Dispose();
+                unitOfWork.Commit();
+                unitOfWork.Dispose();
 
-            return Task.FromResult(Unit.Value);
+                return Task.FromResult(Unit.Value);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            unitOfWork?.Dispose();
         }
     }
 }

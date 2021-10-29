@@ -29,9 +29,7 @@ namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
 
         public DateRecordRepository(DbConnection connection)
         {
-            if (connection == null) throw new ArgumentNullException(nameof(connection));
-
-            this.connection = connection;
+            this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
         }
 
         public void Add(DateRecord dateRecord)

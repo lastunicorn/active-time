@@ -25,26 +25,34 @@ namespace DustInTheWind.ActiveTime.Application.CurrentDate.IncrementDate
 {
     internal class IncrementDateUseCase : IRequestHandler<IncrementDateRequest>
     {
-        private readonly InMemoryState inMemoryState;
+        private readonly CurrentDay currentDay;
         private readonly EventBus eventBus;
 
-        public IncrementDateUseCase(InMemoryState inMemoryState, EventBus eventBus)
+        public IncrementDateUseCase(CurrentDay currentDay, EventBus eventBus)
         {
-            this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
+            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task<Unit> Handle(IncrementDateRequest request, CancellationToken cancellationToken)
         {
-            DateTime currentDate = inMemoryState.CurrentDate;
+            DateTime currentDate = currentDay.Date;
 
             if (currentDate >= DateTime.MaxValue.Date)
                 throw new ActiveTimeException("We are already at the end of time. Tomorrow does not exist.");
 
-            inMemoryState.CurrentDate = currentDate.Date.AddDays(1);
-            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged);
+            currentDay.IncrementDate();
+            RaiseCurrentDateChangedEvent();
 
             return Task.FromResult(Unit.Value);
+        }
+
+        private void RaiseCurrentDateChangedEvent()
+        {
+            EventParameters eventParameters = new EventParameters();
+            eventParameters.Add("Date", currentDay.Date);
+
+            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged, eventParameters);
         }
     }
 }

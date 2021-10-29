@@ -43,9 +43,9 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
                 .Setup(x => x.TimeRecordRepository)
                 .Returns(timeRecordRepository.Object);
 
-            InMemoryState inMemoryState = new InMemoryState();
+            CurrentDay currentDay = new CurrentDay();
 
-            scribe = new Scribe(systemClock.Object, unitOfWork.Object, inMemoryState);
+            scribe = new Scribe(systemClock.Object, unitOfWork.Object, currentDay);
         }
 
         [Test]
