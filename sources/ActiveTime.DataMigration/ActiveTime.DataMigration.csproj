@@ -1,108 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6343D3EC-D787-43D7-B590-918EB97464C2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.ActiveTime.DataMigration</RootNamespace>
-    <AssemblyName>ActiveTime.DataMigration</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DustInTheWind.ConsoleTools, Version=0.2.0.37841, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ConsoleTools.0.3.0\lib\net461\DustInTheWind.ConsoleTools.dll</HintPath>
-    </Reference>
-    <Reference Include="LiteDB, Version=5.0.11.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.5.0.11\lib\net45\LiteDB.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.115.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\lib\net46\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\AssemblyInfo.Shared.cs">
-      <Link>Properties\AssemblyInfo.Shared.cs</Link>
-    </Compile>
-    <Compile Include="Flows\DisplayDatabaseStructureCommand.cs" />
-    <Compile Include="Flows\DisplayDatesCommand.cs" />
-    <Compile Include="Flows\DisplayDataCommand.cs" />
-    <Compile Include="Flows\ExitCommand.cs" />
-    <Compile Include="Flows\StatisticsCommand.cs" />
-    <Compile Include="ViewControls\TimePerDayView.cs" />
-    <Compile Include="Migration\CommentMigratedEventArgs.cs" />
-    <Compile Include="Migration\CommentMigration.cs" />
-    <Compile Include="Migration\DataTimeExtensions.cs" />
-    <Compile Include="Migration\TimeRecordMigratedEventArgs.cs" />
-    <Compile Include="Migration\TimeMigration.cs" />
-    <Compile Include="Flows\MigrationCommand.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Statistics\AnalisedPeriod.cs" />
-    <Compile Include="Statistics\DateTimeExtension.cs" />
-    <Compile Include="Statistics\TimePerDay.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
-      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
-      <Name>ActiveTime.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence.SQLite.AdoNet.Module\ActiveTime.Persistence.SQLite.AdoNet.Module.csproj">
-      <Project>{78a4111d-38dd-439f-abc1-cd569c70de9c}</Project>
-      <Name>ActiveTime.Persistence.SQLite.AdoNet.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj">
-      <Project>{bfc9b5e5-e55e-4f98-88e5-49f31609eb4c}</Project>
-      <Name>ActiveTime.Persistence.LiteDB.Module</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+<Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>DustInTheWind.ActiveTime.DataMigration</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.DataMigration</RootNamespace>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+    <ItemGroup>
+        <None Include="..\license.txt">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ConsoleTools" Version="0.5.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
+      <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" />
+      <ProjectReference Include="..\ActiveTime.Persistence.SQLite.AdoNet\ActiveTime.Persistence.SQLite.AdoNet.csproj" />
+    </ItemGroup>
+
 </Project>

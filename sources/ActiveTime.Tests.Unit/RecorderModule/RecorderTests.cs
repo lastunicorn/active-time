@@ -16,6 +16,7 @@
 
 using System;
 using System.Threading;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.RecorderModule.Services;
@@ -28,7 +29,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
     [TestFixture]
     public class RecorderTests
     {
-        private Recorder recorder;
+        private EventNames.Recorder recorder;
         private Mock<ITimeRecordRepository> recordRepositoryMock;
         private Mock<IEventAggregator> eventAggregatorMock;
 
@@ -37,7 +38,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         {
             recordRepositoryMock = new Mock<ITimeRecordRepository>();
             eventAggregatorMock = new Mock<IEventAggregator>();
-            recorder = new Recorder(recordRepositoryMock.Object, eventAggregatorMock.Object);
+            recorder = new EventNames.Recorder(recordRepositoryMock.Object, eventAggregatorMock.Object);
         }
 
         #region Constructor
@@ -51,7 +52,7 @@ namespace DustInTheWind.ActiveTime.UnitTests.Recording
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestConstructorNull()
         {
-            new Recorder(null, null);
+            new EventNames.Recorder(null, null);
         }
 
         [Test]

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\license.txt">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.11" />
+      <PackageReference Include="SQLite" Version="3.13.0" />
+      <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="DustInTheWind.ActiveTime.Tests.Integration" />
+    </ItemGroup>
+
+</Project>

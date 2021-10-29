@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.DataMigration.Statistics;
 using DustInTheWind.ActiveTime.DataMigration.ViewControls;
-using DustInTheWind.ConsoleTools.MenuControl;
+using DustInTheWind.ConsoleTools.Menues;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Flows
 {

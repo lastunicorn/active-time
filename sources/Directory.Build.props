@@ -1,0 +1,14 @@
+<Project>
+    <PropertyGroup>
+        <Company>Dust in the Wind</Company>
+        <Product>Active Time</Product>
+        <Copyright>Copyright © Dust in the Wind 2011-2021</Copyright>
+        <Version>2.3.4.0</Version>
+        <NeutralLanguage>en</NeutralLanguage>
+        <RepositoryType>Git</RepositoryType>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+
+        <PackageProjectUrl>https://github.com/lastunicorn/ActiveTime</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/lastunicorn/ActiveTime</RepositoryUrl>
+    </PropertyGroup>
+</Project>

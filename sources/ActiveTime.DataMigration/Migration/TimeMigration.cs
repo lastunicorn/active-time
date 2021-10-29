@@ -28,7 +28,7 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
         private readonly IUnitOfWork sourceUnitOfWork;
         private readonly IUnitOfWork destinationUnitOfWork;
 
-        private Dictionary<DateTime, bool> destinationExitentDays;
+        private Dictionary<DateTime, bool> destinationExistentDays;
 
         public bool Simulate { get; set; }
         public int MigratedRecordsCount { get; private set; }
@@ -39,11 +39,8 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
         public TimeMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
         {
-            if (sourceUnitOfWork == null) throw new ArgumentNullException(nameof(sourceUnitOfWork));
-            if (destinationUnitOfWork == null) throw new ArgumentNullException(nameof(destinationUnitOfWork));
-
-            this.sourceUnitOfWork = sourceUnitOfWork;
-            this.destinationUnitOfWork = destinationUnitOfWork;
+            this.sourceUnitOfWork = sourceUnitOfWork ?? throw new ArgumentNullException(nameof(sourceUnitOfWork));
+            this.destinationUnitOfWork = destinationUnitOfWork ?? throw new ArgumentNullException(nameof(destinationUnitOfWork));
         }
 
         public void Migrate()
@@ -54,7 +51,7 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
         private void PrepareMigration()
         {
-            destinationExitentDays = new Dictionary<DateTime, bool>();
+            destinationExistentDays = new Dictionary<DateTime, bool>();
             Warnings.Clear();
             MigratedRecordsCount = 0;
             IgnoredRecordsCount = 0;
@@ -124,11 +121,11 @@ namespace DustInTheWind.ActiveTime.DataMigration.Migration
 
         private bool CheckIfDateExistsInDestination(DateTime date, IEnumerable<TimeRecord> destinationRecords)
         {
-            if (destinationExitentDays.ContainsKey(date))
-                return destinationExitentDays[date];
+            if (destinationExistentDays.ContainsKey(date))
+                return destinationExistentDays[date];
 
             bool existsRecords = destinationRecords.Any();
-            destinationExitentDays.Add(date, existsRecords);
+            destinationExistentDays.Add(date, existsRecords);
 
             return existsRecords;
         }

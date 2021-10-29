@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <AssemblyName>DustInTheWind.ActiveTime.Bootstrapper</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Bootstrapper</RootNamespace>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="BootstrapperWithMicrosoftDi.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.3.0" />
+      <PackageReference Include="MediatR" Version="9.0.0" />
+      <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" />
+      <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj" />
+      <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" />
+      <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" />
+      <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Watchman.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="db.s3db">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

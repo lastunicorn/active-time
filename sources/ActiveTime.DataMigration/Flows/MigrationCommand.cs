@@ -19,7 +19,7 @@ using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.DataMigration.Migration;
 using DustInTheWind.ConsoleTools;
-using DustInTheWind.ConsoleTools.MenuControl;
+using DustInTheWind.ConsoleTools.Menues;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.UnitOfWork;
 using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.Module.UnitOfWork;
 

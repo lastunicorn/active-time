@@ -1,20 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-    <Settings>
-        <Setting Name="General_UserName" Type="System.String" Scope="User">
-            <Value Profile="(Default)">Iuga Alexandru</Value>
-        </Setting>
-        <Setting Name="Reminder_PauseInterval" Type="System.TimeSpan" Scope="User">
-            <Value Profile="(Default)">01:00:00</Value>
-        </Setting>
-        <Setting Name="Reminder_SnoozeInterval" Type="System.TimeSpan" Scope="User">
-            <Value Profile="(Default)">00:03:00</Value>
-        </Setting>
-        <Setting Name="General_ConfirmExitApplication" Type="System.Boolean" Scope="User">
-            <Value Profile="(Default)">True</Value>
-        </Setting>
-    </Settings>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ActiveTime.Presentation.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="General_UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Iuga Alexandru</Value>
+    </Setting>
+    <Setting Name="Reminder_PauseInterval" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">01:00:00</Value>
+    </Setting>
+    <Setting Name="Reminder_SnoozeInterval" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:03:00</Value>
+    </Setting>
+    <Setting Name="General_ConfirmExitApplication" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

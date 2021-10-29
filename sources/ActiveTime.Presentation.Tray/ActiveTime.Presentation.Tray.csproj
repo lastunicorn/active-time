@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <AssemblyName>DustInTheWind.ActiveTime.Presentation.Tray</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Presentation.Tray</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\license.txt">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="Resources\icon.ico" />
+        <None Remove="Resources\icon_off.ico" />
+        <None Remove="Resources\Leopard-Optical-Illusion.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Resources\icon.ico" />
+        <Content Include="Resources\icon_off.ico" />
+        <Content Include="Resources\Leopard-Optical-Illusion.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" />
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\TrayIconView.cs">
+            <SubType>Component</SubType>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>
