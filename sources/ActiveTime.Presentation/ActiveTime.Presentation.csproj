@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" />
-    <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
-    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" />
-    <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" />
+    <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" PrivateAssets="All" />
   </ItemGroup>
 
     <ItemGroup>

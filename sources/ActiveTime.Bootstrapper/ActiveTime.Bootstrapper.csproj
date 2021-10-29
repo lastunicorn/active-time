@@ -20,14 +20,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" />
-      <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj" />
-      <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" />
-      <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" />
-      <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" />
-      <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" />
-      <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" />
-      <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Watchman.csproj" />
+      <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Watchman.csproj" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
