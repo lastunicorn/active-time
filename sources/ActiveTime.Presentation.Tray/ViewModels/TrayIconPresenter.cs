@@ -22,7 +22,6 @@ using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Services;
-using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Presentation.Tray.Commands;
@@ -74,8 +73,6 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels
             AboutCommand = new AboutCommand(shellNavigator);
             ExitCommand = new ExitCommand(applicationService);
 
-            applicationService.Exiting += HandleApplicationServiceExiting;
-
             eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
             eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
         }
@@ -90,15 +87,9 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels
             SetIconOff();
         }
 
-        private void HandleApplicationServiceExiting(object sender, EventArgs e)
-        {
-            Hide();
-        }
-
         private void Initialize()
         {
             _ = RefreshView();
-            Show();
         }
 
         private async Task RefreshView()
@@ -127,13 +118,13 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels
                 View.IconState = TrayIconState.Off;
         }
 
-        private void Show()
+        public void Show()
         {
             if (View != null)
                 View.Visible = true;
         }
 
-        private void Hide()
+        public void Hide()
         {
             if (View != null)
                 View.Visible = false;

@@ -20,5 +20,6 @@ namespace DustInTheWind.ActiveTime.Common
     {
         public const string Recorder = "Recorder";
         public const string ResetStatus = "ResetStatus";
+        public static string TrayIcon = "Tray Icon";
     }
 }

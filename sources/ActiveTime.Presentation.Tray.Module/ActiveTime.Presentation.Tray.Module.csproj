@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net5.0-windows</TargetFramework>
@@ -18,10 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.3.0" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" PrivateAssets="All" />
     </ItemGroup>
 

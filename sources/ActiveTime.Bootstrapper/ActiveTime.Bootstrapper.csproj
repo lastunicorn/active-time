@@ -26,6 +26,7 @@
       <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" />
       <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" PrivateAssets="All" />

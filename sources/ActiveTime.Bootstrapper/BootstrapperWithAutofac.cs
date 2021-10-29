@@ -172,7 +172,6 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             // GUI - Tray Icon
-            containerBuilder.RegisterType<TrayIconModule>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<TrayIconView>().AsSelf();
             containerBuilder.RegisterType<TrayIconPresenter>().AsSelf();
 
@@ -230,6 +229,7 @@ namespace DustInTheWind.ActiveTime
             // Jobs
             containerBuilder.RegisterType<ScheduledJobs>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<RecorderJob>();
+            containerBuilder.RegisterType<TrayIconJob>();
 
             // MediatR
             Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
@@ -257,8 +257,12 @@ namespace DustInTheWind.ActiveTime
         private void RegisterJobs()
         {
             ScheduledJobs scheduledJobs = container.Resolve<ScheduledJobs>();
+            
             RecorderJob recorderJob = container.Resolve<RecorderJob>();
             scheduledJobs.Add(recorderJob);
+
+            TrayIconJob trayIconJob = container.Resolve<TrayIconJob>();
+            scheduledJobs.Add(trayIconJob);
         }
 
         private void RegisterGuiShells()
@@ -275,8 +279,11 @@ namespace DustInTheWind.ActiveTime
 
         private void InitializeModules()
         {
-            TrayIconModule trayIconModule = container.Resolve<TrayIconModule>();
-            trayIconModule.Initialize();
+            //TrayIconModule trayIconModule = container.Resolve<TrayIconModule>();
+            //trayIconModule.Initialize();
+
+            ScheduledJobs scheduledJobs = container.Resolve<ScheduledJobs>();
+            scheduledJobs.Start(JobNames.TrayIcon);
         }
     }
 }

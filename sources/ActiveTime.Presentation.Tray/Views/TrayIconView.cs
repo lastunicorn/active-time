@@ -23,11 +23,11 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Views
 {
     public partial class TrayIconView : Component, ITrayIconView
     {
-        private readonly TrayIconPresenter presenter;
+        public TrayIconPresenter Presenter { get; }
 
         public TrayIconView(TrayIconPresenter presenter)
         {
-            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+            Presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             
@@ -73,7 +73,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Views
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                presenter.LeftDoubleClicked();
+                Presenter.LeftDoubleClicked();
         }
     }
 }
