@@ -12,7 +12,7 @@
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/StatusBarStyles.xaml"/>
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/TextBoxStyles.xaml"/>
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/WindowStyles.xaml"/>
-        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/HighlightPanelStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/TabControlStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

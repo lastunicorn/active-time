@@ -54,6 +54,7 @@ namespace DustInTheWind.ActiveTime.Common
 
         public CurrentDay()
         {
+            Date = DateTime.Today;
             AreCommentsSaved = true;
         }
 

@@ -40,7 +40,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.PresentComments
             {
                 string comments = RetrieveComments();
 
-                PresentCommentsResponse response = new PresentCommentsResponse
+                PresentCommentsResponse response = new()
                 {
                     Comments = comments
                 };

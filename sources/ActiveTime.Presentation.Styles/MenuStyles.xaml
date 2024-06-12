@@ -19,7 +19,7 @@
                             <Border
                                 BorderBrush="{StaticResource MenuSeparatorBorderBrush}"
                                 BorderThickness="1"
-                                Margin="25,0,2,0"/>
+                                Margin="25 0 2 0"/>
                             
                         </ControlTemplate>
                     </Setter.Value>
@@ -33,7 +33,9 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type MenuItem}">
-                            <!--Border 1-->
+
+                            <!-- Border 1 -->
+
                             <Border
                                 x:Name="Border"
                                 Background="Transparent"
@@ -66,14 +68,14 @@
                                     
                                     <ContentPresenter
                                         Grid.Column="2"
-                                        Margin="8,1,8,1"
+                                        Margin="8 1 8 1"
                                         x:Name="IGTHost"
                                         ContentSource="InputGestureText"
                                         VerticalAlignment="Center"/>
                                     
                                     <Grid
                                         Grid.Column="3"
-                                        Margin="4,0,6,0"
+                                        Margin="4 0 6 0"
                                         x:Name="ArrowPanel"
                                         VerticalAlignment="Center">
                                         
@@ -95,9 +97,10 @@
                                         PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                                         AllowsTransparency="True">
                                         
-                                        <Grid Margin="0,0,5,5">
+                                        <Grid Margin="0 0 5 5">
                                             
-                                            <!--Border 2-->
+                                            <!-- Border 2 -->
+
                                             <Border
                                                 x:Name="SubMenuBorder"
                                                 BorderBrush="{StaticResource MenuSeparatorBorderBrush}"
@@ -122,9 +125,10 @@
                                             
                                             </Border>
                                             
-                                            <!--Border 3-->
+                                            <!-- Border 3 -->
+
                                             <Border
-                                                Margin="1,0,0,0"
+                                                Margin="1 0 0 0"
                                                 x:Name="TransitionBorder"
                                                 Width="0"
                                                 Height="2"
@@ -135,7 +139,9 @@
                                                 BorderThickness="1" BorderBrush="{StaticResource SubmenuItemNormalBackground}"/>
                                             
                                         </Grid>
+
                                     </Popup>
+
                                 </Grid>
                             </Border>
                             

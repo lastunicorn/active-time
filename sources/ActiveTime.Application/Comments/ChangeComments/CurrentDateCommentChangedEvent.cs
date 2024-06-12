@@ -18,4 +18,5 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 
 public class CurrentDateCommentChangedEvent
 {
+    public string NewComments { get; set; }
 }

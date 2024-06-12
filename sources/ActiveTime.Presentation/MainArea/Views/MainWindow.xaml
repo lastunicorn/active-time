@@ -42,11 +42,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <DockPanel>
 
-        <mainMenuArea:MainMenuView DockPanel.Dock="Top" DataContext="{Binding MainMenuViewModel}"/>
+        <mainMenuArea:MainMenuView
+            DockPanel.Dock="Top"
+            DataContext="{Binding MainMenuViewModel}" />
 
-        <views1:StatusInfoView DockPanel.Dock="Bottom" DataContext="{Binding StatusInfoViewModel}"/>
+        <views1:StatusInfoView
+            DockPanel.Dock="Bottom"
+            DataContext="{Binding StatusInfoViewModel}"/>
 
-        <views1:FrontView  DataContext="{Binding FrontViewModel}"/>
+        <views1:FrontView
+            DataContext="{Binding FrontViewModel}"
+            Margin="10"  />
 
     </DockPanel>
 

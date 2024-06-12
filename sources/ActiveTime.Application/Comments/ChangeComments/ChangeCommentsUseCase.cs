@@ -47,6 +47,10 @@ internal class ChangeCommentsUseCase : IRequestHandler<ChangeCommentsRequest>
 
     private async Task RaiseCommentChangedEvent()
     {
-        await eventBus.Publish(new CurrentDateCommentChangedEvent());
+        CurrentDateCommentChangedEvent currentDateCommentChangedEvent = new()
+        {
+            NewComments = currentDay.Comments
+        };
+        await eventBus.Publish(currentDateCommentChangedEvent);
     }
 }

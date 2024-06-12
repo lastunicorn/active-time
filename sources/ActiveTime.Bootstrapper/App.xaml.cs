@@ -15,7 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Presentation.Tray;
 using DustInTheWind.ActiveTime.Watchman;
@@ -32,6 +36,13 @@ namespace DustInTheWind.ActiveTime.Bootstrapper
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            ICollection<FontFamily> monoSpacedFonts = Fonts.SystemFontFamilies;
+
+            foreach (FontFamily fontFamily in monoSpacedFonts)
+            {
+                Debug.WriteLine(fontFamily);
+            }
+
             base.OnStartup(e);
 
             if (CreateTheGuard())

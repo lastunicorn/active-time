@@ -69,16 +69,18 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <CheckBox
             DockPanel.Dock="Bottom"
             Content="Wrap"
-            Margin="0 0 0 5"
+            Margin="0 0 0 10"
             IsChecked="{Binding Path=CommentTextWrap}"/>
 
         <TextBox
-            Margin="0 0 0 5"
+            Margin="0 10 0 10"
             Text="{Binding Path=Comments, UpdateSourceTrigger=PropertyChanged}"
             AcceptsReturn="True"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
-            TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}">
+            TextWrapping="{Binding Path=CommentTextWrap, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BooleanConverter}}"
+            FontSize="12"
+            FontFamily="Consolas">
 
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding SaveCommentsCommand}" Key="S" Modifiers="Control"/>

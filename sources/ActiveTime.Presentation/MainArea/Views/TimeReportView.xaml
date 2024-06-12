@@ -24,20 +24,18 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Converters"
-    xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls;assembly=DustInTheWind.ActiveTime.Presentation.CustomControls"
-    xmlns:viewModels1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels"
+    xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels"
 
     mc:Ignorable="d"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    d:DataContext="{d:DesignInstance viewModels1:TimeReportViewModel}">
+    d:DataContext="{d:DesignInstance viewModels:TimeReportViewModel}">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-
 
     <Grid>
 
@@ -48,29 +46,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <!-- Active Time -->
 
-        <customControls:HighlightPanel
-            Grid.Row="0"
-            Margin="0 0 0 1">
-
-            <StackPanel
-                Orientation="Vertical"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-
-                <TextBlock
-                    Text="{Binding Path=ActiveTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                    FontSize="25" />
-
-                <TextBlock
-                    Text="{Binding Path=TotalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}"
-                    Foreground="DarkGray"
-                    TextAlignment="Center" />
-
-            </StackPanel>
-
-        </customControls:HighlightPanel>
-
-        <!--<Border
+        <Border
             Grid.Row="0"
             BorderThickness="1"
             Padding="0 6 0 6"
@@ -79,14 +55,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
+                        
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}" />
                             <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}" />
                         </Trigger>
+                        
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}" />
                             <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}" />
                         </Trigger>
+
                     </Style.Triggers>
                 </Style>
             </Border.Style>
@@ -107,7 +86,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
             </StackPanel>
 
-        </Border>-->
+        </Border>
 
         <!-- Start/End Time -->
 

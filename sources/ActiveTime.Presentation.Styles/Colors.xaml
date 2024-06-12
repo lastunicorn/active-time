@@ -18,12 +18,57 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <!--
+    ================================================================================================
+    Primary Colors
+    ================================================================================================
+    -->
+
+    <Color x:Key="PrimaryColor">#2D2D30</Color>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+
+    <Color x:Key="PrimaryDarkColor">#252526</Color>
+    <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}" />
+
+    <Color x:Key="PrimaryDarkestColor">#202020</Color>
+    <SolidColorBrush x:Key="PrimaryDarkestBrush" Color="{StaticResource PrimaryDarkestColor}" />
+
+    <Color x:Key="PrimaryLightColor">#3F3F46</Color>
+    <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}" />
+
+    <!--<Color x:Key="AccentColor">#00bc00</Color>-->
+    <Color x:Key="AccentColor">#007acc</Color>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+
+    <!--
+    ================================================================================================
+    Font
+    ================================================================================================
+    -->
+
+    <Color x:Key="FontPrimaryColor">#e6e6e6</Color>
+    <SolidColorBrush x:Key="FontPrimaryBrush" Color="{StaticResource FontPrimaryColor}" />
+
+    <Color x:Key="FontDimColor">Gray</Color>
+    <SolidColorBrush x:Key="FontDimBrush" Color="{StaticResource FontDimColor}" />
+
+    <Color x:Key="FontDisabledColor">#8F8F8F</Color>
+    <SolidColorBrush x:Key="FontDisabledBrush" Color="{StaticResource FontDisabledColor}" />
+
+    <Color x:Key="FontAccentColor">#F1F1F1</Color>
+    <SolidColorBrush x:Key="FontAccentBrush" Color="{StaticResource FontAccentColor}" />
+
+    <system:Double x:Key="DefaultFontSize">14</system:Double>
+
+    <FontFamily x:Key="DefaultFontFamily">OpenSans</FontFamily>
 
     <!-- Main -->
 
-    <SolidColorBrush x:Key="MainBackground" Color="#2d2d30"/>
-    <SolidColorBrush x:Key="MainForeground" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="MainBackground" Color="{StaticResource PrimaryColor}"/>
+    <SolidColorBrush x:Key="MainForeground" Color="{StaticResource FontPrimaryColor}"/>
 
     <!-- Button -->
 

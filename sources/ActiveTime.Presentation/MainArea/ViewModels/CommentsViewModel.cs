@@ -37,6 +37,9 @@ public class CommentsViewModel : ViewModelBase
         get => comments;
         set
         {
+            if (comments == value)
+                return;
+
             comments = value;
             OnPropertyChanged();
 
@@ -78,12 +81,18 @@ public class CommentsViewModel : ViewModelBase
 
     private async Task HandleCurrentDateChanged(CurrentDateChangedEvent ev, CancellationToken cancellationToken)
     {
-        await Initialize();
+        if (!IsInitializing)
+            await Initialize();
     }
 
-    private async Task HandleCommentChanged(CurrentDateCommentChangedEvent ev, CancellationToken cancellationToken)
+    private Task HandleCommentChanged(CurrentDateCommentChangedEvent ev, CancellationToken cancellationToken)
     {
-        await Initialize();
+        RunAsInitialization(() =>
+        {
+            Comments = ev.NewComments;
+        });
+
+        return Task.CompletedTask;
     }
 
     private async Task Initialize()

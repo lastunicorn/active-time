@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
+using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
@@ -28,11 +29,13 @@ internal class RefreshUseCase : IRequestHandler<RefreshRequest>
 {
     private readonly EventBus eventBus;
     private readonly StatusInfoService statusInfoService;
+    private readonly CurrentDay currentDay;
 
-    public RefreshUseCase(EventBus eventBus, StatusInfoService statusInfoService)
+    public RefreshUseCase(EventBus eventBus, StatusInfoService statusInfoService, CurrentDay currentDay)
     {
         this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
+        this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
     }
 
     public async Task Handle(RefreshRequest request, CancellationToken cancellationToken)
@@ -43,7 +46,10 @@ internal class RefreshUseCase : IRequestHandler<RefreshRequest>
 
     private async Task RaiseCurrentDateChangedEvent()
     {
-        CurrentDateChangedEvent currentDateChangedEvent = new();
+        CurrentDateChangedEvent currentDateChangedEvent = new()
+        {
+            Date = currentDay.Date
+        };
         await eventBus.Publish(currentDateChangedEvent);
     }
 

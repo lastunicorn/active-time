@@ -17,6 +17,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace DustInTheWind.ActiveTime.Presentation
 {
@@ -34,9 +35,24 @@ namespace DustInTheWind.ActiveTime.Presentation
         protected void RunAsInitialization(Action action)
         {
             IsInitializing = true;
+
             try
             {
                 action();
+            }
+            finally
+            {
+                IsInitializing = false;
+            }
+        }
+
+        protected Task RunAsInitialization(Func<Task> action)
+        {
+            IsInitializing = true;
+
+            try
+            {
+                return action();
             }
             finally
             {

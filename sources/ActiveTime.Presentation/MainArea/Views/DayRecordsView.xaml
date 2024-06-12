@@ -71,10 +71,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
             </ItemsControl>
         </ScrollViewer>
+
         <ListBox
             ItemsSource="{Binding Path=Records}"
             SelectionMode="Extended"
-            Margin="0 0 0 5">
+            Margin="0 10 0 10">
 
             <ListBox.Resources>
                 <converters:RecordConverter x:Key="RecordConverter" />

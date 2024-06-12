@@ -60,7 +60,7 @@ public class TimeReportViewModel : ViewModelBase
     public TimeSpan? BeginTime
     {
         get => beginTime;
-        set
+        private set
         {
             beginTime = value;
             OnPropertyChanged();
@@ -72,7 +72,7 @@ public class TimeReportViewModel : ViewModelBase
     public TimeSpan? EstimatedEndTime
     {
         get => estimatedEndTime;
-        set
+        private set
         {
             estimatedEndTime = value;
             OnPropertyChanged();
