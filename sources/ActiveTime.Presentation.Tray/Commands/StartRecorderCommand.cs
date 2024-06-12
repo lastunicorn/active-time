@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
@@ -51,18 +52,22 @@ public class StartRecorderCommand : ICommand
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
-        eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+        eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
+        eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
     }
 
-    private void HandleRecorderStarted(EventParameters parameters)
+    private Task HandleRecorderStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
     {
         RecorderState = JobState.Running;
+
+        return Task.CompletedTask;
     }
 
-    private void HandleRecorderStopped(EventParameters parameters)
+    private Task HandleRecorderStopped(RecorderStoppedEvent ev, CancellationToken cancellationToken)
     {
         RecorderState = JobState.Stopped;
+
+        return Task.CompletedTask;
     }
 
     public bool CanExecute(object parameter)

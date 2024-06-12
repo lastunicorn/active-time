@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
@@ -37,7 +38,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments
             this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
-        public Task Handle(ResetCommentsRequest request, CancellationToken cancellationToken)
+        public async Task Handle(ResetCommentsRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -45,9 +46,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments
 
                 DateRecord dateRecord = RetrieveDateRecordFromDb(currentDate);
                 SetCommentOnCurrentDay(dateRecord?.Comment);
-                RaiseCommentChangedEvent();
-
-                return Task.FromResult(Unit.Value);
+                await RaiseCommentChangedEvent();
             }
             finally
             {
@@ -65,9 +64,9 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments
             currentDay.ResetComments(comments);
         }
 
-        private void RaiseCommentChangedEvent()
+        private async Task RaiseCommentChangedEvent()
         {
-            eventBus.Raise(EventNames.CurrentDate.CommentChanged);
+            await eventBus.Publish(new CurrentDateCommentChangedEvent());
         }
 
         public void Dispose()

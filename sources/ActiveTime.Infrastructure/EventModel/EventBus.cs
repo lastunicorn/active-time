@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,52 +16,46 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.EventModel
+namespace DustInTheWind.ActiveTime.Infrastructure.EventModel;
+
+public class EventBus
 {
-    public class EventBus
+    private readonly Dictionary<Type, List<object>> subscribersByEvent = new();
+
+    public void Subscribe<TEvent>(Func<TEvent, CancellationToken, Task> action)
     {
-        private readonly Dictionary<string, List<Action<EventParameters>>> eventHandlers = new Dictionary<string, List<Action<EventParameters>>>();
+        List<object> actions = GetBucket<TEvent>() ?? CreateBucket<TEvent>();
+        actions.Add(action);
+    }
 
-        public void Subscribe(string eventName, Action<EventParameters> eventHandler)
-        {
-            if (eventName == null) throw new ArgumentNullException(nameof(eventName));
-            if (eventHandler == null) throw new ArgumentNullException(nameof(eventHandler));
+    public async Task Publish<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
+    {
+        List<object> bucket = GetBucket<TEvent>();
 
-            List<Action<EventParameters>> currentEventHandlers = GetOrCreateHandlersFor(eventName);
+        if (bucket == null)
+            return;
 
-            currentEventHandlers.Add(eventHandler);
-        }
+        IEnumerable<Func<TEvent, CancellationToken, Task>> actions = bucket.Cast<Func<TEvent, CancellationToken, Task>>();
 
-        public void Unsubscribe(string eventName, Action<EventParameters> eventHandler)
-        {
-            if (eventName == null) throw new ArgumentNullException(nameof(eventName));
-            if (eventHandler == null) throw new ArgumentNullException(nameof(eventHandler));
+        foreach (Func<TEvent, CancellationToken, Task> action in actions)
+            await action(@event, cancellationToken);
+    }
 
-            List<Action<EventParameters>> currentEventHandlers = GetOrCreateHandlersFor(eventName);
+    private List<object> GetBucket<TEvent>()
+    {
+        return subscribersByEvent.ContainsKey(typeof(TEvent))
+            ? subscribersByEvent[typeof(TEvent)]
+            : null;
+    }
 
-            currentEventHandlers.Remove(eventHandler);
-        }
-
-        public void Raise(string eventName, EventParameters parameter = null)
-        {
-            if (eventName == null) throw new ArgumentNullException(nameof(eventName));
-
-            List<Action<EventParameters>> currentEventHandlers = GetOrCreateHandlersFor(eventName);
-
-            foreach (Action<EventParameters> currentEventHandler in currentEventHandlers)
-                currentEventHandler(parameter);
-        }
-
-        private List<Action<EventParameters>> GetOrCreateHandlersFor(string eventName)
-        {
-            if (eventHandlers.ContainsKey(eventName))
-                return eventHandlers[eventName];
-
-            List<Action<EventParameters>> currentEventHandlers = new List<Action<EventParameters>>();
-            eventHandlers.Add(eventName, currentEventHandlers);
-
-            return currentEventHandlers;
-        }
+    private List<object> CreateBucket<TEvent>()
+    {
+        List<object> actions = new();
+        subscribersByEvent.Add(typeof(TEvent), actions);
+        return actions;
     }
 }

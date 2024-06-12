@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
+using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Application.CurrentDate.PresentCurrentDate;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
@@ -64,14 +65,16 @@ public class CurrentDateViewModel : ViewModelBase
         DecrementDayCommand = decrementDayCommand ?? throw new ArgumentNullException(nameof(decrementDayCommand));
         IncrementDateCommand = incrementDateCommand ?? throw new ArgumentNullException(nameof(incrementDateCommand));
 
-        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+        eventBus.Subscribe<CurrentDateChangedEvent>(HandleCurrentDateChanged);
 
         _ = Initialize();
     }
 
-    private void HandleCurrentDateChanged(EventParameters parameters)
+    private Task HandleCurrentDateChanged(CurrentDateChangedEvent ev, CancellationToken cancellationToken)
     {
-        RunAsInitialization(() => Date = parameters.Get<DateTime>("Date"));
+        RunAsInitialization(() => Date = ev.Date);
+
+        return Task.CompletedTask;
     }
 
     private async Task Initialize()

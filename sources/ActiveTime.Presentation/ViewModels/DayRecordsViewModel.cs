@@ -15,7 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Application.TimeRecords.PresentTimeRecords;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
@@ -50,30 +55,30 @@ public class DayRecordsViewModel : ViewModelBase
 
         _ = Initialize();
 
-        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
-        eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
-        eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
-        eventBus.Subscribe(EventNames.Recorder.Stamped, HandleRecorderStamped);
+        eventBus.Subscribe<CurrentDateChangedEvent>(HandleCurrentDateChanged);
+        eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
+        eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
+        eventBus.Subscribe<RecorderStampedEvent>(HandleRecorderStamped);
     }
 
-    private void HandleCurrentDateChanged(EventParameters parameters)
+    private async Task HandleCurrentDateChanged(CurrentDateChangedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
-    private void HandleRecorderStarted(EventParameters parameters)
+    private async Task HandleRecorderStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
-    private void HandleRecorderStopped(EventParameters parameters)
+    private async Task HandleRecorderStopped(RecorderStoppedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
-    private void HandleRecorderStamped(EventParameters parameters)
+    private async Task HandleRecorderStamped(RecorderStampedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
     private async Task Initialize()

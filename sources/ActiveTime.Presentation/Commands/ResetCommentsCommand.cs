@@ -15,9 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Application.Comments.ResetComments;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 
@@ -33,12 +34,14 @@ public class ResetCommentsCommand : CommandBase
 
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        eventBus.Subscribe(EventNames.CurrentDate.CommentChanged, HandleCurrentDayCommentChanged);
+        eventBus.Subscribe<CurrentDateCommentChangedEvent>(HandleCurrentDayCommentChanged);
     }
 
-    private void HandleCurrentDayCommentChanged(EventParameters parameters)
+    private Task HandleCurrentDayCommentChanged(CurrentDateCommentChangedEvent ev, CancellationToken cancellationToken)
     {
         OnCanExecuteChanged();
+
+        return Task.CompletedTask;
     }
 
     public override bool CanExecute(object parameter)

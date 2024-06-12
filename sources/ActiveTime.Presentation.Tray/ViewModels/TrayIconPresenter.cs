@@ -15,8 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;
@@ -73,18 +76,22 @@ public class TrayIconPresenter
         AboutCommand = new AboutCommand(shellNavigator);
         ExitCommand = new ExitCommand(applicationService);
 
-        eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
-        eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+        eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
+        eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
     }
 
-    private void HandleRecorderStarted(EventParameters parameters)
+    private Task HandleRecorderStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
     {
         SetIconOn();
+
+        return Task.CompletedTask;
     }
 
-    private void HandleRecorderStopped(EventParameters parameters)
+    private Task HandleRecorderStopped(RecorderStoppedEvent ev, CancellationToken cancellationToken)
     {
         SetIconOff();
+
+        return Task.CompletedTask;
     }
 
     private void Initialize()

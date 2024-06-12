@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
+using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Application.CurrentDate.PresentCalendar;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 
@@ -56,12 +57,13 @@ public class CalendarViewModel : ViewModelBase
 
         _ = Initialize();
 
-        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+        eventBus.Subscribe<CurrentDateChangedEvent>(HandleCurrentDateChanged);
     }
 
-    private void HandleCurrentDateChanged(EventParameters parameters)
+    private Task HandleCurrentDateChanged(CurrentDateChangedEvent ev, CancellationToken cancellationToken)
     {
-        RunAsInitialization(() => Date = parameters.Get<DateTime>("Date"));
+        RunAsInitialization(() => Date = ev.Date);
+        return Task.CompletedTask;
     }
 
     private async Task Initialize()

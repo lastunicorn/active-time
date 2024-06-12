@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,53 +26,52 @@ using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Recording.StopRecording
+namespace DustInTheWind.ActiveTime.Application.Recording.StopRecording;
+
+internal sealed class StopRecordingUseCase : IRequestHandler<StopRecordingRequest>, IDisposable
 {
-    internal sealed class StopRecordingUseCase : IRequestHandler<StopRecordingRequest>, IDisposable
+    private readonly IUnitOfWork unitOfWork;
+    private readonly Scribe scribe;
+    private readonly EventBus eventBus;
+    private readonly ScheduledJobs scheduledJobs;
+    private readonly IStatusInfoService statusInfoService;
+
+    public StopRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs,
+        IStatusInfoService statusInfoService)
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly Scribe scribe;
-        private readonly EventBus eventBus;
-        private readonly ScheduledJobs scheduledJobs;
-        private readonly IStatusInfoService statusInfoService;
+        this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+        this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+        this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
+    }
 
-        public StopRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs,
-            IStatusInfoService statusInfoService)
+    public async Task Handle(StopRecordingRequest request, CancellationToken cancellationToken)
+    {
+        try
         {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
-            this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
-        }
+            if (request.DeleteLastRecord)
+                scribe.DeleteCurrentTimeRecord();
+            else
+                scribe.Stamp();
 
-        public Task Handle(StopRecordingRequest request, CancellationToken cancellationToken)
+            scheduledJobs.Stop(JobNames.Recorder);
+            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStoppedStatus>());
+
+            unitOfWork.Commit();
+            unitOfWork.Dispose();
+
+            RecorderStoppedEvent recorderStoppedEvent = new();
+            await eventBus.Publish(recorderStoppedEvent, cancellationToken);
+        }
+        finally
         {
-            try
-            {
-                if (request.DeleteLastRecord)
-                    scribe.DeleteCurrentTimeRecord();
-                else
-                    scribe.Stamp();
-
-                scheduledJobs.Stop(JobNames.Recorder);
-                eventBus.Raise(EventNames.Recorder.Stopped);
-                statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStoppedStatus>());
-
-                unitOfWork.Commit();
-                unitOfWork.Dispose();
-
-                return Task.FromResult(Unit.Value);
-            }
-            finally
-            {
-                Dispose();
-            }
+            Dispose();
         }
+    }
 
-        public void Dispose()
-        {
-            unitOfWork?.Dispose();
-        }
+    public void Dispose()
+    {
+        unitOfWork?.Dispose();
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
@@ -24,76 +26,87 @@ using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder
+namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder;
+
+public sealed class ToggleRecorderUseCase : IRequestHandler<ToggleRecorderRequest>, IDisposable
 {
-    public sealed class ToggleRecorderUseCase : IRequestHandler<ToggleRecorderRequest>, IDisposable
+    private readonly IUnitOfWork unitOfWork;
+    private readonly Scribe scribe;
+    private readonly EventBus eventBus;
+    private readonly ScheduledJobs scheduledJobs;
+    private bool isStarted;
+    private bool isStopped;
+
+    public ToggleRecorderUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs)
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly Scribe scribe;
-        private readonly EventBus eventBus;
-        private readonly ScheduledJobs scheduledJobs;
+        this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+        this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+    }
 
-        public ToggleRecorderUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs)
+    public async Task Handle(ToggleRecorderRequest request, CancellationToken cancellationToken)
+    {
+        try
         {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
-        }
+            IJob recorderJob = GetRecorderJob();
 
-        public Task Handle(ToggleRecorderRequest request, CancellationToken cancellationToken)
-        {
-            try
+            switch (recorderJob.State)
             {
-                IJob recorderJob = GetRecorderJob();
+                case JobState.Stopped:
+                    await Start(recorderJob);
+                    break;
 
-                switch (recorderJob.State)
-                {
-                    case JobState.Stopped:
-                        Start(recorderJob);
-                        break;
-
-                    case JobState.Running:
-                        Stop(recorderJob);
-                        break;
-                }
-
-                unitOfWork.Commit();
-                unitOfWork.Dispose();
-
-                return Task.FromResult(Unit.Value);
+                case JobState.Running:
+                    await Stop(recorderJob);
+                    break;
             }
-            finally
+
+            unitOfWork.Commit();
+            unitOfWork.Dispose();
+
+            if (isStarted)
             {
-                Dispose();
+                RecorderStartedEvent recorderStartedEvent = new();
+                await eventBus.Publish(recorderStartedEvent, cancellationToken);
+            }
+
+            if (isStopped)
+            {
+                RecorderStoppedEvent recorderStoppedEvent = new();
+                await eventBus.Publish(recorderStoppedEvent, cancellationToken);
             }
         }
-
-        private IJob GetRecorderJob()
+        finally
         {
-            IJob recorderJob = scheduledJobs.Get(JobNames.Recorder);
-            return recorderJob;
+            Dispose();
         }
+    }
 
-        private void Start(IJob recorderJob)
-        {
-            scribe.StampNew();
-            recorderJob.Start();
+    private IJob GetRecorderJob()
+    {
+        IJob recorderJob = scheduledJobs.Get(JobNames.Recorder);
+        return recorderJob;
+    }
 
-            eventBus.Raise(EventNames.Recorder.Started);
-        }
+    private async Task Start(IJob recorderJob)
+    {
+        scribe.StampNew();
+        await recorderJob.Start();
 
-        private void Stop(IJob recorderJob)
-        {
-            recorderJob.Stop();
-            scribe.Stamp();
+        isStarted = true;
+    }
 
-            eventBus.Raise(EventNames.Recorder.Stopped);
-        }
+    private async Task Stop(IJob recorderJob)
+    {
+        await recorderJob.Stop();
+        scribe.Stamp();
 
-        public void Dispose()
-        {
-            unitOfWork?.Dispose();
-        }
+        isStopped = true;
+    }
+
+    public void Dispose()
+    {
+        unitOfWork?.Dispose();
     }
 }

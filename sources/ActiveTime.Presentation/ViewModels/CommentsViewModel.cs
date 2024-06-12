@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
@@ -69,20 +70,20 @@ public class CommentsViewModel : ViewModelBase
         SaveCommentsCommand = saveCommentsCommand ?? throw new ArgumentNullException(nameof(saveCommentsCommand));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
-        eventBus.Subscribe(EventNames.CurrentDate.CommentChanged, HandleCommentChanged);
+        eventBus.Subscribe<CurrentDateChangedEvent>(HandleCurrentDateChanged);
+        eventBus.Subscribe<CurrentDateCommentChangedEvent>(HandleCommentChanged);
 
         _ = Initialize();
     }
 
-    private void HandleCurrentDateChanged(EventParameters ev)
+    private async Task HandleCurrentDateChanged(CurrentDateChangedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
-    private void HandleCommentChanged(EventParameters ev)
+    private async Task HandleCommentChanged(CurrentDateCommentChangedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
     private async Task Initialize()

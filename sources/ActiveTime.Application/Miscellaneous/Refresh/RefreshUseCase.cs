@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,42 +17,40 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Miscellaneous.Refresh
+namespace DustInTheWind.ActiveTime.Application.Miscellaneous.Refresh;
+
+internal class RefreshUseCase : IRequestHandler<RefreshRequest>
 {
-    internal class RefreshUseCase : IRequestHandler<RefreshRequest>
+    private readonly EventBus eventBus;
+    private readonly IStatusInfoService statusInfoService;
+
+    public RefreshUseCase(EventBus eventBus, IStatusInfoService statusInfoService)
     {
-        private readonly EventBus eventBus;
-        private readonly IStatusInfoService statusInfoService;
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+        this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
+    }
 
-        public RefreshUseCase(EventBus eventBus, IStatusInfoService statusInfoService)
-        {
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
-        }
+    public async Task Handle(RefreshRequest request, CancellationToken cancellationToken)
+    {
+        await RaiseCurrentDateChangedEvent();
+        UpdateApplicationStatus();
+    }
 
-        public Task Handle(RefreshRequest request, CancellationToken cancellationToken)
-        {
-            RaiseCurrentDateChangedEvent();
-            UpdateApplicationStatus();
+    private async Task RaiseCurrentDateChangedEvent()
+    {
+        CurrentDateChangedEvent currentDateChangedEvent = new();
+        await eventBus.Publish(currentDateChangedEvent);
+    }
 
-            return Task.FromResult(Unit.Value);
-        }
-
-        private void RaiseCurrentDateChangedEvent()
-        {
-            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged);
-        }
-
-        private void UpdateApplicationStatus()
-        {
-            RefreshedStatus status = ApplicationStatus.Create<RefreshedStatus>();
-            statusInfoService.SetStatus(status);
-        }
+    private void UpdateApplicationStatus()
+    {
+        RefreshedStatus status = ApplicationStatus.Create<RefreshedStatus>();
+        statusInfoService.SetStatus(status);
     }
 }

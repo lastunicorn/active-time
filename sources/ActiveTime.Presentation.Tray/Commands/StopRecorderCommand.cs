@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,87 +15,90 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands;
+
+public class StopRecorderCommand : ICommand
 {
-    public class StopRecorderCommand : ICommand
+    private readonly IRequestBus requestBus;
+    private readonly ILogger logger;
+
+    private JobState recorderState = JobState.Stopped;
+
+    public JobState RecorderState
     {
-        private readonly IRequestBus requestBus;
-        private readonly ILogger logger;
-
-        private JobState recorderState = JobState.Stopped;
-
-        public JobState RecorderState
+        get => recorderState;
+        set
         {
-            get => recorderState;
-            set
-            {
-                recorderState = value;
-                OnCanExecuteChanged();
-            }
+            recorderState = value;
+            OnCanExecuteChanged();
         }
+    }
 
-        public event EventHandler CanExecuteChanged;
+    public event EventHandler CanExecuteChanged;
 
-        public StopRecorderCommand(IRequestBus requestBus, ILogger logger, EventBus eventBus)
+    public StopRecorderCommand(IRequestBus requestBus, ILogger logger, EventBus eventBus)
+    {
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+        eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
+        eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
+    }
+
+    private Task HandleRecorderStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
+    {
+        RecorderState = JobState.Running;
+
+        return Task.CompletedTask;
+    }
+
+    private Task HandleRecorderStopped(RecorderStoppedEvent ev, CancellationToken cancellationToken)
+    {
+        RecorderState = JobState.Stopped;
+
+        return Task.CompletedTask;
+    }
+
+    public bool CanExecute(object parameter)
+    {
+        return recorderState == JobState.Running;
+    }
+
+    public void Execute(object parameter)
+    {
+        _ = StopRecording(parameter);
+    }
+
+    private async Task StopRecording(object parameter)
+    {
+        StopRecordingRequest request = new()
         {
-            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            DeleteLastRecord = parameter is true
+        };
 
-            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
-            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
-        }
-
-        private void HandleRecorderStarted(EventParameters parameters)
+        try
         {
-            RecorderState = JobState.Running;
+            await requestBus.Send(request);
         }
-
-        private void HandleRecorderStopped(EventParameters parameters)
+        catch (Exception ex)
         {
-            RecorderState = JobState.Stopped;
+            logger.Log("ERROR: " + ex);
         }
+    }
 
-        public bool CanExecute(object parameter)
-        {
-            return recorderState == JobState.Running;
-        }
-
-        public void Execute(object parameter)
-        {
-            _ = StopRecording(parameter);
-        }
-
-        private async Task StopRecording(object parameter)
-        {
-            StopRecordingRequest request = new()
-            {
-                DeleteLastRecord = parameter is true
-            };
-
-            try
-            {
-                await requestBus.Send(request);
-            }
-            catch (Exception ex)
-            {
-                logger.Log("ERROR: " + ex);
-            }
-        }
-
-        protected virtual void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+    protected virtual void OnCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

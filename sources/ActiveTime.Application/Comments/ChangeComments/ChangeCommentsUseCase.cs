@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,35 +21,32 @@ using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Comments.ChangeComments
+namespace DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
+
+internal class ChangeCommentsUseCase : IRequestHandler<ChangeCommentsRequest>
 {
-    internal class ChangeCommentsUseCase : IRequestHandler<ChangeCommentsRequest>
+    private readonly CurrentDay currentDay;
+    private readonly EventBus eventBus;
+
+    public ChangeCommentsUseCase(CurrentDay currentDay, EventBus eventBus)
     {
-        private readonly CurrentDay currentDay;
-        private readonly EventBus eventBus;
+        this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+    }
 
-        public ChangeCommentsUseCase(CurrentDay currentDay, EventBus eventBus)
-        {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-        }
+    public async Task Handle(ChangeCommentsRequest request, CancellationToken cancellationToken)
+    {
+        SetCommentsOnCurrentDay(request.Comments);
+        await RaiseCommentChangedEvent();
+    }
 
-        public Task Handle(ChangeCommentsRequest request, CancellationToken cancellationToken)
-        {
-            SetCommentsOnCurrentDay(request.Comments);
-            RaiseCommentChangedEvent();
+    private void SetCommentsOnCurrentDay(string comments)
+    {
+        currentDay.Comments = comments;
+    }
 
-            return Task.FromResult(Unit.Value);
-        }
-
-        private void SetCommentsOnCurrentDay(string comments)
-        {
-            currentDay.Comments = comments;
-        }
-
-        private void RaiseCommentChangedEvent()
-        {
-            eventBus.Raise(EventNames.CurrentDate.CommentChanged);
-        }
+    private async Task RaiseCommentChangedEvent()
+    {
+        await eventBus.Publish(new CurrentDateCommentChangedEvent());
     }
 }

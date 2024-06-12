@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,42 +17,41 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.CurrentDate.IncrementDate
+namespace DustInTheWind.ActiveTime.Application.CurrentDate.IncrementDate;
+
+internal class IncrementDateUseCase : IRequestHandler<IncrementDateRequest>
 {
-    internal class IncrementDateUseCase : IRequestHandler<IncrementDateRequest>
+    private readonly CurrentDay currentDay;
+    private readonly EventBus eventBus;
+
+    public IncrementDateUseCase(CurrentDay currentDay, EventBus eventBus)
     {
-        private readonly CurrentDay currentDay;
-        private readonly EventBus eventBus;
+        this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+    }
 
-        public IncrementDateUseCase(CurrentDay currentDay, EventBus eventBus)
+    public async Task Handle(IncrementDateRequest request, CancellationToken cancellationToken)
+    {
+        DateTime currentDate = currentDay.Date;
+
+        if (currentDate >= DateTime.MaxValue.Date)
+            throw new ActiveTimeException("We are already at the end of time. Tomorrow does not exist.");
+
+        currentDay.IncrementDate();
+        await RaiseCurrentDateChangedEvent();
+    }
+
+    private async Task RaiseCurrentDateChangedEvent()
+    {
+        CurrentDateChangedEvent currentDateChangedEvent = new()
         {
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-        }
-
-        public Task Handle(IncrementDateRequest request, CancellationToken cancellationToken)
-        {
-            DateTime currentDate = currentDay.Date;
-
-            if (currentDate >= DateTime.MaxValue.Date)
-                throw new ActiveTimeException("We are already at the end of time. Tomorrow does not exist.");
-
-            currentDay.IncrementDate();
-            RaiseCurrentDateChangedEvent();
-
-            return Task.FromResult(Unit.Value);
-        }
-
-        private void RaiseCurrentDateChangedEvent()
-        {
-            EventParameters eventParameters = new EventParameters();
-            eventParameters.Add("Date", currentDay.Date);
-
-            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged, eventParameters);
-        }
+            Date = currentDay.Date
+        };
+        await eventBus.Publish(currentDateChangedEvent);
     }
 }

@@ -32,6 +32,6 @@ public class ToggleRecorderCommand : CommandBase
     public override void Execute(object parameter)
     {
         ToggleRecorderRequest request = new();
-        requestBus.Send(request);
+        _ = requestBus.Send(request);
     }
 }

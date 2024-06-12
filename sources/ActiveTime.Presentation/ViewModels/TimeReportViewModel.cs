@@ -15,7 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
@@ -83,20 +86,20 @@ public class TimeReportViewModel : ViewModelBase
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
-        eventBus.Subscribe(EventNames.Recorder.Stamped, HandleStamped);
+        eventBus.Subscribe<CurrentDateChangedEvent>(HandleCurrentDateChanged);
+        eventBus.Subscribe<RecorderStampedEvent>(HandleRecorderStamped);
 
         _ = Initialize();
     }
 
-    private void HandleCurrentDateChanged(EventParameters parameters)
+    private async Task HandleCurrentDateChanged(CurrentDateChangedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
-    private void HandleStamped(EventParameters parameters)
+    private async Task HandleRecorderStamped(RecorderStampedEvent ev, CancellationToken cancellationToken)
     {
-        _ = Initialize();
+        await Initialize();
     }
 
     private async Task Initialize()

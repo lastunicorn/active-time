@@ -15,8 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationStatus;
+using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
@@ -64,9 +68,9 @@ public class StatusInfoViewModel : ViewModelBase
 
         ToggleRecorderCommand = new ToggleRecorderCommand(requestBus);
 
-        eventBus.Subscribe("Recorder.Started", HandleRecorderServiceStarted);
-        eventBus.Subscribe("Recorder.Stopped", HandleRecorderServiceStopped);
-        eventBus.Subscribe("Application.StatusChanged", HandleStatusTextChanged);
+        eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderServiceStarted);
+        eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderServiceStopped);
+        eventBus.Subscribe<ApplicationStatusChangedEvent>(HandleStatusTextChanged);
 
         _ = Load();
     }
@@ -87,18 +91,24 @@ public class StatusInfoViewModel : ViewModelBase
         }
     }
 
-    private void HandleStatusTextChanged(EventParameters parameters)
+    private Task HandleStatusTextChanged(ApplicationStatusChangedEvent ev, CancellationToken cancellationToken)
     {
-        StatusText = parameters.Get<string>("StatusText");
+        StatusText = ev.StatusText;
+
+        return Task.CompletedTask;
     }
 
-    private void HandleRecorderServiceStarted(EventParameters parameters)
+    private Task HandleRecorderServiceStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
     {
         IsRecorderStarted = true;
+
+        return Task.CompletedTask;
     }
 
-    private void HandleRecorderServiceStopped(EventParameters parameters)
+    private Task HandleRecorderServiceStopped(RecorderStoppedEvent ev, CancellationToken cancellationToken)
     {
         IsRecorderStarted = false;
+
+        return Task.CompletedTask;
     }
 }

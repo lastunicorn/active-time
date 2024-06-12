@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,49 +26,49 @@ using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Recording.StartRecording
+namespace DustInTheWind.ActiveTime.Application.Recording.StartRecording;
+
+public sealed class StartRecordingUseCase : IRequestHandler<StartRecordingRequest>, IDisposable
 {
-    public sealed class StartRecordingUseCase : IRequestHandler<StartRecordingRequest>, IDisposable
+    private readonly IUnitOfWork unitOfWork;
+    private readonly Scribe scribe;
+    private readonly EventBus eventBus;
+    private readonly ScheduledJobs scheduledJobs;
+    private readonly IStatusInfoService statusInfoService;
+
+    public StartRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs,
+        IStatusInfoService statusInfoService)
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly Scribe scribe;
-        private readonly EventBus eventBus;
-        private readonly ScheduledJobs scheduledJobs;
-        private readonly IStatusInfoService statusInfoService;
+        this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+        this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+        this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
+    }
 
-        public StartRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs,
-            IStatusInfoService statusInfoService)
+    public async Task Handle(StartRecordingRequest request, CancellationToken cancellationToken)
+    {
+        try
         {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
-            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
-            this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
-        }
+            scribe.StampNew();
+            scheduledJobs.Start(JobNames.Recorder);
 
-        public Task Handle(StartRecordingRequest request, CancellationToken cancellationToken)
+            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStartedStatus>());
+
+            unitOfWork.Commit();
+            unitOfWork.Dispose();
+
+            RecorderStartedEvent recorderStartedEvent = new();
+            await eventBus.Publish(recorderStartedEvent, cancellationToken);
+        }
+        finally
         {
-            try
-            {
-                scribe.StampNew();
-                scheduledJobs.Start(JobNames.Recorder);
-                eventBus.Raise(EventNames.Recorder.Started);
-                statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStartedStatus>());
-
-                unitOfWork.Commit();
-                unitOfWork.Dispose();
-
-                return Task.FromResult(Unit.Value);
-            }
-            finally
-            {
-                Dispose();
-            }
+            Dispose();
         }
+    }
 
-        public void Dispose()
-        {
-            unitOfWork?.Dispose();
-        }
+    public void Dispose()
+    {
+        unitOfWork?.Dispose();
     }
 }
