@@ -1,6 +1,6 @@
 ﻿using System;
-using DustInTheWind.ActiveTime.Common.System;
 using DustInTheWind.ActiveTime.Ports.Persistence;
+using DustInTheWind.ActiveTime.Ports.SystemAccess;
 
 namespace DustInTheWind.ActiveTime.Common.Recording
 {

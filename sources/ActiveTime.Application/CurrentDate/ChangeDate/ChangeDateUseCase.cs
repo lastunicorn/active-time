@@ -19,8 +19,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.System;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Ports.SystemAccess;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
