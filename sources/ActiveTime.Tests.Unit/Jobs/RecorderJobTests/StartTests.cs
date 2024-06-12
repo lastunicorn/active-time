@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,42 +19,41 @@ using DustInTheWind.ActiveTime.Application.Recording.Stamp;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Jobs;
-using MediatR;
 using Moq;
 using NUnit.Framework;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests;
+
+[TestFixture]
+public class StartTests
 {
-    [TestFixture]
-    public class StartTests
+    private Mock<IRequestBus> requestBus;
+    private Mock<ITimer> timer;
+    private RecorderJob recorderJob;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Mock<IMediator> mediator;
-        private Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer> timer;
-        private RecorderJob recorderJob;
+        requestBus = new Mock<IRequestBus>();
+        timer = new Mock<ITimer>();
 
-        [SetUp]
-        public void SetUp()
-        {
-            mediator = new Mock<IMediator>();
-            timer = new Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer>();
+        recorderJob = new RecorderJob(requestBus.Object, timer.Object);
+    }
 
-            recorderJob = new RecorderJob(mediator.Object, timer.Object);
-        }
+    [Test]
+    public void HavingRecorderJob_WhenStarted_ThenSendsAStampRequest()
+    {
+        recorderJob.Start();
 
-        [Test]
-        public void HavingRecorderJob_WhenStarted_ThenSendsAStampRequest()
-        {
-            recorderJob.Start();
+        requestBus.Verify(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+    }
 
-            mediator.Verify(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()), Times.Once);
-        }
+    [Test]
+    public void HavingRecorderJob_WhenStarted_ThenStatusIsRunning()
+    {
+        recorderJob.Start();
 
-        [Test]
-        public void HavingRecorderJob_WhenStarted_ThenStatusIsRunning()
-        {
-            recorderJob.Start();
-
-            Assert.That(recorderJob.State, Is.EqualTo(JobState.Running));
-        }
+        Assert.That(recorderJob.State, Is.EqualTo(JobState.Running));
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,31 +20,29 @@ using DustInTheWind.ActiveTime.Application.Recording.Stamp;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Jobs
+namespace DustInTheWind.ActiveTime.Jobs;
+
+/// <summary>
+/// Periodically calls the scribe to update the time of the current record in the database.
+/// </summary>
+public class RecorderJob : PeriodicalJob
 {
-    /// <summary>
-    /// Periodically calls the scribe to update the time of the current record in the database.
-    /// </summary>
-    public class RecorderJob : PeriodicalJob
+    private readonly IRequestBus requestBus;
+
+    public override string Id { get; } = JobNames.Recorder;
+
+    public RecorderJob(IRequestBus requestBus, ITimer timer)
+        : base(timer)
     {
-        private readonly IMediator mediator;
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        public override string Id { get; } = JobNames.Recorder;
+        RunInterval = TimeSpan.FromMinutes(1);
+    }
 
-        public RecorderJob(IMediator mediator, ITimer timer)
-            : base(timer)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-
-            RunInterval = TimeSpan.FromMinutes(1);
-        }
-
-        protected override async Task DoExecute()
-        {
-            StampRequest stampRequest = new StampRequest();
-            await mediator.Send(stampRequest);
-        }
+    protected override async Task DoExecute()
+    {
+        StampRequest stampRequest = new();
+        await requestBus.Send(stampRequest);
     }
 }

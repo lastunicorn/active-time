@@ -22,7 +22,7 @@ namespace DustInTheWind.ActiveTime.Presentation
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
-        protected bool IsInitializeMode { get; private set; }
+        protected bool IsInitializing { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -31,16 +31,16 @@ namespace DustInTheWind.ActiveTime.Presentation
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void RunInInitializeMode(Action action)
+        protected void RunAsInitialization(Action action)
         {
-            IsInitializeMode = true;
+            IsInitializing = true;
             try
             {
                 action();
             }
             finally
             {
-                IsInitializeMode = false;
+                IsInitializing = false;
             }
         }
     }

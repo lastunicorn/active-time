@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,49 +17,47 @@
 using System;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Jobs;
-using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests;
+
+[TestFixture]
+public class ConstructorTests
 {
-    [TestFixture]
-    public class ConstructorTests
+    private Mock<IRequestBus> requestBus;
+    private Mock<ITimer> timer;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Mock<IMediator> mediator;
-        private Mock<ITimer> timer;
+        requestBus = new Mock<IRequestBus>();
+        timer = new Mock<ITimer>();
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            mediator = new Mock<IMediator>();
-            timer = new Mock<ITimer>();
-        }
+    [Test]
+    public void HavingNullMediator_WhenNewInstanceIsCreated_ThenThrows()
+    {
+        Assert.Throws<ArgumentNullException>(() => new RecorderJob(null, timer.Object));
+    }
 
-        [Test]
-        public void HavingNullMediator_WhenNewInstanceIsCreated_ThenThrows()
-        {
-            Assert.Throws<ArgumentNullException>(() => new RecorderJob(null, timer.Object));
-        }
+    [Test]
+    public void HavingNullTimer_WhenNewInstanceIsCreated_ThenThrows()
+    {
+        Assert.Throws<ArgumentNullException>(() => new RecorderJob(requestBus.Object, null));
+    }
 
-        [Test]
-        public void HavingNullTimer_WhenNewInstanceIsCreated_ThenThrows()
-        {
-            Assert.Throws<ArgumentNullException>(() => new RecorderJob(mediator.Object, null));
-        }
+    [Test]
+    public void HavingAllNeededDependencies_WhenNewInstanceIsCreated_ThenInstanceIsSuccessfullyCreated()
+    {
+        new RecorderJob(requestBus.Object, timer.Object);
+    }
 
-        [Test]
-        public void HavingAllNeededDependencies_WhenNewInstanceIsCreated_ThenInstanceIsSuccessfullyCreated()
-        {
-            new RecorderJob(mediator.Object, timer.Object);
-        }
+    [Test]
+    public void WhenNewInstanceIsCreated_ThenStampingIntervalIsInitializedTo1Minute()
+    {
+        new RecorderJob(requestBus.Object, timer.Object);
 
-        [Test]
-        public void WhenNewInstanceIsCreated_ThenStampingIntervalIsInitializedTo1Minute()
-        {
-            new RecorderJob(mediator.Object, timer.Object);
-
-            timer.VerifySet(x => x.Interval = TimeSpan.FromMinutes(1));
-        }
+        timer.VerifySet(x => x.Interval = TimeSpan.FromMinutes(1));
     }
 }

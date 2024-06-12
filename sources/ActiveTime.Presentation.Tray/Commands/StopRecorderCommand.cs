@@ -20,6 +20,7 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
@@ -28,7 +29,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 {
     public class StopRecorderCommand : ICommand
     {
-        private readonly IMediator mediator;
+        private readonly IRequestBus requestBus;
         private readonly ILogger logger;
 
         private JobState recorderState = JobState.Stopped;
@@ -45,10 +46,10 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 
         public event EventHandler CanExecuteChanged;
 
-        public StopRecorderCommand(IMediator mediator, ILogger logger, EventBus eventBus)
+        public StopRecorderCommand(IRequestBus requestBus, ILogger logger, EventBus eventBus)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
@@ -77,14 +78,14 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 
         private async Task StopRecording(object parameter)
         {
-            StopRecordingRequest request = new StopRecordingRequest
+            StopRecordingRequest request = new()
             {
-                DeleteLastRecord = parameter is bool && (bool)parameter
+                DeleteLastRecord = parameter is true
             };
 
             try
             {
-                await mediator.Send(request);
+                await requestBus.Send(request);
             }
             catch (Exception ex)
             {

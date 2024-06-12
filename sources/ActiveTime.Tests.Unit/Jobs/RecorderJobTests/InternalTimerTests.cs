@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,46 +22,46 @@ using DustInTheWind.ActiveTime.Jobs;
 using MediatR;
 using Moq;
 using NUnit.Framework;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests;
+
+[TestFixture]
+public class InternalTimerTests
 {
-    [TestFixture]
-    public class InternalTimerTests
+    private Mock<IRequestBus> requestBus;
+    private Mock<ITimer> timer;
+    private TimeAssertion timeAssertion;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Mock<IMediator> mediator;
-        private Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer> timer;
-        private TimeAssertion timeAssertion;
+        timeAssertion = new TimeAssertion();
 
-        [SetUp]
-        public void SetUp()
-        {
-            timeAssertion = new TimeAssertion();
+        requestBus = new Mock<IRequestBus>();
+        requestBus
+            .Setup(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()))
+            .Callback<IRequest<MediatR.Unit>, CancellationToken>((request, cancellationToken) => timeAssertion.Signal());
 
-            mediator = new Mock<IMediator>();
-            mediator
-                .Setup(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()))
-                .Callback<IRequest<MediatR.Unit>, CancellationToken>((request, cancellationToken) => timeAssertion.Signal());
+        timer = new Mock<ITimer>();
+    }
 
-            timer = new Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer>();
-        }
+    [TearDown]
+    public void TearDown()
+    {
+        timeAssertion.Dispose();
+    }
 
-        [TearDown]
-        public void TearDown()
-        {
-            timeAssertion.Dispose();
-        }
+    [Test]
+    public void HavingRecorderJobRunning_WhenTimerIsTriggered_ThenStampRequestIsSentToMediator()
+    {
+        RecorderJob recorderJob = new(requestBus.Object, timer.Object);
+        recorderJob.Start();
 
-        [Test]
-        public void HavingRecorderJobRunning_WhenTimerIsTriggered_ThenStampRequestIsSentToMediator()
-        {
-            RecorderJob recorderJob = new RecorderJob(mediator.Object, timer.Object);
-            recorderJob.Start();
+        requestBus.Invocations.Clear();
 
-            mediator.Invocations.Clear();
+        timer.Raise(x => x.Tick += null, EventArgs.Empty);
 
-            timer.Raise(x => x.Tick += null, EventArgs.Empty);
-
-            mediator.Verify(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()), Times.Once);
-        }
+        requestBus.Verify(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

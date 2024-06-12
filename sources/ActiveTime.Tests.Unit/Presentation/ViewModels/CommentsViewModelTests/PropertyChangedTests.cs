@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,101 +19,100 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
-using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.CommentsViewModelTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.CommentsViewModelTests;
+
+[TestFixture]
+public class PropertyChangedTests
 {
-    [TestFixture]
-    public class PropertyChangedTests
+    private CommentsViewModel viewModel;
+
+    [SetUp]
+    public void SetUp()
     {
-        private CommentsViewModel viewModel;
+        Mock<IRequestBus> requestBus = new();
 
-        [SetUp]
-        public void SetUp()
+        PresentCommentsResponse presentCommentsResponse = new()
         {
-            Mock<IMediator> mediator = new Mock<IMediator>();
+            Comments = "ha ha ha"
+        };
+        requestBus
+            .Setup(x => x.Send(It.IsAny<PresentCommentsRequest>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(presentCommentsResponse));
 
-            PresentCommentsResponse presentCommentsResponse = new PresentCommentsResponse
-            {
-                Comments = "ha ha ha"
-            };
-            mediator
-                .Setup(x => x.Send(It.IsAny<PresentCommentsRequest>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(presentCommentsResponse));
+        EventBus eventBus = new();
+        ResetCommentsCommand resetCommentsCommand = new(requestBus.Object, eventBus);
+        SaveCommentsCommand saveCommentsCommand = new(requestBus.Object, eventBus);
 
-            EventBus eventBus = new EventBus();
-            ResetCommentsCommand resetCommentsCommand = new ResetCommentsCommand(mediator.Object, eventBus);
-            SaveCommentsCommand saveCommentsCommand = new SaveCommentsCommand(mediator.Object, eventBus);
+        viewModel = new CommentsViewModel(requestBus.Object, eventBus, resetCommentsCommand, saveCommentsCommand);
+    }
 
-            viewModel = new CommentsViewModel(mediator.Object, resetCommentsCommand, saveCommentsCommand);
-        }
+    #region CommentTextWrap Property
 
-        #region CommentTextWrap Property
+    [Test]
+    public void CommentTextWrap_is_initially_true()
+    {
+        Assert.That(viewModel.CommentTextWrap, Is.True);
+    }
 
-        [Test]
-        public void CommentTextWrap_is_initially_true()
-        {
-            Assert.That(viewModel.CommentTextWrap, Is.True);
-        }
+    [Test]
+    public void CommentTextWrap_raises_PropertyChanged_event()
+    {
+        bool eventWasCalled = false;
+        viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
 
-        [Test]
-        public void CommentTextWrap_raises_PropertyChanged_event()
-        {
-            bool eventWasCalled = false;
-            viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
+        viewModel.CommentTextWrap = false;
 
-            viewModel.CommentTextWrap = false;
+        Assert.That(eventWasCalled, Is.True);
+    }
 
-            Assert.That(eventWasCalled, Is.True);
-        }
+    [Test]
+    public void CommentTextWrap_raises_PropertyChanged_event_with_correct_PropertyName()
+    {
+        string propertyName = null;
+        viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
 
-        [Test]
-        public void CommentTextWrap_raises_PropertyChanged_event_with_correct_PropertyName()
-        {
-            string propertyName = null;
-            viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
+        viewModel.CommentTextWrap = false;
 
-            viewModel.CommentTextWrap = false;
+        Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.CommentTextWrap)));
+    }
 
-            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.CommentTextWrap)));
-        }
+    #endregion
 
-        #endregion
+    #region Comments Property
 
-        #region Comments Property
+    [Test]
+    public void Comment_raises_PropertyChanged_event()
+    {
+        bool eventWasCalled = false;
+        viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
 
-        [Test]
-        public void Comment_raises_PropertyChanged_event()
-        {
-            bool eventWasCalled = false;
-            viewModel.PropertyChanged += (s, e) => { eventWasCalled = true; };
+        viewModel.Comments = "some comment";
 
-            viewModel.Comments = "some comment";
+        Assert.That(eventWasCalled, Is.True);
+    }
 
-            Assert.That(eventWasCalled, Is.True);
-        }
+    [Test]
+    public void Comment_raises_PropertyChanged_event_with_correct_PropertyName()
+    {
+        string propertyName = null;
+        viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
 
-        [Test]
-        public void Comment_raises_PropertyChanged_event_with_correct_PropertyName()
-        {
-            string propertyName = null;
-            viewModel.PropertyChanged += (s, e) => { propertyName = e.PropertyName; };
+        viewModel.Comments = "some comment";
 
-            viewModel.Comments = "some comment";
+        Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.Comments)));
+    }
 
-            Assert.That(propertyName, Is.EqualTo(GetNameOfMember(() => viewModel.Comments)));
-        }
+    #endregion
 
-        #endregion
-
-        private static string GetNameOfMember<T>(Expression<Func<T>> action)
-        {
-            return ((MemberExpression)action.Body).Member.Name;
-        }
+    private static string GetNameOfMember<T>(Expression<Func<T>> action)
+    {
+        return ((MemberExpression)action.Body).Member.Name;
     }
 }

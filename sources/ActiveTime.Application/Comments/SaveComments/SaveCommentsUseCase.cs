@@ -41,6 +41,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.SaveComments
                 DateTime currentDate = currentDay.Date;
                 DateRecord dateRecord = GetOrCreateDateRecordFromDb(currentDate);
                 dateRecord.Comment = currentDay.Comments;
+                unitOfWork.DateRecordRepository.Update(dateRecord);
 
                 unitOfWork.Commit();
 

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,69 +19,68 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.TimeRecords.PresentTimeRecords;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.ViewModels;
+
+public class DayRecordsViewModel : ViewModelBase
 {
-    public class DayRecordsViewModel : ViewModelBase
+    private readonly IRequestBus requestBus;
+
+    private DayTimeInterval[] records;
+
+    public DayTimeInterval[] Records
     {
-        private readonly IMediator mediator;
-
-        private DayTimeInterval[] records;
-
-        public DayTimeInterval[] Records
+        get => records;
+        private set
         {
-            get => records;
-            private set
-            {
-                records = value;
-                OnPropertyChanged();
-            }
+            records = value;
+            OnPropertyChanged();
         }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DayRecordsViewModel"/> class.
-        /// </summary>
-        public DayRecordsViewModel(IMediator mediator, EventBus eventBus)
-        {
-            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DayRecordsViewModel"/> class.
+    /// </summary>
+    public DayRecordsViewModel(IRequestBus requestBus, EventBus eventBus)
+    {
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-            _ = Initialize();
+        _ = Initialize();
 
-            eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
-            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
-            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
-            eventBus.Subscribe(EventNames.Recorder.Stamped, HandleRecorderStamped);
-        }
+        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+        eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
+        eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+        eventBus.Subscribe(EventNames.Recorder.Stamped, HandleRecorderStamped);
+    }
 
-        private void HandleCurrentDateChanged(EventParameters parameters)
-        {
-            _ = Initialize();
-        }
+    private void HandleCurrentDateChanged(EventParameters parameters)
+    {
+        _ = Initialize();
+    }
 
-        private void HandleRecorderStarted(EventParameters parameters)
-        {
-            _ = Initialize();
-        }
+    private void HandleRecorderStarted(EventParameters parameters)
+    {
+        _ = Initialize();
+    }
 
-        private void HandleRecorderStopped(EventParameters parameters)
-        {
-            _ = Initialize();
-        }
+    private void HandleRecorderStopped(EventParameters parameters)
+    {
+        _ = Initialize();
+    }
 
-        private void HandleRecorderStamped(EventParameters parameters)
-        {
-            _ = Initialize();
-        }
+    private void HandleRecorderStamped(EventParameters parameters)
+    {
+        _ = Initialize();
+    }
 
-        private async Task Initialize()
-        {
-            PresentTimeRecordsRequest request = new PresentTimeRecordsRequest();
-            PresentTimeRecordsResponse response = await mediator.Send(request);
+    private async Task Initialize()
+    {
+        PresentTimeRecordsRequest request = new();
+        PresentTimeRecordsResponse response = await requestBus.Send<PresentTimeRecordsRequest, PresentTimeRecordsResponse>(request);
 
-            Records = response.Records;
-        }
+        Records = response.Records;
     }
 }

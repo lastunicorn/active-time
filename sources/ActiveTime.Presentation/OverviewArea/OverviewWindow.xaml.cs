@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2024 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,23 +16,21 @@
 
 using System;
 using System.Windows;
-using Autofac;
-using DustInTheWind.ActiveTime.Presentation.Services;
 
-namespace DustInTheWind.ActiveTime;
-
-internal class AutofacWindowFactory : IWindowFactory
+namespace DustInTheWind.ActiveTime.Presentation.OverviewArea
 {
-    private readonly IComponentContext context;
-
-    public AutofacWindowFactory(IComponentContext context)
+    /// <summary>
+    /// Interaction logic for OverviewWindow.xaml
+    /// </summary>
+    public partial class OverviewWindow : Window
     {
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
-    }
+        public OverviewWindow(OverviewViewModel viewModel)
+        {
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-    public Window Create(Type type)
-    {
-        ILifetimeScope parentLifetimeScope = context.Resolve<ILifetimeScope>();
-        return (Window)parentLifetimeScope.Resolve(type);
+            InitializeComponent();
+
+            DataContext = viewModel;
+        }
     }
 }

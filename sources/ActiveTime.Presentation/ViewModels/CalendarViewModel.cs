@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,66 +19,65 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
 using DustInTheWind.ActiveTime.Application.CurrentDate.PresentCalendar;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.ViewModels;
+
+public class CalendarViewModel : ViewModelBase
 {
-    public class CalendarViewModel : ViewModelBase
+    private readonly IRequestBus requestBus;
+
+    private DateTime date;
+
+    public DateTime Date
     {
-        private readonly IMediator mediator;
-
-        private DateTime date;
-
-        public DateTime Date
+        get => date;
+        set
         {
-            get => date;
-            set
-            {
-                if (date == value)
-                    return;
+            if (date == value)
+                return;
 
-                date = value;
-                OnPropertyChanged();
+            date = value;
+            OnPropertyChanged();
 
-                if (!IsInitializeMode)
-                    UpdateDate(value).Wait();
-            }
+            if (!IsInitializing)
+                UpdateDate(value).Wait();
         }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CalendarViewModel"/> class.
-        /// </summary>
-        public CalendarViewModel(IMediator mediator, EventBus eventBus)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CalendarViewModel"/> class.
+    /// </summary>
+    public CalendarViewModel(IRequestBus requestBus, EventBus eventBus)
+    {
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+
+        _ = Initialize();
+
+        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+    }
+
+    private void HandleCurrentDateChanged(EventParameters parameters)
+    {
+        RunAsInitialization(() => Date = parameters.Get<DateTime>("Date"));
+    }
+
+    private async Task Initialize()
+    {
+        PresentCalendarRequest request = new();
+        PresentCalendarResponse response = await requestBus.Send<PresentCalendarRequest, PresentCalendarResponse>(request);
+
+        RunAsInitialization(() => Date = response.Date);
+    }
+
+    private async Task UpdateDate(DateTime? value)
+    {
+        ChangeDateRequest request = new()
         {
-            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-
-            _ = Initialize();
-
-            eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
-        }
-
-        private void HandleCurrentDateChanged(EventParameters parameters)
-        {
-            RunInInitializeMode(() => Date = parameters.Get<DateTime>("Date"));
-        }
-
-        private async Task Initialize()
-        {
-            PresentCalendarRequest request = new PresentCalendarRequest();
-            PresentCalendarResponse response = await mediator.Send(request);
-
-            RunInInitializeMode(() => Date = response.Date);
-        }
-
-        private async Task UpdateDate(DateTime? value)
-        {
-            ChangeDateRequest request = new ChangeDateRequest
-            {
-                Date = value
-            };
-            await mediator.Send(request);
-        }
+            Date = value
+        };
+        await requestBus.Send(request);
     }
 }

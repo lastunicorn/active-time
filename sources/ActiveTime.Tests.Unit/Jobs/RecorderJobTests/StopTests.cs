@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,36 +17,34 @@
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Jobs;
-using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests;
+
+[TestFixture]
+public class StopTests
 {
-    [TestFixture]
-    public class StopTests
+    private Mock<IRequestBus> requestBus;
+    private Mock<ITimer> timer;
+    private RecorderJob recorderJob;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Mock<IMediator> mediator;
-        private Mock<ITimer> timer;
-        private RecorderJob recorderJob;
+        requestBus = new Mock<IRequestBus>();
+        timer = new Mock<ITimer>();
 
-        [SetUp]
-        public void SetUp()
-        {
-            mediator = new Mock<IMediator>();
-            timer = new Mock<ITimer>();
+        recorderJob = new RecorderJob(requestBus.Object, timer.Object);
+    }
 
-            recorderJob = new RecorderJob(mediator.Object, timer.Object);
-        }
+    [Test]
+    public void HavingARunningJob_WhenStopped_ThenStateIsStopped()
+    {
+        recorderJob.Start();
 
-        [Test]
-        public void HavingARunningJob_WhenStopped_ThenStateIsStopped()
-        {
-            recorderJob.Start();
+        recorderJob.Stop();
 
-            recorderJob.Stop();
-
-            Assert.That(recorderJob.State, Is.EqualTo(JobState.Stopped));
-        }
+        Assert.That(recorderJob.State, Is.EqualTo(JobState.Stopped));
     }
 }

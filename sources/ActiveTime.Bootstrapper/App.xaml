@@ -1,6 +1,6 @@
 ﻿<!--
 ActiveTime
-Copyright (C) 2011-2020 Dust in the Wind
+Copyright (C) 2011-2024 Dust in the Wind
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Presentation.Views;assembly=DustInTheWind.ActiveTime.Presentation"
+    xmlns:aboutArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.AboutArea;assembly=DustInTheWind.ActiveTime.Presentation"
+    xmlns:overviewArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.OverviewArea;assembly=DustInTheWind.ActiveTime.Presentation"
 
     ShutdownMode="OnExplicitShutdown">
 
@@ -32,10 +34,10 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="{x:Type views:MainWindow}" BasedOn="{StaticResource WindowStyle}" />
-            <Style TargetType="{x:Type views:AboutWindow}" BasedOn="{StaticResource WindowStyle}" />
+            <Style TargetType="{x:Type aboutArea:AboutWindow}" BasedOn="{StaticResource WindowStyle}" />
             <Style TargetType="{x:Type views:CalendarWindow}" BasedOn="{StaticResource WindowStyle}" />
             <Style TargetType="{x:Type views:MessageWindow}" BasedOn="{StaticResource WindowStyle}" />
-            <Style TargetType="{x:Type views:OverviewWindow}" BasedOn="{StaticResource WindowStyle}" />
+            <Style TargetType="{x:Type overviewArea:OverviewWindow}" BasedOn="{StaticResource WindowStyle}" />
         </ResourceDictionary>
     </Application.Resources>
 

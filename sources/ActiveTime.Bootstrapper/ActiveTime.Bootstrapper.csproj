@@ -5,7 +5,7 @@
         <TargetFramework>net8.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <AssemblyName>DustInTheWind.ActiveTime.Bootstrapper</AssemblyName>
-        <RootNamespace>DustInTheWind.ActiveTime.Bootstrapper</RootNamespace>
+        <RootNamespace>DustInTheWind.ActiveTime</RootNamespace>
         <ApplicationIcon>icon.ico</ApplicationIcon>
     </PropertyGroup>
 

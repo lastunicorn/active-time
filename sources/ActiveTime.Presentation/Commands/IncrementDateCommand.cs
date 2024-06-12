@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,33 +17,32 @@
 using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.CurrentDate.IncrementDate;
-using MediatR;
+using DustInTheWind.ActiveTime.Infrastructure;
 
-namespace DustInTheWind.ActiveTime.Presentation.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Commands;
+
+public class IncrementDateCommand : CommandBase
 {
-    public class IncrementDateCommand : CommandBase
+    private readonly IRequestBus requestBus;
+
+    public IncrementDateCommand(IRequestBus requestBus)
     {
-        private readonly IMediator mediator;
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+    }
 
-        public IncrementDateCommand(IMediator mediator)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
+    public override bool CanExecute(object parameter)
+    {
+        return true;
+    }
 
-        public override bool CanExecute(object parameter)
-        {
-            return true;
-        }
+    public override void Execute(object parameter)
+    {
+        _ = IncrementDate();
+    }
 
-        public override void Execute(object parameter)
-        {
-            _ = IncrementDate();
-        }
-
-        private async Task IncrementDate()
-        {
-            IncrementDateRequest request = new IncrementDateRequest();
-            await mediator.Send(request);
-        }
+    private async Task IncrementDate()
+    {
+        IncrementDateRequest request = new();
+        await requestBus.Send(request);
     }
 }

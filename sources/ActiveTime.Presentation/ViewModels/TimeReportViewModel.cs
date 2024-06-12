@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,102 +19,101 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.ViewModels;
+
+public class TimeReportViewModel : ViewModelBase
 {
-    public class TimeReportViewModel : ViewModelBase
+    private readonly IRequestBus requestBus;
+    private readonly ILogger logger;
+
+    private TimeSpan activeTime;
+
+    public TimeSpan ActiveTime
     {
-        private readonly IMediator mediator;
-        private readonly ILogger logger;
-
-        private TimeSpan activeTime;
-
-        public TimeSpan ActiveTime
+        get => activeTime;
+        private set
         {
-            get => activeTime;
-            private set
-            {
-                activeTime = value;
-                OnPropertyChanged();
-            }
+            activeTime = value;
+            OnPropertyChanged();
         }
+    }
 
-        private TimeSpan totalTime;
+    private TimeSpan totalTime;
 
-        public TimeSpan TotalTime
+    public TimeSpan TotalTime
+    {
+        get => totalTime;
+        private set
         {
-            get => totalTime;
-            private set
-            {
-                totalTime = value;
-                OnPropertyChanged();
-            }
+            totalTime = value;
+            OnPropertyChanged();
         }
+    }
 
-        private TimeSpan? beginTime;
+    private TimeSpan? beginTime;
 
-        public TimeSpan? BeginTime
+    public TimeSpan? BeginTime
+    {
+        get => beginTime;
+        set
         {
-            get => beginTime;
-            set
-            {
-                beginTime = value;
-                OnPropertyChanged();
-            }
+            beginTime = value;
+            OnPropertyChanged();
         }
+    }
 
-        private TimeSpan? estimatedEndTime;
+    private TimeSpan? estimatedEndTime;
 
-        public TimeSpan? EstimatedEndTime
+    public TimeSpan? EstimatedEndTime
+    {
+        get => estimatedEndTime;
+        set
         {
-            get => estimatedEndTime;
-            set
-            {
-                estimatedEndTime = value;
-                OnPropertyChanged();
-            }
+            estimatedEndTime = value;
+            OnPropertyChanged();
         }
+    }
 
-        public TimeReportViewModel(IMediator mediator, EventBus eventBus, ILogger logger)
+    public TimeReportViewModel(IRequestBus requestBus, EventBus eventBus, ILogger logger)
+    {
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+        eventBus.Subscribe(EventNames.Recorder.Stamped, HandleStamped);
+
+        _ = Initialize();
+    }
+
+    private void HandleCurrentDateChanged(EventParameters parameters)
+    {
+        _ = Initialize();
+    }
+
+    private void HandleStamped(EventParameters parameters)
+    {
+        _ = Initialize();
+    }
+
+    private async Task Initialize()
+    {
+        try
         {
-            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            PresentTimeReportRequest request = new();
+            PresentTimeReportResponse response = await requestBus.Send<PresentTimeReportRequest, PresentTimeReportResponse>(request);
 
-            eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
-            eventBus.Subscribe(EventNames.Recorder.Stamped, HandleStamped);
-
-            _ = Initialize();
+            ActiveTime = response.ActiveTime;
+            TotalTime = response.TotalTime;
+            BeginTime = response.BeginTime;
+            EstimatedEndTime = response.EstimatedEndTime;
         }
-
-        private void HandleCurrentDateChanged(EventParameters parameters)
+        catch (Exception ex)
         {
-            _ = Initialize();
-        }
-
-        private void HandleStamped(EventParameters parameters)
-        {
-            _ = Initialize();
-        }
-
-        private async Task Initialize()
-        {
-            try
-            {
-                PresentTimeReportRequest request = new PresentTimeReportRequest();
-                PresentTimeReportResponse response = await mediator.Send(request);
-
-                ActiveTime = response.ActiveTime;
-                TotalTime = response.TotalTime;
-                BeginTime = response.BeginTime;
-                EstimatedEndTime = response.EstimatedEndTime;
-            }
-            catch (Exception ex)
-            {
-                logger.Log("ERROR: " + ex);
-            }
+            logger.Log("ERROR: " + ex);
         }
     }
 }

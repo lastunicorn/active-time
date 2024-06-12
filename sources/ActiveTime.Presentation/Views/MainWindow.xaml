@@ -25,6 +25,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Presentation.Views"
     xmlns:viewModels="clr-namespace:DustInTheWind.ActiveTime.Presentation.ViewModels"
+    xmlns:mainMenuArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainMenuArea"
 
     Title="{Binding Path=WindowTitle}"
     Height="500"
@@ -41,7 +42,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <DockPanel>
 
-        <views:MainMenuView DockPanel.Dock="Top" DataContext="{Binding MainMenuViewModel}"/>
+        <mainMenuArea:MainMenuView DockPanel.Dock="Top" DataContext="{Binding MainMenuViewModel}"/>
 
         <views:StatusInfoView DockPanel.Dock="Bottom" DataContext="{Binding StatusInfoViewModel}"/>
 

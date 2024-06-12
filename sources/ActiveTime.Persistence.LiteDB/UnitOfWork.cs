@@ -26,13 +26,14 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
     {
         public const string ConnectionString = Constants.DatabaseFileName;
 
-        private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim Semaphore = new(1, 1);
 
         private bool isDisposed;
 
         private LiteDatabase database;
-
         private TimeRecordRepository timeRecordRepository;
+        private DateRecordRepository dateRecordRepository;
+
         public ITimeRecordRepository TimeRecordRepository
         {
             get
@@ -40,14 +41,10 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
                 if (isDisposed)
                     throw new ObjectDisposedException(nameof(UnitOfWork));
 
-                if (timeRecordRepository == null)
-                    timeRecordRepository = new TimeRecordRepository(database);
-
-                return timeRecordRepository;
+                return timeRecordRepository ??= new TimeRecordRepository(database);
             }
         }
 
-        private DateRecordRepository dateRecordRepository;
         public IDateRecordRepository DateRecordRepository
         {
             get
@@ -55,10 +52,7 @@ namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
                 if (isDisposed)
                     throw new ObjectDisposedException(nameof(UnitOfWork));
 
-                if (dateRecordRepository == null)
-                    dateRecordRepository = new DateRecordRepository(database);
-
-                return dateRecordRepository;
+                return dateRecordRepository ??= new DateRecordRepository(database);
             }
         }
 

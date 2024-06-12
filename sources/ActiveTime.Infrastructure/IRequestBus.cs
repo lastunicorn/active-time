@@ -14,25 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows;
-using Autofac;
-using DustInTheWind.ActiveTime.Presentation.Services;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Infrastructure;
 
-internal class AutofacWindowFactory : IWindowFactory
+public interface IRequestBus
 {
-    private readonly IComponentContext context;
+    Task<TResponse> Send<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default);
 
-    public AutofacWindowFactory(IComponentContext context)
-    {
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
-    }
-
-    public Window Create(Type type)
-    {
-        ILifetimeScope parentLifetimeScope = context.Resolve<ILifetimeScope>();
-        return (Window)parentLifetimeScope.Resolve(type);
-    }
+    Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default);
 }

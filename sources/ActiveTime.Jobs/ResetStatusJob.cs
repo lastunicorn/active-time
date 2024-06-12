@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,26 +20,24 @@ using DustInTheWind.ActiveTime.Application.Miscellaneous.ResetStatus;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Jobs
+namespace DustInTheWind.ActiveTime.Jobs;
+
+public class ResetStatusJob : OneTimeJob
 {
-    public class ResetStatusJob : OneTimeJob
+    private readonly IRequestBus requestBus;
+
+    public override string Id { get; } = JobNames.ResetStatus;
+
+    public ResetStatusJob(IRequestBus requestBus, ITimer timer)
+        : base(timer)
     {
-        private readonly IMediator mediator;
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+    }
 
-        public override string Id { get; } = JobNames.ResetStatus;
-
-        public ResetStatusJob(IMediator mediator, ITimer timer)
-            : base(timer)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
-        protected override async Task DoExecute()
-        {
-            ResetStatusRequest stampRequest = new ResetStatusRequest();
-            await mediator.Send(stampRequest);
-        }
+    protected override async Task DoExecute()
+    {
+        ResetStatusRequest stampRequest = new();
+        await requestBus.Send(stampRequest);
     }
 }

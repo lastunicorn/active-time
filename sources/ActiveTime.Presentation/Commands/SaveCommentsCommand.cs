@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,42 +18,41 @@ using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Comments.SaveComments;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Commands;
+
+public class SaveCommentsCommand : CommandBase
 {
-    public class SaveCommentsCommand : CommandBase
+    private readonly IRequestBus requestBus;
+
+    public SaveCommentsCommand(IRequestBus requestBus, EventBus eventBus)
     {
-        private readonly IMediator mediator;
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        public SaveCommentsCommand(IMediator mediator, EventBus eventBus)
-        {
-            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        eventBus.Subscribe(EventNames.CurrentDate.CommentChanged, HandleCurrentDayCommentChanged);
+    }
 
-            eventBus.Subscribe(EventNames.CurrentDate.CommentChanged, HandleCurrentDayCommentChanged);
-        }
+    private void HandleCurrentDayCommentChanged(EventParameters parameters)
+    {
+        OnCanExecuteChanged();
+    }
 
-        private void HandleCurrentDayCommentChanged(EventParameters parameters)
-        {
-            OnCanExecuteChanged();
-        }
+    public override bool CanExecute(object parameter)
+    {
+        return true;
+    }
 
-        public override bool CanExecute(object parameter)
-        {
-            return true;
-        }
+    public override void Execute(object parameter)
+    {
+        _ = SaveComments();
+    }
 
-        public override void Execute(object parameter)
-        {
-            _ = SaveComments();
-        }
-
-        private async Task SaveComments()
-        {
-            SaveCommentsRequest request = new SaveCommentsRequest();
-            await mediator.Send(request);
-        }
+    private async Task SaveComments()
+    {
+        SaveCommentsRequest request = new();
+        await requestBus.Send(request);
     }
 }

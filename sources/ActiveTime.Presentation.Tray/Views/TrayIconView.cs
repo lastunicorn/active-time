@@ -30,7 +30,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Views
             Presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
-            
+
             toolStripMenuItemShow.Command = presenter.ShowCommand;
             toolStripMenuItemStart.Command = presenter.StartRecorderCommand;
             toolStripMenuItemStop.Command = presenter.StopRecorderCommand;

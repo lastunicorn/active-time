@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,78 +20,77 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands;
+
+public class StartRecorderCommand : ICommand
 {
-    public class StartRecorderCommand : ICommand
+    private readonly IRequestBus requestBus;
+    private readonly ILogger logger;
+
+    private JobState recorderState = JobState.Stopped;
+
+    public JobState RecorderState
     {
-        private readonly IMediator mediator;
-        private readonly ILogger logger;
-        
-        private JobState recorderState = JobState.Stopped;
-
-        public JobState RecorderState
+        get => recorderState;
+        set
         {
-            get => recorderState;
-            set
-            {
-                recorderState = value;
-                OnCanExecuteChanged();
-            }
+            recorderState = value;
+            OnCanExecuteChanged();
         }
+    }
 
-        public event EventHandler CanExecuteChanged;
+    public event EventHandler CanExecuteChanged;
 
-        public StartRecorderCommand(IMediator mediator, ILogger logger, EventBus eventBus)
+    public StartRecorderCommand(IRequestBus requestBus, ILogger logger, EventBus eventBus)
+    {
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+        eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
+        eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+    }
+
+    private void HandleRecorderStarted(EventParameters parameters)
+    {
+        RecorderState = JobState.Running;
+    }
+
+    private void HandleRecorderStopped(EventParameters parameters)
+    {
+        RecorderState = JobState.Stopped;
+    }
+
+    public bool CanExecute(object parameter)
+    {
+        return RecorderState == JobState.Stopped;
+    }
+
+    public void Execute(object parameter)
+    {
+        _ = StartRecording();
+    }
+
+    private async Task StartRecording()
+    {
+        StartRecordingRequest request = new();
+
+        try
         {
-            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
-            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
-            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+            await requestBus.Send(request);
         }
-
-        private void HandleRecorderStarted(EventParameters parameters)
+        catch (Exception ex)
         {
-            RecorderState = JobState.Running;
+            logger.Log("ERROR: " + ex);
         }
+    }
 
-        private void HandleRecorderStopped(EventParameters parameters)
-        {
-            RecorderState = JobState.Stopped;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return RecorderState == JobState.Stopped;
-        }
-
-        public void Execute(object parameter)
-        {
-            _ = StartRecording();
-        }
-
-        private async Task StartRecording()
-        {
-            StartRecordingRequest request = new StartRecordingRequest();
-
-            try
-            {
-                await mediator.Send(request);
-            }
-            catch (Exception ex)
-            {
-                logger.Log("ERROR: " + ex);
-            }
-        }
-
-        protected virtual void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+    protected virtual void OnCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

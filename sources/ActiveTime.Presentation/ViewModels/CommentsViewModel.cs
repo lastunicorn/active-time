@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,70 +18,91 @@ using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
+using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.ViewModels;
+
+public class CommentsViewModel : ViewModelBase
 {
-    public class CommentsViewModel : ViewModelBase
+    private readonly IRequestBus requestBus;
+
+    private string comments;
+
+    public string Comments
     {
-        private readonly IMediator mediator;
-
-        private string comments;
-
-        public string Comments
+        get => comments;
+        set
         {
-            get => comments;
-            set
-            {
-                comments = value;
-                OnPropertyChanged();
+            comments = value;
+            OnPropertyChanged();
 
+            if (!IsInitializing)
                 _ = ChangeComments(value);
-            }
         }
+    }
 
-        private bool commentTextWrap = true;
+    private bool commentTextWrap = true;
 
-        public bool CommentTextWrap
+    public bool CommentTextWrap
+    {
+        get => commentTextWrap;
+        set
         {
-            get => commentTextWrap;
-            set
-            {
-                commentTextWrap = value;
-                OnPropertyChanged();
-            }
+            commentTextWrap = value;
+            OnPropertyChanged();
         }
+    }
 
-        public ResetCommentsCommand ResetCommentsCommand { get; }
+    public ResetCommentsCommand ResetCommentsCommand { get; }
 
-        public SaveCommentsCommand SaveCommentsCommand { get; }
+    public SaveCommentsCommand SaveCommentsCommand { get; }
 
-        public CommentsViewModel(IMediator mediator, ResetCommentsCommand resetCommentsCommand, SaveCommentsCommand saveCommentsCommand)
+    public CommentsViewModel(IRequestBus requestBus, EventBus eventBus,
+        ResetCommentsCommand resetCommentsCommand, SaveCommentsCommand saveCommentsCommand)
+    {
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+
+        ResetCommentsCommand = resetCommentsCommand ?? throw new ArgumentNullException(nameof(resetCommentsCommand));
+        SaveCommentsCommand = saveCommentsCommand ?? throw new ArgumentNullException(nameof(saveCommentsCommand));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+
+        eventBus.Subscribe(EventNames.CurrentDate.CurrentDateChanged, HandleCurrentDateChanged);
+        eventBus.Subscribe(EventNames.CurrentDate.CommentChanged, HandleCommentChanged);
+
+        _ = Initialize();
+    }
+
+    private void HandleCurrentDateChanged(EventParameters ev)
+    {
+        _ = Initialize();
+    }
+
+    private void HandleCommentChanged(EventParameters ev)
+    {
+        _ = Initialize();
+    }
+
+    private async Task Initialize()
+    {
+        PresentCommentsRequest request = new();
+        PresentCommentsResponse response = await requestBus.Send<PresentCommentsRequest, PresentCommentsResponse>(request);
+
+        RunAsInitialization(() =>
         {
-            ResetCommentsCommand = resetCommentsCommand ?? throw new ArgumentNullException(nameof(resetCommentsCommand));
-            SaveCommentsCommand = saveCommentsCommand ?? throw new ArgumentNullException(nameof(saveCommentsCommand));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-
-            _ = Initialize();
-        }
-
-        private async Task Initialize()
-        {
-            PresentCommentsRequest request = new PresentCommentsRequest();
-            PresentCommentsResponse response = await mediator.Send(request);
-
             Comments = response.Comments;
-        }
+        });
+    }
 
-        private async Task ChangeComments(string value)
+    private async Task ChangeComments(string value)
+    {
+        ChangeCommentsRequest request = new()
         {
-            ChangeCommentsRequest request = new ChangeCommentsRequest
-            {
-                Comments = value
-            };
+            Comments = value
+        };
 
-            await mediator.Send(request);
-        }
+        await requestBus.Send(request);
     }
 }

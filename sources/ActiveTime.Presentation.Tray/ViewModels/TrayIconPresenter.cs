@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,117 +22,116 @@ using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Presentation.Tray.Commands;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
-using MediatR;
 
-namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
+
+public class TrayIconPresenter
 {
-    public class TrayIconPresenter
+    private ITrayIconView view;
+
+    public ITrayIconView View
     {
-        private ITrayIconView view;
-
-        public ITrayIconView View
+        get => view;
+        set
         {
-            get => view;
-            set
-            {
-                view = value;
-                if (view != null) Initialize();
-            }
+            view = value;
+            if (view != null) Initialize();
         }
+    }
 
-        public ShowCommand ShowCommand { get; }
+    public ShowCommand ShowCommand { get; }
 
-        public StartRecorderCommand StartRecorderCommand { get; }
+    public StartRecorderCommand StartRecorderCommand { get; }
 
-        public StopRecorderCommand StopRecorderCommand { get; }
+    public StopRecorderCommand StopRecorderCommand { get; }
 
-        public AboutCommand AboutCommand { get; }
+    public AboutCommand AboutCommand { get; }
 
-        public ExitCommand ExitCommand { get; }
+    public ExitCommand ExitCommand { get; }
 
-        private readonly IShellNavigator shellNavigator;
-        private readonly IMediator mediator;
+    private readonly IShellNavigator shellNavigator;
+    private readonly IRequestBus requestBus;
 
-        public TrayIconPresenter(IApplicationService applicationService, IShellNavigator shellNavigator,
-            IMediator mediator, ILogger logger, EventBus eventBus)
-        {
-            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
-            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+    public TrayIconPresenter(IApplicationService applicationService, IShellNavigator shellNavigator,
+        IRequestBus requestBus, ILogger logger, EventBus eventBus)
+    {
+        if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+        if (logger == null) throw new ArgumentNullException(nameof(logger));
+        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-            ShowCommand = new ShowCommand(shellNavigator);
-            StartRecorderCommand = new StartRecorderCommand(mediator, logger, eventBus);
-            StopRecorderCommand = new StopRecorderCommand(mediator, logger, eventBus);
-            AboutCommand = new AboutCommand(shellNavigator);
-            ExitCommand = new ExitCommand(applicationService);
+        ShowCommand = new ShowCommand(shellNavigator);
+        StartRecorderCommand = new StartRecorderCommand(requestBus, logger, eventBus);
+        StopRecorderCommand = new StopRecorderCommand(requestBus, logger, eventBus);
+        AboutCommand = new AboutCommand(shellNavigator);
+        ExitCommand = new ExitCommand(applicationService);
 
-            eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
-            eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
-        }
+        eventBus.Subscribe(EventNames.Recorder.Started, HandleRecorderStarted);
+        eventBus.Subscribe(EventNames.Recorder.Stopped, HandleRecorderStopped);
+    }
 
-        private void HandleRecorderStarted(EventParameters parameters)
-        {
+    private void HandleRecorderStarted(EventParameters parameters)
+    {
+        SetIconOn();
+    }
+
+    private void HandleRecorderStopped(EventParameters parameters)
+    {
+        SetIconOff();
+    }
+
+    private void Initialize()
+    {
+        _ = RefreshView();
+    }
+
+    private async Task RefreshView()
+    {
+        PresentTrayRequest request = new();
+        PresentTrayResponse response = await requestBus.Send<PresentTrayRequest, PresentTrayResponse>(request);
+
+        if (response.RecorderState == JobState.Running)
             SetIconOn();
-        }
-
-        private void HandleRecorderStopped(EventParameters parameters)
-        {
+        else
             SetIconOff();
-        }
 
-        private void Initialize()
-        {
-            _ = RefreshView();
-        }
+        StartRecorderCommand.RecorderState = response.RecorderState;
+        StopRecorderCommand.RecorderState = response.RecorderState;
+    }
 
-        private async Task RefreshView()
-        {
-            PresentTrayRequest request = new PresentTrayRequest();
-            PresentTrayResponse response = await mediator.Send(request);
+    private void SetIconOn()
+    {
+        if (View != null)
+            View.IconState = TrayIconState.On;
+    }
 
-            if (response.RecorderState == JobState.Running)
-                SetIconOn();
-            else
-                SetIconOff();
+    private void SetIconOff()
+    {
+        if (View != null)
+            View.IconState = TrayIconState.Off;
+    }
 
-            StartRecorderCommand.RecorderState = response.RecorderState;
-            StopRecorderCommand.RecorderState = response.RecorderState;
-        }
+    public void Show()
+    {
+        if (View != null)
+            View.Visible = true;
+    }
 
-        private void SetIconOn()
-        {
-            if (View != null)
-                View.IconState = TrayIconState.On;
-        }
+    public void Hide()
+    {
+        if (View != null)
+            View.Visible = false;
+    }
 
-        private void SetIconOff()
-        {
-            if (View != null)
-                View.IconState = TrayIconState.Off;
-        }
-
-        public void Show()
-        {
-            if (View != null)
-                View.Visible = true;
-        }
-
-        public void Hide()
-        {
-            if (View != null)
-                View.Visible = false;
-        }
-
-        public void LeftDoubleClicked()
-        {
-            shellNavigator.Navigate(ShellNames.MainShell);
-        }
+    public void LeftDoubleClicked()
+    {
+        shellNavigator.Navigate(ShellNames.MainShell);
     }
 }

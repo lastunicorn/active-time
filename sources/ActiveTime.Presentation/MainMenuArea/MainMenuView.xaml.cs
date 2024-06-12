@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2024 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,25 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows;
-using Autofac;
-using DustInTheWind.ActiveTime.Presentation.Services;
+using System.Windows.Controls;
 
-namespace DustInTheWind.ActiveTime;
-
-internal class AutofacWindowFactory : IWindowFactory
+namespace DustInTheWind.ActiveTime.Presentation.MainMenuArea
 {
-    private readonly IComponentContext context;
-
-    public AutofacWindowFactory(IComponentContext context)
+    /// <summary>
+    /// Interaction logic for MainMenuView.xaml
+    /// </summary>
+    internal partial class MainMenuView : UserControl
     {
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
-    }
-
-    public Window Create(Type type)
-    {
-        ILifetimeScope parentLifetimeScope = context.Resolve<ILifetimeScope>();
-        return (Window)parentLifetimeScope.Resolve(type);
+        public MainMenuView()
+        {
+            InitializeComponent();
+        }
     }
 }

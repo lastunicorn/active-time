@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,23 +16,22 @@
 
 using System;
 using DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder;
-using MediatR;
+using DustInTheWind.ActiveTime.Infrastructure;
 
-namespace DustInTheWind.ActiveTime.Presentation.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Commands;
+
+public class ToggleRecorderCommand : CommandBase
 {
-    public class ToggleRecorderCommand : CommandBase
+    private readonly IRequestBus requestBus;
+
+    public ToggleRecorderCommand(IRequestBus requestBus)
     {
-        private readonly IMediator mediator;
+        this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+    }
 
-        public ToggleRecorderCommand(IMediator mediator)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
-        public override void Execute(object parameter)
-        {
-            ToggleRecorderRequest request = new ToggleRecorderRequest();
-            mediator.Send(request);
-        }
+    public override void Execute(object parameter)
+    {
+        ToggleRecorderRequest request = new();
+        requestBus.Send(request);
     }
 }
