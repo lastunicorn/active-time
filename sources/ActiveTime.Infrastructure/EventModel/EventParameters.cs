@@ -21,7 +21,7 @@ namespace DustInTheWind.ActiveTime.Infrastructure.EventModel
 {
     public class EventParameters
     {
-        private readonly Dictionary<string, object> values = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> values = new();
 
         public T Get<T>(string name)
         {

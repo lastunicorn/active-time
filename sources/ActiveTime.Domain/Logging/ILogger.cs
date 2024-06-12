@@ -19,6 +19,7 @@ namespace DustInTheWind.ActiveTime.Common.Logging
     public interface ILogger
     {
         void Log(DateRecord value);
+        
         void Log(string message);
     }
 }

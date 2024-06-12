@@ -36,7 +36,7 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.Refresh
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
         }
 
-        public Task<Unit> Handle(RefreshRequest request, CancellationToken cancellationToken)
+        public Task Handle(RefreshRequest request, CancellationToken cancellationToken)
         {
             RaiseCurrentDateChangedEvent();
             UpdateApplicationStatus();

@@ -21,7 +21,7 @@ namespace DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
-        public Task<Unit> Handle(ChangeDateRequest request, CancellationToken cancellationToken)
+        public Task Handle(ChangeDateRequest request, CancellationToken cancellationToken)
         {
             currentDay.Date = request.Date ?? systemClock.GetCurrentDate();
             RaiseCurrentDateChangedEvent();

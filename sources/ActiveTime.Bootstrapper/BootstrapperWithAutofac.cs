@@ -30,6 +30,7 @@ using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Views;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using MediatR.Extensions.Autofac.DependencyInjection.Builder;
 using Timer = DustInTheWind.ActiveTime.Infrastructure.Timer;
 
 namespace DustInTheWind.ActiveTime
@@ -233,14 +234,16 @@ namespace DustInTheWind.ActiveTime
 
             // MediatR
             Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
-            containerBuilder.RegisterMediatR(useCasesAssembly);
+            MediatRConfiguration mediatRConfiguration = MediatRConfigurationBuilder.Create(useCasesAssembly)
+                .Build();
+            containerBuilder.RegisterMediatR(mediatRConfiguration);
 
-            containerBuilder.Register<ServiceFactory>(outerContext =>
-            {
-                ILifetimeScope parentLifetimeScope = outerContext.Resolve<ILifetimeScope>();
+            //containerBuilder.Register<ServiceFactory>(outerContext =>
+            //{
+            //    ILifetimeScope parentLifetimeScope = outerContext.Resolve<ILifetimeScope>();
 
-                return serviceType => parentLifetimeScope.BeginLifetimeScope().Resolve(serviceType);
-            });
+            //    return serviceType => parentLifetimeScope.BeginLifetimeScope().Resolve(serviceType);
+            //});
         }
 
         public void Run()

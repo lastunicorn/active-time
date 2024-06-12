@@ -27,7 +27,7 @@ namespace DustInTheWind.ActiveTime.Logging
 
         public void Log(DateRecord value)
         {
-            string message = string.Format("{0} - {1:yyyy MM dd} - {2}", value.Id, value.Date, value.Comment);
+            string message = $"{value.Id} - {value.Date:yyyy MM dd} - {value.Comment}";
             DateTime now = DateTime.Now;
 
             WriteLog(message, now);
@@ -40,11 +40,9 @@ namespace DustInTheWind.ActiveTime.Logging
             string logFileName = dateTime.ToString("yyyy MM dd") + ".log";
             string logFilePath = Path.Combine(LogDirectory, logFileName);
 
-            using (StreamWriter sw = new StreamWriter(logFilePath, true))
-            {
-                string line = string.Format("[{0:yyyy-MM-dd HH:mm:ss.fff}] {1}", dateTime, message);
-                sw.WriteLine(line);
-            }
+            using StreamWriter sw = new(logFilePath, true);
+            string line = $"[{dateTime:yyyy-MM-dd HH:mm:ss.fff}] {message}";
+            sw.WriteLine(line);
         }
 
         private static void EnsureLogDirectory()

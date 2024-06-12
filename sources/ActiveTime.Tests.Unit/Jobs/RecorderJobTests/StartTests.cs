@@ -29,14 +29,14 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
     public class StartTests
     {
         private Mock<IMediator> mediator;
-        private Mock<ITimer> timer;
+        private Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer> timer;
         private RecorderJob recorderJob;
 
         [SetUp]
         public void SetUp()
         {
             mediator = new Mock<IMediator>();
-            timer = new Mock<ITimer>();
+            timer = new Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer>();
 
             recorderJob = new RecorderJob(mediator.Object, timer.Object);
         }

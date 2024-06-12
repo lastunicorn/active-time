@@ -22,6 +22,7 @@ using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
+using FluentAssertions;
 using MediatR;
 using Moq;
 using NUnit.Framework;
@@ -65,7 +66,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
             OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
             Thread.Sleep(50);
 
-            Assert.AreEqual(new DateTime(1980, 05, 15), overviewViewModel.FirstDay);
+            overviewViewModel.FirstDay.Should().Be(new DateTime(1980, 05, 15));
         }
 
         [Test]
@@ -84,7 +85,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
             OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
             Thread.Sleep(50);
 
-            Assert.AreEqual(new DateTime(1980, 06, 13), overviewViewModel.LastDay);
+            overviewViewModel.LastDay.Should().Be(new DateTime(1980, 06, 13));
         }
 
         [Test]
@@ -103,7 +104,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
 
             OverviewViewModel overviewViewModel = new OverviewViewModel(mediator.Object, logger.Object);
 
-            Assert.IsNotNull(overviewViewModel.Comments);
+            overviewViewModel.Comments.Should().NotBeNull();
         }
 
         [Test]
@@ -143,7 +144,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
 
             overviewViewModel.FirstDay = new DateTime(2000, 06, 13);
 
-            Assert.IsTrue(eventWasRaised);
+            eventWasRaised.Should().BeTrue();
         }
 
         [Test]
@@ -161,7 +162,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels
 
             overviewViewModel.LastDay = new DateTime(2000, 06, 13);
 
-            Assert.IsTrue(eventWasRaised);
+            eventWasRaised.Should().BeTrue();
         }
     }
 }

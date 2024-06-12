@@ -20,6 +20,7 @@ using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.System;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
@@ -85,11 +86,11 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
             scribe.StampNew();
 
             timeRecordRepository.VerifyAll();
-            Assert.AreEqual(0, savedTimeRecord.Id);
-            Assert.AreEqual(TimeRecordType.Normal, savedTimeRecord.RecordType);
-            Assert.AreEqual(now.Date, savedTimeRecord.Date);
-            Assert.AreEqual(now.TimeOfDay, savedTimeRecord.StartTime);
-            Assert.AreEqual(now.TimeOfDay, savedTimeRecord.EndTime);
+            savedTimeRecord.Id.Should().Be(0);
+            savedTimeRecord.RecordType.Should().Be(TimeRecordType.Normal);
+            savedTimeRecord.Date.Should().Be(now.Date);
+            savedTimeRecord.StartTime.Should().Be(now.TimeOfDay);
+            savedTimeRecord.EndTime.Should().Be(now.TimeOfDay);
         }
 
         [Test]
@@ -107,8 +108,8 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Domain.Recording.ScribeTests
             scribe.StampNew();
 
             timeRecordRepository.VerifyAll();
-            Assert.AreEqual(2, timeRecords.Count);
-            Assert.AreNotSame(timeRecords[0], timeRecords[1]);
+            timeRecords.Count.Should().Be(2);
+            timeRecords[1].Should().NotBeSameAs(timeRecords[0]);
         }
     }
 }

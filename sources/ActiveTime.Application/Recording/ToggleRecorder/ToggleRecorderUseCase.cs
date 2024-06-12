@@ -41,7 +41,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder
             this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
         }
 
-        public Task<Unit> Handle(ToggleRecorderRequest request, CancellationToken cancellationToken)
+        public Task Handle(ToggleRecorderRequest request, CancellationToken cancellationToken)
         {
             try
             {

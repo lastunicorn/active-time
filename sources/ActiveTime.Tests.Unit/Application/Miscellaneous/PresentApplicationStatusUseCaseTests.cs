@@ -4,6 +4,7 @@ using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationStatu
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
@@ -41,7 +42,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Application.Miscellaneous
 
             PresentApplicationStatusResponse response = await ExecuteUseCase();
 
-            Assert.IsTrue(response.IsRecorderStarted);
+            response.IsRecorderStarted.Should().BeTrue();
         }
 
         [Test]
@@ -53,7 +54,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Application.Miscellaneous
 
             PresentApplicationStatusResponse response = await ExecuteUseCase();
 
-            Assert.IsFalse(response.IsRecorderStarted);
+            response.IsRecorderStarted.Should().BeFalse();
         }
 
         [Test]
@@ -65,12 +66,12 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Application.Miscellaneous
 
             PresentApplicationStatusResponse response = await ExecuteUseCase();
 
-            Assert.AreEqual("some status text", response.StatusText);
+            response.StatusText.Should().Be("some status text");
         }
 
         private async Task<PresentApplicationStatusResponse> ExecuteUseCase()
         {
-            PresentApplicationStatusRequest request = new PresentApplicationStatusRequest();
+            PresentApplicationStatusRequest request = new();
             return await useCase.Handle(request, CancellationToken.None);
         }
     }

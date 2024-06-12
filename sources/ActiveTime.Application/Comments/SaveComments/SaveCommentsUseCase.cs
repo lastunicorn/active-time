@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.SaveComments
             this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
         }
 
-        public Task<Unit> Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
+        public Task Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
         {
             try
             {

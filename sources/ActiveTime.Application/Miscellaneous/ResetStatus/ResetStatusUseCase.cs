@@ -15,7 +15,7 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.ResetStatus
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
         }
 
-        public Task<Unit> Handle(ResetStatusRequest request, CancellationToken cancellationToken)
+        public Task Handle(ResetStatusRequest request, CancellationToken cancellationToken)
         {
             statusInfoService.SetStatus(ApplicationStatus.Create<ReadyStatus>());
 

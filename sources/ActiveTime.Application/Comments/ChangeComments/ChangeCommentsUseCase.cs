@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ChangeComments
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
-        public Task<Unit> Handle(ChangeCommentsRequest request, CancellationToken cancellationToken)
+        public Task Handle(ChangeCommentsRequest request, CancellationToken cancellationToken)
         {
             SetCommentsOnCurrentDay(request.Comments);
             RaiseCommentChangedEvent();

@@ -29,7 +29,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
     public class InternalTimerTests
     {
         private Mock<IMediator> mediator;
-        private Mock<ITimer> timer;
+        private Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer> timer;
         private TimeAssertion timeAssertion;
 
         [SetUp]
@@ -42,7 +42,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests
                 .Setup(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()))
                 .Callback<IRequest<MediatR.Unit>, CancellationToken>((request, cancellationToken) => timeAssertion.Signal());
 
-            timer = new Mock<ITimer>();
+            timer = new Mock<DustInTheWind.ActiveTime.Infrastructure.ITimer>();
         }
 
         [TearDown]
