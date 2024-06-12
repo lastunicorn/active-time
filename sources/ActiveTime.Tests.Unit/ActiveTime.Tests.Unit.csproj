@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 ActiveTime
 Copyright (C) 2011-2024 Dust in the Wind
 
@@ -54,6 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" PrivateAssets="All" />
     </ItemGroup>
 

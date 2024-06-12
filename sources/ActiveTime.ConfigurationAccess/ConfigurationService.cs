@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,13 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using DustInTheWind.ActiveTime.ConfigurationAccess.Properties;
+using DustInTheWind.ActiveTime.Ports.ConfigurationAccess;
 
-namespace DustInTheWind.ActiveTime.Common.Services
+namespace DustInTheWind.ActiveTime.ConfigurationAccess;
+
+public class ConfigurationService : IConfigurationService
 {
-    public interface IConfigurationService
+    public TimeSpan ReminderPauseInterval
     {
-        TimeSpan ReminderPauseInterval { get; set; }
-        TimeSpan ReminderSnoozeInterval { get; set; }
+        get => Settings.Default.Reminder_PauseInterval;
+        set => Settings.Default.Reminder_PauseInterval = value;
+    }
+
+    public TimeSpan ReminderSnoozeInterval
+    {
+        get => Settings.Default.Reminder_SnoozeInterval;
+        set => Settings.Default.Reminder_SnoozeInterval = value;
     }
 }

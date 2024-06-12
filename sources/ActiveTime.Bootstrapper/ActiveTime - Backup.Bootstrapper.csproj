@@ -1,0 +1,65 @@
+﻿<!--
+ActiveTime
+Copyright (C) 2011-2024 Dust in the Wind
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <AssemblyName>DustInTheWind.ActiveTime.Bootstrapper</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime</RootNamespace>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="BootstrapperWithMicrosoftDi.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="8.0.0" />
+      <PackageReference Include="MediatR" Version="12.3.0" />
+      <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.ConfigurationAccess\ActiveTime.ConfigurationAccess.csproj" />
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Ports.ConfigurationAccess\ActiveTime.Ports.ConfigurationAccess.csproj" />
+      <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.SystemAccess\ActiveTime.SystemAccess.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Watchman.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="db.s3db">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>
