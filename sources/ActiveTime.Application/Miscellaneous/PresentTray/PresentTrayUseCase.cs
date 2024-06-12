@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray
 
         public Task<PresentTrayResponse> Handle(PresentTrayRequest request, CancellationToken cancellationToken)
         {
-            IJob recordingJob = scheduledJobs.Get(JobNames.Recorder);
+            IJob recordingJob = RetrieveRecordingJob();
 
             PresentTrayResponse response = new PresentTrayResponse
             {
@@ -42,6 +42,12 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray
             };
 
             return Task.FromResult(response);
+        }
+
+        private IJob RetrieveRecordingJob()
+        {
+            IJob recordingJob = scheduledJobs.Get(JobNames.Recorder);
+            return recordingJob;
         }
     }
 }

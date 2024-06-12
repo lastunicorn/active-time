@@ -5,7 +5,7 @@
         <Copyright>Copyright © Dust in the Wind 2011-2021</Copyright>
         <Version>2.3.4.0</Version>
         <NeutralLanguage>en</NeutralLanguage>
-        <RepositoryType>Git</RepositoryType>
+        <RepositoryType>git</RepositoryType>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
 
         <PackageProjectUrl>https://github.com/lastunicorn/ActiveTime</PackageProjectUrl>

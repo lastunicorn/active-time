@@ -45,7 +45,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder
         {
             try
             {
-                IJob recorderJob = scheduledJobs.Get(JobNames.Recorder);
+                IJob recorderJob = GetRecorderJob();
 
                 switch (recorderJob.State)
                 {
@@ -67,6 +67,12 @@ namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder
             {
                 Dispose();
             }
+        }
+
+        private IJob GetRecorderJob()
+        {
+            IJob recorderJob = scheduledJobs.Get(JobNames.Recorder);
+            return recorderJob;
         }
 
         private void Start(IJob recorderJob)

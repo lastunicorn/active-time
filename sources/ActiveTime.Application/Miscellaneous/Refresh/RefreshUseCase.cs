@@ -38,10 +38,21 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.Refresh
 
         public Task<Unit> Handle(RefreshRequest request, CancellationToken cancellationToken)
         {
-            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged);
-            statusInfoService.SetStatus(ApplicationStatus.Create<RefreshedStatus>());
+            RaiseCurrentDateChangedEvent();
+            UpdateApplicationStatus();
 
             return Task.FromResult(Unit.Value);
+        }
+
+        private void RaiseCurrentDateChangedEvent()
+        {
+            eventBus.Raise(EventNames.CurrentDate.CurrentDateChanged);
+        }
+
+        private void UpdateApplicationStatus()
+        {
+            RefreshedStatus status = ApplicationStatus.Create<RefreshedStatus>();
+            statusInfoService.SetStatus(status);
         }
     }
 }

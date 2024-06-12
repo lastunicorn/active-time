@@ -224,7 +224,7 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>();
             containerBuilder.RegisterType<AutofacUnitOfWorkFactory>().As<IUnitOfWorkFactory>();
             containerBuilder.RegisterType<Dwarfs>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<Timer>().As<ITimer>();
+            containerBuilder.RegisterType<Timer>().As<DustInTheWind.ActiveTime.Infrastructure.ITimer>();
 
             // Jobs
             containerBuilder.RegisterType<ScheduledJobs>().AsSelf().SingleInstance();

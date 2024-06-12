@@ -1,0 +1,6 @@
+In SQLite
+	- exists record for day x and hout y
+In LiteBD:
+	1) does not exist any record for day x                         -> insert
+	2) exist identical record for day x and hour y                 -> do nothing
+	3) exist record for day x but the hour does not correspound    -> warning

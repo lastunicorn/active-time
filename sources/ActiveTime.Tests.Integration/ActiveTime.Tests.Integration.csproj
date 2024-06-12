@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <AssemblyName>DustInTheWind.ActiveTime.Tests.Integration</AssemblyName>
         <RootNamespace>DustInTheWind.ActiveTime.Tests.Integration</RootNamespace>
     </PropertyGroup>

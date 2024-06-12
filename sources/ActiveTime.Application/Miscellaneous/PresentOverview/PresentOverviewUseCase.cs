@@ -41,26 +41,14 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
         {
             try
             {
-                DateTime firstDay;
-                DateTime lastDay;
-
-                if (request.FirstDay == null || request.LastDay == null)
-                {
-                    DateTime today = systemClock.GetCurrentDate();
-                    firstDay = today.AddDays(-29);
-                    lastDay = today;
-                }
-                else
-                {
-                    firstDay = request.FirstDay.Value;
-                    lastDay = request.LastDay.Value;
-                }
+                (DateTime firstDay, DateTime lastDay) = CalculateDateInterval(request);
+                List<DateRecord> dayRecords = RetrieveDayRecords(firstDay, lastDay);
 
                 PresentOverviewResponse response = new PresentOverviewResponse
                 {
                     FirstDay = firstDay,
                     LastDay = lastDay,
-                    DayRecords = RetrieveDayRecords(firstDay, lastDay)
+                    DayRecords = dayRecords
                 };
 
                 return Task.FromResult(response);
@@ -69,6 +57,26 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
             {
                 Dispose();
             }
+        }
+
+        private (DateTime, DateTime) CalculateDateInterval(PresentOverviewRequest request)
+        {
+            DateTime firstDay;
+            DateTime lastDay;
+
+            if (request.FirstDay == null || request.LastDay == null)
+            {
+                DateTime today = systemClock.GetCurrentDate();
+                firstDay = today.AddDays(-29);
+                lastDay = today;
+            }
+            else
+            {
+                firstDay = request.FirstDay.Value;
+                lastDay = request.LastDay.Value;
+            }
+
+            return (firstDay, lastDay);
         }
 
         private List<DateRecord> RetrieveDayRecords(DateTime firstDay, DateTime lastDay)

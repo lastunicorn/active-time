@@ -37,7 +37,7 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationS
 
         public Task<PresentApplicationStatusResponse> Handle(PresentApplicationStatusRequest request, CancellationToken cancellationToken)
         {
-            IJob recorderJob = scheduledJobs.Get(JobNames.Recorder);
+            IJob recorderJob = RetrieveRecorderJob();
 
             PresentApplicationStatusResponse response = new PresentApplicationStatusResponse
             {
@@ -46,6 +46,11 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationS
             };
 
             return Task.FromResult(response);
+        }
+
+        private IJob RetrieveRecorderJob()
+        {
+            return scheduledJobs.Get(JobNames.Recorder);
         }
     }
 }

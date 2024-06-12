@@ -42,9 +42,9 @@ namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
         {
             try
             {
-                statusInfoService.SetStatus(ApplicationStatus.Create<StampingStatus>());
+                SetApplicationStatusToStamping();
                 scribe.Stamp();
-                statusInfoService.SetStatus(ApplicationStatus.Create<StampedStatus>());
+                SetApplicationStatusToStamped();
 
                 unitOfWork.Commit();
 
@@ -54,6 +54,18 @@ namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
             {
                 Dispose();
             }
+        }
+
+        private void SetApplicationStatusToStamping()
+        {
+            StampingStatus status = ApplicationStatus.Create<StampingStatus>();
+            statusInfoService.SetStatus(status);
+        }
+
+        private void SetApplicationStatusToStamped()
+        {
+            StampedStatus status = ApplicationStatus.Create<StampedStatus>();
+            statusInfoService.SetStatus(status);
         }
 
         public void Dispose()
