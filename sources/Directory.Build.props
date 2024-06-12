@@ -3,7 +3,7 @@
         <Company>Dust in the Wind</Company>
         <Product>Active Time</Product>
         <Copyright>Copyright © Dust in the Wind 2011-2021</Copyright>
-        <Version>2.3.4.0</Version>
+        <Version>2.3.5.0</Version>
         <NeutralLanguage>en</NeutralLanguage>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
