@@ -17,8 +17,8 @@
 using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
-using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 
 namespace DustInTheWind.ActiveTime.Presentation.OverviewArea;
 

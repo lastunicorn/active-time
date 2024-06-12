@@ -21,9 +21,9 @@ using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels;
 

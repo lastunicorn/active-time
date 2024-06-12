@@ -20,10 +20,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
-using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 
 namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands;
 

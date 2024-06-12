@@ -16,11 +16,11 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
 namespace DustInTheWind.ActiveTime.Presentation.MainMenuArea
