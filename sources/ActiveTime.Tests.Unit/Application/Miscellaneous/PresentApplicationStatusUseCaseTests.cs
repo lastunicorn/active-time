@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationStatus;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Services;
@@ -14,13 +15,13 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Application.Miscellaneous
     public class PresentApplicationStatusUseCaseTests
     {
         private Mock<IJob> recorderJob;
-        private Mock<IStatusInfoService> statusInfoService;
+        private StatusInfoService statusInfoService;
         private PresentApplicationStatusUseCase useCase;
 
         [SetUp]
         public void SetUp()
         {
-            statusInfoService = new Mock<IStatusInfoService>();
+            statusInfoService = new StatusInfoService();
 
             recorderJob = new Mock<IJob>();
             recorderJob
@@ -30,7 +31,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Application.Miscellaneous
             ScheduledJobs scheduledJobs = new ScheduledJobs();
             scheduledJobs.Add(recorderJob.Object);
 
-            useCase = new PresentApplicationStatusUseCase(statusInfoService.Object, scheduledJobs);
+            useCase = new PresentApplicationStatusUseCase(statusInfoService, scheduledJobs);
         }
 
         [Test]
@@ -60,9 +61,7 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Application.Miscellaneous
         [Test]
         public async Task HavingAStatusTextInStatusInfoService_WhenUseCaseIsExecuted_ThanResponseContainsTheStatusText()
         {
-            statusInfoService
-                .SetupGet(x => x.StatusText)
-                .Returns("some status text");
+            statusInfoService.SetStatus("some status text");
 
             PresentApplicationStatusResponse response = await ExecuteUseCase();
 

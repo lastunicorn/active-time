@@ -17,14 +17,13 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Application;
 
 /// <summary>
 /// A service that stores different status messages.
 /// </summary>
-public class StatusInfoService : IStatusInfoService, IDisposable
+public class StatusInfoService : IDisposable
 {
     /// <summary>
     /// The default Text of the status.

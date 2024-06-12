@@ -19,7 +19,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
@@ -29,9 +28,9 @@ namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly Scribe scribe;
-        private readonly IStatusInfoService statusInfoService;
+        private readonly StatusInfoService statusInfoService;
 
-        public StampUseCase(IUnitOfWork unitOfWork, Scribe scribe, IStatusInfoService statusInfoService)
+        public StampUseCase(IUnitOfWork unitOfWork, Scribe scribe, StatusInfoService statusInfoService)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));

@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Ports.Persistence;
@@ -34,10 +33,10 @@ internal sealed class StopRecordingUseCase : IRequestHandler<StopRecordingReques
     private readonly Scribe scribe;
     private readonly EventBus eventBus;
     private readonly ScheduledJobs scheduledJobs;
-    private readonly IStatusInfoService statusInfoService;
+    private readonly StatusInfoService statusInfoService;
 
     public StopRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs,
-        IStatusInfoService statusInfoService)
+        StatusInfoService statusInfoService)
     {
         this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));

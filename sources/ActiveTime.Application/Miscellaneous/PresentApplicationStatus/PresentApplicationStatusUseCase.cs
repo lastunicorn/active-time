@@ -26,10 +26,10 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationS
 {
     public class PresentApplicationStatusUseCase : IRequestHandler<PresentApplicationStatusRequest, PresentApplicationStatusResponse>
     {
-        private readonly IStatusInfoService statusInfoService;
+        private readonly StatusInfoService statusInfoService;
         private readonly ScheduledJobs scheduledJobs;
 
-        public PresentApplicationStatusUseCase(IStatusInfoService statusInfoService, ScheduledJobs scheduledJobs)
+        public PresentApplicationStatusUseCase(StatusInfoService statusInfoService, ScheduledJobs scheduledJobs)
         {
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
             this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));

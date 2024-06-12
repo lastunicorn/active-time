@@ -222,7 +222,7 @@ internal class BootstrapperWithAutofac
         containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<MediatrRequestBus>().As<IRequestBus>().SingleInstance();
         containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
-        containerBuilder.RegisterType<StatusInfoService>().As<IStatusInfoService>().SingleInstance();
+        containerBuilder.RegisterType<StatusInfoService>().AsSelf().SingleInstance();
 
         // Register services.
         containerBuilder.RegisterType<SystemClock>().As<ISystemClock>();
