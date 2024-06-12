@@ -18,7 +18,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
+using DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories;
 using LiteDB;
 using NUnit.Framework;
 

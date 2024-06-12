@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Runtime.Serialization;
+using DustInTheWind.ActiveTime.Common;
 
-namespace DustInTheWind.ActiveTime.Common.Persistence
+namespace DustInTheWind.ActiveTime.Ports.Persistence
 {
     /// <summary>
     /// Exception raised by an Exporter.

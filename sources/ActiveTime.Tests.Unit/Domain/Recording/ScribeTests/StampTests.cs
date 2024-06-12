@@ -16,9 +16,9 @@
 
 using System;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.System;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 using Moq;
 using NUnit.Framework;
 

@@ -19,8 +19,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments

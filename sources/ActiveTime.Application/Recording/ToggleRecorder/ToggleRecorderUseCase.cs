@@ -20,10 +20,10 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Recording.ToggleRecorder;

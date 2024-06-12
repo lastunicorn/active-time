@@ -19,9 +19,9 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 
-namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories
+namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Repositories
 {
     public class DateRecordRepository : IDateRecordRepository
     {

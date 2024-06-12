@@ -16,11 +16,11 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
+using DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 using LiteDB;
 
-namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module
+namespace DustInTheWind.ActiveTime.Persistence.LiteDB
 {
     public class UnitOfWork : IUnitOfWork
     {

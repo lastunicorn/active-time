@@ -14,10 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Common.Persistence
+namespace DustInTheWind.ActiveTime.Ports.Persistence
 {
-    public interface IUnitOfWorkFactory
+    public interface IUnitOfWork : IDisposable
     {
-        IUnitOfWork CreateNew();
+        ITimeRecordRepository TimeRecordRepository { get; }
+
+        IDateRecordRepository DateRecordRepository { get; }
+
+        void Commit();
+
+        void Rollback();
     }
 }

@@ -17,8 +17,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
+using DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 using DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers;
 using LiteDB;
 using NUnit.Framework;

@@ -18,10 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 using LiteDB;
 
-namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories
+namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories
 {
     internal class TimeRecordRepository : ITimeRecordRepository
     {

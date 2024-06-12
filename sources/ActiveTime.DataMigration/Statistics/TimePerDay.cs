@@ -17,7 +17,7 @@
 using System;
 using System.Linq;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
+using DustInTheWind.ActiveTime.Persistence.LiteDB;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Statistics
 {

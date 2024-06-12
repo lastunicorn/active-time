@@ -19,11 +19,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Common.Recording;
 using DustInTheWind.ActiveTime.Common.Services;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Recording.StartRecording;

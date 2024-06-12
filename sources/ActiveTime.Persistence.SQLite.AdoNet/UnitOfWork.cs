@@ -18,10 +18,10 @@ using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
-using DustInTheWind.ActiveTime.Common.Persistence;
-using DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module.Repositories;
+using DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Repositories;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 
-namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Module
+namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet
 {
     public class UnitOfWork : IUnitOfWork
     {

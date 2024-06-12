@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ActiveTimeApp", "ActiveTimeApp", "{4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}"
 EndProject
@@ -41,7 +41,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Presentation.Tra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Tests.Unit", "ActiveTime.Tests.Unit\ActiveTime.Tests.Unit.csproj", "{D964489F-2EA8-4837-91EE-053CB1B11232}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Tests.Integration", "ActiveTime.Tests.Integration\ActiveTime.Tests.Integration.csproj", "{75162884-1AAE-447D-AB28-6F9A12023E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Tests.Integration", "ActiveTime.Tests.Integration\ActiveTime.Tests.Integration.csproj", "{75162884-1AAE-447D-AB28-6F9A12023E27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{6C90BF43-6EB0-46ED-A53E-06D59382B0B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Ports.Persistence", "ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj", "{209196E1-D0D6-49EC-8EE8-63EE5965188E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{3BF02524-2055-49CB-9D81-BBE07A10724F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,11 +127,17 @@ Global
 		{75162884-1AAE-447D-AB28-6F9A12023E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75162884-1AAE-447D-AB28-6F9A12023E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75162884-1AAE-447D-AB28-6F9A12023E27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{209196E1-D0D6-49EC-8EE8-63EE5965188E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{209196E1-D0D6-49EC-8EE8-63EE5965188E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{209196E1-D0D6-49EC-8EE8-63EE5965188E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{209196E1-D0D6-49EC-8EE8-63EE5965188E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{CB6E9BAF-0E09-4BE3-81E9-C982AF2FCE1B} = {3BF02524-2055-49CB-9D81-BBE07A10724F}
+		{B69EC531-A7FE-47DC-8679-1A12B53C5BF4} = {3BF02524-2055-49CB-9D81-BBE07A10724F}
 		{612076BF-B8BA-4FEF-815C-DAABCE304961} = {F86B8721-23AE-4440-9078-004F413F57E6}
 		{70452B77-D016-4845-BFBE-DA1E1DA67D6A} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{F92620A2-33CA-4A3A-831C-F0AAC2A28928} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
@@ -136,6 +148,7 @@ Global
 		{6A5E34F4-D168-4D5A-A90B-6A778FF8838D} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{38EF783F-73BE-4A53-86BE-6EAF9C132590} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{08812A83-BD22-4A3D-B62C-3C648951BFFD} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
+		{209196E1-D0D6-49EC-8EE8-63EE5965188E} = {6C90BF43-6EB0-46ED-A53E-06D59382B0B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5D4502D-510A-459A-B75B-AD6DBED249E6}

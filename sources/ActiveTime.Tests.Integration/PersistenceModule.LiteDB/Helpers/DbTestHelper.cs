@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Module;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Module.Repositories;
+using DustInTheWind.ActiveTime.Persistence.LiteDB;
+using DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories;
 using LiteDB;
 
 namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers

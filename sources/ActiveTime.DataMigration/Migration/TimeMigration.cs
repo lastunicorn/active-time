@@ -18,8 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Persistence;
 using DustInTheWind.ActiveTime.Persistence;
+using DustInTheWind.ActiveTime.Ports.Persistence;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {

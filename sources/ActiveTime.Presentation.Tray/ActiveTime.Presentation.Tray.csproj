@@ -1,4 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--
+ActiveTime
+Copyright (C) 2011-2024 Dust in the Wind
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
@@ -27,20 +45,20 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="12.3.0" />
+        <PackageReference Include="MediatR" Version="12.3.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
-      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
-      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>Resources.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
         <Compile Update="Views\TrayIconView.cs">
             <SubType>Component</SubType>
@@ -48,10 +66,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Properties\Resources.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
 </Project>

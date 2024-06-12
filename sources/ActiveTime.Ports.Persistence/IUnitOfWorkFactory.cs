@@ -1,4 +1,4 @@
-// ActiveTime
+﻿// ActiveTime
 // Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-
-namespace DustInTheWind.ActiveTime.Common.Persistence
+namespace DustInTheWind.ActiveTime.Ports.Persistence
 {
-    public interface ITimeRecordRepository
+    public interface IUnitOfWorkFactory
     {
-        void Add(TimeRecord timeRecord);
-        //void Update(TimeRecord timeRecord);
-        void Delete(TimeRecord timeRecord);
-        TimeRecord GetById(int id);
-        IEnumerable<TimeRecord> GetByDate(DateTime date);
-        IEnumerable<TimeRecord> GetAll();
+        IUnitOfWork CreateNew();
     }
 }
