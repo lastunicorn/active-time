@@ -21,7 +21,7 @@ using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
-using DustInTheWind.ActiveTime.Presentation.ViewModels;
+using DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
 using Moq;
 using NUnit.Framework;
 

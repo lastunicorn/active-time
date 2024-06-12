@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Properties;
-using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.MessageWindowViewModelTests
