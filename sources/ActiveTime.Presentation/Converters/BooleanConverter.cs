@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,43 +15,43 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace DustInTheWind.ActiveTime.Presentation.Converters
+namespace DustInTheWind.ActiveTime.Presentation.Converters;
+
+/// <summary>
+/// Converts the <see cref="TextWrapping"/> value into <see cref="bool"/> value and viceversa.
+/// </summary>
+public class BooleanConverter : IValueConverter
 {
-    /// <summary>
-    /// Converts the <see cref="TextWrapping"/> value into <see cref="bool"/> value and viceversa.
-    /// </summary>
-    public class BooleanConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value == null || value.GetType() != typeof(bool))
-                return null;
-
-            if (value.GetType() == targetType)
-                return value;
-
-            if (targetType == typeof(TextWrapping))
-                return (bool)value ? TextWrapping.Wrap : TextWrapping.NoWrap;
-
+        if (value == null || value.GetType() != typeof(bool))
             return null;
+
+        if (value.GetType() == targetType)
+            return value;
+
+        if (targetType == typeof(TextWrapping))
+            return (bool)value ? TextWrapping.Wrap : TextWrapping.NoWrap;
+
+        return null;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null || targetType != typeof(bool))
+            return null;
+
+        if (value.GetType() == typeof(TextWrapping))
+        {
+            TextWrapping textWrapping = (TextWrapping)value;
+
+            return textWrapping != TextWrapping.NoWrap;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value == null || targetType != typeof(bool))
-                return null;
-
-            if (value.GetType() == typeof(TextWrapping))
-            {
-                TextWrapping textWrapping = (TextWrapping)value;
-
-                return textWrapping != TextWrapping.NoWrap;
-            }
-
-            return null;
-        }
+        return null;
     }
 }

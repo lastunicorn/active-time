@@ -28,8 +28,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:views1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.Views"
 
     Title="{Binding Path=WindowTitle}"
-    Height="500"
-    Width="600"
+    Height="600"
+    Width="800"
     ResizeMode="CanResizeWithGrip"
     MinWidth="450"
     MinHeight="450"

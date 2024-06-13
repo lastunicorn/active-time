@@ -69,11 +69,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <CheckBox
             DockPanel.Dock="Bottom"
             Content="Wrap"
-            Margin="0 0 0 10"
+            Margin="0 8 0 8"
             IsChecked="{Binding Path=CommentTextWrap}"/>
 
         <TextBox
-            Margin="0 10 0 10"
+            Margin="0 8 0 0"
             Text="{Binding Path=Comments, UpdateSourceTrigger=PropertyChanged}"
             AcceptsReturn="True"
             HorizontalScrollBarVisibility="Auto"

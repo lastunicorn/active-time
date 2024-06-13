@@ -27,6 +27,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Style TargetType="{x:Type Label}">
         <Setter Property="Background" Value="{StaticResource LabelNormalBackgroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource LabelNormalForegroundColor}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
     </Style>
 
 </ResourceDictionary>

@@ -23,12 +23,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <!--
     ================================================================================================
-    Primary Colors
+    General - Colors
     ================================================================================================
     -->
 
     <Color x:Key="PrimaryColor">#2D2D30</Color>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+
+    <!-- Dark -->
 
     <Color x:Key="PrimaryDarkColor">#252526</Color>
     <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}" />
@@ -36,16 +38,43 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Color x:Key="PrimaryDarkestColor">#202020</Color>
     <SolidColorBrush x:Key="PrimaryDarkestBrush" Color="{StaticResource PrimaryDarkestColor}" />
 
+    <!-- Light -->
+
     <Color x:Key="PrimaryLightColor">#3F3F46</Color>
     <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}" />
 
-    <!--<Color x:Key="AccentColor">#00bc00</Color>-->
+    <Color x:Key="PrimaryLighterColor">#333337</Color>
+    <SolidColorBrush x:Key="PrimaryLighterBrush" Color="{StaticResource PrimaryLighterColor}" />
+
+    <Color x:Key="PrimaryLightestColor">#54545c</Color>
+    <SolidColorBrush x:Key="PrimaryLightestBrush" Color="{StaticResource PrimaryLightestColor}" />
+
+    <!-- Accent -->
+
     <Color x:Key="AccentColor">#007acc</Color>
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
 
+    <Color x:Key="SecondaryAccentColor">#CA5100</Color>
+    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource SecondaryAccentColor}" />
+
     <!--
     ================================================================================================
-    Font
+    General - Disabled
+    ================================================================================================
+    -->
+
+    <Color x:Key="DisabledBackgroundColor">#252526</Color>
+    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="{StaticResource DisabledBackgroundColor}" />
+
+    <Color x:Key="DisabledForegroundColor">#536c5e</Color>
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="{StaticResource DisabledForegroundColor}" />
+
+    <Color x:Key="DisabledBorderColor">#434346</Color>
+    <SolidColorBrush x:Key="DisabledBorderBrush" Color="{StaticResource DisabledBorderColor}" />
+
+    <!--
+    ================================================================================================
+    General - Font
     ================================================================================================
     -->
 
@@ -61,93 +90,121 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Color x:Key="FontAccentColor">#F1F1F1</Color>
     <SolidColorBrush x:Key="FontAccentBrush" Color="{StaticResource FontAccentColor}" />
 
-    <system:Double x:Key="DefaultFontSize">14</system:Double>
+    <system:Double x:Key="DefaultFontSize">12</system:Double>
 
     <FontFamily x:Key="DefaultFontFamily">OpenSans</FontFamily>
 
-    <!-- Main -->
+    <!--
+    ================================================================================================
+    Main
+    ================================================================================================
+    -->
 
     <SolidColorBrush x:Key="MainBackground" Color="{StaticResource PrimaryColor}"/>
     <SolidColorBrush x:Key="MainForeground" Color="{StaticResource FontPrimaryColor}"/>
 
-    <!-- Button -->
+    <!--
+    ================================================================================================
+    Button
+    ================================================================================================
+    -->
 
-    <SolidColorBrush x:Key="ButtonNormalBackgroundColor" Color="#3f3f46"/>
-    <SolidColorBrush x:Key="ButtonNormalForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ButtonNormalBorderColor" Color="#3f3f46"/>
+    <SolidColorBrush x:Key="ButtonNormalBackgroundColor" Color="{StaticResource PrimaryLightColor}"/>
+    <SolidColorBrush x:Key="ButtonNormalForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
+    <SolidColorBrush x:Key="ButtonNormalBorderColor" Color="{StaticResource PrimaryLightColor}"/>
 
-    <SolidColorBrush x:Key="ButtonOverBackgroundColor" Color="#54545c"/>
-    <SolidColorBrush x:Key="ButtonOverForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ButtonOverBorderColor" Color="#54545c"/>
+    <SolidColorBrush x:Key="ButtonOverBackgroundColor" Color="{StaticResource PrimaryLightestColor}"/>
+    <SolidColorBrush x:Key="ButtonOverForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
+    <SolidColorBrush x:Key="ButtonOverBorderColor" Color="{StaticResource PrimaryLightestColor}"/>
 
-    <SolidColorBrush x:Key="ButtonPressedBackgroundColor" Color="#007acc"/>
-    <SolidColorBrush x:Key="ButtonPressedForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ButtonPressedBorderColor" Color="#007acc"/>
+    <SolidColorBrush x:Key="ButtonPressedBackgroundColor" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="ButtonPressedForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
+    <SolidColorBrush x:Key="ButtonPressedBorderColor" Color="{StaticResource AccentColor}"/>
 
-    <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="#252526"/>
-    <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#536c5e"/>
-    <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="#434346"/>
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="{StaticResource DisabledBackgroundColor}"/>
+    <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="{StaticResource DisabledForegroundColor}"/>
+    <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="{StaticResource DisabledBorderColor}"/>
 
-    <!-- CheckButton -->
-
-    <!--<SolidColorBrush x:Key="ButtonCheckedBackgroundColor" Color="#ff9f4d"/>
-    <SolidColorBrush x:Key="ButtonCheckedForegroundColor" Color="#ffffff"/>
-
-    <SolidColorBrush x:Key="ButtonCheckedOverBackgroundColor" Color="#ff9f4d"/>
-    <SolidColorBrush x:Key="ButtonCheckedOverForegroundColor" Color="#ffffff"/>-->
-
-    <!-- CheckBox -->
+    <!--
+    ================================================================================================
+    CheckBox
+    ================================================================================================
+    -->
 
     <SolidColorBrush x:Key="CheckBoxNormalBackgroundColor" Color="Transparent"/>
-    <SolidColorBrush x:Key="CheckBoxNormalForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="CheckBoxNormalForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
 
     <SolidColorBrush x:Key="CheckBoxDisabledBackgroundColor" Color="Transparent"/>
-    <SolidColorBrush x:Key="CheckBoxDisabledForegroundColor" Color="Gray"/>
+    <SolidColorBrush x:Key="CheckBoxDisabledForegroundColor" Color="{StaticResource DisabledForegroundColor}"/>
 
     <SolidColorBrush x:Key="CheckBoxOverBackgroundColor" Color="#3f3f46"/>
-    <SolidColorBrush x:Key="CheckBoxOverForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="CheckBoxOverForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
     
-    <!-- TextBox -->
+    <!--
+    ================================================================================================
+    TextBox
+    ================================================================================================
+    -->
 
-    <SolidColorBrush x:Key="TextBoxNormalBackgroundColor" Color="#333337"/>
-    <SolidColorBrush x:Key="TextBoxNormalForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="TextBoxNormalBorderColor" Color="#3f3f46"/>
+    <SolidColorBrush x:Key="TextBoxNormalBackgroundColor" Color="{StaticResource PrimaryLighterColor}"/>
+    <SolidColorBrush x:Key="TextBoxNormalForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
+    <SolidColorBrush x:Key="TextBoxNormalBorderColor" Color="{StaticResource PrimaryLightColor}"/>
 
-    <SolidColorBrush x:Key="TextBoxOverBackgroundColor" Color="#333337"/>
-    <SolidColorBrush x:Key="TextBoxOverForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="TextBoxOverBackgroundColor" Color="{StaticResource PrimaryLighterColor}"/>
+    <SolidColorBrush x:Key="TextBoxOverForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
     <SolidColorBrush x:Key="TextBoxOverBorderColor" Color="#6a6a75"/>
 
-    <SolidColorBrush x:Key="TextBoxFocusBackgroundColor" Color="#333337"/>
-    <SolidColorBrush x:Key="TextBoxFocusForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="TextBoxFocusBorderColor" Color="#3399ff"/>
+    <SolidColorBrush x:Key="TextBoxFocusBackgroundColor" Color="{StaticResource PrimaryLighterColor}"/>
+    <SolidColorBrush x:Key="TextBoxFocusForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
+    <SolidColorBrush x:Key="TextBoxFocusBorderColor" Color="{StaticResource AccentColor}"/>
 
-    <SolidColorBrush x:Key="TextBoxFocusInactiveBackgroundColor" Color="#333337"/>
-    <SolidColorBrush x:Key="TextBoxFocusInactiveForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="TextBoxFocusInactiveBackgroundColor" Color="{StaticResource PrimaryLighterColor}"/>
+    <SolidColorBrush x:Key="TextBoxFocusInactiveForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
     <SolidColorBrush x:Key="TextBoxFocusInactiveBorderColor" Color="#6a6a75"/>
 
-    <!-- Status Bar -->
+    <!--
+    ================================================================================================
+    Status Bar
+    ================================================================================================
+    -->
 
-    <SolidColorBrush x:Key="StatusBarNormalBackground" Color="#007acc"/>
-    <SolidColorBrush x:Key="StatusBarNormalForeground" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="StatusBarNormalBackground" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="StatusBarNormalForeground" Color="{StaticResource FontPrimaryColor}"/>
 
-    <SolidColorBrush x:Key="StatusBarOffBackground" Color="#CA5100"/>
-    <SolidColorBrush x:Key="StatusBarOffForeground" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="StatusBarOffBackground" Color="{StaticResource SecondaryAccentColor}"/>
+    <SolidColorBrush x:Key="StatusBarOffForeground" Color="{StaticResource FontPrimaryColor}"/>
 
-    <!-- Icons -->
+    <!--
+    ================================================================================================
+    Icons
+    ================================================================================================
+    -->
 
     <SolidColorBrush x:Key="IconNormalForeground" Color="#805400"/>
 
-    <!-- Label -->
+    <!--
+    ================================================================================================
+    Label
+    ================================================================================================
+    -->
 
     <SolidColorBrush x:Key="LabelNormalBackgroundColor" Color="Transparent"/>
-    <SolidColorBrush x:Key="LabelNormalForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="LabelNormalForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
 
-    <!-- DatePicker -->
+    <!--
+    ================================================================================================
+    DatePicker
+    ================================================================================================
+    -->
 
     <SolidColorBrush x:Key="DatePickerNormalBackgroundColor" Color="Transparent"/>
-    <SolidColorBrush x:Key="DatePickerNormalForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="DatePickerNormalForegroundColor" Color="{StaticResource FontPrimaryColor}"/>
 
-    <!-- Menu -->
+    <!--
+    ================================================================================================
+    Menu
+    ================================================================================================
+    -->
 
     <SolidColorBrush x:Key="MenuNormalBackgroundColor" Color="#2d2d30"/>
 
@@ -165,22 +222,42 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     
     <SolidColorBrush x:Key="ArrowOpenedBackground" Color="#007ACC"/>
 
-    <!-- ListBox -->
+    <!--
+    ================================================================================================
+    ListBox
+    ================================================================================================
+    -->
 
     <SolidColorBrush x:Key="ListBoxBackground" Color="#333337"/>
-    <SolidColorBrush x:Key="ListBoxForeground" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="ListBoxForeground" Color="{StaticResource FontPrimaryColor}"/>
     <SolidColorBrush x:Key="ListBoxBorder" Color="#3f3f46"/>
     <SolidColorBrush x:Key="ListBoxOverBorderColor" Color="#6a6a75"/>
-    <SolidColorBrush x:Key="ListBoxFocusBorderColor" Color="#3399ff"/>
+    <SolidColorBrush x:Key="ListBoxFocusBorderColor" Color="{StaticResource AccentColor}"/>
 
     <SolidColorBrush x:Key="ListBoxItemNormalColor" Color="Transparent"/>
     <SolidColorBrush x:Key="ListBoxItemOverColor" Color="#6a6a75"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedColor" Color="#3399ff"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedColor" Color="{StaticResource AccentColor}"/>
     <SolidColorBrush x:Key="ListBoxItemSelectedInactiveColor" Color="#3f3f46"/>
 
-    <!-- Record Bar -->
+    <!--
+    ================================================================================================
+    Status Bar
+    ================================================================================================
+    -->
 
-    <SolidColorBrush x:Key="RecordBarActive" Color="#007acc"/>
-    <SolidColorBrush x:Key="RecordBarInactive" Color="#CA5100"/>
+    <SolidColorBrush x:Key="RecordBarActive" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="RecordBarInactive" Color="{StaticResource SecondaryAccentColor}"/>
+
+    <!--
+    ================================================================================================
+    Tab Control
+    ================================================================================================
+    -->
+
+    <SolidColorBrush x:Key="TabBackgroundBrush" Color="{StaticResource PrimaryColor}"/>
+    <SolidColorBrush x:Key="TabForegroundBrush" Color="{StaticResource FontPrimaryColor}"/>
+
+    <SolidColorBrush x:Key="TabHeaderSelectedBackgroundBrush" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="TabHeaderUnselectedBackgroundBrush" Color="{StaticResource PrimaryLightColor}"/>
 
 </ResourceDictionary>

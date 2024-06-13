@@ -24,29 +24,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="ButtonNormalBackgroundColor" Color="#3f3f46"/>
-    <SolidColorBrush x:Key="ButtonNormalForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ButtonNormalBorderColor" Color="#3f3f46"/>
-
-    <SolidColorBrush x:Key="ButtonOverBackgroundColor" Color="#54545c"/>
-    <SolidColorBrush x:Key="ButtonOverForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ButtonOverBorderColor" Color="#54545c"/>
-
-    <SolidColorBrush x:Key="ButtonPressedBackgroundColor" Color="#007acc"/>
-    <SolidColorBrush x:Key="ButtonPressedForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ButtonPressedBorderColor" Color="#007acc"/>
-
-    <SolidColorBrush x:Key="ButtonDisabledBackgroundColor" Color="#252526"/>
-    <SolidColorBrush x:Key="ButtonDisabledForegroundColor" Color="#536c5e"/>
-    <SolidColorBrush x:Key="ButtonDisabledBorderColor" Color="#434346"/>
-
     <Style TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackgroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource ButtonNormalForegroundColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorderColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Margin" Value="0"/>
-        <Setter Property="Padding" Value="8 3"/>
+        <Setter Property="Padding" Value="10 3"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
 
         <Setter Property="Template">
             <Setter.Value>

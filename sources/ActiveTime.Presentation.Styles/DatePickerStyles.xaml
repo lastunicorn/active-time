@@ -35,6 +35,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <Setter Property="Foreground" Value="{StaticResource TextBoxNormalForegroundColor}"/>
         <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
 
         <Setter Property="Template">
             <Setter.Value>

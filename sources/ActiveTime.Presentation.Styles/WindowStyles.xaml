@@ -9,6 +9,7 @@
     <Style x:Key="WindowStyle" TargetType="Window">
         <Setter Property="Background" Value="{StaticResource MainBackground}" />
         <Setter Property="Foreground" Value="{StaticResource MainForeground}" />
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
     </Style>
 
 </ResourceDictionary>
