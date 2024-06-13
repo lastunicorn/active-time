@@ -21,22 +21,62 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:viewModels1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels"
     xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.Views"
 
-    mc:Ignorable="d" 
+    mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300"
     d:DataContext="{d:DesignInstance viewModels1:FrontViewModel}">
 
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding DecrementDayCommand}" Key="PageUp" Modifiers="Control"/>
-        <KeyBinding Command="{Binding IncrementDateCommand}" Key="PageDown" Modifiers="Control"/>
+        <KeyBinding Command="{Binding DecrementDayCommand}" Key="PageUp" Modifiers="Control" />
+        <KeyBinding Command="{Binding IncrementDateCommand}" Key="PageDown" Modifiers="Control" />
     </UserControl.InputBindings>
 
     <DockPanel>
+
+        <!-- Top Date Info -->
+
+        <views:CurrentDateView
+            DockPanel.Dock="Right"
+            Margin="10 0 0 0"
+            DataContext="{Binding CurrentDateViewModel}"
+            VerticalAlignment="Stretch"/>
+
+        <!--<StackPanel
+            DockPanel.Dock="Right"
+            Margin="10 0 0 0">
+
+            <Grid
+                HorizontalAlignment="Stretch"
+                Margin="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Grid.Column="0"
+                    Content="&lt;&lt;"
+                    Command="{Binding DecrementDayCommand}"
+                    MinHeight="40" />
+
+                <Button
+                    Grid.Column="1"
+                    Content="&gt;&gt;"
+                    Command="{Binding IncrementDateCommand}"
+                    MinHeight="40" />
+            </Grid>
+
+            <Calendar
+                SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Margin="0 8 0 0"/>
+
+        </StackPanel>-->
 
         <!-- Top Date Info -->
 
@@ -48,11 +88,12 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 DockPanel.Dock="Left"
                 Margin="0 0 5 0"
                 DataContext="{Binding CurrentDateViewModel}"
-                VerticalAlignment="Stretch"/>
+                VerticalAlignment="Stretch"
+                Visibility="Collapsed"/>
 
             <views:TimeReportView
                 Margin="5 0 0 0"
-                DataContext="{Binding TimeReportViewModel}"/>
+                DataContext="{Binding TimeReportViewModel}" />
 
         </DockPanel>
 
@@ -77,11 +118,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Margin="0 10">
 
             <TabItem Header="Time Records">
-                <views:DayRecordsView DataContext="{Binding DayRecordsViewModel}"/>
+                <views:DayRecordsView DataContext="{Binding DayRecordsViewModel}" />
             </TabItem>
 
             <TabItem Header="Comments">
-                <views:CommentsView DataContext="{Binding CommentsViewModel}"/>
+                <views:CommentsView DataContext="{Binding CommentsViewModel}" />
             </TabItem>
 
         </TabControl>
@@ -89,6 +130,3 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     </DockPanel>
 
 </UserControl>
-
-
-

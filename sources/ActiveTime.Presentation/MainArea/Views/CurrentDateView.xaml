@@ -33,7 +33,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         Orientation="Vertical"
         HorizontalAlignment="Center">
 
-        <DatePicker
+        <!--<DatePicker
             Margin="0,0,0,5"
             HorizontalAlignment="Left"
             MinWidth="150"
@@ -41,13 +41,12 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             SelectedDateFormat="Long"
             Padding="0"
             VerticalAlignment="Center"
-            FontSize="18"/>
+            FontSize="18"/>-->
 
-        <Button
-            Content="..."
-            Command="{Binding CalendarCommand}"
-            Margin="0,5"
-            MinHeight="40"/>
+        <Calendar
+            SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            Margin="0"
+            Foreground="AliceBlue"/>
 
         <Grid
             HorizontalAlignment="Stretch"
