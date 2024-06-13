@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,59 +21,58 @@ using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Comments.SaveComments
+namespace DustInTheWind.ActiveTime.Application.Comments.SaveComments;
+
+internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>, IDisposable
 {
-    internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>, IDisposable
+    private readonly IUnitOfWork unitOfWork;
+    private readonly CurrentDay currentDay;
+
+    public SaveCommentsUseCase(IUnitOfWork unitOfWork, CurrentDay currentDay)
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly CurrentDay currentDay;
+        this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+    }
 
-        public SaveCommentsUseCase(IUnitOfWork unitOfWork, CurrentDay currentDay)
+    public Task Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
+    {
+        try
         {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+            DateTime currentDate = currentDay.Date;
+            DateRecord dateRecord = GetOrCreateDateRecordFromDb(currentDate);
+            dateRecord.Comment = currentDay.Comments;
+            unitOfWork.DateRecordRepository.Update(dateRecord);
+
+            unitOfWork.Commit();
+
+            currentDay.AcceptModifications();
+
+            return Task.FromResult(Unit.Value);
         }
-
-        public Task Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
+        finally
         {
-            try
+            Dispose();
+        }
+    }
+
+    private DateRecord GetOrCreateDateRecordFromDb(DateTime date)
+    {
+        DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(date);
+
+        if (dateRecord == null)
+        {
+            dateRecord = new DateRecord
             {
-                DateTime currentDate = currentDay.Date;
-                DateRecord dateRecord = GetOrCreateDateRecordFromDb(currentDate);
-                dateRecord.Comment = currentDay.Comments;
-                unitOfWork.DateRecordRepository.Update(dateRecord);
-
-                unitOfWork.Commit();
-
-                currentDay.AcceptModifications();
-
-                return Task.FromResult(Unit.Value);
-            }
-            finally
-            {
-                Dispose();
-            }
+                Date = date
+            };
+            unitOfWork.DateRecordRepository.Add(dateRecord);
         }
 
-        private DateRecord GetOrCreateDateRecordFromDb(DateTime date)
-        {
-            DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(date);
+        return dateRecord;
+    }
 
-            if (dateRecord == null)
-            {
-                dateRecord = new DateRecord
-                {
-                    Date = date
-                };
-                unitOfWork.DateRecordRepository.Add(dateRecord);
-            }
-
-            return dateRecord;
-        }
-
-        public void Dispose()
-        {
-            unitOfWork?.Dispose();
-        }
+    public void Dispose()
+    {
+        unitOfWork?.Dispose();
     }
 }

@@ -17,7 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
+using DustInTheWind.ActiveTime.Application.Comments;
 using DustInTheWind.ActiveTime.Application.Comments.ResetComments;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
@@ -34,10 +34,10 @@ public class ResetCommentsCommand : CommandBase
 
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        eventBus.Subscribe<CurrentDateCommentChangedEvent>(HandleCurrentDayCommentChanged);
+        eventBus.Subscribe<CommentChangedEvent>(HandleCurrentDayCommentChanged);
     }
 
-    private Task HandleCurrentDayCommentChanged(CurrentDateCommentChangedEvent ev, CancellationToken cancellationToken)
+    private Task HandleCurrentDayCommentChanged(CommentChangedEvent ev, CancellationToken cancellationToken)
     {
         OnCanExecuteChanged();
 

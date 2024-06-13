@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Comments;
 using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
@@ -74,7 +75,7 @@ public class CommentsViewModel : ViewModelBase
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
         eventBus.Subscribe<CurrentDateChangedEvent>(HandleCurrentDateChanged);
-        eventBus.Subscribe<CurrentDateCommentChangedEvent>(HandleCommentChanged);
+        eventBus.Subscribe<CommentChangedEvent>(HandleCommentChanged);
 
         _ = Initialize();
     }
@@ -85,7 +86,7 @@ public class CommentsViewModel : ViewModelBase
             await Initialize();
     }
 
-    private Task HandleCommentChanged(CurrentDateCommentChangedEvent ev, CancellationToken cancellationToken)
+    private Task HandleCommentChanged(CommentChangedEvent ev, CancellationToken cancellationToken)
     {
         RunAsInitialization(() =>
         {

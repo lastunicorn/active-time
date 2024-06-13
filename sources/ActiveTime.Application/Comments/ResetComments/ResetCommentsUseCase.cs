@@ -17,7 +17,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Ports.Persistence;
@@ -66,11 +65,11 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments
 
         private async Task RaiseCommentChangedEvent()
         {
-            CurrentDateCommentChangedEvent currentDateCommentChangedEvent = new()
+            CommentChangedEvent commentChangedEvent = new()
             {
                 NewComments = currentDay.Comments
             };
-            await eventBus.Publish(currentDateCommentChangedEvent);
+            await eventBus.Publish(commentChangedEvent);
         }
 
         public void Dispose()
