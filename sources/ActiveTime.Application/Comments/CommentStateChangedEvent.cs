@@ -18,4 +18,5 @@ namespace DustInTheWind.ActiveTime.Application.Comments;
 
 public class CommentStateChangedEvent
 {
+    public bool CommentsAreSaved { get; set; }
 }

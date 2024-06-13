@@ -48,27 +48,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <Border
             Grid.Row="0"
+            BorderBrush="{StaticResource TextBoxNormalBorderColor}"
             BorderThickness="1"
             Padding="0 6 0 6"
-            Margin="0 0 0 1">
-
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}" />
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}" />
-                        </Trigger>
-                        
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}" />
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}" />
-                        </Trigger>
-
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
+            Margin="0 0 0 1"
+            Background="{StaticResource TextBoxNormalBackgroundColor}">
 
             <StackPanel
                 Orientation="Vertical"
@@ -92,24 +76,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <Border
             Grid.Row="1"
+            BorderBrush="{StaticResource TextBoxNormalBorderColor}"
             BorderThickness="1"
             Padding="0 6 0 6"
-            Margin="0 1 0 0">
-
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource TextBoxOverBackgroundColor}" />
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxOverBorderColor}" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter Property="Background" Value="{StaticResource TextBoxNormalBackgroundColor}" />
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxNormalBorderColor}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
+            Margin="0 1 0 0"
+            Background="{StaticResource TextBoxNormalBackgroundColor}">
 
             <Grid
                 VerticalAlignment="Center"

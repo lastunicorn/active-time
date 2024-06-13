@@ -26,13 +26,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:mainMenuArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainMenuArea"
     xmlns:viewModels1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels"
     xmlns:views1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.Views"
+    xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls;assembly=DustInTheWind.ActiveTime.Presentation.CustomControls"
 
     Title="{Binding Path=WindowTitle}"
     Height="600"
     Width="800"
     ResizeMode="CanResizeWithGrip"
-    MinWidth="450"
-    MinHeight="450"
+    MinWidth="640"
+    MinHeight="480"
     UseLayoutRounding="True"
     VisualClearTypeHint="Enabled"
     VisualTextRenderingMode="Auto"
@@ -48,11 +49,102 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <views1:StatusInfoView
             DockPanel.Dock="Bottom"
-            DataContext="{Binding StatusInfoViewModel}"/>
+            DataContext="{Binding StatusInfoViewModel}" />
 
-        <views1:FrontView
-            DataContext="{Binding FrontViewModel}"
-            Margin="10"  />
+        <customControls:SideNavigator>
+
+            <TabItem>
+
+                <TabItem.Header>
+
+                    <customControls:GenericIcon
+                        Width="20"
+                        Height="20"
+                        Geometry="{StaticResource ChartIconGeometry}">
+
+                        <Control.Effect>
+                            <DropShadowEffect
+                                Color="{StaticResource ShadowColor}"
+                                Direction="0"
+                                ShadowDepth="0"
+                                BlurRadius="10" />
+                        </Control.Effect>
+
+                    </customControls:GenericIcon>
+
+                </TabItem.Header>
+
+                <views1:FrontView
+                    DataContext="{Binding FrontViewModel}" />
+
+
+            </TabItem>
+
+            <TabItem>
+
+                <TabItem.Header>
+
+                    <customControls:GenericIcon
+                        Width="20"
+                        Height="20"
+                        Geometry="{StaticResource ChartIconGeometry}">
+
+                        <Control.Effect>
+                            <DropShadowEffect
+                                Color="{StaticResource ShadowColor}"
+                                Direction="0"
+                                ShadowDepth="0"
+                                BlurRadius="10" />
+                        </Control.Effect>
+
+                    </customControls:GenericIcon>
+
+                </TabItem.Header>
+
+                <TextBlock Text="Page 1"/>
+
+            </TabItem>
+
+            <customControls:SideNavigator.Buttons>
+
+                <Button
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Padding="8"
+                    Margin="5"
+                    Command="{Binding RefreshCommand}">
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <customControls:GenericIcon
+                        Width="20"
+                        Height="20"
+                        Geometry="{StaticResource RefreshIconGeometry}">
+
+                        <Control.Effect>
+                            <DropShadowEffect
+                                Color="{StaticResource ShadowColor}"
+                                Direction="0"
+                                ShadowDepth="0"
+                                BlurRadius="10" />
+                        </Control.Effect>
+
+                    </customControls:GenericIcon>
+
+                </Button>
+
+            </customControls:SideNavigator.Buttons>
+
+        </customControls:SideNavigator>
 
     </DockPanel>
 

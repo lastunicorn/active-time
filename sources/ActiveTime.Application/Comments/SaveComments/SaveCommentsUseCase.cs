@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
@@ -26,15 +27,17 @@ namespace DustInTheWind.ActiveTime.Application.Comments.SaveComments;
 internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>, IDisposable
 {
     private readonly IUnitOfWork unitOfWork;
+    private readonly EventBus eventBus;
     private readonly CurrentDay currentDay;
 
-    public SaveCommentsUseCase(IUnitOfWork unitOfWork, CurrentDay currentDay)
+    public SaveCommentsUseCase(IUnitOfWork unitOfWork, EventBus eventBus, CurrentDay currentDay)
     {
         this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
     }
 
-    public Task Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
+    public async Task Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -46,8 +49,7 @@ internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>
             unitOfWork.Commit();
 
             currentDay.AcceptModifications();
-
-            return Task.FromResult(Unit.Value);
+            await RaiseCommentStateChangedEvent();
         }
         finally
         {
@@ -69,6 +71,15 @@ internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>
         }
 
         return dateRecord;
+    }
+
+    private async Task RaiseCommentStateChangedEvent()
+    {
+        CommentStateChangedEvent commentChangedEvent = new()
+        {
+            CommentsAreSaved = currentDay.AreCommentsSaved
+        };
+        await eventBus.Publish(commentChangedEvent);
     }
 
     public void Dispose()

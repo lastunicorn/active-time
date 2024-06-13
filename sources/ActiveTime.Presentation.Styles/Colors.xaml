@@ -96,7 +96,19 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
     <!--
     ================================================================================================
-    Main
+    General - Border
+    ================================================================================================
+    -->
+
+    <Color x:Key="BorderColor">#3F3F46</Color>
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+
+    <Color x:Key="ShadowColor">#2D2D30</Color>
+    <SolidColorBrush x:Key="ShadowBrush" Color="{StaticResource ShadowColor}" />
+
+    <!--
+    ================================================================================================
+    General - Main
     ================================================================================================
     -->
 

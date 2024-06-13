@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 
 namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
@@ -29,11 +30,16 @@ namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
 
         public MainWindowTitle WindowTitle { get; } = new();
 
-        public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel)
+        public RefreshCommand RefreshCommand { get; }
+
+        public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel,
+            RefreshCommand refreshCommand)
         {
             MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
             StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
             FrontViewModel = frontViewModel ?? throw new ArgumentNullException(nameof(frontViewModel));
+
+            RefreshCommand = refreshCommand ?? throw new ArgumentNullException(nameof(refreshCommand));
         }
     }
 }

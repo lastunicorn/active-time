@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Comments;
 using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
@@ -57,5 +58,14 @@ internal class RefreshUseCase : IRequestHandler<RefreshRequest>
     {
         RefreshedStatus status = ApplicationStatus.Create<RefreshedStatus>();
         statusInfoService.SetStatus(status);
+    }
+
+    private async Task RaiseCommentStateChangedEvent()
+    {
+        CommentStateChangedEvent commentChangedEvent = new()
+        {
+            CommentsAreSaved = currentDay.AreCommentsSaved
+        };
+        await eventBus.Publish(commentChangedEvent);
     }
 }

@@ -14,6 +14,9 @@
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/WindowStyles.xaml"/>
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/TabControlStyles.xaml"/>
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/CalendarStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/SideNavigatorStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/GenericIconStyles.xaml"/>
+        <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/IconStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

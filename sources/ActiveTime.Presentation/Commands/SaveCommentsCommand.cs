@@ -27,17 +27,19 @@ namespace DustInTheWind.ActiveTime.Presentation.Commands;
 public class SaveCommentsCommand : CommandBase
 {
     private readonly IRequestBus requestBus;
+    private bool canExecute;
 
     public SaveCommentsCommand(IRequestBus requestBus, EventBus eventBus)
     {
         if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        eventBus.Subscribe<CommentChangedEvent>(HandleCurrentDayCommentChanged);
+        eventBus.Subscribe<CommentStateChangedEvent>(HandleCommentStateChanged);
     }
 
-    private Task HandleCurrentDayCommentChanged(CommentChangedEvent ev, CancellationToken cancellationToken)
+    private Task HandleCommentStateChanged(CommentStateChangedEvent ev, CancellationToken cancellationToken)
     {
+        canExecute = !ev.CommentsAreSaved;
         OnCanExecuteChanged();
 
         return Task.CompletedTask;
@@ -45,7 +47,7 @@ public class SaveCommentsCommand : CommandBase
 
     public override bool CanExecute(object parameter)
     {
-        return true;
+        return canExecute;
     }
 
     public override void Execute(object parameter)

@@ -27,6 +27,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Commands;
 public class ResetCommentsCommand : CommandBase
 {
     private readonly IRequestBus requestBus;
+    private bool canExecute;
 
     public ResetCommentsCommand(IRequestBus requestBus, EventBus eventBus)
     {
@@ -34,11 +35,12 @@ public class ResetCommentsCommand : CommandBase
 
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        eventBus.Subscribe<CommentChangedEvent>(HandleCurrentDayCommentChanged);
+        eventBus.Subscribe<CommentStateChangedEvent>(HandleCommentStateChanged);
     }
 
-    private Task HandleCurrentDayCommentChanged(CommentChangedEvent ev, CancellationToken cancellationToken)
+    private Task HandleCommentStateChanged(CommentStateChangedEvent ev, CancellationToken cancellationToken)
     {
+        canExecute = !ev.CommentsAreSaved;
         OnCanExecuteChanged();
 
         return Task.CompletedTask;
@@ -46,7 +48,7 @@ public class ResetCommentsCommand : CommandBase
 
     public override bool CanExecute(object parameter)
     {
-        return true;
+        return canExecute;
     }
 
     public override void Execute(object parameter)

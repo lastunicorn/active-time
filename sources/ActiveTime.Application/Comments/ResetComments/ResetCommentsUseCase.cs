@@ -46,6 +46,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments
                 DateRecord dateRecord = RetrieveDateRecordFromDb(currentDate);
                 SetCommentOnCurrentDay(dateRecord?.Comment);
                 await RaiseCommentChangedEvent();
+                await RaiseCommentStateChangedEvent();
             }
             finally
             {
@@ -68,6 +69,15 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ResetComments
             CommentChangedEvent commentChangedEvent = new()
             {
                 NewComments = currentDay.Comments
+            };
+            await eventBus.Publish(commentChangedEvent);
+        }
+
+        private async Task RaiseCommentStateChangedEvent()
+        {
+            CommentStateChangedEvent commentChangedEvent = new()
+            {
+                CommentsAreSaved = currentDay.AreCommentsSaved
             };
             await eventBus.Publish(commentChangedEvent);
         }
