@@ -70,12 +70,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <ContentPresenter
                             ContentSource="SelectedContent"
-                            Margin="10">
+                            Margin="16">
 
                             <ContentPresenter.Resources>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                                    <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+                                    <Setter Property="FontSize" Value="20" />
                                     <Setter Property="Foreground" Value="{StaticResource FontPrimaryBrush}" />
                                 </Style>
                             </ContentPresenter.Resources>
