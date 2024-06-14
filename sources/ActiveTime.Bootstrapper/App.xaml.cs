@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows;
 
 namespace DustInTheWind.ActiveTime.Bootstrapper;
@@ -22,46 +21,15 @@ namespace DustInTheWind.ActiveTime.Bootstrapper;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : IDisposable
+public partial class App
 {
-    private StartupGuard startupGuard;
     private BootstrapperWithAutofac bootstrapper;
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        startupGuard = new StartupGuard();
-
-        if (startupGuard.Start())
-            StartApp();
-        else
-            Shutdown();
-    }
-
-    protected override void OnExit(ExitEventArgs e)
-    {
-        base.OnExit(e);
-        Dispose();
-    }
-
-    private void StartApp()
-    {
         bootstrapper = new BootstrapperWithAutofac();
         bootstrapper.Run();
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            startupGuard?.Dispose();
-        }
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }

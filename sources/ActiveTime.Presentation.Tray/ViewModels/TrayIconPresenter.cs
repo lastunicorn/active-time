@@ -101,7 +101,6 @@ public class TrayIconPresenter
 
     private void Initialize()
     {
-        Show();
         _ = RefreshView();
     }
 
@@ -134,7 +133,10 @@ public class TrayIconPresenter
     public void Show()
     {
         if (View != null)
+        {
+            Initialize();
             View.Visible = true;
+        }
     }
 
     public void Hide()

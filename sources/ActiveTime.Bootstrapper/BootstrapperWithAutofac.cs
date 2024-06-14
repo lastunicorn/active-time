@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -29,20 +30,30 @@ using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 
 namespace DustInTheWind.ActiveTime.Bootstrapper;
 
-internal class BootstrapperWithAutofac
+internal sealed class BootstrapperWithAutofac : IDisposable
 {
+    private StartupGuard startupGuard;
     private IContainer container;
 
     public void Run()
     {
-        ConfigureServices();
-        ConfigureJobs();
-        ConfigureGuiShells();
+        startupGuard = new StartupGuard();
 
-        StartJobs();
+        if (startupGuard.Start())
+        {
+            ConfigureServices();
+            ConfigureJobs();
+            ConfigureGuiShells();
 
-        IApplicationService applicationService = container.Resolve<IApplicationService>();
-        applicationService.Start();
+            StartJobs();
+
+            IApplicationService applicationService = container.Resolve<IApplicationService>();
+            applicationService.Start();
+        }
+        else
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 
     private void ConfigureServices()
@@ -56,14 +67,16 @@ internal class BootstrapperWithAutofac
     {
         JobCollection jobCollection = container.Resolve<JobCollection>();
 
-        Assembly[] assemblies = new[]
-        {
-            typeof(RecorderJob).Assembly,
-            typeof(TrayIconJob).Assembly
-        };
+        IEnumerable<IJob> jobs = container.Resolve<IEnumerable<IJob>>();
 
-        IEnumerable<IJob> jobs = assemblies
-            .SelectMany(CreateJobs);
+        //Assembly[] assemblies =
+        //{
+        //    typeof(RecorderJob).Assembly,
+        //    typeof(TrayIconJob).Assembly
+        //};
+
+        //IEnumerable<IJob> jobs = assemblies
+        //    .SelectMany(CreateJobs);
 
         foreach (IJob job in jobs)
             jobCollection.Add(job);
@@ -91,5 +104,29 @@ internal class BootstrapperWithAutofac
     {
         JobCollection jobCollection = container.Resolve<JobCollection>();
         jobCollection.StartAll();
+    }
+
+    public void Dispose()
+    {
+        startupGuard?.Dispose();
+        container?.Dispose();
+    }
+}
+
+internal static class JobRegistrationExtensions
+{
+    public static void RegisterJobs(this ContainerBuilder containerBuilder, params Assembly[] assemblies)
+    {
+        IEnumerable<Type> jobTypes = assemblies
+            .SelectMany(FindJobs);
+
+        foreach (Type jobType in jobTypes) 
+            containerBuilder.RegisterType(jobType).As<IJob>();
+    }
+
+    private static IEnumerable<Type> FindJobs(Assembly assembly)
+    {
+        return assembly.GetTypes()
+            .Where(x => x.IsClass && !x.IsAbstract && typeof(IJob).IsAssignableFrom(x));
     }
 }

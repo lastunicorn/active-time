@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
 {
-    public abstract class OneTimeJob : JobBase
+    public abstract class OneTimeJob : TimerJobBase
     {
         protected OneTimeJob(ITimer timer)
             : base(timer)

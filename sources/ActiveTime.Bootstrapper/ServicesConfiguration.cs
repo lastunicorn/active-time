@@ -110,9 +110,16 @@ internal static class ServicesConfiguration
 
         // Jobs
         containerBuilder.RegisterType<JobCollection>().AsSelf().SingleInstance();
-        containerBuilder.RegisterType<RecorderJob>();
-        containerBuilder.RegisterType<ResetStatusJob>();
-        containerBuilder.RegisterType<TrayIconJob>();
+        //containerBuilder.RegisterType<RecorderJob>();
+        //containerBuilder.RegisterType<ResetStatusJob>();
+        //containerBuilder.RegisterType<TrayIconJob>();
+
+        Assembly[] assemblies =
+        {
+            typeof(RecorderJob).Assembly,
+            typeof(TrayIconJob).Assembly
+        };
+        containerBuilder.RegisterJobs(assemblies);
 
         // MediatR
         Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;

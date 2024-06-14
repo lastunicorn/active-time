@@ -22,39 +22,35 @@ using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 
 namespace DustInTheWind.ActiveTime.Presentation.Tray.Module;
 
-public class TrayIconJob : IJob
+public class TrayIconJob : JobBase
 {
     private readonly TrayIconView trayIconView;
+    private readonly IApplicationService applicationService;
 
-    public string Id { get; } = "Tray Icon";
-
-    public JobState State { get; private set; }
+    public override string Id { get; } = "Tray Icon";
 
     public TrayIconJob(TrayIconView trayIconView, IApplicationService applicationService)
     {
         this.trayIconView = trayIconView ?? throw new ArgumentNullException(nameof(trayIconView));
+        this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
+    }
+
+    protected override void DoStart()
+    {
+        trayIconView.Presenter.Show();
 
         applicationService.Exiting += HandleApplicationServiceExiting;
+    }
+
+    protected override void DoStop()
+    {
+        applicationService.Exiting -= HandleApplicationServiceExiting;
+
+        trayIconView.Presenter.Hide();
     }
 
     private void HandleApplicationServiceExiting(object sender, EventArgs e)
     {
         trayIconView.Presenter.Hide();
-    }
-
-    public Task Start()
-    {
-        trayIconView.Presenter.Show();
-        State = JobState.Running;
-
-        return Task.CompletedTask;
-    }
-
-    public Task Stop()
-    {
-        trayIconView.Presenter.Hide();
-        State = JobState.Stopped;
-
-        return Task.CompletedTask;
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,117 +14,75 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Threading.Tasks;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
+
+public abstract class JobBase : IJob
 {
-    public abstract class JobBase : IJob, IDisposable
+    protected readonly object StateSynchronizer = new();
+
+    public abstract string Id { get; }
+
+    public JobState State { get; private set; }
+
+    public async Task Start()
     {
-        private bool isDisposed;
-        protected readonly object StateSynchronizer = new object();
-        protected readonly ITimer Timer;
-
-        public abstract string Id { get; }
-
-        /// <summary>
-        /// Gets the state of the current recorder job.
-        /// </summary>
-        public JobState State { get; private set; }
-
-        protected JobBase(ITimer timer)
+        if (State == JobState.Stopped)
         {
-            Timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            await OnStarting();
 
-            timer.Tick += HandleTimerTick;
-        }
-
-        private void HandleTimerTick(object sender, EventArgs e)
-        {
-            _ = Execute();
-        }
-
-        public async Task Start()
-        {
-            if (State == JobState.Stopped)
+            lock (StateSynchronizer)
             {
                 DoStart();
-                await OnStarted();
-            }
-        }
-
-        protected virtual Task OnStarted()
-        {
-            return Task.CompletedTask;
-        }
-
-        private void DoStart()
-        {
-            lock (StateSynchronizer)
-            {
-                Timer.Start();
                 State = JobState.Running;
             }
+
+            await OnStarted();
         }
+    }
 
-        public Task Stop()
+    protected virtual Task OnStarting()
+    {
+        return Task.CompletedTask;
+    }
+
+    protected virtual void DoStart()
+    {
+    }
+
+    protected virtual Task OnStarted()
+    {
+        return Task.CompletedTask;
+    }
+
+    public async Task Stop()
+    {
+        if (State == JobState.Running)
         {
-            if (State == JobState.Running)
-                DoStop();
+            await OnStopping();
 
-            return Task.CompletedTask;
-        }
-
-        private void DoStop()
-        {
             lock (StateSynchronizer)
             {
-                Timer.Stop();
+                DoStop();
                 State = JobState.Stopped;
             }
+
+            await OnStopped();
         }
+    }
 
-        protected async Task Execute()
-        {
-            await OnExecuting();
-            await DoExecute();
-            await OnExecuted();
-        }
+    protected virtual Task OnStopped()
+    {
+        return Task.CompletedTask;
+    }
 
-        protected virtual Task OnExecuting()
-        {
-            return Task.CompletedTask;
-        }
+    protected virtual void DoStop()
+    {
+    }
 
-        protected virtual Task OnExecuted()
-        {
-            return Task.CompletedTask;
-        }
-
-        protected abstract Task DoExecute();
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (isDisposed)
-                return;
-
-            if (disposing)
-            {
-                Timer.Dispose();
-            }
-
-            isDisposed = true;
-        }
-
-        ~JobBase()
-        {
-            Dispose(false);
-        }
+    protected virtual Task OnStopping()
+    {
+        return Task.CompletedTask;
     }
 }

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
 {
-    public abstract class PeriodicalJob : JobBase
+    public abstract class PeriodicalJob : TimerJobBase
     {
         public bool RunOnStart { get; set; }
 

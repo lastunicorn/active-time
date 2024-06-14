@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,76 +18,75 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
+
+public class JobCollection
 {
-    public class JobCollection
+    private readonly HashSet<IJob> jobs = new();
+
+    public IJob this[string jobId]
     {
-        private readonly HashSet<IJob> jobs = new HashSet<IJob>();
-
-        public IJob this[string jobId]
-        {
-            get
-            {
-                if (jobId == null) throw new ArgumentNullException(nameof(jobId));
-
-                return GetInternal(jobId);
-            }
-        }
-
-        public void Add(IJob job)
-        {
-            if (job == null) throw new ArgumentNullException(nameof(job));
-
-            jobs.Add(job);
-        }
-
-        public IJob Get(string jobId)
+        get
         {
             if (jobId == null) throw new ArgumentNullException(nameof(jobId));
 
             return GetInternal(jobId);
         }
+    }
 
-        public JobState GetState(string jobId)
+    public void Add(IJob job)
+    {
+        if (job == null) throw new ArgumentNullException(nameof(job));
+
+        jobs.Add(job);
+    }
+
+    public IJob Get(string jobId)
+    {
+        if (jobId == null) throw new ArgumentNullException(nameof(jobId));
+
+        return GetInternal(jobId);
+    }
+
+    public JobState GetState(string jobId)
+    {
+        if (jobId == null) throw new ArgumentNullException(nameof(jobId));
+
+        IJob job = GetInternal(jobId);
+        return job.State;
+    }
+
+    public void Start(string jobId)
+    {
+        if (jobId == null) throw new ArgumentNullException(nameof(jobId));
+
+        IJob job = GetInternal(jobId);
+        job.Start();
+    }
+
+    public void Stop(string jobId)
+    {
+        if (jobId == null) throw new ArgumentNullException(nameof(jobId));
+
+        IJob job = GetInternal(jobId);
+        job.Stop();
+    }
+
+    private IJob GetInternal(string jobId)
+    {
+        try
         {
-            if (jobId == null) throw new ArgumentNullException(nameof(jobId));
-
-            IJob job = GetInternal(jobId);
-            return job.State;
+            return jobs.First(x => x.Id == jobId);
         }
-
-        public void Start(string jobId)
+        catch (Exception ex)
         {
-            if (jobId == null) throw new ArgumentNullException(nameof(jobId));
+            throw new Exception($"There is no job with the id {jobId}.", ex);
+        }
+    }
 
-            IJob job = GetInternal(jobId);
+    public void StartAll()
+    {
+        foreach (IJob job in jobs)
             job.Start();
-        }
-
-        public void Stop(string jobId)
-        {
-            if (jobId == null) throw new ArgumentNullException(nameof(jobId));
-
-            IJob job = GetInternal(jobId);
-            job.Stop();
-        }
-
-        private IJob GetInternal(string jobId)
-        {
-            try
-            {
-                return jobs.First(x => x.Id == jobId);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"There is no job with the id {jobId}.", ex);
-            }
-        }
-
-        public void StartAll()
-        {
-            foreach (IJob job in jobs) 
-                job.Start();
-        }
     }
 }
