@@ -28,6 +28,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:overviewArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.OverviewArea"
     xmlns:calendarArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.CalendarArea"
     xmlns:mainArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea"
+    xmlns:recorderArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.RecorderArea"
 
     Title="{Binding Path=WindowTitle}"
     Height="600"
@@ -104,6 +105,32 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
                 <overviewArea:OverviewControl
                     DataContext="{Binding OverviewViewModel}" />
+
+            </TabItem>
+
+            <TabItem>
+
+                <TabItem.Header>
+
+                    <customControls:GenericIcon
+                        Width="20"
+                        Height="20"
+                        Geometry="{StaticResource ChartIconGeometry}">
+
+                        <Control.Effect>
+                            <DropShadowEffect
+                                Color="{StaticResource ShadowColor}"
+                                Direction="0"
+                                ShadowDepth="0"
+                                BlurRadius="10" />
+                        </Control.Effect>
+
+                    </customControls:GenericIcon>
+
+                </TabItem.Header>
+
+                <recorderArea:RecorderControl
+                    DataContext="{Binding RecorderViewModel}" />
 
             </TabItem>
 

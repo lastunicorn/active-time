@@ -40,6 +40,7 @@ using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainArea;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
+using DustInTheWind.ActiveTime.Presentation.RecorderArea;
 using DustInTheWind.ActiveTime.Presentation.Services;
 using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
@@ -72,6 +73,7 @@ internal static class ServicesConfiguration
         containerBuilder.RegisterType<TimeReportViewModel>().AsSelf();
         containerBuilder.RegisterType<CommentsViewModel>().AsSelf();
         containerBuilder.RegisterType<DayRecordsViewModel>().AsSelf();
+        containerBuilder.RegisterType<RecorderViewModel>().AsSelf();
 
         containerBuilder.RegisterType<AboutWindow>().AsSelf();
         containerBuilder.RegisterType<AboutViewModel>().AsSelf();
@@ -84,6 +86,8 @@ internal static class ServicesConfiguration
         containerBuilder.RegisterType<ResetCommentsCommand>().AsSelf();
         containerBuilder.RegisterType<SaveCommentsCommand>().AsSelf();
         containerBuilder.RegisterType<ExitCommand>().AsSelf();
+        containerBuilder.RegisterType<StartRecorderCommand>().AsSelf();
+        containerBuilder.RegisterType<StopRecorderCommand>().AsSelf();
 
         // GUI - Services
         containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();
@@ -110,16 +114,10 @@ internal static class ServicesConfiguration
 
         // Jobs
         containerBuilder.RegisterType<JobCollection>().AsSelf().SingleInstance();
-        //containerBuilder.RegisterType<RecorderJob>();
-        //containerBuilder.RegisterType<ResetStatusJob>();
-        //containerBuilder.RegisterType<TrayIconJob>();
-
-        Assembly[] assemblies =
-        {
+        containerBuilder.RegisterJobs(new[] {
             typeof(RecorderJob).Assembly,
             typeof(TrayIconJob).Assembly
-        };
-        containerBuilder.RegisterJobs(assemblies);
+        });
 
         // MediatR
         Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;

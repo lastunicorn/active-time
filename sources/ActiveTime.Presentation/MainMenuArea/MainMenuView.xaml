@@ -37,11 +37,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
         </MenuItem>
 
-        <MenuItem Header="_Recorder">
-            <MenuItem Header="St_art" Command="{Binding StartCommand}" />
-            <MenuItem Header="St_op" Command="{Binding StopCommand}" />
-        </MenuItem>
-
         <MenuItem Header="_Help">
             <MenuItem Header="_About" Command="{Binding AboutCommand}" />
         </MenuItem>

@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.ActiveTime.Application.Recording.PresentRecorderState;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Infrastructure;
@@ -25,10 +26,11 @@ using DustInTheWind.ActiveTime.Ports.LogAccess;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands;
 
-internal class StopRecorderCommand : CommandBase
+public class StopRecorderCommand : CommandBase
 {
     private readonly IRequestBus requestBus;
     private readonly ILogger logger;
+    private bool canExecute;
 
     public StopRecorderCommand(IRequestBus requestBus, ILogger logger, EventBus eventBus)
     {
@@ -38,10 +40,22 @@ internal class StopRecorderCommand : CommandBase
 
         eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
         eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
+
+        _ = Initialize();
+    }
+
+    private async Task Initialize()
+    {
+        PresentRecorderStateRequest request = new();
+        PresentRecorderStateResponse response = await requestBus.Send<PresentRecorderStateRequest, PresentRecorderStateResponse>(request);
+
+        canExecute = response.IsRunning;
+        OnCanExecuteChanged();
     }
 
     private Task HandleRecorderStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
     {
+        canExecute = true;
         OnCanExecuteChanged();
 
         return Task.CompletedTask;
@@ -49,6 +63,7 @@ internal class StopRecorderCommand : CommandBase
 
     private Task HandleRecorderStopped(RecorderStoppedEvent ev, CancellationToken cancellationToken)
     {
+        canExecute = false;
         OnCanExecuteChanged();
 
         return Task.CompletedTask;
@@ -56,9 +71,7 @@ internal class StopRecorderCommand : CommandBase
 
     public override bool CanExecute(object parameter)
     {
-        // todo: check the recorder timer state.
-
-        return true;
+        return canExecute;
     }
 
     public override void Execute(object parameter)

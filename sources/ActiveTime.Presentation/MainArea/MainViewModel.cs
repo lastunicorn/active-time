@@ -19,6 +19,7 @@ using DustInTheWind.ActiveTime.Presentation.CalendarArea;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
+using DustInTheWind.ActiveTime.Presentation.RecorderArea;
 
 namespace DustInTheWind.ActiveTime.Presentation.MainArea
 {
@@ -36,16 +37,18 @@ namespace DustInTheWind.ActiveTime.Presentation.MainArea
 
         public OverviewViewModel OverviewViewModel { get; }
 
+        public RecorderViewModel RecorderViewModel { get; }
+
         public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel,
-            OverviewViewModel overviewViewModel, RefreshCommand refreshCommand)
+            OverviewViewModel overviewViewModel, RefreshCommand refreshCommand, RecorderViewModel recorderViewModel)
         {
             MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
             StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
             FrontViewModel = frontViewModel ?? throw new ArgumentNullException(nameof(frontViewModel));
 
             OverviewViewModel = overviewViewModel ?? throw new ArgumentNullException(nameof(overviewViewModel));
-
             RefreshCommand = refreshCommand ?? throw new ArgumentNullException(nameof(refreshCommand));
+            RecorderViewModel = recorderViewModel ?? throw new ArgumentNullException(nameof(recorderViewModel));
         }
     }
 }
