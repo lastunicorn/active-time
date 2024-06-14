@@ -16,17 +16,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Autofac;
 using DustInTheWind.ActiveTime.Domain.Presentation;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.Presentation.AboutArea;
 using DustInTheWind.ActiveTime.Presentation.MainArea;
-using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 
 namespace DustInTheWind.ActiveTime.Bootstrapper;
 
@@ -69,25 +65,8 @@ internal sealed class BootstrapperWithAutofac : IDisposable
 
         IEnumerable<IJob> jobs = container.Resolve<IEnumerable<IJob>>();
 
-        //Assembly[] assemblies =
-        //{
-        //    typeof(RecorderJob).Assembly,
-        //    typeof(TrayIconJob).Assembly
-        //};
-
-        //IEnumerable<IJob> jobs = assemblies
-        //    .SelectMany(CreateJobs);
-
         foreach (IJob job in jobs)
             jobCollection.Add(job);
-    }
-
-    private IEnumerable<IJob> CreateJobs(Assembly assembly)
-    {
-        return assembly.GetTypes()
-            .Where(x => x.IsClass && !x.IsAbstract && typeof(IJob).IsAssignableFrom(x))
-            .Select(x => container.Resolve(x))
-            .OfType<IJob>();
     }
 
     private void ConfigureGuiShells()
@@ -110,23 +89,5 @@ internal sealed class BootstrapperWithAutofac : IDisposable
     {
         startupGuard?.Dispose();
         container?.Dispose();
-    }
-}
-
-internal static class JobRegistrationExtensions
-{
-    public static void RegisterJobs(this ContainerBuilder containerBuilder, params Assembly[] assemblies)
-    {
-        IEnumerable<Type> jobTypes = assemblies
-            .SelectMany(FindJobs);
-
-        foreach (Type jobType in jobTypes) 
-            containerBuilder.RegisterType(jobType).As<IJob>();
-    }
-
-    private static IEnumerable<Type> FindJobs(Assembly assembly)
-    {
-        return assembly.GetTypes()
-            .Where(x => x.IsClass && !x.IsAbstract && typeof(IJob).IsAssignableFrom(x));
     }
 }

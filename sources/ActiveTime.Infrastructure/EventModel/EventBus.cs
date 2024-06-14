@@ -32,6 +32,12 @@ public class EventBus
         actions.Add(action);
     }
 
+    public void Unsubscribe<TEvent>(Func<TEvent, CancellationToken, Task> action)
+    {
+        List<object> actions = GetBucket<TEvent>();
+        actions?.Remove(action);
+    }
+
     public async Task Publish<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
     {
         List<object> bucket = GetBucket<TEvent>();

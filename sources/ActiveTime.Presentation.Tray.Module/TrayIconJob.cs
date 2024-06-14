@@ -15,8 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 
@@ -25,32 +23,16 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Module;
 public class TrayIconJob : JobBase
 {
     private readonly TrayIconView trayIconView;
-    private readonly IApplicationService applicationService;
 
     public override string Id { get; } = "Tray Icon";
 
-    public TrayIconJob(TrayIconView trayIconView, IApplicationService applicationService)
+    public TrayIconJob(TrayIconView trayIconView)
     {
         this.trayIconView = trayIconView ?? throw new ArgumentNullException(nameof(trayIconView));
-        this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
     }
 
     protected override void DoStart()
     {
         trayIconView.Presenter.Show();
-
-        applicationService.Exiting += HandleApplicationServiceExiting;
-    }
-
-    protected override void DoStop()
-    {
-        applicationService.Exiting -= HandleApplicationServiceExiting;
-
-        trayIconView.Presenter.Hide();
-    }
-
-    private void HandleApplicationServiceExiting(object sender, EventArgs e)
-    {
-        trayIconView.Presenter.Hide();
     }
 }

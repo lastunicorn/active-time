@@ -33,17 +33,11 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 
 public class TrayIconPresenter
 {
-    private ITrayIconView view;
+    private readonly IApplicationService applicationService;
+    private readonly IRequestBus requestBus;
+    private readonly EventBus eventBus;
 
-    public ITrayIconView View
-    {
-        get => view;
-        set
-        {
-            view = value;
-            if (view != null) Initialize();
-        }
-    }
+    public ITrayIconView View { get; set; }
 
     public ShowCommand ShowCommand { get; }
 
@@ -55,29 +49,21 @@ public class TrayIconPresenter
 
     public ExitCommand ExitCommand { get; }
 
-    private readonly IShellNavigator shellNavigator;
-    private readonly IRequestBus requestBus;
-
     public TrayIconPresenter(IApplicationService applicationService, IShellNavigator shellNavigator,
         IRequestBus requestBus, ILogger logger, EventBus eventBus)
     {
-        if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+        if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
         if (logger == null) throw new ArgumentNullException(nameof(logger));
-        if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-        this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
+        this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
         ShowCommand = new ShowCommand(shellNavigator);
         StartRecorderCommand = new StartRecorderCommand(requestBus, logger, eventBus);
         StopRecorderCommand = new StopRecorderCommand(requestBus, logger, eventBus);
         AboutCommand = new AboutCommand(shellNavigator);
         ExitCommand = new ExitCommand(applicationService);
-
-        applicationService.Exiting += HandleApplicationServiceExiting;
-
-        eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
-        eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
     }
 
     private void HandleApplicationServiceExiting(object sender, EventArgs e)
@@ -134,14 +120,27 @@ public class TrayIconPresenter
     {
         if (View != null)
         {
+            applicationService.Exiting += HandleApplicationServiceExiting;
+
+            eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
+            eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
+
             Initialize();
+
             View.Visible = true;
         }
     }
 
-    public void Hide()
+    private void Hide()
     {
         if (View != null)
+        {
+            applicationService.Exiting -= HandleApplicationServiceExiting;
+
+            eventBus.Unsubscribe<RecorderStartedEvent>(HandleRecorderStarted);
+            eventBus.Unsubscribe<RecorderStoppedEvent>(HandleRecorderStopped);
+
             View.Visible = false;
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Views
     public interface ITrayIconView
     {
         bool Visible { set; }
+
         TrayIconState IconState { set; }
     }
 }
