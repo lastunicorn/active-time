@@ -45,10 +45,10 @@ public class PresentApplicationStatusUseCaseTests
             .SetupGet(x => x.Id)
             .Returns(JobNames.Recorder);
 
-        ScheduledJobs scheduledJobs = new();
-        scheduledJobs.Add(recorderJob.Object);
+        JobCollection jobCollection = new();
+        jobCollection.Add(recorderJob.Object);
 
-        useCase = new PresentApplicationStatusUseCase(statusInfoService, scheduledJobs);
+        useCase = new PresentApplicationStatusUseCase(statusInfoService, jobCollection);
     }
 
     [Test]

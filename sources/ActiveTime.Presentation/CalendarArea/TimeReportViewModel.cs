@@ -24,7 +24,7 @@ using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;
 
 public class TimeReportViewModel : ViewModelBase
 {

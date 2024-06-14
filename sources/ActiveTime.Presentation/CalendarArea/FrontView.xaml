@@ -23,7 +23,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:views="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.Views"
     xmlns:calendarArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.CalendarArea"
 
     mc:Ignorable="d"
@@ -48,7 +47,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
         <!-- Top Date Info -->
 
-        <views:TimeReportView
+        <calendarArea:TimeReportView
             DockPanel.Dock="Top"
             DataContext="{Binding TimeReportViewModel}" />
 

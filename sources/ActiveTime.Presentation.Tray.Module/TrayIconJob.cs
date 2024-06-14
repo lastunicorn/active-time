@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,42 +20,41 @@ using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 
-namespace DustInTheWind.ActiveTime.Presentation.Tray.Module
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Module;
+
+public class TrayIconJob : IJob
 {
-    public class TrayIconJob : IJob
+    private readonly TrayIconView trayIconView;
+
+    public string Id { get; } = "Tray Icon";
+
+    public JobState State { get; private set; }
+
+    public TrayIconJob(TrayIconView trayIconView, IApplicationService applicationService)
     {
-        private readonly TrayIconView trayIconView;
+        this.trayIconView = trayIconView ?? throw new ArgumentNullException(nameof(trayIconView));
 
-        public string Id { get; } = "Tray Icon";
+        applicationService.Exiting += HandleApplicationServiceExiting;
+    }
 
-        public JobState State { get; private set; }
+    private void HandleApplicationServiceExiting(object sender, EventArgs e)
+    {
+        trayIconView.Presenter.Hide();
+    }
 
-        public TrayIconJob(TrayIconView trayIconView, IApplicationService applicationService)
-        {
-            this.trayIconView = trayIconView ?? throw new ArgumentNullException(nameof(trayIconView));
+    public Task Start()
+    {
+        trayIconView.Presenter.Show();
+        State = JobState.Running;
 
-            applicationService.Exiting += HandleApplicationServiceExiting;
-        }
+        return Task.CompletedTask;
+    }
 
-        private void HandleApplicationServiceExiting(object sender, EventArgs e)
-        {
-            trayIconView.Presenter.Hide();
-        }
+    public Task Stop()
+    {
+        trayIconView.Presenter.Hide();
+        State = JobState.Stopped;
 
-        public Task Start()
-        {
-            trayIconView.Presenter.Show();
-            State = JobState.Running;
-
-            return Task.CompletedTask;
-        }
-
-        public Task Stop()
-        {
-            trayIconView.Presenter.Hide();
-            State = JobState.Stopped;
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

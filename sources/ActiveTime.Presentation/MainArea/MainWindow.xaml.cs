@@ -1,4 +1,4 @@
-// ActiveTime
+﻿// ActiveTime
 // Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows.Controls;
+using System;
+using System.Windows;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.Views
+namespace DustInTheWind.ActiveTime.Presentation.MainArea
 {
     /// <summary>
-    /// Interaction logic for StatusView.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    internal partial class StatusInfoView : UserControl
+    public partial class MainWindow : Window
     {
-        public StatusInfoView()
+        public MainWindow(MainViewModel viewModel)
         {
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+
             InitializeComponent();
+
+            DataContext = viewModel;
         }
     }
 }

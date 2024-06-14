@@ -32,16 +32,16 @@ public sealed class StartRecordingUseCase : IRequestHandler<StartRecordingReques
     private readonly IUnitOfWork unitOfWork;
     private readonly Scribe scribe;
     private readonly EventBus eventBus;
-    private readonly ScheduledJobs scheduledJobs;
+    private readonly JobCollection jobCollection;
     private readonly StatusInfoService statusInfoService;
 
-    public StartRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs,
+    public StartRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, JobCollection jobCollection,
         StatusInfoService statusInfoService)
     {
         this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
         this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-        this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+        this.jobCollection = jobCollection ?? throw new ArgumentNullException(nameof(jobCollection));
         this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
     }
 
@@ -50,7 +50,7 @@ public sealed class StartRecordingUseCase : IRequestHandler<StartRecordingReques
         try
         {
             scribe.StampNew();
-            scheduledJobs.Start(JobNames.Recorder);
+            jobCollection.Start(JobNames.Recorder);
 
             statusInfoService.SetStatus<RecorderStartedStatusMessage>();
 

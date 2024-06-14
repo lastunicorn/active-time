@@ -26,7 +26,7 @@ using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
+namespace DustInTheWind.ActiveTime.Presentation.MainArea;
 
 /// <summary>
 /// Contains the UI logic of the status bar displayed at the bottom of the main window.

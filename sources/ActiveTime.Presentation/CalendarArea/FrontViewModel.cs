@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.ActiveTime.Presentation.Commands;
-using DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
 
 namespace DustInTheWind.ActiveTime.Presentation.CalendarArea
 {

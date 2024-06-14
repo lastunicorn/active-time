@@ -17,18 +17,17 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 -->
 
 <Window
-    x:Class="DustInTheWind.ActiveTime.Presentation.MainArea.Views.MainWindow"
+    x:Class="DustInTheWind.ActiveTime.Presentation.MainArea.MainWindow"
 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mainMenuArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainMenuArea"
-    xmlns:viewModels1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels"
-    xmlns:views1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.Views"
     xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls;assembly=DustInTheWind.ActiveTime.Presentation.CustomControls"
     xmlns:overviewArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.OverviewArea"
     xmlns:calendarArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.CalendarArea"
+    xmlns:mainArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea"
 
     Title="{Binding Path=WindowTitle}"
     Height="600"
@@ -41,7 +40,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     VisualTextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance viewModels1:MainViewModel}">
+    d:DataContext="{d:DesignInstance mainArea:MainViewModel}">
 
     <DockPanel>
 
@@ -49,7 +48,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             DockPanel.Dock="Top"
             DataContext="{Binding MainMenuViewModel}" />
 
-        <views1:StatusInfoView
+        <mainArea:StatusInfoView
             DockPanel.Dock="Bottom"
             DataContext="{Binding StatusInfoViewModel}" />
 

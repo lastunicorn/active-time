@@ -20,7 +20,7 @@ using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.MainArea
 {
     public class MainViewModel : ViewModelBase
     {

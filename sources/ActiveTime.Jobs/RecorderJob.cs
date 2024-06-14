@@ -22,9 +22,6 @@ using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
 namespace DustInTheWind.ActiveTime.Jobs;
 
-/// <summary>
-/// Periodically calls the scribe to update the time of the current record in the database.
-/// </summary>
 public class RecorderJob : PeriodicalJob
 {
     private readonly IRequestBus requestBus;

@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
-using DustInTheWind.ActiveTime.Domain.Presentation;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure;
@@ -75,8 +74,15 @@ public class TrayIconPresenter
         AboutCommand = new AboutCommand(shellNavigator);
         ExitCommand = new ExitCommand(applicationService);
 
+        applicationService.Exiting += HandleApplicationServiceExiting;
+
         eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
         eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
+    }
+
+    private void HandleApplicationServiceExiting(object sender, EventArgs e)
+    {
+        Hide();
     }
 
     private Task HandleRecorderStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
@@ -95,6 +101,7 @@ public class TrayIconPresenter
 
     private void Initialize()
     {
+        Show();
         _ = RefreshView();
     }
 
@@ -134,10 +141,5 @@ public class TrayIconPresenter
     {
         if (View != null)
             View.Visible = false;
-    }
-
-    public void LeftDoubleClicked()
-    {
-        shellNavigator.Navigate(ShellNames.MainShell);
     }
 }

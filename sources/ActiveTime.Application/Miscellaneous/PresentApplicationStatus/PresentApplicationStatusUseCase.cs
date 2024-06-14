@@ -26,12 +26,12 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationS
     public class PresentApplicationStatusUseCase : IRequestHandler<PresentApplicationStatusRequest, PresentApplicationStatusResponse>
     {
         private readonly StatusInfoService statusInfoService;
-        private readonly ScheduledJobs scheduledJobs;
+        private readonly JobCollection jobCollection;
 
-        public PresentApplicationStatusUseCase(StatusInfoService statusInfoService, ScheduledJobs scheduledJobs)
+        public PresentApplicationStatusUseCase(StatusInfoService statusInfoService, JobCollection jobCollection)
         {
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
-            this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+            this.jobCollection = jobCollection ?? throw new ArgumentNullException(nameof(jobCollection));
         }
 
         public Task<PresentApplicationStatusResponse> Handle(PresentApplicationStatusRequest request, CancellationToken cancellationToken)
@@ -49,7 +49,7 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationS
 
         private IJob RetrieveRecorderJob()
         {
-            return scheduledJobs.Get(JobNames.Recorder);
+            return jobCollection.Get(JobNames.Recorder);
         }
     }
 }

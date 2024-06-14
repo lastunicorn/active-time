@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
+using DustInTheWind.ActiveTime.Presentation.MainArea;
 using DustInTheWind.ActiveTime.Presentation.Properties;
 using NUnit.Framework;
 

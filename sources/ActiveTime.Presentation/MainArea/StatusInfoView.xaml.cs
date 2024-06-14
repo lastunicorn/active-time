@@ -1,4 +1,4 @@
-﻿// ActiveTime
+// ActiveTime
 // Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,30 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Reflection;
+using System.Windows.Controls;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.MainArea
 {
-    public class MainWindowTitle
+    /// <summary>
+    /// Interaction logic for StatusView.xaml
+    /// </summary>
+    internal partial class StatusInfoView : UserControl
     {
-        private readonly string value;
-
-        public MainWindowTitle()
+        public StatusInfoView()
         {
-            value = BuildWindowTitle();
-        }
-
-        private static string BuildWindowTitle()
-        {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            AssemblyName assemblyName = assembly.GetName();
-
-            return $"ActiveTime {assemblyName.Version.ToString(3)}";
-        }
-
-        public override string ToString()
-        {
-            return value;
+            InitializeComponent();
         }
     }
 }

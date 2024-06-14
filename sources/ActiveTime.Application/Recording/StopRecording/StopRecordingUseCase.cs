@@ -32,16 +32,16 @@ internal sealed class StopRecordingUseCase : IRequestHandler<StopRecordingReques
     private readonly IUnitOfWork unitOfWork;
     private readonly Scribe scribe;
     private readonly EventBus eventBus;
-    private readonly ScheduledJobs scheduledJobs;
+    private readonly JobCollection jobCollection;
     private readonly StatusInfoService statusInfoService;
 
-    public StopRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs,
+    public StopRecordingUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, JobCollection jobCollection,
         StatusInfoService statusInfoService)
     {
         this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
         this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-        this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+        this.jobCollection = jobCollection ?? throw new ArgumentNullException(nameof(jobCollection));
         this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
     }
 
@@ -54,7 +54,7 @@ internal sealed class StopRecordingUseCase : IRequestHandler<StopRecordingReques
             else
                 scribe.Stamp();
 
-            scheduledJobs.Stop(JobNames.Recorder);
+            jobCollection.Stop(JobNames.Recorder);
 
             statusInfoService.SetStatus<RecorderStoppedStatusMessage>();
 

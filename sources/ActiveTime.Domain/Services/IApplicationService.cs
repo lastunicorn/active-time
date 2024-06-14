@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,19 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Domain.Services
+namespace DustInTheWind.ActiveTime.Domain.Services;
+
+public interface IApplicationService
 {
-    public interface IApplicationService
-    {
-        event EventHandler Exiting;
+    event EventHandler Exiting;
 
-        DateTime? StartTime { get; }
-        TimeSpan RunTime { get; }
+    DateTime? StartTime { get; }
 
-        void Start();
-        void Exit();
-        Version GetVersion();
-    }
+    TimeSpan RunTime { get; }
+
+    void Start();
+
+    void Exit();
+
+    Version GetVersion();
 }

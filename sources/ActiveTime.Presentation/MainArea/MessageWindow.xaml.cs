@@ -16,9 +16,8 @@
 
 using System;
 using System.Windows;
-using DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.Views
+namespace DustInTheWind.ActiveTime.Presentation.MainArea
 {
     /// <summary>
     /// Interaction logic for MessageWindow.xaml

@@ -43,21 +43,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Tests.Integratio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{6C90BF43-6EB0-46ED-A53E-06D59382B0B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Ports.Persistence", "ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj", "{209196E1-D0D6-49EC-8EE8-63EE5965188E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.Persistence", "ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj", "{209196E1-D0D6-49EC-8EE8-63EE5965188E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{3BF02524-2055-49CB-9D81-BBE07A10724F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Ports.SystemAccess", "ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj", "{C743924A-E13A-4AD0-B4DB-903E7CEEEFA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.SystemAccess", "ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj", "{C743924A-E13A-4AD0-B4DB-903E7CEEEFA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.SystemAccess", "ActiveTime.SystemAccess\ActiveTime.SystemAccess.csproj", "{4971D01B-866E-4AFF-AEDC-3E39E406D15F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.SystemAccess", "ActiveTime.SystemAccess\ActiveTime.SystemAccess.csproj", "{4971D01B-866E-4AFF-AEDC-3E39E406D15F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Ports.ConfigurationAccess", "ActiveTime.Ports.ConfigurationAccess\ActiveTime.Ports.ConfigurationAccess.csproj", "{08928C39-89A8-4963-BF46-75A3231B71E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.ConfigurationAccess", "ActiveTime.Ports.ConfigurationAccess\ActiveTime.Ports.ConfigurationAccess.csproj", "{08928C39-89A8-4963-BF46-75A3231B71E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.ConfigurationAccess", "ActiveTime.ConfigurationAccess\ActiveTime.ConfigurationAccess.csproj", "{5C8CAF31-C2FC-486C-A3BD-4CFB482BC2EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.ConfigurationAccess", "ActiveTime.ConfigurationAccess\ActiveTime.ConfigurationAccess.csproj", "{5C8CAF31-C2FC-486C-A3BD-4CFB482BC2EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Ports.LogAccess", "ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj", "{E86CA667-FF1E-4C72-A745-BD5F32D492D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.LogAccess", "ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj", "{E86CA667-FF1E-4C72-A745-BD5F32D492D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.LogAccess", "ActiveTime.LogAccess\ActiveTime.LogAccess.csproj", "{F72F0B29-3F61-4611-85DA-AD45D7F646FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.LogAccess", "ActiveTime.LogAccess\ActiveTime.LogAccess.csproj", "{F72F0B29-3F61-4611-85DA-AD45D7F646FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,6 +173,7 @@ Global
 		{F92620A2-33CA-4A3A-831C-F0AAC2A28928} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{C3E6D6AE-8269-4FCC-B6A7-95211C5AD1EE} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{ADE70833-CBA7-4317-8F86-133E50DE72EB} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
+		{A057AE60-9F4D-4F2E-80FA-4829F1AFFAB0} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{133C213A-3ED4-43CA-9652-C2CB6936A3E3} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{7B03FB8F-2198-4A67-81C1-DF4E78E758E2} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{6A5E34F4-D168-4D5A-A90B-6A778FF8838D} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}

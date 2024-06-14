@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Presentation.Properties;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.MainArea
 {
     public class MessageViewModel : ViewModelBase, IShell
     {

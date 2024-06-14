@@ -28,13 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <ItemGroup>
         <Compile Remove="Commands\MenuItemClick.cs" />
         <Compile Remove="Commands\MenuItemClickCommandBehavior.cs" />
-        <Compile Remove="MainArea\Views\ExportWindow.xaml.cs" />
-        <Compile Remove="MainArea\Views\StatisticsWindow.xaml.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Page Remove="MainArea\Views\ExportWindow.xaml" />
-        <Page Remove="MainArea\Views\StatisticsWindow.xaml" />
     </ItemGroup>
 
     <ItemGroup>

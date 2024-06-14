@@ -25,11 +25,11 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray
 {
     public class PresentTrayUseCase : IRequestHandler<PresentTrayRequest, PresentTrayResponse>
     {
-        private readonly ScheduledJobs scheduledJobs;
+        private readonly JobCollection jobCollection;
 
-        public PresentTrayUseCase(ScheduledJobs scheduledJobs)
+        public PresentTrayUseCase(JobCollection jobCollection)
         {
-            this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+            this.jobCollection = jobCollection ?? throw new ArgumentNullException(nameof(jobCollection));
         }
 
         public Task<PresentTrayResponse> Handle(PresentTrayRequest request, CancellationToken cancellationToken)
@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray
 
         private IJob RetrieveRecordingJob()
         {
-            IJob recordingJob = scheduledJobs.Get(JobNames.Recorder);
+            IJob recordingJob = jobCollection.Get(JobNames.Recorder);
             return recordingJob;
         }
     }
