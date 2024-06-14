@@ -17,6 +17,7 @@
 using System.Threading;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using Moq;
 using NUnit.Framework;
 
@@ -26,14 +27,15 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceT
     public class SetStatusTests
     {
         private StatusInfoService statusInfoService;
-        private Mock<ApplicationStatus> applicationStatus;
+        private Mock<StatusMessage> applicationStatus;
         private const string Text = "same test text";
 
         [SetUp]
         public void SetUp()
         {
-            statusInfoService = new StatusInfoService();
-            applicationStatus = new Mock<ApplicationStatus>();
+            EventBus eventBus = new();
+            statusInfoService = new StatusInfoService(eventBus);
+            applicationStatus = new Mock<StatusMessage>();
         }
 
         [Test]

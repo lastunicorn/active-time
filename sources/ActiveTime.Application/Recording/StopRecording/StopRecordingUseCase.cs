@@ -55,7 +55,8 @@ internal sealed class StopRecordingUseCase : IRequestHandler<StopRecordingReques
                 scribe.Stamp();
 
             scheduledJobs.Stop(JobNames.Recorder);
-            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStoppedStatus>());
+
+            statusInfoService.SetStatus<RecorderStoppedStatusMessage>();
 
             unitOfWork.Commit();
             unitOfWork.Dispose();

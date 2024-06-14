@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Domain;
+using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
@@ -29,12 +30,14 @@ internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>
     private readonly IUnitOfWork unitOfWork;
     private readonly EventBus eventBus;
     private readonly CurrentDay currentDay;
+    private readonly StatusInfoService statusInfoService;
 
-    public SaveCommentsUseCase(IUnitOfWork unitOfWork, EventBus eventBus, CurrentDay currentDay)
+    public SaveCommentsUseCase(IUnitOfWork unitOfWork, EventBus eventBus, CurrentDay currentDay, StatusInfoService statusInfoService)
     {
         this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         this.currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
+        this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
     }
 
     public async Task Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
@@ -50,6 +53,7 @@ internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>
 
             currentDay.AcceptModifications();
             await RaiseCommentStateChangedEvent();
+            UpdateApplicationStatus();
         }
         finally
         {
@@ -80,6 +84,11 @@ internal sealed class SaveCommentsUseCase : IRequestHandler<SaveCommentsRequest>
             CommentsAreSaved = currentDay.AreCommentsSaved
         };
         await eventBus.Publish(commentChangedEvent);
+    }
+
+    private void UpdateApplicationStatus()
+    {
+        statusInfoService.SetStatus<SavedStatusMessage>();
     }
 
     public void Dispose()

@@ -17,28 +17,21 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 
 namespace DustInTheWind.ActiveTime.Application;
 
-/// <summary>
-/// A service that stores different status messages.
-/// </summary>
 public class StatusInfoService : IDisposable
 {
-    /// <summary>
-    /// The default Text of the status.
-    /// </summary>
     public const string DefaultStatusText = "Ready";
-
     private const int DefaultStatusTimeout = 5000;
+
+    private readonly EventBus eventBus;
 
     private bool isDisposed;
     private readonly Timer timer;
     private string statusText;
 
-    /// <summary>
-    /// Gets or sets the text representing the status.
-    /// </summary>
     public string StatusText
     {
         get => statusText;
@@ -49,44 +42,31 @@ public class StatusInfoService : IDisposable
         }
     }
 
-    /// <summary>
-    /// Event raised when the status text is changed.
-    /// </summary>
     public event EventHandler StatusTextChanged;
 
-    /// <summary>
-    /// Raises the <see cref="StatusTextChanged"/> event.
-    /// </summary>
-    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected virtual void OnStatusTextChanged(EventArgs e)
     {
         StatusTextChanged?.Invoke(this, e);
+
+        ApplicationStatusChangedEvent applicationStatusChangedEvent = new()
+        {
+            StatusText = StatusText
+        };
+        _ = eventBus.Publish(applicationStatusChangedEvent);
     }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="StatusInfoService"/> class.
-    /// </summary>
-    public StatusInfoService()
+    public StatusInfoService(EventBus eventBus)
     {
+        this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         statusText = DefaultStatusText;
         timer = new Timer(HandleTimerElapsed);
     }
 
-    /// <summary>
-    /// The call-back method of the timer that resets the status to the default Text.
-    /// </summary>
-    /// <param name="o">Unused</param>
     private void HandleTimerElapsed(object o)
     {
         StatusText = DefaultStatusText;
     }
 
-    /// <summary>
-    /// Sets the status of the model to the specified Text and
-    /// starts the timer that will reset it back to the default one.
-    /// </summary>
-    /// <param name="text">The Text to be set as status.</param>
-    /// <param name="timeout">The Time in milliseconds after which the status will be reset to the default Text. If this Value is 0, the status will never be reset.</param>
     public void SetStatus(string text, int timeout)
     {
         StatusText = text;
@@ -100,9 +80,16 @@ public class StatusInfoService : IDisposable
         SetStatus(text, DefaultStatusTimeout);
     }
 
-    public void SetStatus(ApplicationStatus applicationStatus)
+    public void SetStatus(StatusMessage statusMessage)
     {
-        SetStatus(applicationStatus.Text, DefaultStatusTimeout);
+        SetStatus(statusMessage.Text, DefaultStatusTimeout);
+    }
+
+    public void SetStatus<T>()
+        where T : StatusMessage
+    {
+        T statusMessage = Activator.CreateInstance<T>();
+        SetStatus(statusMessage.Text, DefaultStatusTimeout);
     }
 
     public void Dispose()

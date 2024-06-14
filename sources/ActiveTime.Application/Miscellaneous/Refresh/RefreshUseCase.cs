@@ -56,8 +56,7 @@ internal class RefreshUseCase : IRequestHandler<RefreshRequest>
 
     private void UpdateApplicationStatus()
     {
-        RefreshedStatus status = ApplicationStatus.Create<RefreshedStatus>();
-        statusInfoService.SetStatus(status);
+        statusInfoService.SetStatus<RefreshedStatusMessage>();
     }
 
     private async Task RaiseCommentStateChangedEvent()

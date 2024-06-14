@@ -70,7 +70,7 @@ public class StatusInfoViewModel : ViewModelBase
 
         eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderServiceStarted);
         eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderServiceStopped);
-        eventBus.Subscribe<ApplicationStatusChangedEvent>(HandleStatusTextChanged);
+        eventBus.Subscribe<ApplicationStatusChangedEvent>(HandleApplicationStatusTextChanged);
 
         _ = Load();
     }
@@ -91,7 +91,7 @@ public class StatusInfoViewModel : ViewModelBase
         }
     }
 
-    private Task HandleStatusTextChanged(ApplicationStatusChangedEvent ev, CancellationToken cancellationToken)
+    private Task HandleApplicationStatusTextChanged(ApplicationStatusChangedEvent ev, CancellationToken cancellationToken)
     {
         StatusText = ev.StatusText;
 

@@ -52,7 +52,7 @@ public sealed class StartRecordingUseCase : IRequestHandler<StartRecordingReques
             scribe.StampNew();
             scheduledJobs.Start(JobNames.Recorder);
 
-            statusInfoService.SetStatus(ApplicationStatus.Create<RecorderStartedStatus>());
+            statusInfoService.SetStatus<RecorderStartedStatusMessage>();
 
             unitOfWork.Commit();
             unitOfWork.Dispose();

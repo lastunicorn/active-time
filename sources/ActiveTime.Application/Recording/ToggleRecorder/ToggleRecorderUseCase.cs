@@ -21,6 +21,7 @@ using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Application.Recording2;
 using DustInTheWind.ActiveTime.Domain;
+using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Ports.Persistence;
@@ -34,15 +35,17 @@ public sealed class ToggleRecorderUseCase : IRequestHandler<ToggleRecorderReques
     private readonly Scribe scribe;
     private readonly EventBus eventBus;
     private readonly ScheduledJobs scheduledJobs;
+    private readonly StatusInfoService statusInfoService;
     private bool isStarted;
     private bool isStopped;
 
-    public ToggleRecorderUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs)
+    public ToggleRecorderUseCase(IUnitOfWork unitOfWork, Scribe scribe, EventBus eventBus, ScheduledJobs scheduledJobs, StatusInfoService statusInfoService)
     {
         this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
         this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         this.scheduledJobs = scheduledJobs ?? throw new ArgumentNullException(nameof(scheduledJobs));
+        this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
     }
 
     public async Task Handle(ToggleRecorderRequest request, CancellationToken cancellationToken)
@@ -69,12 +72,16 @@ public sealed class ToggleRecorderUseCase : IRequestHandler<ToggleRecorderReques
             {
                 RecorderStartedEvent recorderStartedEvent = new();
                 await eventBus.Publish(recorderStartedEvent, cancellationToken);
+
+                statusInfoService.SetStatus<RecorderStartedStatusMessage>();
             }
 
             if (isStopped)
             {
                 RecorderStoppedEvent recorderStoppedEvent = new();
                 await eventBus.Publish(recorderStoppedEvent, cancellationToken);
+
+                statusInfoService.SetStatus<RecorderStoppedStatusMessage>();
             }
         }
         finally

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,31 +15,33 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests;
+
+[TestFixture]
+public class ConstructorTests
 {
-    [TestFixture]
-    public class ConstructorTests
+    [Test]
+    public void successfully_instantiated()
     {
-        [Test]
-        public void successfully_instantiated()
-        {
-            new StatusInfoService();
-        }
+        EventBus eventBus = new();
+        new StatusInfoService(eventBus);
+    }
 
-        [Test]
-        public void DefaultStatusText_constant_value()
-        {
-            Assert.That(StatusInfoService.DefaultStatusText, Is.EqualTo("Ready"));
-        }
+    [Test]
+    public void DefaultStatusText_constant_value()
+    {
+        Assert.That(StatusInfoService.DefaultStatusText, Is.EqualTo("Ready"));
+    }
 
-        [Test]
-        public void StatusText_initial_value()
-        {
-            StatusInfoService statusInfoService = new StatusInfoService();
+    [Test]
+    public void StatusText_initial_value()
+    {
+        EventBus eventBus = new();
+        StatusInfoService statusInfoService = new(eventBus);
 
-            Assert.That(statusInfoService.StatusText, Is.EqualTo("Ready"));
-        }
+        Assert.That(statusInfoService.StatusText, Is.EqualTo("Ready"));
     }
 }

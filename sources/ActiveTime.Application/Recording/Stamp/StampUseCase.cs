@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,54 +22,51 @@ using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
+namespace DustInTheWind.ActiveTime.Application.Recording.Stamp;
+
+public sealed class StampUseCase : IRequestHandler<StampRequest>, IDisposable
 {
-    public sealed class StampUseCase : IRequestHandler<StampRequest>, IDisposable
+    private readonly IUnitOfWork unitOfWork;
+    private readonly Scribe scribe;
+    private readonly StatusInfoService statusInfoService;
+
+    public StampUseCase(IUnitOfWork unitOfWork, Scribe scribe, StatusInfoService statusInfoService)
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly Scribe scribe;
-        private readonly StatusInfoService statusInfoService;
+        this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
+        this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
+    }
 
-        public StampUseCase(IUnitOfWork unitOfWork, Scribe scribe, StatusInfoService statusInfoService)
+    public Task Handle(StampRequest request, CancellationToken cancellationToken)
+    {
+        try
         {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.scribe = scribe ?? throw new ArgumentNullException(nameof(scribe));
-            this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
-        }
+            SetApplicationStatusToStamping();
+            scribe.Stamp();
+            SetApplicationStatusToStamped();
 
-        public Task Handle(StampRequest request, CancellationToken cancellationToken)
+            unitOfWork.Commit();
+
+            return Task.FromResult(Unit.Value);
+        }
+        finally
         {
-            try
-            {
-                SetApplicationStatusToStamping();
-                scribe.Stamp();
-                SetApplicationStatusToStamped();
-
-                unitOfWork.Commit();
-
-                return Task.FromResult(Unit.Value);
-            }
-            finally
-            {
-                Dispose();
-            }
+            Dispose();
         }
+    }
 
-        private void SetApplicationStatusToStamping()
-        {
-            StampingStatus status = ApplicationStatus.Create<StampingStatus>();
-            statusInfoService.SetStatus(status);
-        }
+    private void SetApplicationStatusToStamping()
+    {
+        statusInfoService.SetStatus<StampingStatusMessage>();
+    }
 
-        private void SetApplicationStatusToStamped()
-        {
-            StampedStatus status = ApplicationStatus.Create<StampedStatus>();
-            statusInfoService.SetStatus(status);
-        }
+    private void SetApplicationStatusToStamped()
+    {
+        statusInfoService.SetStatus<StampedStatusMessage>();
+    }
 
-        public void Dispose()
-        {
-            unitOfWork?.Dispose();
-        }
+    public void Dispose()
+    {
+        unitOfWork?.Dispose();
     }
 }

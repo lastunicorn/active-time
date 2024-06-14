@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,23 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+namespace DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 
-namespace DustInTheWind.ActiveTime.Domain.ApplicationStatuses
+public class RefreshedStatusMessage : StatusMessage
 {
-    public abstract class ApplicationStatus
-    {
-        public abstract string Text { get; }
-
-        public override string ToString()
-        {
-            return Text;
-        }
-
-        public static T Create<T>()
-            where T : ApplicationStatus
-        {
-            return Activator.CreateInstance<T>();
-        }
-    }
+    public override string Text { get; } = "Displayed data was refreshed.";
 }

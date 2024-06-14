@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,48 +15,49 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests;
+
+[TestFixture]
+public class StatusTextTests
 {
-    [TestFixture]
-    public class StatusTextTests
+    private StatusInfoService statusInfoService;
+    private const string Text = "same test text";
+
+    [SetUp]
+    public void SetUp()
     {
-        private StatusInfoService statusInfoService;
-        private const string Text = "same test text";
+        EventBus eventBus = new();
+        statusInfoService = new StatusInfoService(eventBus);
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            statusInfoService = new StatusInfoService();
-        }
+    [Test]
+    public void set_value()
+    {
+        statusInfoService.StatusText = Text;
 
-        [Test]
-        public void set_value()
-        {
-            statusInfoService.StatusText = Text;
+        Assert.That(statusInfoService.StatusText, Is.EqualTo(Text));
+    }
 
-            Assert.That(statusInfoService.StatusText, Is.EqualTo(Text));
-        }
+    [Test]
+    public void set_null_value()
+    {
+        statusInfoService.StatusText = null;
 
-        [Test]
-        public void set_null_value()
-        {
-            statusInfoService.StatusText = null;
+        Assert.That(statusInfoService.StatusText, Is.Null);
+    }
 
-            Assert.That(statusInfoService.StatusText, Is.Null);
-        }
+    [Test]
+    public void raises_StatusTextChanged_event()
+    {
+        bool eventRaised = false;
+        statusInfoService.StatusTextChanged += (s, e) => eventRaised = true;
 
-        [Test]
-        public void raises_StatusTextChanged_event()
-        {
-            bool eventRaised = false;
-            statusInfoService.StatusTextChanged += (s, e) => eventRaised = true;
+        statusInfoService.StatusText = Text;
 
-            statusInfoService.StatusText = Text;
-
-            if (!eventRaised)
-                Assert.Fail("Event StatusTextChanged was not raised.");
-        }
+        if (!eventRaised)
+            Assert.Fail("Event StatusTextChanged was not raised.");
     }
 }
