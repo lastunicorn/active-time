@@ -34,8 +34,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Menu Height="Auto">
 
         <MenuItem Header="_File">
-            <MenuItem Header="_Overview" Command="{Binding OverviewCommand}" />
-            <Separator Margin="0" />
             <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
         </MenuItem>
 

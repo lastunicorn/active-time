@@ -17,6 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
+using DustInTheWind.ActiveTime.Presentation.OverviewArea;
 
 namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
 {
@@ -32,12 +33,16 @@ namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
 
         public RefreshCommand RefreshCommand { get; }
 
+        public OverviewViewModel OverviewViewModel { get; }
+
         public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel,
-            RefreshCommand refreshCommand)
+            OverviewViewModel overviewViewModel, RefreshCommand refreshCommand)
         {
             MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
             StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
             FrontViewModel = frontViewModel ?? throw new ArgumentNullException(nameof(frontViewModel));
+
+            OverviewViewModel = overviewViewModel ?? throw new ArgumentNullException(nameof(overviewViewModel));
 
             RefreshCommand = refreshCommand ?? throw new ArgumentNullException(nameof(refreshCommand));
         }

@@ -185,6 +185,7 @@ internal class BootstrapperWithAutofac
         containerBuilder.RegisterType<MainViewModel>().AsSelf();
         containerBuilder.RegisterType<MainMenuViewModel>().AsSelf();
         containerBuilder.RegisterType<StatusInfoViewModel>().AsSelf();
+        containerBuilder.RegisterType<OverviewViewModel>().AsSelf();
         containerBuilder.RegisterType<FrontViewModel>().AsSelf();
         containerBuilder.RegisterType<CurrentDateViewModel>().AsSelf();
         containerBuilder.RegisterType<TimeReportViewModel>().AsSelf();
@@ -194,8 +195,6 @@ internal class BootstrapperWithAutofac
         containerBuilder.RegisterType<CalendarWindow>().AsSelf();
         containerBuilder.RegisterType<CalendarViewModel>().AsSelf();
 
-        containerBuilder.RegisterType<OverviewWindow>().AsSelf();
-        containerBuilder.RegisterType<OverviewViewModel>().AsSelf();
 
         containerBuilder.RegisterType<AboutWindow>().AsSelf();
         containerBuilder.RegisterType<AboutViewModel>().AsSelf();
@@ -208,6 +207,7 @@ internal class BootstrapperWithAutofac
         containerBuilder.RegisterType<CalendarCommand>().AsSelf();
         containerBuilder.RegisterType<ResetCommentsCommand>().AsSelf();
         containerBuilder.RegisterType<SaveCommentsCommand>().AsSelf();
+        containerBuilder.RegisterType<ExitCommand>().AsSelf();
 
         // GUI - Services
         containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();
@@ -243,13 +243,6 @@ internal class BootstrapperWithAutofac
             .WithAllOpenGenericHandlerTypesRegistered()
             .Build();
         containerBuilder.RegisterMediatR(mediatRConfiguration);
-
-        //containerBuilder.Register<ServiceFactory>(outerContext =>
-        //{
-        //    ILifetimeScope parentLifetimeScope = outerContext.Resolve<ILifetimeScope>();
-
-        //    return serviceType => parentLifetimeScope.BeginLifetimeScope().Resolve(serviceType);
-        //});
     }
 
     public void Run()
@@ -282,7 +275,6 @@ internal class BootstrapperWithAutofac
         shellNavigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
         shellNavigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow), ShellNames.MainShell));
         shellNavigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow), ShellNames.MainShell));
-        shellNavigator.RegisterShell(new ShellInfo(ShellNames.OverviewShell, typeof(OverviewWindow), ShellNames.MainShell));
         shellNavigator.RegisterShell(new ShellInfo(ShellNames.CalendarShell, typeof(CalendarWindow), ShellNames.MainShell));
     }
 

@@ -40,7 +40,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             DockPanel.Dock="Bottom"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
-            Margin="0 8 0 0">
+            Margin="0 0 0 0">
 
             <ItemsControl
                 ItemsSource="{Binding Records}">
@@ -56,14 +56,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type recording1:DayTimeInterval}">
                         <Rectangle
-                            Height="30"
+                            Height="15"
                             Fill="{StaticResource RecordBarActive}"
                             Width="{Binding IntervalInMinutes}"/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type recording1:Break}">
                         <Rectangle
-                            Height="30"
+                            Height="15"
                             Fill="{StaticResource RecordBarInactive}"
                             Width="{Binding IntervalInMinutes}"/>
                     </DataTemplate>

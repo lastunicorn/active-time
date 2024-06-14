@@ -27,6 +27,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:viewModels1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels"
     xmlns:views1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.Views"
     xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls;assembly=DustInTheWind.ActiveTime.Presentation.CustomControls"
+    xmlns:overviewArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.OverviewArea"
 
     Title="{Binding Path=WindowTitle}"
     Height="600"
@@ -101,16 +102,15 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
                 </TabItem.Header>
 
-                <TextBlock Text="Page 1"/>
+                <overviewArea:OverviewControl
+                    DataContext="{Binding OverviewViewModel}" />
 
             </TabItem>
 
             <customControls:SideNavigator.Buttons>
 
                 <Button
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Left"
-                    Padding="8"
+                    Padding="6"
                     Margin="5"
                     Command="{Binding RefreshCommand}">
 
@@ -126,8 +126,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                     </Button.Style>
 
                     <customControls:GenericIcon
-                        Width="20"
-                        Height="20"
+                        Width="16"
+                        Height="16"
                         Geometry="{StaticResource RefreshIconGeometry}">
 
                         <Control.Effect>

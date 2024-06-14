@@ -57,12 +57,12 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         <TabControl
             Margin="0 16 0 0">
 
-            <TabItem Header="Time Records">
-                <views:DayRecordsView DataContext="{Binding DayRecordsViewModel}" />
-            </TabItem>
-
             <TabItem Header="Comments">
                 <views:CommentsView DataContext="{Binding CommentsViewModel}" />
+            </TabItem>
+
+            <TabItem Header="Time Records">
+                <views:DayRecordsView DataContext="{Binding DayRecordsViewModel}" />
             </TabItem>
 
         </TabControl>

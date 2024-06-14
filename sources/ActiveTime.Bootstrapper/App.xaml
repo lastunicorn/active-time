@@ -37,7 +37,6 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             <Style TargetType="{x:Type aboutArea:AboutWindow}" BasedOn="{StaticResource WindowStyle}" />
             <Style TargetType="{x:Type views:CalendarWindow}" BasedOn="{StaticResource WindowStyle}" />
             <Style TargetType="{x:Type views:MessageWindow}" BasedOn="{StaticResource WindowStyle}" />
-            <Style TargetType="{x:Type overviewArea:OverviewWindow}" BasedOn="{StaticResource WindowStyle}" />
         </ResourceDictionary>
     </Application.Resources>
 

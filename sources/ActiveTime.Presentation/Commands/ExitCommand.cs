@@ -19,7 +19,7 @@ using DustInTheWind.ActiveTime.Common.Services;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
-    internal class ExitCommand : CommandBase
+    public class ExitCommand : CommandBase
     {
         private readonly IApplicationService applicationService;
 

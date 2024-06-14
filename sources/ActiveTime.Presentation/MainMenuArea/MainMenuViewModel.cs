@@ -27,8 +27,6 @@ namespace DustInTheWind.ActiveTime.Presentation.MainMenuArea
 {
     public class MainMenuViewModel : ViewModelBase
     {
-        public ICommand OverviewCommand { get; }
-
         public ICommand ExitCommand { get; }
 
         public ICommand StartCommand { get; }
@@ -46,7 +44,6 @@ namespace DustInTheWind.ActiveTime.Presentation.MainMenuArea
             if (logger == null) throw new ArgumentNullException(nameof(logger));
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            OverviewCommand = new OverviewCommand(shellNavigator);
             ExitCommand = new ExitCommand(applicationService);
             StartCommand = new StartRecorderCommand(requestBus, logger, eventBus);
             StopCommand = new StopRecorderCommand(requestBus, logger, eventBus);
