@@ -18,7 +18,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Persistence;
 using DustInTheWind.ActiveTime.Persistence.LiteDB;
 using DustInTheWind.ActiveTime.Ports.Persistence;

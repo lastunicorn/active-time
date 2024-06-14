@@ -14,10 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Domain.ApplicationStatuses
+namespace DustInTheWind.ActiveTime.Domain
 {
-    public class ReadyStatus : ApplicationStatus
+    public static class JobNames
     {
-        public override string Text { get; } = "Ready";
+        public const string Recorder = "Recorder";
+        public const string ResetStatus = "ResetStatus";
+        public static string TrayIcon = "Tray Icon";
     }
 }

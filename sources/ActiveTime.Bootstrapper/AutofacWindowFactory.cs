@@ -19,7 +19,7 @@ using System.Windows;
 using Autofac;
 using DustInTheWind.ActiveTime.Presentation.Services;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Bootstrapper;
 
 internal class AutofacWindowFactory : IWindowFactory
 {

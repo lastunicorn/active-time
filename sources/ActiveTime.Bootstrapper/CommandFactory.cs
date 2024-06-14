@@ -19,7 +19,7 @@ using System.Windows.Input;
 using Autofac;
 using DustInTheWind.ActiveTime.Presentation;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Bootstrapper;
 
 internal class CommandFactory : ICommandFactory
 {

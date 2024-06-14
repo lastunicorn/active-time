@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;

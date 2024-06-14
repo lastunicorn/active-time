@@ -21,7 +21,7 @@ using Autofac;
 using DustInTheWind.ActiveTime.Infrastructure;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Bootstrapper;
 
 internal class MediatrRequestBus : IRequestBus
 {

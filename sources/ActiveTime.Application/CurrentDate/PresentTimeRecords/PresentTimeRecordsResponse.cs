@@ -1,6 +1,6 @@
-﻿using DustInTheWind.ActiveTime.Common.Recording;
+﻿using DustInTheWind.ActiveTime.Application.Recording2;
 
-namespace DustInTheWind.ActiveTime.Application.TimeRecords.PresentTimeRecords
+namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentTimeRecords
 {
     public class PresentTimeRecordsResponse
     {

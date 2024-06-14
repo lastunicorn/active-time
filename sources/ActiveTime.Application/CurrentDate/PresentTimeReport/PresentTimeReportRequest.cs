@@ -16,7 +16,7 @@
 
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport
+namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentTimeReport
 {
     public class PresentTimeReportRequest : IRequest<PresentTimeReportResponse>
     {

@@ -18,12 +18,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.TimeReport.PresentTimeReport
+namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentTimeReport
 {
     public sealed class PresentTimeReportUseCase : IRequestHandler<PresentTimeReportRequest, PresentTimeReportResponse>, IDisposable
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
+using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.Miscellaneous.ResetStatus

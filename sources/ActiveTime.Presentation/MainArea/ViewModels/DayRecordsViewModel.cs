@@ -19,10 +19,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
+using DustInTheWind.ActiveTime.Application.CurrentDate.PresentTimeRecords;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
-using DustInTheWind.ActiveTime.Application.TimeRecords.PresentTimeRecords;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Application.Recording2;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 

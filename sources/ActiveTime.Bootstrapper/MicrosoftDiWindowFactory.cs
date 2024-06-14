@@ -18,7 +18,7 @@ using System;
 using System.Windows;
 using DustInTheWind.ActiveTime.Presentation.Services;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Bootstrapper;
 
 internal class MicrosoftDiWindowFactory : IWindowFactory
 {

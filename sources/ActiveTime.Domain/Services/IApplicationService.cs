@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Common.Services
+namespace DustInTheWind.ActiveTime.Domain.Services
 {
     public interface IApplicationService
     {

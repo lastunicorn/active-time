@@ -18,12 +18,12 @@ using System.Reflection;
 using Autofac;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Presentation;
-using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Common.Recording;
-using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Application.Recording2;
 using DustInTheWind.ActiveTime.ConfigurationAccess;
+using DustInTheWind.ActiveTime.Domain;
+using DustInTheWind.ActiveTime.Domain.Presentation;
+using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
@@ -49,7 +49,7 @@ using DustInTheWind.ActiveTime.SystemAccess;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Bootstrapper;
 
 //internal class SomeViewModel
 //{

@@ -17,7 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Domain;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentCalendar

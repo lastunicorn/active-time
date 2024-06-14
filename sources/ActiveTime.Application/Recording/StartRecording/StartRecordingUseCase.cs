@@ -17,9 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Domain;
+using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Ports.Persistence;

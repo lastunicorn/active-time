@@ -19,7 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
-      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+      
       <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
     </ItemGroup>
 

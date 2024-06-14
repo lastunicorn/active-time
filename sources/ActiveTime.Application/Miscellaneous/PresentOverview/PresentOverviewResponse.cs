@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Domain;
 
 namespace DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview
 {

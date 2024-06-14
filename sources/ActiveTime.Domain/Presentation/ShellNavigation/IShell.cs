@@ -16,7 +16,7 @@
 
 using System.Collections.Generic;
 
-namespace DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation
+namespace DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation
 {
     public interface IShell
     {

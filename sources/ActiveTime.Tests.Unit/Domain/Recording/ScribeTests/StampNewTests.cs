@@ -16,8 +16,8 @@
 
 using System;
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using DustInTheWind.ActiveTime.Ports.SystemAccess;
 using FluentAssertions;

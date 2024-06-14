@@ -18,7 +18,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace DustInTheWind.ActiveTime.Common.Services
+namespace DustInTheWind.ActiveTime.Domain.Services
 {
     public class Dwarfs : IEnumerable<IDwarf>
     {

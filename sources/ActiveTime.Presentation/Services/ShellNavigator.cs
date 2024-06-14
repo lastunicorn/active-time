@@ -17,8 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 
 namespace DustInTheWind.ActiveTime.Presentation.Services
 {

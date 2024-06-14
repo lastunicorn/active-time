@@ -17,7 +17,6 @@
 using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.ResetStatus;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
@@ -27,7 +26,7 @@ public class ResetStatusJob : OneTimeJob
 {
     private readonly IRequestBus requestBus;
 
-    public override string Id { get; } = JobNames.ResetStatus;
+    public override string Id { get; } = "ResetStatus";
 
     public ResetStatusJob(IRequestBus requestBus, ITimer timer)
         : base(timer)

@@ -16,8 +16,8 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common.Presentation;
-using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Domain.Presentation;
+using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 
 namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 {

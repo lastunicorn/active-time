@@ -17,121 +17,118 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Presentation.Tray;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Watchman;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper
+namespace DustInTheWind.ActiveTime.Bootstrapper;
+
+/// <summary>
+/// Interaction logic for App.xaml
+/// </summary>
+public partial class App : IDisposable
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : IDisposable
+    private Guard guard;
+    private BootstrapperWithAutofac bootstrapper;
+
+    protected override void OnStartup(StartupEventArgs e)
     {
-        private Guard guard;
-        private BootstrapperWithAutofac bootstrapper;
+        ICollection<FontFamily> monoSpacedFonts = Fonts.SystemFontFamilies;
 
-        protected override void OnStartup(StartupEventArgs e)
+        foreach (FontFamily fontFamily in monoSpacedFonts)
         {
-            ICollection<FontFamily> monoSpacedFonts = Fonts.SystemFontFamilies;
-
-            foreach (FontFamily fontFamily in monoSpacedFonts)
-            {
-                Debug.WriteLine(fontFamily);
-            }
-
-            base.OnStartup(e);
-
-            if (CreateTheGuard())
-                StartApp();
-            else
-                Shutdown();
+            Debug.WriteLine(fontFamily);
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        base.OnStartup(e);
+
+        if (CreateTheGuard())
+            StartApp();
+        else
+            Shutdown();
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        base.OnExit(e);
+        Dispose();
+    }
+
+    private void StartApp()
+    {
+        bootstrapper = new BootstrapperWithAutofac();
+        bootstrapper.Run();
+    }
+
+    private bool CreateTheGuard()
+    {
+        GuardLevel guardLevel = CalculateGuardLevel();
+
+        try
         {
-            base.OnExit(e);
-            Dispose();
+            guard = new Guard("DustInTheWind.ActiveTime", guardLevel);
+        }
+        catch (ActiveTimeException)
+        {
+            const string message = "The application is already started. Current instance will not start.";
+            MessageBox.Show(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            return false;
+        }
+        catch (Exception ex)
+        {
+            string message = string.Format("Error creating the unique instance.\nInternal error: {0}", ex.Message);
+            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            return false;
         }
 
-        private void StartApp()
-        {
-            bootstrapper = new BootstrapperWithAutofac();
-            bootstrapper.Run();
-        }
+        return true;
+    }
 
-        private bool CreateTheGuard()
-        {
-            GuardLevel guardLevel = CalculateGuardLevel();
-
-            try
-            {
-                guard = new Guard("DustInTheWind.ActiveTime", guardLevel);
-            }
-            catch (ActiveTimeException)
-            {
-                const string message = "The application is already started. Current instance will not start.";
-                MessageBox.Show(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                string message = string.Format("Error creating the unique instance.\nInternal error: {0}", ex.Message);
-                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                return false;
-            }
-
-            return true;
-        }
-
-        private static GuardLevel CalculateGuardLevel()
-        {
+    private static GuardLevel CalculateGuardLevel()
+    {
 #if DEBUG
-            return GuardLevel.None;
+        return GuardLevel.None;
 #else
             return GuardLevel.Machine;
 #endif
-        }
+    }
 
-        private bool disposed;
+    private bool disposed;
 
-        public void Dispose()
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (disposed)
+            return;
+
+        if (disposing)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-
-            if (disposing)
+            if (bootstrapper != null)
             {
-                if (bootstrapper != null)
-                {
-                    //bootstrapper.Dispose();
-                    bootstrapper = null;
-                }
-
-                if (guard != null)
-                {
-                    guard.Dispose();
-                    guard = null;
-                }
+                //bootstrapper.Dispose();
+                bootstrapper = null;
             }
 
-            disposed = true;
+            if (guard != null)
+            {
+                guard.Dispose();
+                guard = null;
+            }
         }
 
-        ~App()
-        {
-            Dispose(false);
-        }
+        disposed = true;
+    }
+
+    ~App()
+    {
+        Dispose(false);
     }
 }

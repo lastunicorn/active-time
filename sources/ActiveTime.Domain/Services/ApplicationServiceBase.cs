@@ -17,7 +17,7 @@
 using System;
 using System.Reflection;
 
-namespace DustInTheWind.ActiveTime.Common.Services
+namespace DustInTheWind.ActiveTime.Domain.Services
 {
     /// <summary>
     /// This service has only one method that closes the application.

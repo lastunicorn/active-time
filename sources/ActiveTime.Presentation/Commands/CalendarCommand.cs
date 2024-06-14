@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Common.Presentation;
-using DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Domain.Presentation;
+using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {

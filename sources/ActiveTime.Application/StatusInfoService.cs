@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
+using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 
 namespace DustInTheWind.ActiveTime.Application;
 

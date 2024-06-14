@@ -16,7 +16,7 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Domain.Services;
 
 namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 {

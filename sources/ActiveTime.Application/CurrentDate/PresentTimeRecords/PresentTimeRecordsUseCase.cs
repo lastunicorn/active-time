@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Recording;
+using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Application.TimeRecords.PresentTimeRecords
+namespace DustInTheWind.ActiveTime.Application.CurrentDate.PresentTimeRecords
 {
     internal class PresentTimeRecordsUseCase : IRequestHandler<PresentTimeRecordsRequest, PresentTimeRecordsResponse>, IDisposable
     {

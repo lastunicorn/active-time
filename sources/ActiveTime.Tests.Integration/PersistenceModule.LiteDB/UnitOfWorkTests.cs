@@ -16,7 +16,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Persistence.LiteDB;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers;

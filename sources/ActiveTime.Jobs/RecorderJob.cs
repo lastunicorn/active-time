@@ -17,7 +17,6 @@
 using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Recording.Stamp;
-using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
@@ -30,7 +29,7 @@ public class RecorderJob : PeriodicalJob
 {
     private readonly IRequestBus requestBus;
 
-    public override string Id { get; } = JobNames.Recorder;
+    public override string Id { get; } = "Recorder";
 
     public RecorderJob(IRequestBus requestBus, ITimer timer)
         : base(timer)

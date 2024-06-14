@@ -19,8 +19,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Comments;
 using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.ApplicationStatuses;
+using DustInTheWind.ActiveTime.Domain;
+using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using MediatR;
 

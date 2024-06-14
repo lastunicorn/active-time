@@ -18,7 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Domain;
 
 namespace DustInTheWind.ActiveTime.Presentation
 {
@@ -45,7 +46,7 @@ namespace DustInTheWind.ActiveTime.Presentation
             {
                 foreach (DateRecord dayComment in DayRecords)
                 {
-                    Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(dayComment.TimeRecords);
+                    DayRecord dayRecord = new DayRecord(dayComment.TimeRecords);
 
                     sb.Append(dayComment.Date.ToDefaultFormat());
 
@@ -88,7 +89,7 @@ namespace DustInTheWind.ActiveTime.Presentation
                 DateRecord dateRec = DayRecords?.FirstOrDefault(x => x.Date == date);
                 List<TimeRecord> timeRecords = dateRec?.TimeRecords ?? new List<TimeRecord>();
 
-                Common.Recording.DayRecord dayRecord = new Common.Recording.DayRecord(timeRecords);
+                DayRecord dayRecord = new DayRecord(timeRecords);
 
                 TimeSpan totalDayActiveTime = dayRecord.TotalActiveTime;
 

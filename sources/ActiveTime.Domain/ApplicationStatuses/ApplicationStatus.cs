@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Common.ApplicationStatuses
+namespace DustInTheWind.ActiveTime.Domain.ApplicationStatuses
 {
     public abstract class ApplicationStatus
     {

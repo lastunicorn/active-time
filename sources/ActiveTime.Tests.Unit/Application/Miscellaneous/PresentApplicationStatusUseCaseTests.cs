@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationStatus;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using FluentAssertions;
 using Moq;

@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.ActiveTime.Common;
+using DustInTheWind.ActiveTime.Domain;
 
 namespace DustInTheWind.ActiveTime.Watchman
 {

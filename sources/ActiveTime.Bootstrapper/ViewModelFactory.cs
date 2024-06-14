@@ -18,7 +18,7 @@ using System;
 using Autofac;
 using DustInTheWind.ActiveTime.Presentation;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Bootstrapper;
 
 internal class ViewModelFactory : IViewModelFactory
 {

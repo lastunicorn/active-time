@@ -17,8 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using MediatR;
 

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Common.Presentation.ShellNavigation
+namespace DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation
 {
     public class ShellInfo
     {

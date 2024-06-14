@@ -17,7 +17,7 @@
 using System;
 using System.Timers;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Common.Services;
+using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
 namespace DustInTheWind.ActiveTime.Presentation.AboutArea
