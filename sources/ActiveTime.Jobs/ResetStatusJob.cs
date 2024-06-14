@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Miscellaneous.ResetStatus;
+using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.ResetStatus;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 

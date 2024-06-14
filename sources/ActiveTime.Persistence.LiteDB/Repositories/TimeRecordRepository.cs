@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,98 +21,87 @@ using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using LiteDB;
 
-namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories
+namespace DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories;
+
+internal class TimeRecordRepository : ITimeRecordRepository
 {
-    internal class TimeRecordRepository : ITimeRecordRepository
+    public const string CollectionName = "TimeRecord";
+
+    private readonly LiteDatabase database;
+
+    public TimeRecordRepository(LiteDatabase database)
     {
-        public const string CollectionName = "TimeRecord";
+        this.database = database ?? throw new ArgumentNullException(nameof(database));
+    }
 
-        private readonly LiteDatabase database;
+    public void Add(TimeRecord timeRecord)
+    {
+        ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
-        public TimeRecordRepository(LiteDatabase database)
-        {
-            this.database = database ?? throw new ArgumentNullException(nameof(database));
-        }
+        bool exists = timeRecordCollection
+            .Find(x =>
+                x.Date == timeRecord.Date &&
+                x.StartTime == timeRecord.StartTime &&
+                x.EndTime == timeRecord.EndTime &&
+                x.RecordType == timeRecord.RecordType)
+            .Any();
 
-        public void Add(TimeRecord timeRecord)
-        {
-            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+        if (exists)
+            throw new TimeRecordExistsException(timeRecord);
 
-            bool exists = timeRecordCollection
-                .Find(x =>
-                    x.Date == timeRecord.Date &&
-                    x.StartTime == timeRecord.StartTime &&
-                    x.EndTime == timeRecord.EndTime &&
-                    x.RecordType == timeRecord.RecordType)
-                .Any();
+        timeRecordCollection.Insert(timeRecord);
+    }
 
-            if (exists)
-            {
-                string errorMessage = string.Format("An identical time record already exists in the database. Record: '{0}'", timeRecord);
-                throw new PersistenceException(errorMessage);
-            }
+    public void Update(TimeRecord timeRecord)
+    {
+        if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
 
-            timeRecordCollection.Insert(timeRecord);
-        }
+        if (timeRecord.Id <= 0)
+            throw new PersistenceException("The id of the time record should be a positive integer.");
 
-        public void Update(TimeRecord timeRecord)
-        {
-            if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
+        ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
-            if (timeRecord.Id <= 0)
-                throw new PersistenceException("The id of the time record should be a positive integer.");
+        bool exists = timeRecordCollection
+            .Find(x => x.Id == timeRecord.Id)
+            .Any();
 
-            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+        if (!exists)
+            throw new PersistenceException("There is no record with the specified id to update.");
 
-            bool exists = timeRecordCollection
-                .Find(x => x.Id == timeRecord.Id)
-                .Any();
+        timeRecordCollection.Update(timeRecord);
+    }
 
-            if (!exists)
-                throw new PersistenceException("There is no record with the specified id to update.");
+    public void Delete(TimeRecord timeRecord)
+    {
+        if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
 
-            timeRecordCollection.Update(timeRecord);
-        }
+        if (timeRecord.Id <= 0)
+            throw new NegativeEntityIdException(timeRecord.Id);
 
-        public void Delete(TimeRecord timeRecord)
-        {
-            if (timeRecord == null) throw new ArgumentNullException(nameof(timeRecord));
+        ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
 
-            if (timeRecord.Id <= 0)
-                throw new PersistenceException("The id of the time record should be a positive integer.");
+        timeRecordCollection.Delete(timeRecord.Id);
+    }
 
-            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+    public TimeRecord GetById(int id)
+    {
+        ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+        return timeRecordCollection
+            .Find(x => x.Id == id)
+            .FirstOrDefault();
+    }
 
-            bool exists = timeRecordCollection
-                .Find(x => x.Id == timeRecord.Id)
-                .Any();
+    public IEnumerable<TimeRecord> GetByDate(DateTime date)
+    {
+        ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+        return timeRecordCollection
+            .Find(x => x.Date == date);
+    }
 
-            if (!exists)
-                throw new PersistenceException("There is no record with the specified id to update.");
-
-            timeRecordCollection.Delete(timeRecord.Id);
-        }
-
-        public TimeRecord GetById(int id)
-        {
-            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
-            return timeRecordCollection
-                .Find(x => x.Id == id)
-                .FirstOrDefault();
-        }
-
-        public IEnumerable<TimeRecord> GetByDate(DateTime date)
-        {
-            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
-            return timeRecordCollection
-                .Find(x => x.Date == date);
-        }
-
-        public IEnumerable<TimeRecord> GetAll()
-        {
-            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
-            return timeRecordCollection
-                .FindAll();
-        }
+    public IEnumerable<TimeRecord> GetAll()
+    {
+        ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(CollectionName);
+        return timeRecordCollection
+            .FindAll();
     }
 }

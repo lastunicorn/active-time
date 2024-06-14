@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.CurrentDate.IncrementDate;
+using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.IncrementDate;
 using DustInTheWind.ActiveTime.Infrastructure;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands;

@@ -17,9 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentTray;
-using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
-using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
+using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentTray;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure;

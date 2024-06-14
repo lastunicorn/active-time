@@ -17,10 +17,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Comments;
-using DustInTheWind.ActiveTime.Application.Comments.ChangeComments;
-using DustInTheWind.ActiveTime.Application.Comments.PresentComments;
-using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
+using DustInTheWind.ActiveTime.Application.UseCases.Comments;
+using DustInTheWind.ActiveTime.Application.UseCases.Comments.ChangeComments;
+using DustInTheWind.ActiveTime.Application.UseCases.Comments.PresentComments;
+using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;

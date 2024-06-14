@@ -17,9 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate;
-using DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate;
-using DustInTheWind.ActiveTime.Application.CurrentDate.PresentCurrentDate;
+using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.ChangeDate;
+using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;
+using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.PresentCurrentDate;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;

@@ -35,7 +35,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording2
 
         private void CreateNewTimeRecord(DateTime now)
         {
-            TimeRecord newTimeRecord = new TimeRecord(now);
+            TimeRecord newTimeRecord = new(now);
             unitOfWork.TimeRecordRepository.Add(newTimeRecord);
             currentDay.TimeRecordId = newTimeRecord.Id;
         }

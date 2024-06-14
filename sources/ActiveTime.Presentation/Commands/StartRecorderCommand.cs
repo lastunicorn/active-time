@@ -17,9 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Recording.PresentRecorderState;
-using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
-using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.PresentRecorderState;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Ports.LogAccess;

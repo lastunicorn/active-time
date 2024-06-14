@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Recording.Stamp;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.Stamp;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 

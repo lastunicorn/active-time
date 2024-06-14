@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
+using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentOverview;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 

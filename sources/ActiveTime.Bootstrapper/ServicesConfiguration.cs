@@ -17,8 +17,8 @@
 using System.Reflection;
 using Autofac;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.ConfigurationAccess;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;

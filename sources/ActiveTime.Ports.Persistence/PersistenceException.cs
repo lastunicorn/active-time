@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,60 +17,35 @@
 using System.Runtime.Serialization;
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Ports.Persistence
+namespace DustInTheWind.ActiveTime.Ports.Persistence;
+
+[Serializable]
+public class PersistenceException : ActiveTimeException
 {
-    /// <summary>
-    /// Exception raised by an Exporter.
-    /// </summary>
-    [Serializable]
-    public class PersistenceException : ActiveTimeException
+    private const string DefaultMessage = "Internal error in the persistence layer.";
+
+    public PersistenceException()
+        : base(DefaultMessage)
     {
-        private const string DefaultMessage = "Internal error in the persistence layer.";
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersistenceException"/> class.
-        /// </summary>
-        public PersistenceException()
-            : base(DefaultMessage)
-        {
-        }
+    public PersistenceException(string message)
+        : base(message)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersistenceException"/> class with a specified error message.
-        /// </summary>
-        /// <param name="message">A message that describes the error.</param>
-        public PersistenceException(string message)
-            : base(message)
-        {
-        }
+    public PersistenceException(Exception innerException)
+        : base(DefaultMessage, innerException)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersistenceException"/> class with a reference to the inner exception that is the cause of this exception.
-        /// </summary>
-        /// <param name="innerException">The exception that is the cause of the current exception.</param>
-        public PersistenceException(Exception innerException)
-            : base(DefaultMessage, innerException)
-        {
-        }
+    public PersistenceException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersistenceException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
-        /// </summary>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="innerException">The exception that is the cause of the current exception.</param>
-        public PersistenceException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersistenceException"/> class with serialized data.
-        /// </summary>
-        /// <param name="info">The object that holds the serialized object data.</param>
-        /// <param name="context">The contextual information about the source or destination.</param>
-        public PersistenceException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+    public PersistenceException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
     }
 }

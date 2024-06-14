@@ -17,8 +17,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Comments;
-using DustInTheWind.ActiveTime.Application.Comments.SaveComments;
+using DustInTheWind.ActiveTime.Application.UseCases.Comments;
+using DustInTheWind.ActiveTime.Application.UseCases.Comments.SaveComments;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 

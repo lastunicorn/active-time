@@ -17,7 +17,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationStatus;
+using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentApplicationStatus;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;

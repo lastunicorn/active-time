@@ -17,9 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Recording.PresentRecorderState;
-using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
-using DustInTheWind.ActiveTime.Application.Recording.StopRecording;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.PresentRecorderState;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
@@ -29,17 +29,27 @@ namespace DustInTheWind.ActiveTime.Presentation.RecorderArea;
 public class RecorderViewModel : ViewModelBase
 {
     private readonly IRequestBus requestBus;
-    private string state;
-    private const string RunningText = "Running";
-    private const string StoppedText = "Stopped";
+    private bool isStarted;
+    private bool isStopped;
 
-    public string State
+    public bool IsStarted
     {
-        get => state;
-        private set
+        get => isStarted;
+        set
         {
-            if (value == state) return;
-            state = value;
+            if (value == isStarted) return;
+            isStarted = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsStopped
+    {
+        get => isStopped;
+        set
+        {
+            if (value == isStopped) return;
+            isStopped = value;
             OnPropertyChanged();
         }
     }
@@ -65,21 +75,22 @@ public class RecorderViewModel : ViewModelBase
         PresentRecorderStateRequest request = new();
         PresentRecorderStateResponse response = await requestBus.Send<PresentRecorderStateRequest, PresentRecorderStateResponse>(request);
 
-        State = response.IsRunning
-            ? RunningText
-            : StoppedText;
+        IsStarted = response.IsRunning;
+        IsStopped = !response.IsRunning;
     }
 
     private Task HandleRecorderStartedAction(RecorderStartedEvent ev, CancellationToken cancellationToken)
     {
-        State = RunningText;
+        IsStarted = true;
+        IsStopped = false;
 
         return Task.CompletedTask;
     }
 
     private Task HandleRecorderStoppedAction(RecorderStoppedEvent ev, CancellationToken cancellationToken)
     {
-        State = StoppedText;
+        IsStarted = false;
+        IsStopped = true;
 
         return Task.CompletedTask;
     }

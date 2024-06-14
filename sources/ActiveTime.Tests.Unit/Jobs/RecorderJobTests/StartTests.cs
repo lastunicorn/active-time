@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Threading;
-using DustInTheWind.ActiveTime.Application.Recording.Stamp;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.Stamp;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Jobs;
