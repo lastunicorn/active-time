@@ -16,22 +16,16 @@
 
 using System.Windows.Controls;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.Views
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for CommentsView.xaml
     /// </summary>
-    public partial class FrontView : UserControl
+    public partial class CommentsView : UserControl
     {
-        public FrontView()
+        public CommentsView()
         {
             InitializeComponent();
         }
-
-        //private void MainView_OnLoaded(object sender, RoutedEventArgs e)
-        //{
-        //    DataContext = viewModel;
-        //    viewModel.RefreshCommand.Execute(null);
-        //}
     }
 }

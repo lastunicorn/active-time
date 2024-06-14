@@ -16,8 +16,9 @@
 
 using System;
 using DustInTheWind.ActiveTime.Presentation.Commands;
+using DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea
 {
     public class FrontViewModel : ViewModelBase
     {
@@ -28,7 +29,7 @@ namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels
         public CommentsViewModel CommentsViewModel { get; }
 
         public DayRecordsViewModel DayRecordsViewModel { get; }
-        
+
         public DeleteCommand DeleteCommand { get; }
 
         public DecrementDayCommand DecrementDayCommand { get; }

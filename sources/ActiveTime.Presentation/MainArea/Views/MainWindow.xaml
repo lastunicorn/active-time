@@ -28,6 +28,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:views1="clr-namespace:DustInTheWind.ActiveTime.Presentation.MainArea.Views"
     xmlns:customControls="clr-namespace:DustInTheWind.ActiveTime.Presentation.CustomControls;assembly=DustInTheWind.ActiveTime.Presentation.CustomControls"
     xmlns:overviewArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.OverviewArea"
+    xmlns:calendarArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.CalendarArea"
 
     Title="{Binding Path=WindowTitle}"
     Height="600"
@@ -75,7 +76,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
                 </TabItem.Header>
 
-                <views1:FrontView
+                <calendarArea:FrontView
                     DataContext="{Binding FrontViewModel}" />
 
 

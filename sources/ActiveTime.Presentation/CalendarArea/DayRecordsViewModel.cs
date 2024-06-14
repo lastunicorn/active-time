@@ -26,7 +26,7 @@ using DustInTheWind.ActiveTime.Application.Recording2;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;
 
 public class DayRecordsViewModel : ViewModelBase
 {

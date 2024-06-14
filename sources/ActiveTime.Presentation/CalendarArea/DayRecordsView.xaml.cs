@@ -16,14 +16,14 @@
 
 using System.Windows.Controls;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.Views
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea
 {
     /// <summary>
-    /// Interaction logic for CommentsView.xaml
+    /// Interaction logic for DayRecordsView.xaml
     /// </summary>
-    public partial class CommentsView : UserControl
+    public partial class DayRecordsView : UserControl
     {
-        public CommentsView()
+        public DayRecordsView()
         {
             InitializeComponent();
         }

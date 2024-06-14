@@ -16,16 +16,22 @@
 
 using System.Windows.Controls;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.Views
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea
 {
     /// <summary>
-    /// Interaction logic for DayRecordsView.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class DayRecordsView : UserControl
+    public partial class FrontView : UserControl
     {
-        public DayRecordsView()
+        public FrontView()
         {
             InitializeComponent();
         }
+
+        //private void MainView_OnLoaded(object sender, RoutedEventArgs e)
+        //{
+        //    DataContext = viewModel;
+        //    viewModel.RefreshCommand.Execute(null);
+        //}
     }
 }

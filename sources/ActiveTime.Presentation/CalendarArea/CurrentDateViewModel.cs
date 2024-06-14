@@ -24,7 +24,7 @@ using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;
 
 public class CurrentDateViewModel : ViewModelBase
 {
@@ -48,20 +48,17 @@ public class CurrentDateViewModel : ViewModelBase
         }
     }
 
-    public CalendarCommand CalendarCommand { get; }
-
     public DecrementDayCommand DecrementDayCommand { get; }
 
     public IncrementDateCommand IncrementDateCommand { get; }
 
     public CurrentDateViewModel(IRequestBus requestBus, EventBus eventBus,
-        CalendarCommand calendarCommand, DecrementDayCommand decrementDayCommand, IncrementDateCommand incrementDateCommand)
+        DecrementDayCommand decrementDayCommand, IncrementDateCommand incrementDateCommand)
     {
         if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
 
-        CalendarCommand = calendarCommand ?? throw new ArgumentNullException(nameof(calendarCommand));
         DecrementDayCommand = decrementDayCommand ?? throw new ArgumentNullException(nameof(decrementDayCommand));
         IncrementDateCommand = incrementDateCommand ?? throw new ArgumentNullException(nameof(incrementDateCommand));
 

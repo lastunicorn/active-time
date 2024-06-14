@@ -36,6 +36,7 @@ using DustInTheWind.ActiveTime.Ports.Persistence;
 using DustInTheWind.ActiveTime.Ports.SystemAccess;
 using DustInTheWind.ActiveTime.Presentation;
 using DustInTheWind.ActiveTime.Presentation.AboutArea;
+using DustInTheWind.ActiveTime.Presentation.CalendarArea;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.MainArea.Views;
@@ -192,10 +193,6 @@ internal class BootstrapperWithAutofac
         containerBuilder.RegisterType<CommentsViewModel>().AsSelf();
         containerBuilder.RegisterType<DayRecordsViewModel>().AsSelf();
 
-        containerBuilder.RegisterType<CalendarWindow>().AsSelf();
-        containerBuilder.RegisterType<CalendarViewModel>().AsSelf();
-
-
         containerBuilder.RegisterType<AboutWindow>().AsSelf();
         containerBuilder.RegisterType<AboutViewModel>().AsSelf();
 
@@ -204,7 +201,6 @@ internal class BootstrapperWithAutofac
         containerBuilder.RegisterType<DeleteCommand>().AsSelf();
         containerBuilder.RegisterType<DecrementDayCommand>().AsSelf();
         containerBuilder.RegisterType<IncrementDateCommand>().AsSelf();
-        containerBuilder.RegisterType<CalendarCommand>().AsSelf();
         containerBuilder.RegisterType<ResetCommentsCommand>().AsSelf();
         containerBuilder.RegisterType<SaveCommentsCommand>().AsSelf();
         containerBuilder.RegisterType<ExitCommand>().AsSelf();
@@ -275,7 +271,6 @@ internal class BootstrapperWithAutofac
         shellNavigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
         shellNavigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow), ShellNames.MainShell));
         shellNavigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow), ShellNames.MainShell));
-        shellNavigator.RegisterShell(new ShellInfo(ShellNames.CalendarShell, typeof(CalendarWindow), ShellNames.MainShell));
     }
 
     private void InitializeModules()

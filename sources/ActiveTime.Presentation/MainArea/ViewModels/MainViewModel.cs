@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.ActiveTime.Presentation.CalendarArea;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;

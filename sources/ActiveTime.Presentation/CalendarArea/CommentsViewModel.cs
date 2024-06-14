@@ -25,7 +25,7 @@ using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea.ViewModels;
+namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;
 
 public class CommentsViewModel : ViewModelBase
 {
