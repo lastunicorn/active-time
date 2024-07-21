@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Ports.Persistence
+namespace DustInTheWind.ActiveTime.Ports.DataAccess
 {
     public interface IUnitOfWork : IDisposable
     {

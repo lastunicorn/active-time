@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB;
+using DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB.Repositories;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Persistence.LiteDB;
-using DustInTheWind.ActiveTime.Persistence.LiteDB.Repositories;
 using LiteDB;
 
 namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers

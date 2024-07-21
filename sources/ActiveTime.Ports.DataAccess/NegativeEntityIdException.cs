@@ -16,7 +16,7 @@
 
 using System.Runtime.Serialization;
 
-namespace DustInTheWind.ActiveTime.Ports.Persistence;
+namespace DustInTheWind.ActiveTime.Ports.DataAccess;
 
 [Serializable]
 public class NegativeEntityIdException : PersistenceException

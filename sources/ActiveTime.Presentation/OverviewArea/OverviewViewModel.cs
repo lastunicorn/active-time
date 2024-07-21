@@ -26,7 +26,7 @@ namespace DustInTheWind.ActiveTime.Presentation.OverviewArea;
 public sealed class OverviewViewModel : ViewModelBase
 {
     private readonly IRequestBus requestBus;
-    private readonly ILogger logger;
+    private readonly ILog log;
 
     private string comments;
 
@@ -70,10 +70,10 @@ public sealed class OverviewViewModel : ViewModelBase
         }
     }
 
-    public OverviewViewModel(IRequestBus requestBus, ILogger logger)
+    public OverviewViewModel(IRequestBus requestBus, ILog log)
     {
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.log = log ?? throw new ArgumentNullException(nameof(log));
 
         Comments = "Loading...";
         _ = PopulateComments();
@@ -90,7 +90,7 @@ public sealed class OverviewViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            logger.Log("ERROR: " + ex);
+            log.Write("ERROR: " + ex);
         }
     }
 

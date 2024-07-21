@@ -17,11 +17,11 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Ports.Persistence;
+using DustInTheWind.ActiveTime.Ports.DataAccess;
 using DustInTheWind.ConsoleTools;
 using DustInTheWind.ConsoleTools.Menues;
-using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.UnitOfWork;
-using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Persistence.LiteDB.UnitOfWork;
+using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.UnitOfWork;
+using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB.UnitOfWork;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Flows
 {

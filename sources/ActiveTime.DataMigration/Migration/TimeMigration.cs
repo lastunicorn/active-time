@@ -14,12 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Persistence;
-using DustInTheWind.ActiveTime.Ports.Persistence;
+using DustInTheWind.ActiveTime.Ports.DataAccess;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {

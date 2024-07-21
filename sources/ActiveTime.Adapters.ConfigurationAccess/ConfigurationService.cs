@@ -17,7 +17,7 @@
 using DustInTheWind.ActiveTime.Adapters.ConfigurationAccess.Properties;
 using DustInTheWind.ActiveTime.Ports.ConfigurationAccess;
 
-namespace DustInTheWind.ActiveTime.ConfigurationAccess;
+namespace DustInTheWind.ActiveTime.Adapters.ConfigurationAccess;
 
 public class ConfigurationService : IConfigurationService
 {

@@ -16,9 +16,9 @@
 
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 
-namespace DustInTheWind.ActiveTime.LogAccess
+namespace DustInTheWind.ActiveTime.Adapters.LogAccess
 {
-    public class Logger : ILogger
+    public class Log : ILog
     {
         private const string LogDirectory = "Logs";
 
@@ -40,7 +40,7 @@ namespace DustInTheWind.ActiveTime.LogAccess
                 Directory.CreateDirectory(LogDirectory);
         }
 
-        public void Log(string message)
+        public void Write(string message)
         {
             DateTime now = DateTime.Now;
             WriteLog(message, now);

@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Ports.Persistence;
+using DustInTheWind.ActiveTime.Ports.DataAccess;
 
 namespace DustInTheWind.ActiveTime.DataMigration.Migration
 {

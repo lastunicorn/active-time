@@ -16,7 +16,7 @@
 
 namespace DustInTheWind.ActiveTime.Ports.LogAccess;
 
-public interface ILogger
+public interface ILog
 {
-    void Log(string message);
+    void Write(string message);
 }

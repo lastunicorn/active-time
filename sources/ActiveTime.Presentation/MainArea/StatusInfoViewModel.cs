@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.Presentation.MainArea;
 public class StatusInfoViewModel : ViewModelBase
 {
     private readonly IRequestBus requestBus;
-    private readonly ILogger logger;
+    private readonly ILog log;
     private string statusText;
     private bool isRecorderStarted;
 
@@ -60,11 +60,11 @@ public class StatusInfoViewModel : ViewModelBase
 
     public ToggleRecorderCommand ToggleRecorderCommand { get; }
 
-    public StatusInfoViewModel(IRequestBus requestBus, EventBus eventBus, ILogger logger)
+    public StatusInfoViewModel(IRequestBus requestBus, EventBus eventBus, ILog log)
     {
         if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.log = log ?? throw new ArgumentNullException(nameof(log));
 
         ToggleRecorderCommand = new ToggleRecorderCommand(requestBus);
 
@@ -87,7 +87,7 @@ public class StatusInfoViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            logger.Log("ERROR: " + ex);
+            log.Write("ERROR: " + ex);
         }
     }
 

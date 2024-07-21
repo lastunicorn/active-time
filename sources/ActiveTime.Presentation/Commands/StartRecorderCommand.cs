@@ -29,14 +29,14 @@ namespace DustInTheWind.ActiveTime.Presentation.Commands;
 public class StartRecorderCommand : CommandBase
 {
     private readonly IRequestBus requestBus;
-    private readonly ILogger logger;
+    private readonly ILog log;
     private bool canExecute;
 
-    public StartRecorderCommand(IRequestBus requestBus, ILogger logger, EventBus eventBus)
+    public StartRecorderCommand(IRequestBus requestBus, ILog log, EventBus eventBus)
     {
         if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.log = log ?? throw new ArgumentNullException(nameof(log));
 
         eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
         eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
@@ -89,7 +89,7 @@ public class StartRecorderCommand : CommandBase
         }
         catch (Exception ex)
         {
-            logger.Log("ERROR: " + ex);
+            log.Write("ERROR: " + ex);
         }
     }
 }

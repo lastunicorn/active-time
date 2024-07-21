@@ -14,14 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
-using DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Repositories;
-using DustInTheWind.ActiveTime.Ports.Persistence;
+using DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories;
+using DustInTheWind.ActiveTime.Ports.DataAccess;
 
-namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet
+namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet
 {
     public class UnitOfWork : IUnitOfWork
     {

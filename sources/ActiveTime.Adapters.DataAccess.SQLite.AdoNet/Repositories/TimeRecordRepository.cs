@@ -14,13 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Ports.Persistence;
+using DustInTheWind.ActiveTime.Ports.DataAccess;
 
-namespace DustInTheWind.ActiveTime.Persistence.SQLite.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories
 {
     public class TimeRecordRepository : ITimeRecordRepository
     {

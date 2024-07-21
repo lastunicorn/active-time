@@ -34,13 +34,13 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels;
 public class OverviewViewModuleTests
 {
     private Mock<IRequestBus> requestBus;
-    private Mock<ILogger> logger;
+    private Mock<ILog> logger;
 
     [SetUp]
     public void SetUp()
     {
         requestBus = new Mock<IRequestBus>();
-        logger = new Mock<ILogger>();
+        logger = new Mock<ILog>();
     }
 
     [Test]

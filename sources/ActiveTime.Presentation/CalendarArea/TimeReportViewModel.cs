@@ -29,7 +29,7 @@ namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;
 public class TimeReportViewModel : ViewModelBase
 {
     private readonly IRequestBus requestBus;
-    private readonly ILogger logger;
+    private readonly ILog log;
 
     private TimeSpan activeTime;
 
@@ -79,11 +79,11 @@ public class TimeReportViewModel : ViewModelBase
         }
     }
 
-    public TimeReportViewModel(IRequestBus requestBus, EventBus eventBus, ILogger logger)
+    public TimeReportViewModel(IRequestBus requestBus, EventBus eventBus, ILog log)
     {
         if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.log = log ?? throw new ArgumentNullException(nameof(log));
 
         eventBus.Subscribe<CurrentDateChangedEvent>(HandleCurrentDateChanged);
         eventBus.Subscribe<RecorderStampedEvent>(HandleRecorderStamped);
@@ -115,7 +115,7 @@ public class TimeReportViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            logger.Log("ERROR: " + ex);
+            log.Write("ERROR: " + ex);
         }
     }
 }

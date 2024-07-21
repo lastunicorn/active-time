@@ -50,18 +50,18 @@ public class TrayIconPresenter
     public ExitCommand ExitCommand { get; }
 
     public TrayIconPresenter(IApplicationService applicationService, IShellNavigator shellNavigator,
-        IRequestBus requestBus, ILogger logger, EventBus eventBus)
+        IRequestBus requestBus, ILog log, EventBus eventBus)
     {
         if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
-        if (logger == null) throw new ArgumentNullException(nameof(logger));
+        if (log == null) throw new ArgumentNullException(nameof(log));
 
         this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
         this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
         ShowCommand = new ShowCommand(shellNavigator);
-        StartRecorderCommand = new StartRecorderCommand(requestBus, logger, eventBus);
-        StopRecorderCommand = new StopRecorderCommand(requestBus, logger, eventBus);
+        StartRecorderCommand = new StartRecorderCommand(requestBus, log, eventBus);
+        StopRecorderCommand = new StopRecorderCommand(requestBus, log, eventBus);
         AboutCommand = new AboutCommand(shellNavigator);
         ExitCommand = new ExitCommand(applicationService);
     }

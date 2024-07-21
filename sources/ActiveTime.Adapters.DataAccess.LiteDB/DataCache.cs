@@ -14,11 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Persistence.LiteDB;
+namespace DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB;
 
 internal class DataCache
 {

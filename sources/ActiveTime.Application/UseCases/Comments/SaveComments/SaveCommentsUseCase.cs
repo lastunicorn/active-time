@@ -22,7 +22,7 @@ using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
-using DustInTheWind.ActiveTime.Ports.Persistence;
+using DustInTheWind.ActiveTime.Ports.DataAccess;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.Comments.SaveComments;

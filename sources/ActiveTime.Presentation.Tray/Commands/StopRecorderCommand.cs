@@ -30,7 +30,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands;
 public class StopRecorderCommand : ICommand
 {
     private readonly IRequestBus requestBus;
-    private readonly ILogger logger;
+    private readonly ILog log;
 
     private JobState recorderState = JobState.Stopped;
 
@@ -46,11 +46,11 @@ public class StopRecorderCommand : ICommand
 
     public event EventHandler CanExecuteChanged;
 
-    public StopRecorderCommand(IRequestBus requestBus, ILogger logger, EventBus eventBus)
+    public StopRecorderCommand(IRequestBus requestBus, ILog log, EventBus eventBus)
     {
         if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
-        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.log = log ?? throw new ArgumentNullException(nameof(log));
 
         eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
         eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
@@ -93,7 +93,7 @@ public class StopRecorderCommand : ICommand
         }
         catch (Exception ex)
         {
-            logger.Log("ERROR: " + ex);
+            log.Write("ERROR: " + ex);
         }
     }
 

@@ -17,7 +17,7 @@
 using System.Runtime.Serialization;
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Ports.Persistence;
+namespace DustInTheWind.ActiveTime.Ports.DataAccess;
 
 [Serializable]
 public class TimeRecordExistsException : PersistenceException

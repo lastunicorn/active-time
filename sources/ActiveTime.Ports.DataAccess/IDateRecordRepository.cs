@@ -16,7 +16,7 @@
 
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Ports.Persistence
+namespace DustInTheWind.ActiveTime.Ports.DataAccess
 {
     public interface IDateRecordRepository
     {

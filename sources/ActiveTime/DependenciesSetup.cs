@@ -16,10 +16,13 @@
 
 using System.Reflection;
 using Autofac;
+using DustInTheWind.ActiveTime.Adapters.ConfigurationAccess;
+using DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB;
+using DustInTheWind.ActiveTime.Adapters.LogAccess;
+using DustInTheWind.ActiveTime.Adapters.SystemAccess;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording2;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
-using DustInTheWind.ActiveTime.ConfigurationAccess;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Domain.Services;
@@ -27,13 +30,10 @@ using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac;
 using DustInTheWind.ActiveTime.Jobs;
-using DustInTheWind.ActiveTime.LogAccess;
-using DustInTheWind.ActiveTime.Persistence.LiteDB;
 using DustInTheWind.ActiveTime.Ports.ConfigurationAccess;
+using DustInTheWind.ActiveTime.Ports.DataAccess;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
-using DustInTheWind.ActiveTime.Ports.Persistence;
 using DustInTheWind.ActiveTime.Ports.SystemAccess;
-using DustInTheWind.ActiveTime.Presentation;
 using DustInTheWind.ActiveTime.Presentation.AboutArea;
 using DustInTheWind.ActiveTime.Presentation.CalendarArea;
 using DustInTheWind.ActiveTime.Presentation.Commands;
@@ -45,7 +45,6 @@ using DustInTheWind.ActiveTime.Presentation.Services;
 using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
-using DustInTheWind.ActiveTime.SystemAccess;
 using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobModel.ITimer;
 using Timer = DustInTheWind.ActiveTime.Infrastructure.JobModel.Timer;
 
@@ -94,11 +93,9 @@ internal static class DependenciesSetup
         containerBuilder.RegisterType<ApplicationService>().As<IApplicationService>().SingleInstance();
         containerBuilder.RegisterType<ShellNavigator>().As<IShellNavigator>().SingleInstance();
         containerBuilder.RegisterType<DispatcherService>().AsSelf().SingleInstance();
-        containerBuilder.RegisterType<ViewModelFactory>().As<IViewModelFactory>();
-        containerBuilder.RegisterType<CommandFactory>().As<ICommandFactory>();
 
         // Register singleton services.
-        containerBuilder.RegisterType<Logger>().As<ILogger>().SingleInstance();
+        containerBuilder.RegisterType<Log>().As<ILog>().SingleInstance();
         containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<StatusInfoService>().AsSelf().SingleInstance();
 
