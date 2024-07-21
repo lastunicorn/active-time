@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,118 +17,120 @@
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Migration
+namespace DustInTheWind.ActiveTime.DataMigration.Migration;
+
+internal class TimeMigration
 {
-    internal class TimeMigration
+    private readonly IUnitOfWork sourceUnitOfWork;
+    private readonly IUnitOfWork destinationUnitOfWork;
+
+    private Dictionary<DateTime, bool> destinationExistentDays;
+
+    public bool Simulate { get; set; }
+
+    public int MigratedRecordsCount { get; private set; }
+
+    public int IgnoredRecordsCount { get; private set; }
+
+    public Dictionary<DateTime, string> Warnings { get; } = new();
+
+    public event EventHandler<TimeRecordMigratedEventArgs> TimeRecordMigrated;
+
+    public TimeMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
     {
-        private readonly IUnitOfWork sourceUnitOfWork;
-        private readonly IUnitOfWork destinationUnitOfWork;
+        this.sourceUnitOfWork = sourceUnitOfWork ?? throw new ArgumentNullException(nameof(sourceUnitOfWork));
+        this.destinationUnitOfWork = destinationUnitOfWork ?? throw new ArgumentNullException(nameof(destinationUnitOfWork));
+    }
 
-        private Dictionary<DateTime, bool> destinationExistentDays;
+    public void Migrate()
+    {
+        PrepareMigration();
+        MigrateRecords();
+    }
 
-        public bool Simulate { get; set; }
-        public int MigratedRecordsCount { get; private set; }
-        public int IgnoredRecordsCount { get; private set; }
-        public Dictionary<DateTime, string> Warnings { get; } = new Dictionary<DateTime, string>();
+    private void PrepareMigration()
+    {
+        destinationExistentDays = new Dictionary<DateTime, bool>();
+        Warnings.Clear();
+        MigratedRecordsCount = 0;
+        IgnoredRecordsCount = 0;
+    }
 
-        public event EventHandler<TimeRecordMigratedEventArgs> TimeRecordMigrated;
+    private void MigrateRecords()
+    {
+        IEnumerable<TimeRecord> timeRecords = sourceUnitOfWork.TimeRecordRepository.GetAll();
 
-        public TimeMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
+        foreach (TimeRecord timeRecord in timeRecords)
         {
-            this.sourceUnitOfWork = sourceUnitOfWork ?? throw new ArgumentNullException(nameof(sourceUnitOfWork));
-            this.destinationUnitOfWork = destinationUnitOfWork ?? throw new ArgumentNullException(nameof(destinationUnitOfWork));
+            MigrateRecord(timeRecord);
+            OnTimeRecordMigrated(new TimeRecordMigratedEventArgs(timeRecord));
         }
+    }
 
-        public void Migrate()
+    private void MigrateRecord(TimeRecord timeRecord)
+    {
+        DateTime date = timeRecord.Date;
+
+        IEnumerable<TimeRecord> destinationRecords = destinationUnitOfWork.TimeRecordRepository.GetByDate(date);
+
+        bool existsDestinationRecords = CheckIfDateExistsInDestination(date, destinationRecords);
+
+        if (existsDestinationRecords)
         {
-            PrepareMigration();
-            MigrateRecords();
-        }
+            bool existsIdenticalRecord = destinationRecords
+                .Any(x => x.Date.EqualsWithin(timeRecord.Date, TimeSpan.FromSeconds(1)) &&
+                          x.StartTime.EqualsWithin(timeRecord.StartTime, TimeSpan.FromMinutes(1)) &&
+                          x.EndTime.EqualsWithin(timeRecord.EndTime, TimeSpan.FromMinutes(1)) &&
+                          x.RecordType == timeRecord.RecordType);
 
-        private void PrepareMigration()
-        {
-            destinationExistentDays = new Dictionary<DateTime, bool>();
-            Warnings.Clear();
-            MigratedRecordsCount = 0;
-            IgnoredRecordsCount = 0;
-        }
-
-        private void MigrateRecords()
-        {
-            IEnumerable<TimeRecord> timeRecords = sourceUnitOfWork.TimeRecordRepository.GetAll();
-
-            foreach (TimeRecord timeRecord in timeRecords)
+            if (existsIdenticalRecord)
             {
-                MigrateRecord(timeRecord);
-                OnTimeRecordMigrated(new TimeRecordMigratedEventArgs(timeRecord));
-            }
-        }
-
-        private void MigrateRecord(TimeRecord timeRecord)
-        {
-            DateTime date = timeRecord.Date;
-
-            IEnumerable<TimeRecord> destinationRecords = destinationUnitOfWork.TimeRecordRepository.GetByDate(date);
-
-            bool existsDestinationRecords = CheckIfDateExistsInDestination(date, destinationRecords);
-
-            if (existsDestinationRecords)
-            {
-                bool existsIdenticalRecord = destinationRecords
-                    .Any(x => x.Date.EqualsWithin(timeRecord.Date, TimeSpan.FromSeconds(1)) &&
-                              x.StartTime.EqualsWithin(timeRecord.StartTime, TimeSpan.FromMinutes(1)) &&
-                              x.EndTime.EqualsWithin(timeRecord.EndTime, TimeSpan.FromMinutes(1)) &&
-                              x.RecordType == timeRecord.RecordType);
-
-                if (existsIdenticalRecord)
-                {
-                    IgnoredRecordsCount++;
-                }
-                else
-                {
-                    if (!Warnings.ContainsKey(date))
-                    {
-                        string message = string.Format("Date {0:d} conflict: Some records already exists in the destination database. No record will be imported.", date);
-                        Warnings.Add(date, message);
-                    }
-                }
+                IgnoredRecordsCount++;
             }
             else
             {
-                if (!Simulate)
-                    InsertRecordInDestination(timeRecord);
-
-                MigratedRecordsCount++;
+                if (!Warnings.ContainsKey(date))
+                {
+                    string message = string.Format("Date {0:d} conflict: Some records already exists in the destination database. No record will be imported.", date);
+                    Warnings.Add(date, message);
+                }
             }
         }
-
-        private void InsertRecordInDestination(TimeRecord timeRecord)
+        else
         {
-            TimeRecord timeRecordCopy = new TimeRecord
-            {
-                Date = timeRecord.Date,
-                StartTime = timeRecord.StartTime,
-                EndTime = timeRecord.EndTime,
-                RecordType = timeRecord.RecordType
-            };
+            if (!Simulate)
+                InsertRecordInDestination(timeRecord);
 
-            destinationUnitOfWork.TimeRecordRepository.Add(timeRecordCopy);
+            MigratedRecordsCount++;
         }
+    }
 
-        private bool CheckIfDateExistsInDestination(DateTime date, IEnumerable<TimeRecord> destinationRecords)
+    private void InsertRecordInDestination(TimeRecord timeRecord)
+    {
+        TimeRecord timeRecordCopy = new()
         {
-            if (destinationExistentDays.ContainsKey(date))
-                return destinationExistentDays[date];
+            Date = timeRecord.Date,
+            StartTime = timeRecord.StartTime,
+            EndTime = timeRecord.EndTime,
+            RecordType = timeRecord.RecordType
+        };
 
-            bool existsRecords = destinationRecords.Any();
-            destinationExistentDays.Add(date, existsRecords);
+        destinationUnitOfWork.TimeRecordRepository.Add(timeRecordCopy);
+    }
 
-            return existsRecords;
-        }
+    private bool CheckIfDateExistsInDestination(DateTime date, IEnumerable<TimeRecord> destinationRecords)
+    {
+        if (destinationExistentDays.ContainsKey(date))
+            return destinationExistentDays[date];
 
-        protected virtual void OnTimeRecordMigrated(TimeRecordMigratedEventArgs e)
-        {
-            TimeRecordMigrated?.Invoke(this, e);
-        }
+        bool existsRecords = destinationRecords.Any();
+        destinationExistentDays.Add(date, existsRecords);
+
+        return existsRecords;
+    }
+
+    protected virtual void OnTimeRecordMigrated(TimeRecordMigratedEventArgs e)
+    {
+        TimeRecordMigrated?.Invoke(this, e);
     }
 }

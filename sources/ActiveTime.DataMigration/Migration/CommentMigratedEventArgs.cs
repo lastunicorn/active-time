@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,18 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Migration
-{
-    internal class CommentMigratedEventArgs : EventArgs
-    {
-        public DateRecord DateRecord { get; }
+namespace DustInTheWind.ActiveTime.DataMigration.Migration;
 
-        public CommentMigratedEventArgs(DateRecord dateRecord)
-        {
-            DateRecord = dateRecord;
-        }
+internal class CommentMigratedEventArgs : EventArgs
+{
+    public DateRecord DateRecord { get; }
+
+    public CommentMigratedEventArgs(DateRecord dateRecord)
+    {
+        DateRecord = dateRecord;
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,15 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+namespace DustInTheWind.ActiveTime.DataMigration.Statistics;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Statistics
+internal static class DateTimeExtension
 {
-    internal static class DateTimeExtension
+    public static bool IsWeekEnd(this DateTime dateTime)
     {
-        public static bool IsWeekEnd(this DateTime dateTime)
-        {
-            return dateTime.DayOfWeek == DayOfWeek.Sunday || dateTime.DayOfWeek == DayOfWeek.Saturday;
-        }
+        return dateTime.DayOfWeek == DayOfWeek.Sunday || dateTime.DayOfWeek == DayOfWeek.Saturday;
     }
 }

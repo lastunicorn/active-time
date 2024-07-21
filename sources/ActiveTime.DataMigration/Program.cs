@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,90 +14,87 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
 using DustInTheWind.ActiveTime.DataMigration.Flows;
 using DustInTheWind.ConsoleTools;
 using DustInTheWind.ConsoleTools.Menues;
 
-namespace DustInTheWind.ActiveTime.DataMigration
+namespace DustInTheWind.ActiveTime.DataMigration;
+
+internal static class Program
 {
-    internal static class Program
+    public static volatile bool ExitWasRequested;
+
+    private static void Main(string[] args)
     {
-        public static volatile bool ExitWasRequested;
-
-        private static void Main(string[] args)
+        try
         {
-            try
+            CustomConsole.WriteLine("ActiveTime Data Migration Tool");
+            CustomConsole.WriteLine("===============================================================================");
+
+            ExitWasRequested = false;
+            IEnumerable<TextMenuItem> items = CreateMenuItems();
+
+            while (!ExitWasRequested)
             {
-                CustomConsole.WriteLine("ActiveTime Data Migration Tool");
-                CustomConsole.WriteLine("===============================================================================");
+                CustomConsole.WriteLine();
 
-                ExitWasRequested = false;
-                IEnumerable<TextMenuItem> items = CreateMenuItems();
-
-                while (!ExitWasRequested)
-                {
-                    CustomConsole.WriteLine();
-
-                    TextMenu textMenu = new TextMenu(items);
-                    textMenu.Display();
-                }
-            }
-            catch (Exception ex)
-            {
-                CustomConsole.WriteLineError(ex);
-                Pause.QuickDisplay();
+                TextMenu textMenu = new(items);
+                textMenu.Display();
             }
         }
-
-        private static IEnumerable<TextMenuItem> CreateMenuItems()
+        catch (Exception ex)
         {
-            return new List<TextMenuItem>
-            {
-                new TextMenuItem
-                {
-                    Id = "1",
-                    Text = "Display Database Structure",
-                    Command = new DisplayDatabaseStructureCommand()
-                },
-                new TextMenuItem
-                {
-                    Id = "2",
-                    Text = "Display All Data",
-                    Command = new DisplayDataCommand()
-                },
-                new TextMenuItem
-                {
-                    Id = "3",
-                    Text = "Display Record Dates",
-                    Command = new DisplayDatesCommand()
-                },
-                new TextMenuItem
-                {
-                    Id = "4",
-                    Text = "Simulate Migration",
-                    Command = new MigrationCommand { Simulate = true }
-                },
-                new TextMenuItem
-                {
-                    Id = "5",
-                    Text = "Migrate",
-                    Command = new MigrationCommand()
-                },
-                new TextMenuItem
-                {
-                    Id = "6",
-                    Text = "Statistics",
-                    Command = new StatisticsCommand()
-                },
-                new TextMenuItem
-                {
-                    Id = "0",
-                    Text = "Exit",
-                    Command = new ExitCommand()
-                }
-            };
+            CustomConsole.WriteLineError(ex);
+            Pause.QuickDisplay();
         }
+    }
+
+    private static IEnumerable<TextMenuItem> CreateMenuItems()
+    {
+        return new List<TextMenuItem>
+        {
+            new()
+            {
+                Id = "1",
+                Text = "Display Database Structure",
+                Command = new DisplayDatabaseStructureCommand()
+            },
+            new()
+            {
+                Id = "2",
+                Text = "Display All Data",
+                Command = new DisplayDataCommand()
+            },
+            new()
+            {
+                Id = "3",
+                Text = "Display Record Dates",
+                Command = new DisplayDatesCommand()
+            },
+            new()
+            {
+                Id = "4",
+                Text = "Simulate Migration",
+                Command = new MigrationCommand { Simulate = true }
+            },
+            new()
+            {
+                Id = "5",
+                Text = "Migrate",
+                Command = new MigrationCommand()
+            },
+            new()
+            {
+                Id = "6",
+                Text = "Statistics",
+                Command = new StatisticsCommand()
+            },
+            new()
+            {
+                Id = "0",
+                Text = "Exit",
+                Command = new ExitCommand()
+            }
+        };
     }
 }

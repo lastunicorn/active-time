@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,88 +14,85 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Linq;
 using DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB;
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Statistics
+namespace DustInTheWind.ActiveTime.DataMigration.Statistics;
+
+internal class TimePerDay
 {
-    internal class TimePerDay
+    private readonly UnitOfWork unitOfWork;
+
+    private DateTime date;
+    private TimeSpan time;
+    private bool? isVacation;
+    private bool? isInvalidTime;
+    private string[] commentLines;
+
+    public DateTime Date
     {
-        private readonly UnitOfWork unitOfWork;
-
-        private DateTime date;
-        private TimeSpan time;
-        private bool? isVacation;
-        private bool? isInvalidTime;
-        private string[] commentLines;
-
-        public DateTime Date
+        get => date;
+        set
         {
-            get => date;
-            set
+            date = value;
+            isVacation = null;
+        }
+    }
+
+    public TimeSpan Time
+    {
+        get => time;
+        set
+        {
+            time = value;
+            isVacation = null;
+        }
+    }
+
+    public bool IsInvalidTime => isInvalidTime ?? CalculateIsInvalidTime();
+
+    public bool IsVacation => isVacation ?? CalculateIsVacation();
+
+    public bool IsHoliday => isVacation ?? CalculateIsHoliday();
+
+    public bool IsWeekEnd => Date.IsWeekEnd();
+
+    public TimePerDay(UnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+    }
+
+
+    private string[] CommentLines
+    {
+        get
+        {
+            if (commentLines == null)
             {
-                date = value;
-                isVacation = null;
+                DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(Date);
+                commentLines = dateRecord?.Comment?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
             }
+
+            return commentLines;
         }
+    }
 
-        public TimeSpan Time
-        {
-            get => time;
-            set
-            {
-                time = value;
-                isVacation = null;
-            }
-        }
+    private bool CalculateIsVacation()
+    {
+        return CommentLines
+            .Any(x => x.Equals("vacation:", StringComparison.OrdinalIgnoreCase));
+    }
 
-        public bool IsInvalidTime => isInvalidTime ?? CalculateIsInvalidTime();
+    private bool CalculateIsHoliday()
+    {
+        return CommentLines
+            .Any(x => x.Equals("holiday:", StringComparison.OrdinalIgnoreCase) ||
+                      x.Equals("free day:", StringComparison.OrdinalIgnoreCase));
+    }
 
-        public bool IsVacation => isVacation ?? CalculateIsVacation();
-
-        public bool IsHoliday => isVacation ?? CalculateIsHoliday();
-
-        public bool IsWeekEnd => Date.IsWeekEnd();
-
-        public TimePerDay(UnitOfWork unitOfWork)
-        {
-            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-        }
-
-
-        private string[] CommentLines
-        {
-            get
-            {
-                if (commentLines == null)
-                {
-                    DateRecord dateRecord = unitOfWork.DateRecordRepository.GetByDate(Date);
-                    commentLines = dateRecord?.Comment?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
-                }
-
-                return commentLines;
-            }
-        }
-
-        private bool CalculateIsVacation()
-        {
-            return CommentLines
-                .Any(x => x.Equals("vacation:", StringComparison.OrdinalIgnoreCase));
-        }
-
-        private bool CalculateIsHoliday()
-        {
-            return CommentLines
-                .Any(x => x.Equals("holiday:", StringComparison.OrdinalIgnoreCase) ||
-                          x.Equals("free day:", StringComparison.OrdinalIgnoreCase));
-        }
-
-        private bool CalculateIsInvalidTime()
-        {
-            return CommentLines
-                .Any(x => x.Equals("invalid time:", StringComparison.OrdinalIgnoreCase));
-        }
+    private bool CalculateIsInvalidTime()
+    {
+        return CommentLines
+            .Any(x => x.Equals("invalid time:", StringComparison.OrdinalIgnoreCase));
     }
 }

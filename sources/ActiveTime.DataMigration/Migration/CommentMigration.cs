@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,111 +14,111 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Migration
+namespace DustInTheWind.ActiveTime.DataMigration.Migration;
+
+internal class CommentMigration
 {
-    internal class CommentMigration
+    private readonly IUnitOfWork sourceUnitOfWork;
+    private readonly IUnitOfWork destinationUnitOfWork;
+
+    public bool Simulate { get; set; }
+
+    public int MigratedRecordsCount { get; private set; }
+
+    public int IgnoredRecordsCount { get; private set; }
+
+    public Dictionary<DateTime, string> Warnings { get; } = new();
+
+    public event EventHandler<CommentMigratedEventArgs> CommentMigrated;
+
+    public CommentMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
     {
-        private readonly IUnitOfWork sourceUnitOfWork;
-        private readonly IUnitOfWork destinationUnitOfWork;
+        this.sourceUnitOfWork = sourceUnitOfWork ?? throw new ArgumentNullException(nameof(sourceUnitOfWork));
+        this.destinationUnitOfWork = destinationUnitOfWork ?? throw new ArgumentNullException(nameof(destinationUnitOfWork));
+    }
 
-        public bool Simulate { get; set; }
-        public int MigratedRecordsCount { get; private set; }
-        public int IgnoredRecordsCount { get; private set; }
-        public Dictionary<DateTime, string> Warnings { get; } = new Dictionary<DateTime, string>();
+    public void Migrate()
+    {
+        PrepareMigration();
+        MigrateComments();
+    }
 
-        public event EventHandler<CommentMigratedEventArgs> CommentMigrated;
+    private void PrepareMigration()
+    {
+        Warnings.Clear();
+        MigratedRecordsCount = 0;
+        IgnoredRecordsCount = 0;
+    }
 
-        public CommentMigration(IUnitOfWork sourceUnitOfWork, IUnitOfWork destinationUnitOfWork)
+    private void MigrateComments()
+    {
+        IEnumerable<DateRecord> dayComments = sourceUnitOfWork.DateRecordRepository.GetAll();
+
+        foreach (DateRecord dayComment in dayComments)
         {
-            this.sourceUnitOfWork = sourceUnitOfWork ?? throw new ArgumentNullException(nameof(sourceUnitOfWork));
-            this.destinationUnitOfWork = destinationUnitOfWork ?? throw new ArgumentNullException(nameof(destinationUnitOfWork));
-        }
-
-        public void Migrate()
-        {
-            PrepareMigration();
-            MigrateComments();
-        }
-
-        private void PrepareMigration()
-        {
-            Warnings.Clear();
-            MigratedRecordsCount = 0;
-            IgnoredRecordsCount = 0;
-        }
-
-        private void MigrateComments()
-        {
-            IEnumerable<DateRecord> dayComments = sourceUnitOfWork.DateRecordRepository.GetAll();
-
-            foreach (DateRecord dayComment in dayComments)
+            try
             {
-                try
-                {
-                    MigrateComment(dayComment);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error migrating comment for date " + dayComment.Date, ex);
-                }
-
-                OnCommentMigrated(new CommentMigratedEventArgs(dayComment));
+                MigrateComment(dayComment);
             }
-        }
-
-        private void MigrateComment(DateRecord dateRecord)
-        {
-            DateTime date = dateRecord.Date;
-
-            DateRecord destinationRecord = destinationUnitOfWork.DateRecordRepository.GetByDate(date);
-
-            if (destinationRecord != null)
+            catch (Exception ex)
             {
-                bool existsIdenticalRecord = destinationRecord.Date - dateRecord.Date > TimeSpan.FromSeconds(-1) &&
-                                             destinationRecord.Date - dateRecord.Date < TimeSpan.FromSeconds(1) &&
-                                             destinationRecord.Comment == dateRecord.Comment;
+                throw new Exception("Error migrating comment for date " + dayComment.Date, ex);
+            }
 
-                if (existsIdenticalRecord)
-                {
-                    IgnoredRecordsCount++;
-                }
-                else
-                {
-                    if (!Warnings.ContainsKey(date))
-                    {
-                        string message = string.Format("Date {0:d} conflict: Comment already exists in the destination database. No record will be imported.", date);
-                        Warnings.Add(date, message);
-                    }
-                }
+            OnCommentMigrated(new CommentMigratedEventArgs(dayComment));
+        }
+    }
+
+    private void MigrateComment(DateRecord dateRecord)
+    {
+        DateTime date = dateRecord.Date;
+
+        DateRecord destinationRecord = destinationUnitOfWork.DateRecordRepository.GetByDate(date);
+
+        if (destinationRecord != null)
+        {
+            bool existsIdenticalRecord = destinationRecord.Date - dateRecord.Date > TimeSpan.FromSeconds(-1) &&
+                                         destinationRecord.Date - dateRecord.Date < TimeSpan.FromSeconds(1) &&
+                                         destinationRecord.Comment == dateRecord.Comment;
+
+            if (existsIdenticalRecord)
+            {
+                IgnoredRecordsCount++;
             }
             else
             {
-                if (!Simulate)
-                    InsertRecordInDestination(dateRecord);
-
-                MigratedRecordsCount++;
+                if (!Warnings.ContainsKey(date))
+                {
+                    string message = string.Format("Date {0:d} conflict: Comment already exists in the destination database. No record will be imported.", date);
+                    Warnings.Add(date, message);
+                }
             }
         }
-
-        private void InsertRecordInDestination(DateRecord dateRecord)
+        else
         {
-            DateRecord dateRecordCopy = new DateRecord
-            {
-                Date = dateRecord.Date,
-                Comment = dateRecord.Comment
-            };
+            if (!Simulate)
+                InsertRecordInDestination(dateRecord);
 
-            destinationUnitOfWork.DateRecordRepository.Add(dateRecordCopy);
+            MigratedRecordsCount++;
         }
+    }
 
-        protected virtual void OnCommentMigrated(CommentMigratedEventArgs e)
+    private void InsertRecordInDestination(DateRecord dateRecord)
+    {
+        DateRecord dateRecordCopy = new()
         {
-            CommentMigrated?.Invoke(this, e);
-        }
+            Date = dateRecord.Date,
+            Comment = dateRecord.Comment
+        };
+
+        destinationUnitOfWork.DateRecordRepository.Add(dateRecordCopy);
+    }
+
+    protected virtual void OnCommentMigrated(CommentMigratedEventArgs e)
+    {
+        CommentMigrated?.Invoke(this, e);
     }
 }

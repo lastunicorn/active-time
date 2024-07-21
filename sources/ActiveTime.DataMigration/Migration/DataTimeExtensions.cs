@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,21 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+namespace DustInTheWind.ActiveTime.DataMigration.Migration;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Migration
+internal static class DataTimeExtensions
 {
-    internal static class DataTimeExtensions
+    public static bool EqualsWithin(this DateTime dateTime, DateTime otherDateTime, TimeSpan delta)
     {
-        public static bool EqualsWithin(this DateTime dateTime, DateTime otherDateTime, TimeSpan delta)
-        {
-            TimeSpan diff = dateTime - otherDateTime;
-            return diff > -delta && diff < delta;
-        }
-        public static bool EqualsWithin(this TimeSpan timeSpan, TimeSpan otherTimeSpan, TimeSpan delta)
-        {
-            TimeSpan diff = timeSpan - otherTimeSpan;
-            return diff > -delta && diff < delta;
-        }
+        TimeSpan diff = dateTime - otherDateTime;
+        return diff > -delta && diff < delta;
+    }
+
+    public static bool EqualsWithin(this TimeSpan timeSpan, TimeSpan otherTimeSpan, TimeSpan delta)
+    {
+        TimeSpan diff = timeSpan - otherTimeSpan;
+        return diff > -delta && diff < delta;
     }
 }

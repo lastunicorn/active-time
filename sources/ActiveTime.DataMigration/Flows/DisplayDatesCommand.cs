@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 using DustInTheWind.ConsoleTools;
@@ -23,107 +21,102 @@ using DustInTheWind.ConsoleTools.Menues;
 using SQLiteUnitOfWork = DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.UnitOfWork;
 using LiteDBUnitOfWork = DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB.UnitOfWork;
 
-namespace DustInTheWind.ActiveTime.DataMigration.Flows
+namespace DustInTheWind.ActiveTime.DataMigration.Flows;
+
+internal class DisplayDatesCommand : ICommand
 {
-    internal class DisplayDatesCommand : ICommand
+    public bool IsActive => true;
+
+    public void Execute()
     {
-        public bool IsActive => true;
+        DisplayLiteDBDatabase();
+        Console.WriteLine();
+        DisplaySQLiteDatabase();
+    }
 
-        public void Execute()
+    private static void DisplayLiteDBDatabase()
+    {
+        CustomConsole.WriteLineEmphasies("=========================================================");
+        CustomConsole.WriteLineEmphasies("Database: " + LiteDBUnitOfWork.ConnectionString);
+        CustomConsole.WriteLineEmphasies("=========================================================");
+        CustomConsole.WriteLine();
+
+        using LiteDBUnitOfWork unitOfWork = new();
+        DisplayTimeRecordDays(unitOfWork);
+        DisplayDayCommentDays(unitOfWork);
+    }
+
+    private static void DisplaySQLiteDatabase()
+    {
+        CustomConsole.WriteLineEmphasies("=========================================================");
+        CustomConsole.WriteLineEmphasies("Database: " + SQLiteUnitOfWork.ConnectionString);
+        CustomConsole.WriteLineEmphasies("=========================================================");
+        CustomConsole.WriteLine();
+
+        using SQLiteUnitOfWork unitOfWork = new();
+        DisplayTimeRecordDays(unitOfWork);
+        DisplayDayCommentDays(unitOfWork);
+    }
+
+    private static void DisplayTimeRecordDays(IUnitOfWork unitOfWork)
+    {
+        CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+        CustomConsole.WriteLineEmphasies("TimeRecord");
+        CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+        CustomConsole.WriteLine();
+
+        IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetAll();
+
+        DateTime previousDate = DateTime.MinValue;
+
+        foreach (TimeRecord timeRecord in timeRecords)
         {
-            DisplayLiteDBDatabase();
-            Console.WriteLine();
-            DisplaySQLiteDatabase();
-        }
+            DateTime date = timeRecord.Date;
 
-        private static void DisplayLiteDBDatabase()
-        {
-            CustomConsole.WriteLineEmphasies("=========================================================");
-            CustomConsole.WriteLineEmphasies("Database: " + LiteDBUnitOfWork.ConnectionString);
-            CustomConsole.WriteLineEmphasies("=========================================================");
-            CustomConsole.WriteLine();
-
-            using (LiteDBUnitOfWork unitOfWork = new LiteDBUnitOfWork())
+            bool isSameMonth = date.Year == previousDate.Year && date.Month == previousDate.Month;
+            if (!isSameMonth)
             {
-                DisplayTimeRecordDays(unitOfWork);
-                DisplayDayCommentDays(unitOfWork);
-            }
-        }
-
-        private static void DisplaySQLiteDatabase()
-        {
-            CustomConsole.WriteLineEmphasies("=========================================================");
-            CustomConsole.WriteLineEmphasies("Database: " + SQLiteUnitOfWork.ConnectionString);
-            CustomConsole.WriteLineEmphasies("=========================================================");
-            CustomConsole.WriteLine();
-
-            using (SQLiteUnitOfWork unitOfWork = new SQLiteUnitOfWork())
-            {
-                DisplayTimeRecordDays(unitOfWork);
-                DisplayDayCommentDays(unitOfWork);
-            }
-        }
-
-        private static void DisplayTimeRecordDays(IUnitOfWork unitOfWork)
-        {
-            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
-            CustomConsole.WriteLineEmphasies("TimeRecord");
-            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
-            CustomConsole.WriteLine();
-
-            IEnumerable<TimeRecord> timeRecords = unitOfWork.TimeRecordRepository.GetAll();
-
-            DateTime previousDate = DateTime.MinValue;
-
-            foreach (TimeRecord timeRecord in timeRecords)
-            {
-                DateTime date = timeRecord.Date;
-
-                bool isSameMonth = date.Year == previousDate.Year && date.Month == previousDate.Month;
-                if (!isSameMonth)
-                {
-                    Console.WriteLine();
-                    Console.Write(date.Year + " " + date.Month + " -");
-                }
-
-                Console.Write(" " + date.Day);
-
-                previousDate = date;
+                Console.WriteLine();
+                Console.Write(date.Year + " " + date.Month + " -");
             }
 
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.Write(" " + date.Day);
+
+            previousDate = date;
         }
 
-        private static void DisplayDayCommentDays(IUnitOfWork unitOfWork)
+        Console.WriteLine();
+        Console.WriteLine();
+    }
+
+    private static void DisplayDayCommentDays(IUnitOfWork unitOfWork)
+    {
+        CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+        CustomConsole.WriteLineEmphasies("DayComment");
+        CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
+        CustomConsole.WriteLine();
+
+        IList<DateRecord> dayComments = unitOfWork.DateRecordRepository.GetAll();
+
+        DateTime previousDate = DateTime.MinValue;
+
+        foreach (DateRecord dayComment in dayComments)
         {
-            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
-            CustomConsole.WriteLineEmphasies("DayComment");
-            CustomConsole.WriteLineEmphasies("---------------------------------------------------------");
-            CustomConsole.WriteLine();
+            DateTime date = dayComment.Date;
 
-            IList<DateRecord> dayComments = unitOfWork.DateRecordRepository.GetAll();
-
-            DateTime previousDate = DateTime.MinValue;
-
-            foreach (DateRecord dayComment in dayComments)
+            bool isSameMonth = date.Year == previousDate.Year && date.Month == previousDate.Month;
+            if (!isSameMonth)
             {
-                DateTime date = dayComment.Date;
-
-                bool isSameMonth = date.Year == previousDate.Year && date.Month == previousDate.Month;
-                if (!isSameMonth)
-                {
-                    Console.WriteLine();
-                    Console.Write(date.Year + " " + date.Month + " -");
-                }
-
-                Console.Write(" " + date.Day);
-
-                previousDate = date;
+                Console.WriteLine();
+                Console.Write(date.Year + " " + date.Month + " -");
             }
 
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.Write(" " + date.Day);
+
+            previousDate = date;
         }
+
+        Console.WriteLine();
+        Console.WriteLine();
     }
 }
