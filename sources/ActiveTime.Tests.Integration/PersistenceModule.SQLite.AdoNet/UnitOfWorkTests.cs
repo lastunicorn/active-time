@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet;
 using DustInTheWind.ActiveTime.Domain;
@@ -22,164 +21,163 @@ using DustInTheWind.ActiveTime.Ports.DataAccess;
 using DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet.Helpers;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet;
+
+[TestFixture]
+[SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
+public class UnitOfWorkTests
 {
-    [TestFixture]
-    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
-    public class UnitOfWorkTests
+    private UnitOfWork unitOfWork;
+
+    [SetUp]
+    public void SetUp()
     {
-        private UnitOfWork unitOfWork;
+        DbTestHelper.ClearDatabase();
 
-        [SetUp]
-        public void SetUp()
-        {
-            DbTestHelper.ClearDatabase();
+        UnitOfWork.ConnectionString = DbTestHelper.ConnectionString;
+        unitOfWork = new UnitOfWork();
+    }
 
-            UnitOfWork.ConnectionString = DbTestHelper.ConnectionString;
-            unitOfWork = new UnitOfWork();
-        }
+    [TearDown]
+    public void TearDown()
+    {
+        unitOfWork.Dispose();
+    }
 
-        [TearDown]
-        public void TearDown()
+    [Test]
+    public void no_record_exists_if_not_commited()
+    {
+        InsertOneRecord();
+
+        DbAssert.AssertDoesNotExistAnyTimeRecord();
+    }
+
+    [Test]
+    public void no_record_exists_if_disposed_without_commit()
+    {
+        InsertOneRecord();
+        unitOfWork.Dispose();
+
+        DbAssert.AssertDoesNotExistAnyTimeRecord();
+    }
+
+    [Test]
+    public void no_record_exists_if_rolledback()
+    {
+        InsertOneRecord();
+        unitOfWork.Rollback();
+
+        DbAssert.AssertDoesNotExistAnyTimeRecord();
+    }
+
+    [Test]
+    public void one_record_exists_if_commited()
+    {
+        InsertOneRecord();
+        unitOfWork.Commit();
+
+        DbAssert.AssertExistsAnyTimeRecord();
+    }
+
+    [Test]
+    public void two_records_exists_if_commited()
+    {
+        InsertOneRecord();
+        InsertSecondRecord();
+        unitOfWork.Commit();
+
+        DbAssert.AssertTimeRecordCount(2);
+    }
+
+    [Test]
+    public void no_exception_is_thrown_if_Dispose_is_called_twice()
+    {
+        unitOfWork.Dispose();
+        unitOfWork.Dispose();
+    }
+
+    [Test]
+    public void throws_if_using_connection_after_dispose()
+    {
+        Assert.Throws<ObjectDisposedException>(() =>
         {
             unitOfWork.Dispose();
-        }
 
-        [Test]
-        public void no_record_exists_if_not_commited()
-        {
-            InsertOneRecord();
-
-            DbAssert.AssertDoesNotExistAnyTimeRecord();
-        }
-
-        [Test]
-        public void no_record_exists_if_disposed_without_commit()
-        {
-            InsertOneRecord();
-            unitOfWork.Dispose();
-
-            DbAssert.AssertDoesNotExistAnyTimeRecord();
-        }
-
-        [Test]
-        public void no_record_exists_if_rolledback()
-        {
-            InsertOneRecord();
-            unitOfWork.Rollback();
-
-            DbAssert.AssertDoesNotExistAnyTimeRecord();
-        }
-
-        [Test]
-        public void one_record_exists_if_commited()
-        {
-            InsertOneRecord();
-            unitOfWork.Commit();
-
-            DbAssert.AssertExistsAnyTimeRecord();
-        }
-
-        [Test]
-        public void two_records_exists_if_commited()
-        {
-            InsertOneRecord();
-            InsertSecondRecord();
-            unitOfWork.Commit();
-
-            DbAssert.AssertTimeRecordCount(2);
-        }
-
-        [Test]
-        public void no_exception_is_thrown_if_Dispose_is_called_twice()
-        {
-            unitOfWork.Dispose();
-            unitOfWork.Dispose();
-        }
-
-        [Test]
-        public void throws_if_using_connection_after_dispose()
-        {
-            Assert.Throws<ObjectDisposedException>(() =>
-            {
-                unitOfWork.Dispose();
-
-                ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
-            });
-        }
-
-        [Test]
-        public void nothing_happens_if_Commit_is_called_without_using_the_connection_first()
-        {
-            unitOfWork.Commit();
-        }
-
-        [Test]
-        public void nothing_happens_if_Rollback_is_called_without_using_the_connection_first()
-        {
-            unitOfWork.Rollback();
-        }
-
-        [Test]
-        public void throws_if_Commit_is_called_after_dispose()
-        {
-            Assert.Throws<ObjectDisposedException>(() =>
-            {
-                unitOfWork.Dispose();
-
-                unitOfWork.Commit();
-            });
-        }
-
-        [Test]
-        public void throws_if_Rollback_is_called_after_dispose()
-        {
-            Assert.Throws<ObjectDisposedException>(() =>
-            {
-                unitOfWork.Dispose();
-
-                unitOfWork.Rollback();
-            });
-        }
-
-        private void InsertOneRecord()
-        {
             ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+        });
+    }
 
-            TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecordRepository.Add(timeRecord);
-        }
+    [Test]
+    public void nothing_happens_if_Commit_is_called_without_using_the_connection_first()
+    {
+        unitOfWork.Commit();
+    }
 
-        private static TimeRecord CreateTimeRecordEntity()
+    [Test]
+    public void nothing_happens_if_Rollback_is_called_without_using_the_connection_first()
+    {
+        unitOfWork.Rollback();
+    }
+
+    [Test]
+    public void throws_if_Commit_is_called_after_dispose()
+    {
+        Assert.Throws<ObjectDisposedException>(() =>
         {
-            return new TimeRecord
-            {
-                Id = 0,
-                Date = new DateTime(2014, 04, 30),
-                StartTime = new TimeSpan(1, 1, 1),
-                EndTime = new TimeSpan(2, 2, 2),
-                RecordType = TimeRecordType.Fake
-            };
-        }
+            unitOfWork.Dispose();
 
-        private void InsertSecondRecord()
+            unitOfWork.Commit();
+        });
+    }
+
+    [Test]
+    public void throws_if_Rollback_is_called_after_dispose()
+    {
+        Assert.Throws<ObjectDisposedException>(() =>
         {
-            ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+            unitOfWork.Dispose();
 
-            TimeRecord timeRecord = CreateSecondTimeRecordEntity();
-            timeRecordRepository.Add(timeRecord);
-        }
+            unitOfWork.Rollback();
+        });
+    }
 
-        private static TimeRecord CreateSecondTimeRecordEntity()
+    private void InsertOneRecord()
+    {
+        ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+        TimeRecord timeRecord = CreateTimeRecordEntity();
+        timeRecordRepository.Add(timeRecord);
+    }
+
+    private static TimeRecord CreateTimeRecordEntity()
+    {
+        return new TimeRecord
         {
-            return new TimeRecord
-            {
-                Id = 0,
-                Date = new DateTime(2014, 05, 01),
-                StartTime = new TimeSpan(1, 1, 1),
-                EndTime = new TimeSpan(2, 2, 2),
-                RecordType = TimeRecordType.Normal
-            };
-        }
+            Id = 0,
+            Date = new DateTime(2014, 04, 30),
+            StartTime = new TimeSpan(1, 1, 1),
+            EndTime = new TimeSpan(2, 2, 2),
+            RecordType = TimeRecordType.Fake
+        };
+    }
+
+    private void InsertSecondRecord()
+    {
+        ITimeRecordRepository timeRecordRepository = unitOfWork.TimeRecordRepository;
+
+        TimeRecord timeRecord = CreateSecondTimeRecordEntity();
+        timeRecordRepository.Add(timeRecord);
+    }
+
+    private static TimeRecord CreateSecondTimeRecordEntity()
+    {
+        return new TimeRecord
+        {
+            Id = 0,
+            Date = new DateTime(2014, 05, 01),
+            StartTime = new TimeSpan(1, 1, 1),
+            EndTime = new TimeSpan(2, 2, 2),
+            RecordType = TimeRecordType.Normal
+        };
     }
 }

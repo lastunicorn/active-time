@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,70 +14,67 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+namespace DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Domain
+public class CurrentDay
 {
-    public class CurrentDay
+    private string comments;
+    private DateTime date;
+
+    public int? TimeRecordId { get; set; }
+
+    public DateTime Date
     {
-        private string comments;
-        private DateTime date;
-
-        public int? TimeRecordId { get; set; }
-
-        public DateTime Date
+        get => date;
+        set
         {
-            get => date;
-            set
-            {
-                date = value;
-                comments = null;
+            date = value;
+            comments = null;
 
-                AreCommentsLoaded = false;
-                AreCommentsSaved = true;
-            }
-        }
-
-        public string Comments
-        {
-            get => comments;
-            set
-            {
-                comments = value;
-                AreCommentsSaved = false;
-            }
-        }
-
-        public bool AreCommentsLoaded { get; private set; }
-
-        public bool AreCommentsSaved { get; private set; }
-
-        public CurrentDay()
-        {
-            Date = DateTime.Today;
+            AreCommentsLoaded = false;
             AreCommentsSaved = true;
         }
+    }
 
-        public void ResetComments(string newComments)
+    public string Comments
+    {
+        get => comments;
+        set
         {
-            Comments = newComments;
-            AreCommentsLoaded = true;
-            AreCommentsSaved = true;
+            comments = value;
+            AreCommentsSaved = false;
         }
+    }
 
-        public void AcceptModifications()
-        {
-            AreCommentsSaved = true;
-        }
+    public bool AreCommentsLoaded { get; private set; }
 
-        public void IncrementDate()
-        {
-            Date = Date.AddDays(1);
-        }
+    public bool AreCommentsSaved { get; private set; }
 
-        public void DecrementDate()
-        {
-            Date = Date.AddDays(-1);
-        }
+    public CurrentDay()
+    {
+        Date = DateTime.Today;
+        AreCommentsSaved = true;
+    }
+
+    public void ResetComments(string newComments)
+    {
+        Comments = newComments;
+        AreCommentsLoaded = true;
+        AreCommentsSaved = true;
+    }
+
+    public void AcceptModifications()
+    {
+        AreCommentsSaved = true;
+    }
+
+    public void IncrementDate()
+    {
+        Date = Date.AddDays(1);
+    }
+
+    public void DecrementDate()
+    {
+        Date = Date.AddDays(-1);
     }
 }

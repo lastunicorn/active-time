@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,49 +14,45 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
+namespace DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Domain
+/// <summary>
+/// Represents an interval of time within a day.
+/// </summary>
+public class DateRecord
 {
     /// <summary>
-    /// Represents an interval of time within a day.
+    /// Gets or sets an integer value that uniquely identifies the comment.
     /// </summary>
-    public class DateRecord
+    public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date for which this comment is created.
+    /// </summary>
+    public DateTime Date { get; set; }
+
+    /// <summary>
+    /// Gets or sets the comment text.
+    /// </summary>
+    public string Comment { get; set; }
+
+    public List<TimeRecord> TimeRecords { get; set; }
+
+    /// <summary>
+    /// Compares the business keys.
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public override bool Equals(object obj)
     {
-        /// <summary>
-        /// Gets or sets an integer value that uniquely identifies the comment.
-        /// </summary>
-        public int Id { get; set; }
+        if (this == obj) return true;
 
-        /// <summary>
-        /// Gets or sets the date for which this comment is created.
-        /// </summary>
-        public DateTime Date { get; set; }
+        return obj is DateRecord dayComment && Date == dayComment.Date;
+    }
 
-        /// <summary>
-        /// Gets or sets the comment text.
-        /// </summary>
-        public string Comment { get; set; }
-
-        public List<TimeRecord> TimeRecords { get; set; }
-
-        /// <summary>
-        /// Compares the business keys.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (this == obj) return true;
-
-            return obj is DateRecord dayComment && Date == dayComment.Date;
-        }
-
-        public override string ToString()
-        {
-            string shortDateString = Date.ToShortDateString();
-            return $"{shortDateString} - {Comment}";
-        }
+    public override string ToString()
+    {
+        string shortDateString = Date.ToShortDateString();
+        return $"{shortDateString} - {Comment}";
     }
 }

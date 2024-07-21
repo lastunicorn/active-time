@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,23 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+namespace DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 
-namespace DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation
+public class ShellInfo
 {
-    public class ShellInfo
+    public Type ShellType { get; }
+
+    public string ShellName { get; }
+
+    public string OwnerName { get; }
+
+    public ShellInfo(string shellName, Type shellType, string ownerName = null)
     {
-        public Type ShellType { get; }
-
-        public string ShellName { get; }
-
-        public string OwnerName { get; }
-
-        public ShellInfo(string shellName, Type shellType, string ownerName = null)
-        {
-            ShellName = shellName ?? throw new ArgumentNullException(nameof(shellName));
-            ShellType = shellType ?? throw new ArgumentNullException(nameof(shellType));
-            OwnerName = ownerName;
-        }
+        ShellName = shellName ?? throw new ArgumentNullException(nameof(shellName));
+        ShellType = shellType ?? throw new ArgumentNullException(nameof(shellType));
+        OwnerName = ownerName;
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,163 +20,164 @@ using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 
-namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet
+namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet;
+
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public static string ConnectionString { get; set; } = "Data Source=db.s3db";
+
+    private DbConnection connection;
+    private DbTransaction transaction;
+
+    private TimeRecordRepository timeRecordRepository;
+
+    public ITimeRecordRepository TimeRecordRepository
     {
-        public static string ConnectionString { get; set; } = "Data Source=db.s3db";
-
-        private DbConnection connection;
-        private DbTransaction transaction;
-
-        private TimeRecordRepository timeRecordRepository;
-        public ITimeRecordRepository TimeRecordRepository
+        get
         {
-            get
+            if (timeRecordRepository == null)
             {
-                if (timeRecordRepository == null)
-                {
-                    OpenDatabaseAndTransaction();
-                    timeRecordRepository = new TimeRecordRepository(connection);
-                }
+                OpenDatabaseAndTransaction();
+                timeRecordRepository = new TimeRecordRepository(connection);
+            }
 
-                return timeRecordRepository;
+            return timeRecordRepository;
+        }
+    }
+
+    private DateRecordRepository dateRecordRepository;
+
+    public IDateRecordRepository DateRecordRepository
+    {
+        get
+        {
+            if (dateRecordRepository == null)
+            {
+                OpenDatabaseAndTransaction();
+                dateRecordRepository = new DateRecordRepository(connection);
+            }
+
+            return dateRecordRepository;
+        }
+    }
+
+    private void OpenDatabaseAndTransaction()
+    {
+        if (disposed)
+            throw new ObjectDisposedException(nameof(UnitOfWork));
+
+        if (connection == null)
+        {
+            connection = new SQLiteConnection(ConnectionString);
+            connection.Open();
+        }
+
+        if (transaction == null)
+            transaction = connection.BeginTransaction();
+    }
+
+    public void DisplayAllTables()
+    {
+        OpenDatabaseAndTransaction();
+
+        DataTable dataTable = connection.GetSchema("Tables");
+
+        foreach (DataRow row in dataTable.Rows)
+        {
+            Console.WriteLine();
+            Console.WriteLine("------------------------------------------");
+
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                DataColumn column = dataTable.Columns[i];
+                Console.WriteLine(column.ColumnName + ": " + row[i]);
             }
         }
 
-        private DateRecordRepository dateRecordRepository;
-        public IDateRecordRepository DateRecordRepository
+        DumpTable("dbinfo");
+    }
+
+    private void DumpTable(string dbName)
+    {
+        using (DbCommand command = connection.CreateCommand())
         {
-            get
-            {
-                if (dateRecordRepository == null)
-                {
-                    OpenDatabaseAndTransaction();
-                    dateRecordRepository = new DateRecordRepository(connection);
-                }
+            command.CommandText = "select * from " + dbName;
+            DbDataReader dataReader = command.ExecuteReader();
 
-                return dateRecordRepository;
-            }
-        }
-
-        private void OpenDatabaseAndTransaction()
-        {
-            if (disposed)
-                throw new ObjectDisposedException(nameof(UnitOfWork));
-
-            if (connection == null)
-            {
-                connection = new SQLiteConnection(ConnectionString);
-                connection.Open();
-            }
-
-            if (transaction == null)
-                transaction = connection.BeginTransaction();
-        }
-
-        public void DisplayAllTables()
-        {
-            OpenDatabaseAndTransaction();
-
-            DataTable dataTable = connection.GetSchema("Tables");
-
-            foreach (DataRow row in dataTable.Rows)
+            while (dataReader.Read())
             {
                 Console.WriteLine();
-                Console.WriteLine("------------------------------------------");
 
-                for (int i = 0; i < dataTable.Columns.Count; i++)
+                for (int i = 0; i < dataReader.FieldCount; i++)
                 {
-                    DataColumn column = dataTable.Columns[i];
-                    Console.WriteLine(column.ColumnName + ": " + row[i]);
+                    Console.WriteLine("-> " + dataReader[i]);
                 }
             }
-
-            DumpTable("dbinfo");
         }
+    }
 
-        private void DumpTable(string dbName)
+    public void Commit()
+    {
+        if (disposed)
+            throw new ObjectDisposedException(nameof(UnitOfWork));
+
+        if (transaction == null)
+            return;
+
+        transaction.Commit();
+
+        transaction.Dispose();
+        transaction = null;
+    }
+
+    public void Rollback()
+    {
+        if (disposed)
+            throw new ObjectDisposedException(nameof(UnitOfWork));
+
+        if (transaction == null)
+            return;
+
+        transaction.Rollback();
+
+        transaction.Dispose();
+        transaction = null;
+    }
+
+    private bool disposed;
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (disposed)
+            return;
+
+        if (disposing)
         {
-            using (DbCommand command = connection.CreateCommand())
+            if (transaction != null)
             {
-                command.CommandText = "select * from " + dbName;
-                DbDataReader dataReader = command.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    Console.WriteLine();
-
-                    for (int i = 0; i < dataReader.FieldCount; i++)
-                    {
-                        Console.WriteLine("-> " + dataReader[i]);
-                    }
-                }
+                transaction.Dispose();
+                transaction = null;
             }
-        }
 
-        public void Commit()
-        {
-            if (disposed)
-                throw new ObjectDisposedException(nameof(UnitOfWork));
-
-            if (transaction == null)
-                return;
-
-            transaction.Commit();
-
-            transaction.Dispose();
-            transaction = null;
-        }
-
-        public void Rollback()
-        {
-            if (disposed)
-                throw new ObjectDisposedException(nameof(UnitOfWork));
-
-            if (transaction == null)
-                return;
-
-            transaction.Rollback();
-
-            transaction.Dispose();
-            transaction = null;
-        }
-
-        private bool disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-
-            if (disposing)
+            if (connection != null)
             {
-                if (transaction != null)
-                {
-                    transaction.Dispose();
-                    transaction = null;
-                }
-
-                if (connection != null)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    connection = null;
-                }
+                connection.Close();
+                connection.Dispose();
+                connection = null;
             }
-
-            disposed = true;
         }
 
-        ~UnitOfWork()
-        {
-            Dispose(false);
-        }
+        disposed = true;
+    }
+
+    ~UnitOfWork()
+    {
+        Dispose(false);
     }
 }

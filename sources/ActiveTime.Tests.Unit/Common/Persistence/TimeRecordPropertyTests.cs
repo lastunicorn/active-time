@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,57 +14,55 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using DustInTheWind.ActiveTime.Domain;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Persistence
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Persistence;
+
+[TestFixture]
+public class TimeRecordPropertyTests
 {
-    [TestFixture]
-    public class TimeRecordPropertyTests
+    private TimeRecord timeRecord;
+
+    [SetUp]
+    public void SetUp()
     {
-        private TimeRecord timeRecord;
+        timeRecord = new TimeRecord();
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            timeRecord = new TimeRecord();
-        }
+    [Test]
+    public void TestDate_GetSet()
+    {
+        DateTime date = new(2011, 06, 13);
+        timeRecord.Date = date;
 
-        [Test]
-        public void TestDate_GetSet()
-        {
-            DateTime date = new DateTime(2011, 06, 13);
-            timeRecord.Date = date;
+        Assert.That(timeRecord.Date, Is.EqualTo(date));
+    }
 
-            Assert.That(timeRecord.Date, Is.EqualTo(date));
-        }
+    [Test]
+    public void TestStartTime_GetSet()
+    {
+        TimeSpan startTime = new(12, 10, 30);
+        timeRecord.StartTime = startTime;
 
-        [Test]
-        public void TestStartTime_GetSet()
-        {
-            TimeSpan startTime = new TimeSpan(12, 10, 30);
-            timeRecord.StartTime = startTime;
+        Assert.That(timeRecord.StartTime, Is.EqualTo(startTime));
+    }
 
-            Assert.That(timeRecord.StartTime, Is.EqualTo(startTime));
-        }
+    [Test]
+    public void TestEndTime_GetSet()
+    {
+        TimeSpan endTime = new(12, 10, 30);
+        timeRecord.EndTime = endTime;
 
-        [Test]
-        public void TestEndTime_GetSet()
-        {
-            TimeSpan endTime = new TimeSpan(12, 10, 30);
-            timeRecord.EndTime = endTime;
+        Assert.That(timeRecord.EndTime, Is.EqualTo(endTime));
+    }
 
-            Assert.That(timeRecord.EndTime, Is.EqualTo(endTime));
-        }
+    [Test]
+    public void TestRecordType_GetSet()
+    {
+        TimeRecordType recordType = TimeRecordType.Fake;
+        timeRecord.RecordType = recordType;
 
-        [Test]
-        public void TestRecordType_GetSet()
-        {
-            TimeRecordType recordType = TimeRecordType.Fake;
-            timeRecord.RecordType = recordType;
-
-            Assert.That(timeRecord.RecordType, Is.EqualTo(recordType));
-        }
+        Assert.That(timeRecord.RecordType, Is.EqualTo(recordType));
     }
 }

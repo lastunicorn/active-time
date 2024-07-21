@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,184 +19,183 @@ using System.Data.SQLite;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 
-namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories;
+
+public class DateRecordRepository : IDateRecordRepository
 {
-    public class DateRecordRepository : IDateRecordRepository
+    private readonly DbConnection connection;
+
+    public DateRecordRepository(DbConnection connection)
     {
-        private readonly DbConnection connection;
+        this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
+    }
 
-        public DateRecordRepository(DbConnection connection)
+    public void Add(DateRecord dateRecord)
+    {
+        AddInternal(dateRecord);
+    }
+
+    private void AddInternal(DateRecord dateRecord)
+    {
+        using (DbCommand command = connection.CreateCommand())
         {
-            this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            string sql = string.Format("insert into comments(date,comment) values('{0:yyyy-MM-dd}', '{1}')",
+                dateRecord.Date,
+                SqlTextEncode(dateRecord.Comment));
+
+            command.CommandText = sql;
+
+            if (command.ExecuteNonQuery() == 0)
+                throw new Exception();
         }
+    }
 
-        public void Add(DateRecord dateRecord)
+    public void Update(DateRecord dateRecord)
+    {
+        UpdateInternal(dateRecord);
+    }
+
+    private void UpdateInternal(DateRecord dateRecord)
+    {
+        using (DbCommand command = connection.CreateCommand())
         {
-            AddInternal(dateRecord);
+            string sql = string.Format("update comments set comment='{0}' where date='{1:yyyy-MM-dd}'",
+                SqlTextEncode(dateRecord.Comment),
+                dateRecord.Date);
+
+            command.CommandText = sql;
+
+            if (command.ExecuteNonQuery() == 0)
+                throw new Exception();
         }
+    }
 
-        private void AddInternal(DateRecord dateRecord)
-        {
-            using (DbCommand command = connection.CreateCommand())
-            {
-                string sql = string.Format("insert into comments(date,comment) values('{0:yyyy-MM-dd}', '{1}')",
-                    dateRecord.Date,
-                    SqlTextEncode(dateRecord.Comment));
+    public void AddOrUpdate(DateRecord dateRecord)
+    {
+        bool existsRecord = ExistsRecord(dateRecord);
 
-                command.CommandText = sql;
-
-                if (command.ExecuteNonQuery() == 0)
-                    throw new Exception();
-            }
-        }
-
-        public void Update(DateRecord dateRecord)
-        {
+        if (existsRecord)
             UpdateInternal(dateRecord);
-        }
+        else
+            AddInternal(dateRecord);
+    }
 
-        private void UpdateInternal(DateRecord dateRecord)
+    public bool ExistsRecord(DateRecord dateRecord)
+    {
+        using (DbCommand command = connection.CreateCommand())
         {
-            using (DbCommand command = connection.CreateCommand())
+            string sql = string.Format("select count(*) from comments where date='{0:yyyy-MM-dd}'", dateRecord.Date);
+
+            command.CommandText = sql;
+
+            object countAsObject = command.ExecuteScalar();
+            int count = int.Parse(countAsObject.ToString());
+
+            return count > 0;
+        }
+    }
+
+    public void Delete(DateRecord dateRecord)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DateRecord GetById(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DateRecord GetByDate(DateTime date)
+    {
+        using (DbCommand command = connection.CreateCommand())
+        {
+            string sql = string.Format("select comment from comments where date='{0:yyyy-MM-dd}'", date);
+
+            command.CommandText = sql;
+
+            DbDataReader reader = command.ExecuteReader();
+
+            bool successfullyRead = reader.Read();
+
+            if (!successfullyRead)
+                return null;
+
+            return new DateRecord
             {
-                string sql = string.Format("update comments set comment='{0}' where date='{1:yyyy-MM-dd}'",
-                    SqlTextEncode(dateRecord.Comment),
-                    dateRecord.Date);
-
-                command.CommandText = sql;
-
-                if (command.ExecuteNonQuery() == 0)
-                    throw new Exception();
-            }
+                Date = date,
+                Comment = (string)reader["comment"]
+            };
         }
+    }
 
-        public void AddOrUpdate(DateRecord dateRecord)
+    public List<DateRecord> GetByDate(DateTime startDate, DateTime endDate)
+    {
+        using (DbCommand command = connection.CreateCommand())
         {
-            bool existsRecord = ExistsRecord(dateRecord);
+            const string sql = "select date, comment from comments where date >= @startDate and date <= @endDate";
 
-            if (existsRecord)
-                UpdateInternal(dateRecord);
-            else
-                AddInternal(dateRecord);
-        }
+            command.CommandText = sql;
 
-        public bool ExistsRecord(DateRecord dateRecord)
-        {
-            using (DbCommand command = connection.CreateCommand())
+            command.Parameters.Add(new SQLiteParameter
             {
-                string sql = string.Format("select count(*) from comments where date='{0:yyyy-MM-dd}'", dateRecord.Date);
+                ParameterName = "@startDate",
+                Value = startDate
+            });
 
-                command.CommandText = sql;
-
-                object countAsObject = command.ExecuteScalar();
-                int count = int.Parse(countAsObject.ToString());
-
-                return count > 0;
-            }
-        }
-
-        public void Delete(DateRecord dateRecord)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DateRecord GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DateRecord GetByDate(DateTime date)
-        {
-            using (DbCommand command = connection.CreateCommand())
+            command.Parameters.Add(new SQLiteParameter
             {
-                string sql = string.Format("select comment from comments where date='{0:yyyy-MM-dd}'", date);
+                ParameterName = "@endDate",
+                Value = endDate
+            });
 
-                command.CommandText = sql;
-
-                DbDataReader reader = command.ExecuteReader();
-
-                bool successfullyRead = reader.Read();
-
-                if (!successfullyRead)
-                    return null;
-
-                return new DateRecord
-                {
-                    Date = date,
-                    Comment = (string)reader["comment"]
-                };
-            }
-        }
-
-        public List<DateRecord> GetByDate(DateTime startDate, DateTime endDate)
-        {
-            using (DbCommand command = connection.CreateCommand())
+            using (DbDataReader dataReader = command.ExecuteReader())
             {
-                const string sql = "select date, comment from comments where date >= @startDate and date <= @endDate";
+                List<DateRecord> dayComments = new();
 
-                command.CommandText = sql;
-
-                command.Parameters.Add(new SQLiteParameter
+                while (dataReader.Read())
                 {
-                    ParameterName = "@startDate",
-                    Value = startDate
-                });
-
-                command.Parameters.Add(new SQLiteParameter
-                {
-                    ParameterName = "@endDate",
-                    Value = endDate
-                });
-
-                using (DbDataReader dataReader = command.ExecuteReader())
-                {
-                    List<DateRecord> dayComments = new List<DateRecord>();
-
-                    while (dataReader.Read())
+                    DateRecord dateRecord = new()
                     {
-                        DateRecord dateRecord = new DateRecord
-                        {
-                            Date = (DateTime)dataReader["date"],
-                            Comment = (string)dataReader["comment"]
-                        };
+                        Date = (DateTime)dataReader["date"],
+                        Comment = (string)dataReader["comment"]
+                    };
 
-                        dayComments.Add(dateRecord);
-                    }
-
-                    return dayComments;
+                    dayComments.Add(dateRecord);
                 }
+
+                return dayComments;
             }
         }
+    }
 
-        public IList<DateRecord> GetAll()
+    public IList<DateRecord> GetAll()
+    {
+        using (DbCommand command = connection.CreateCommand())
         {
-            using (DbCommand command = connection.CreateCommand())
+            command.CommandText = "select * from comments";
+
+            using (DbDataReader dataReader = command.ExecuteReader())
             {
-                command.CommandText = "select * from comments";
+                List<DateRecord> dayComments = new();
 
-                using (DbDataReader dataReader = command.ExecuteReader())
+                while (dataReader.Read())
                 {
-                    List<DateRecord> dayComments = new List<DateRecord>();
-
-                    while (dataReader.Read())
+                    DateRecord dateRecord = new()
                     {
-                        DateRecord dateRecord = new DateRecord
-                        {
-                            Date = (DateTime)dataReader["date"],
-                            Comment = (string)dataReader["comment"]
-                        };
+                        Date = (DateTime)dataReader["date"],
+                        Comment = (string)dataReader["comment"]
+                    };
 
-                        dayComments.Add(dateRecord);
-                    }
-
-                    return dayComments;
+                    dayComments.Add(dateRecord);
                 }
+
+                return dayComments;
             }
         }
+    }
 
-        private string SqlTextEncode(string text)
-        {
-            return text.Replace("'", "''");
-        }
+    private string SqlTextEncode(string text)
+    {
+        return text.Replace("'", "''");
     }
 }

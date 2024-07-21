@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,68 +14,64 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading;
-using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using Moq;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests;
+
+[TestFixture]
+public class SetStatusTests
 {
-    [TestFixture]
-    public class SetStatusTests
+    private StatusInfoService statusInfoService;
+    private Mock<StatusMessage> applicationStatus;
+    private EventBus eventBus;
+    private const string Text = "same test text";
+
+    [SetUp]
+    public void SetUp()
     {
-        private StatusInfoService statusInfoService;
-        private Mock<StatusMessage> applicationStatus;
-        private EventBus eventBus;
-        private const string Text = "same test text";
+        eventBus = new EventBus();
+        statusInfoService = new StatusInfoService(eventBus);
+        applicationStatus = new Mock<StatusMessage>();
+    }
 
-        [SetUp]
-        public void SetUp()
+    [Test]
+    public void HavingAnInstance_WhenSetStatusToSpecificText_ThenStatusTextContainsThatText()
+    {
+        applicationStatus
+            .Setup(x => x.Text)
+            .Returns("this is the text");
+        statusInfoService.SetStatus(applicationStatus.Object);
+
+        Assert.That(statusInfoService.StatusText, Is.EqualTo("this is the text"));
+    }
+
+    [Test]
+    public void status_is_reset_after_specified_time()
+    {
+        statusInfoService.SetStatus(Text, 100);
+
+        Thread.Sleep(100 + TestConstants.TimerDelayAccepted);
+
+        Assert.That(statusInfoService.StatusText, Is.EqualTo(StatusInfoService.DefaultStatusText));
+    }
+
+    [Test]
+    public void raises_StatusTextChanged_event()
+    {
+        bool eventRaised = false;
+        eventBus.Subscribe<ApplicationStatusChangedEvent>((s, e) =>
         {
-            eventBus = new EventBus();
-            statusInfoService = new StatusInfoService(eventBus);
-            applicationStatus = new Mock<StatusMessage>();
-        }
+            eventRaised = true;
+            return Task.CompletedTask;
+        });
 
-        [Test]
-        public void HavingAnInstance_WhenSetStatusToSpecificText_ThenStatusTextContainsThatText()
-        {
-            applicationStatus
-                .Setup(x => x.Text)
-                .Returns("this is the text");
-            statusInfoService.SetStatus(applicationStatus.Object);
+        statusInfoService.SetStatus(Text);
 
-            Assert.That(statusInfoService.StatusText, Is.EqualTo("this is the text"));
-        }
-
-        [Test]
-        public void status_is_reset_after_specified_time()
-        {
-            statusInfoService.SetStatus(Text, 100);
-
-            Thread.Sleep(100 + TestConstants.TimerDelayAccepted);
-
-            Assert.That(statusInfoService.StatusText, Is.EqualTo(StatusInfoService.DefaultStatusText));
-        }
-
-        [Test]
-        public void raises_StatusTextChanged_event()
-        {
-            bool eventRaised = false;
-            eventBus.Subscribe<ApplicationStatusChangedEvent>((s, e) =>
-            {
-                eventRaised = true;
-                return Task.CompletedTask;
-            });
-
-            statusInfoService.SetStatus(Text);
-
-            if (!eventRaised)
-                Assert.Fail("Event StatusTextChanged was not raised.");
-        }
+        if (!eventRaised)
+            Assert.Fail("Event StatusTextChanged was not raised.");
     }
 }

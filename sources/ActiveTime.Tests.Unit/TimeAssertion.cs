@@ -1,48 +1,61 @@
-﻿using System;
+﻿// ActiveTime
+// Copyright (C) 2011-2024 Dust in the Wind
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 using System.Diagnostics;
-using System.Threading;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit
+namespace DustInTheWind.ActiveTime.Tests.Unit;
+
+internal class TimeAssertion : IDisposable
 {
-    internal class TimeAssertion : IDisposable
+    private readonly ManualResetEventSlim stampingManualResetEvent = new(false);
+
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(200);
+
+    public TimeSpan MeasurementLag { get; set; } = TimeSpan.FromMilliseconds(20);
+
+    public void Run(TimeSpan expected, Action action)
     {
-        private readonly ManualResetEventSlim stampingManualResetEvent = new ManualResetEventSlim(false);
+        Stopwatch stopwatch = Stopwatch.StartNew();
 
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(200);
+        action();
+        bool success = stampingManualResetEvent.Wait(Timeout);
 
-        public TimeSpan MeasurementLag { get; set; } = TimeSpan.FromMilliseconds(20);
+        if (!success)
+            throw new AssertionException("Assertion timeout.");
 
-        public void Run(TimeSpan expected, Action action)
+        Assert.That(stopwatch.Elapsed, Is.EqualTo(expected).Within(MeasurementLag));
+    }
+
+    public void Signal()
+    {
+        stampingManualResetEvent.Set();
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            action();
-            bool success = stampingManualResetEvent.Wait(Timeout);
-
-            if (!success)
-                throw new AssertionException("Assertion timeout.");
-
-            Assert.That(stopwatch.Elapsed, Is.EqualTo(expected).Within(MeasurementLag));
+            stampingManualResetEvent?.Dispose();
         }
+    }
 
-        public void Signal()
-        {
-            stampingManualResetEvent.Set();
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                stampingManualResetEvent?.Dispose();
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,68 +14,65 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 
-namespace DustInTheWind.ActiveTime.Domain.Services
+namespace DustInTheWind.ActiveTime.Domain.Services;
+
+public class Dwarfs : IEnumerable<IDwarf>
 {
-    public class Dwarfs : IEnumerable<IDwarf>
+    private readonly List<IDwarf> list = new();
+
+    public void Add(IDwarf dwarf)
     {
-        private readonly List<IDwarf> list = new List<IDwarf>();
+        if (dwarf == null) throw new ArgumentNullException(nameof(dwarf));
+        list.Add(dwarf);
+    }
 
-        public void Add(IDwarf dwarf)
+    public List<Exception> StartAll()
+    {
+        List<Exception> errors = new();
+
+        foreach (IDwarf dwarf in list)
         {
-            if (dwarf == null) throw new ArgumentNullException(nameof(dwarf));
-            list.Add(dwarf);
-        }
-
-        public List<Exception> StartAll()
-        {
-            List<Exception> errors = new List<Exception>();
-
-            foreach (IDwarf dwarf in list)
+            try
             {
-                try
-                {
-                    dwarf.Start();
-                }
-                catch (Exception ex)
-                {
-                    errors.Add(ex);
-                }
+                dwarf.Start();
             }
-
-            return errors;
-        }
-
-        public List<Exception> StopAll()
-        {
-            List<Exception> errors = new List<Exception>();
-
-            foreach (IDwarf dwarf in list)
+            catch (Exception ex)
             {
-                try
-                {
-                    dwarf.Stop();
-                }
-                catch (Exception ex)
-                {
-                    errors.Add(ex);
-                }
+                errors.Add(ex);
             }
-
-            return errors;
         }
 
-        public IEnumerator<IDwarf> GetEnumerator()
+        return errors;
+    }
+
+    public List<Exception> StopAll()
+    {
+        List<Exception> errors = new();
+
+        foreach (IDwarf dwarf in list)
         {
-            return list.GetEnumerator();
+            try
+            {
+                dwarf.Stop();
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex);
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        return errors;
+    }
+
+    public IEnumerator<IDwarf> GetEnumerator()
+    {
+        return list.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

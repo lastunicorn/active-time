@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,34 +17,31 @@
 using System.Data.SQLite;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet.Helpers
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet.Helpers;
+
+public class DbTestHelper
 {
-    public class DbTestHelper
+    public static readonly string ConnectionString = "Data Source=" + TestContext.CurrentContext.TestDirectory + "\\db.s3db";
+
+    public static void ClearDatabase()
     {
-        public static readonly string ConnectionString = "Data Source=" + TestContext.CurrentContext.TestDirectory + "\\db.s3db";
-        
-        public static void ClearDatabase()
+        using SQLiteConnection connection = new(ConnectionString);
+        connection.Open();
+
+        using (SQLiteCommand command = new())
         {
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            {
-                connection.Open();
+            command.CommandText = "delete from comments";
+            command.Connection = connection;
 
-                using (SQLiteCommand command = new SQLiteCommand())
-                {
-                    command.CommandText = "delete from comments";
-                    command.Connection = connection;
+            command.ExecuteNonQuery();
+        }
 
-                    command.ExecuteNonQuery();
-                }
+        using (SQLiteCommand command = new())
+        {
+            command.CommandText = "delete from records";
+            command.Connection = connection;
 
-                using (SQLiteCommand command = new SQLiteCommand())
-                {
-                    command.CommandText = "delete from records";
-                    command.Connection = connection;
-
-                    command.ExecuteNonQuery();
-                }
-            }
+            command.ExecuteNonQuery();
         }
     }
 }

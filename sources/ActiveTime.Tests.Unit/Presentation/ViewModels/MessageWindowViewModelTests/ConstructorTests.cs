@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,18 +18,17 @@ using DustInTheWind.ActiveTime.Presentation.MainArea;
 using DustInTheWind.ActiveTime.Presentation.Properties;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.MessageWindowViewModelTests
-{
-    [TestFixture]
-    public class ConstructorTests
-    {
-        [Test]
-        public void WhenCreatingANewInstance_ThenDefaultMessageIsSet()
-        {
-            MessageViewModel messageViewModel = new MessageViewModel();
+namespace DustInTheWind.ActiveTime.Tests.Unit.Presentation.ViewModels.MessageWindowViewModelTests;
 
-            string expectedMessage = Resources.MessageWindow_DefaultText;
-            Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
-        }
+[TestFixture]
+public class ConstructorTests
+{
+    [Test]
+    public void WhenCreatingANewInstance_ThenDefaultMessageIsSet()
+    {
+        MessageViewModel messageViewModel = new();
+
+        string expectedMessage = Resources.MessageWindow_DefaultText;
+        Assert.That(messageViewModel.Message, Is.EqualTo(expectedMessage));
     }
 }

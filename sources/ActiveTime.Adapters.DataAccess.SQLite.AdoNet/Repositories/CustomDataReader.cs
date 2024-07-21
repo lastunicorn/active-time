@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,80 +17,79 @@
 using System.Data.Common;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 
-namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories
+namespace DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories;
+
+public class CustomDataReader
 {
-    public class CustomDataReader
+    private readonly DbDataReader dataReader;
+
+    public CustomDataReader(DbDataReader dataReader)
     {
-        private readonly DbDataReader dataReader;
+        this.dataReader = dataReader ?? throw new ArgumentNullException(nameof(dataReader));
+    }
 
-        public CustomDataReader(DbDataReader dataReader)
+    public int ReadInt32FromCurrentTimeRecord(string fieldName)
+    {
+        try
         {
-            this.dataReader = dataReader ?? throw new ArgumentNullException(nameof(dataReader));
+            object valueAsObject = dataReader[fieldName];
+            string valueAsString = valueAsObject.ToString();
+
+            return int.Parse(valueAsString);
         }
-
-        public int ReadInt32FromCurrentTimeRecord(string fieldName)
+        catch (Exception ex)
         {
-            try
-            {
-                object valueAsObject = dataReader[fieldName];
-                string valueAsString = valueAsObject.ToString();
-
-                return int.Parse(valueAsString);
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
-                throw new PersistenceException(errorMessage, ex);
-            }
+            string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
+            throw new PersistenceException(errorMessage, ex);
         }
+    }
 
-        public DateTime ReadDateTimeFromCurrentTimeRecord(string fieldName)
+    public DateTime ReadDateTimeFromCurrentTimeRecord(string fieldName)
+    {
+        try
         {
-            try
-            {
-                object valueAsObject = dataReader[fieldName];
-                string valueAsString = valueAsObject.ToString();
+            object valueAsObject = dataReader[fieldName];
+            string valueAsString = valueAsObject.ToString();
 
-                return DateTime.Parse(valueAsString);
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
-                throw new PersistenceException(errorMessage, ex);
-            }
+            return DateTime.Parse(valueAsString);
         }
-
-        public TimeSpan ReadTimeOfDayFromCurrentTimeRecord(string fieldName)
+        catch (Exception ex)
         {
-            try
-            {
-                object valueAsObject = dataReader[fieldName];
-                string valueAsString = valueAsObject.ToString();
-                DateTime dateTime = DateTime.Parse(valueAsString);
-
-                return dateTime.TimeOfDay;
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
-                throw new PersistenceException(errorMessage, ex);
-            }
+            string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
+            throw new PersistenceException(errorMessage, ex);
         }
+    }
 
-        public T ReadEnumFromCurrentTimeRecord<T>(string fieldName)
+    public TimeSpan ReadTimeOfDayFromCurrentTimeRecord(string fieldName)
+    {
+        try
         {
-            try
-            {
-                object valueAsObject = dataReader[fieldName];
-                string valueAsString = valueAsObject.ToString();
+            object valueAsObject = dataReader[fieldName];
+            string valueAsString = valueAsObject.ToString();
+            DateTime dateTime = DateTime.Parse(valueAsString);
 
-                return (T)Enum.Parse(typeof(T), valueAsString);
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
-                throw new PersistenceException(errorMessage, ex);
-            }
+            return dateTime.TimeOfDay;
+        }
+        catch (Exception ex)
+        {
+            string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
+            throw new PersistenceException(errorMessage, ex);
+        }
+    }
+
+    public T ReadEnumFromCurrentTimeRecord<T>(string fieldName)
+    {
+        try
+        {
+            object valueAsObject = dataReader[fieldName];
+            string valueAsString = valueAsObject.ToString();
+
+            return (T)Enum.Parse(typeof(T), valueAsString);
+        }
+        catch (Exception ex)
+        {
+            string errorMessage = string.Format("Invalid {0} value for the TimeRecord read from the db.", fieldName);
+            throw new PersistenceException(errorMessage, ex);
         }
     }
 }

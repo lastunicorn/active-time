@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,22 +19,21 @@ using DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB.Repositories;
 using DustInTheWind.ActiveTime.Domain;
 using LiteDB;
 
-namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.LiteDB.Helpers;
+
+internal class DbTestHelper
 {
-    internal class DbTestHelper
+    public const string ConnectionString = Constants.DatabaseFileName;
+
+    public static void ClearDatabase()
     {
-        public const string ConnectionString = Constants.DatabaseFileName;
-
-        public static void ClearDatabase()
+        using (LiteDatabase database = new(ConnectionString))
         {
-            using (LiteDatabase database = new LiteDatabase(ConnectionString))
-            {
-                ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName);
-                timeRecordCollection.DeleteAll();
+            ILiteCollection<TimeRecord> timeRecordCollection = database.GetCollection<TimeRecord>(TimeRecordRepository.CollectionName);
+            timeRecordCollection.DeleteAll();
 
-                ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(DateRecordRepository.CollectionName);
-                dayCommentCollection.DeleteAll();
-            }
+            ILiteCollection<DateRecord> dayCommentCollection = database.GetCollection<DateRecord>(DateRecordRepository.CollectionName);
+            dayCommentCollection.DeleteAll();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Data.SQLite;
 using System.Diagnostics.CodeAnalysis;
 using DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet.Repositories;
@@ -23,147 +22,146 @@ using DustInTheWind.ActiveTime.Ports.DataAccess;
 using DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet.Helpers;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet.Repositories.TimeRecordRepositoryTests
+namespace DustInTheWind.ActiveTime.Tests.Integration.PersistenceModule.SQLite.AdoNet.Repositories.TimeRecordRepositoryTests;
+
+[TestFixture]
+[SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
+public class UpdateTests
 {
-    [TestFixture]
-    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The disposable objects are disposed in the TearDown method.")]
-    public class UpdateTests
+    private TimeRecordRepository timeRecordRepository;
+    private SQLiteConnection connection;
+
+    [SetUp]
+    public void SetUp()
     {
-        private TimeRecordRepository timeRecordRepository;
-        private SQLiteConnection connection;
+        DbTestHelper.ClearDatabase();
 
-        [SetUp]
-        public void SetUp()
-        {
-            DbTestHelper.ClearDatabase();
+        connection = new SQLiteConnection(DbTestHelper.ConnectionString);
+        connection.Open();
+        timeRecordRepository = new TimeRecordRepository(connection);
+    }
 
-            connection = new SQLiteConnection(DbTestHelper.ConnectionString);
-            connection.Open();
-            timeRecordRepository = new TimeRecordRepository(connection);
-        }
+    [TearDown]
+    public void TearDown()
+    {
+        connection.Dispose();
+    }
 
-        [TearDown]
-        public void TearDown()
-        {
-            connection.Dispose();
-        }
+    [Test]
+    public void throws_if_received_entity_is_null()
+    {
+        Assert.Throws<ArgumentNullException>(() => timeRecordRepository.Update(null));
+    }
 
-        [Test]
-        public void throws_if_received_entity_is_null()
-        {
-            Assert.Throws<ArgumentNullException>(() => timeRecordRepository.Update(null));
-        }
-
-        [Test]
-        public void throws_if_id_is_zero()
-        {
-            Assert.Throws<PersistenceException>(() =>
-            {
-                TimeRecord timeRecord = CreateTimeRecordEntity();
-                timeRecord.Id = 0;
-
-                timeRecordRepository.Update(timeRecord);
-            });
-        }
-
-        [Test]
-        public void throws_if_id_is_less_then_zero()
-        {
-            Assert.Throws<PersistenceException>(() =>
-            {
-                TimeRecord timeRecord = CreateTimeRecordEntity();
-                timeRecord.Id = -1;
-
-                timeRecordRepository.Update(timeRecord);
-            });
-        }
-
-        [Test]
-        public void throws_if_id_does_not_exist()
-        {
-            Assert.Throws<PersistenceException>(() =>
-            {
-                TimeRecord timeRecord = CreateTimeRecordEntity();
-                timeRecord.Id = 10000;
-
-                timeRecordRepository.Update(timeRecord);
-            });
-        }
-
-        [Test]
-        public void Date_is_updated_correctly()
+    [Test]
+    public void throws_if_id_is_zero()
+    {
+        Assert.Throws<PersistenceException>(() =>
         {
             TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecordRepository.Add(timeRecord);
-            timeRecord.Date = new DateTime(2018, 05, 02);
+            timeRecord.Id = 0;
 
             timeRecordRepository.Update(timeRecord);
+        });
+    }
 
-            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
-        }
-
-        [Test]
-        public void StartTime_is_updated_correctly()
+    [Test]
+    public void throws_if_id_is_less_then_zero()
+    {
+        Assert.Throws<PersistenceException>(() =>
         {
             TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecordRepository.Add(timeRecord);
-            timeRecord.StartTime = new TimeSpan(10, 10, 10);
+            timeRecord.Id = -1;
 
             timeRecordRepository.Update(timeRecord);
+        });
+    }
 
-            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
-        }
-
-        [Test]
-        public void EndTime_is_updated_correctly()
+    [Test]
+    public void throws_if_id_does_not_exist()
+    {
+        Assert.Throws<PersistenceException>(() =>
         {
             TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecordRepository.Add(timeRecord);
-            timeRecord.EndTime = new TimeSpan(10, 10, 10);
+            timeRecord.Id = 10000;
 
             timeRecordRepository.Update(timeRecord);
+        });
+    }
 
-            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
-        }
+    [Test]
+    public void Date_is_updated_correctly()
+    {
+        TimeRecord timeRecord = CreateTimeRecordEntity();
+        timeRecordRepository.Add(timeRecord);
+        timeRecord.Date = new DateTime(2018, 05, 02);
 
-        [Test]
-        public void RecordType_is_updated_correctly()
+        timeRecordRepository.Update(timeRecord);
+
+        DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
+    }
+
+    [Test]
+    public void StartTime_is_updated_correctly()
+    {
+        TimeRecord timeRecord = CreateTimeRecordEntity();
+        timeRecordRepository.Add(timeRecord);
+        timeRecord.StartTime = new TimeSpan(10, 10, 10);
+
+        timeRecordRepository.Update(timeRecord);
+
+        DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
+    }
+
+    [Test]
+    public void EndTime_is_updated_correctly()
+    {
+        TimeRecord timeRecord = CreateTimeRecordEntity();
+        timeRecordRepository.Add(timeRecord);
+        timeRecord.EndTime = new TimeSpan(10, 10, 10);
+
+        timeRecordRepository.Update(timeRecord);
+
+        DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
+    }
+
+    [Test]
+    public void RecordType_is_updated_correctly()
+    {
+        TimeRecord timeRecord = CreateTimeRecordEntity();
+        timeRecordRepository.Add(timeRecord);
+        timeRecord.RecordType = TimeRecordType.Fake;
+
+        timeRecordRepository.Update(timeRecord);
+
+        DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
+    }
+
+    [Test]
+    public void record_that_was_not_updated_is_not_changed()
+    {
+        TimeRecord timeRecord1 = CreateTimeRecordEntity();
+        timeRecord1.Date = new DateTime(2018, 06, 13);
+        TimeRecord timeRecord2 = CreateTimeRecordEntity();
+        timeRecord1.Date = new DateTime(2020, 06, 13);
+        timeRecordRepository.Add(timeRecord1);
+        timeRecordRepository.Add(timeRecord2);
+        timeRecord1.RecordType = TimeRecordType.Fake;
+
+        timeRecordRepository.Update(timeRecord1);
+
+        DbAssert.AssertExistsTimeRecordEqualTo(timeRecord2);
+    }
+
+    private static TimeRecord CreateTimeRecordEntity()
+    {
+        return new TimeRecord
         {
-            TimeRecord timeRecord = CreateTimeRecordEntity();
-            timeRecordRepository.Add(timeRecord);
-            timeRecord.RecordType = TimeRecordType.Fake;
-
-            timeRecordRepository.Update(timeRecord);
-
-            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord);
-        }
-
-        [Test]
-        public void record_that_was_not_updated_is_not_changed()
-        {
-            TimeRecord timeRecord1 = CreateTimeRecordEntity();
-            timeRecord1.Date = new DateTime(2018, 06, 13);
-            TimeRecord timeRecord2 = CreateTimeRecordEntity();
-            timeRecord1.Date = new DateTime(2020, 06, 13);
-            timeRecordRepository.Add(timeRecord1);
-            timeRecordRepository.Add(timeRecord2);
-            timeRecord1.RecordType = TimeRecordType.Fake;
-
-            timeRecordRepository.Update(timeRecord1);
-
-            DbAssert.AssertExistsTimeRecordEqualTo(timeRecord2);
-        }
-
-        private static TimeRecord CreateTimeRecordEntity()
-        {
-            return new TimeRecord
-            {
-                Id = 0,
-                Date = new DateTime(2014, 04, 30),
-                StartTime = new TimeSpan(1, 1, 1),
-                EndTime = new TimeSpan(2, 2, 2),
-                RecordType = TimeRecordType.Normal
-            };
-        }
+            Id = 0,
+            Date = new DateTime(2014, 04, 30),
+            StartTime = new TimeSpan(1, 1, 1),
+            EndTime = new TimeSpan(2, 2, 2),
+            RecordType = TimeRecordType.Normal
+        };
     }
 }

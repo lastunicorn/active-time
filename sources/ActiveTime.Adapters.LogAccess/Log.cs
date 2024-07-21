@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,34 +16,33 @@
 
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 
-namespace DustInTheWind.ActiveTime.Adapters.LogAccess
+namespace DustInTheWind.ActiveTime.Adapters.LogAccess;
+
+public class Log : ILog
 {
-    public class Log : ILog
+    private const string LogDirectory = "Logs";
+
+    private static void WriteLog(string message, DateTime dateTime)
     {
-        private const string LogDirectory = "Logs";
+        EnsureLogDirectory();
 
-        private static void WriteLog(string message, DateTime dateTime)
-        {
-            EnsureLogDirectory();
+        string logFileName = dateTime.ToString("yyyy MM dd") + ".log";
+        string logFilePath = Path.Combine(LogDirectory, logFileName);
 
-            string logFileName = dateTime.ToString("yyyy MM dd") + ".log";
-            string logFilePath = Path.Combine(LogDirectory, logFileName);
+        using StreamWriter sw = new(logFilePath, true);
+        string line = $"[{dateTime:yyyy-MM-dd HH:mm:ss.fff}] {message}";
+        sw.WriteLine(line);
+    }
 
-            using StreamWriter sw = new(logFilePath, true);
-            string line = $"[{dateTime:yyyy-MM-dd HH:mm:ss.fff}] {message}";
-            sw.WriteLine(line);
-        }
+    private static void EnsureLogDirectory()
+    {
+        if (!Directory.Exists(LogDirectory))
+            Directory.CreateDirectory(LogDirectory);
+    }
 
-        private static void EnsureLogDirectory()
-        {
-            if (!Directory.Exists(LogDirectory))
-                Directory.CreateDirectory(LogDirectory);
-        }
-
-        public void Write(string message)
-        {
-            DateTime now = DateTime.Now;
-            WriteLog(message, now);
-        }
+    public void Write(string message)
+    {
+        DateTime now = DateTime.Now;
+        WriteLog(message, now);
     }
 }

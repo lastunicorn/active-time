@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,32 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Domain
+namespace DustInTheWind.ActiveTime.Domain;
+
+public static class EventNames
 {
-    public static class EventNames
+    public static class Recorder
     {
-        public static class Recorder
-        {
-            public const string Started = "Recorder.Started";
-            public const string Stopped = "Recorder.Stopped";
-            public const string Stamping = "Recorder.Stamping";
-            public const string Stamped = "Recorder.Stamped";
-        }
+        public const string Started = "Recorder.Started";
+        public const string Stopped = "Recorder.Stopped";
+        public const string Stamping = "Recorder.Stamping";
+        public const string Stamped = "Recorder.Stamped";
+    }
 
-        public static class Reminder
-        {
-            public const string Tick = "Reminder.Tick";
-        }
+    public static class Reminder
+    {
+        public const string Tick = "Reminder.Tick";
+    }
 
-        public static class Application
-        {
-            public const string StatusChanged = "Application.StatusChanged";
-        }
+    public static class Application
+    {
+        public const string StatusChanged = "Application.StatusChanged";
+    }
 
-        public static class CurrentDate
-        {
-            public const string CurrentDateChanged = "Application.CurrentDate.CurrentDateChanged";
-            public const string CommentChanged = "Application.CurrentDate.CommentChanged";
-        }
+    public static class CurrentDate
+    {
+        public const string CurrentDateChanged = "Application.CurrentDate.CurrentDateChanged";
+        public const string CommentChanged = "Application.CurrentDate.CommentChanged";
     }
 }

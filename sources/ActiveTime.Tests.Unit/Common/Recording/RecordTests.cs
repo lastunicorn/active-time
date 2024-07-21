@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,39 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using DustInTheWind.ActiveTime.Application.Recording2;
 using NUnit.Framework;
 
-namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Recording
+namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Recording;
+
+[TestFixture]
+public class RecordTests
 {
-    [TestFixture]
-    public class RecordTests
+    private Record record;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Record record;
+        record = new Record(new DateTime(2000, 06, 13), new TimeSpan(1, 30, 20), new TimeSpan(12, 15, 30));
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            record = new Record(new DateTime(2000, 06, 13), new TimeSpan(1, 30, 20), new TimeSpan(12, 15, 30));
-        }
+    [Test]
+    public void TestGetStartDateTime()
+    {
+        DateTime actualValue = record.GetStartDateTime();
+        DateTime expectedValue = new(2000, 06, 13, 1, 30, 20);
 
-        [Test]
-        public void TestGetStartDateTime()
-        {
-            DateTime actualValue = record.GetStartDateTime();
-            DateTime expectedValue = new DateTime(2000, 06, 13, 1, 30, 20);
+        Assert.That(actualValue, Is.EqualTo(expectedValue));
+    }
 
-            Assert.That(actualValue, Is.EqualTo(expectedValue));
-        }
+    [Test]
+    public void TestGetEndDateTime()
+    {
+        DateTime actualValue = record.GetEndDateTime();
+        DateTime expectedValue = new(2000, 06, 13, 12, 15, 30);
 
-        [Test]
-        public void TestGetEndDateTime()
-        {
-            DateTime actualValue = record.GetEndDateTime();
-            DateTime expectedValue = new DateTime(2000, 06, 13, 12, 15, 30);
-
-            Assert.That(actualValue, Is.EqualTo(expectedValue));
-        }
+        Assert.That(actualValue, Is.EqualTo(expectedValue));
     }
 }
