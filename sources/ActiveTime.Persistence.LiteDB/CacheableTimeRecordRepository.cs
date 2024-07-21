@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.Persistence;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DustInTheWind.ActiveTime.Persistence.LiteDB;
 
@@ -37,6 +36,11 @@ internal class CacheableTimeRecordRepository : ITimeRecordRepository
     {
         underlyingRepository.Add(timeRecord);
         dataCache.Add(timeRecord);
+    }
+
+    public void Update(TimeRecord timeRecord)
+    {
+        underlyingRepository.Update(timeRecord);
     }
 
     public void Delete(TimeRecord timeRecord)

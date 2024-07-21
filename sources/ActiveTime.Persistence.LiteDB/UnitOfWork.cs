@@ -62,10 +62,18 @@ public class UnitOfWork : IUnitOfWork
     {
         Semaphore.Wait();
 
-        dataCache = new DataCache();
+        try
+        {
+            dataCache = new DataCache();
 
-        database = new LiteDatabase(ConnectionString);
-        database.BeginTrans();
+            database = new LiteDatabase(ConnectionString);
+            database.BeginTrans();
+        }
+        catch
+        {
+            Semaphore.Release();
+            throw;
+        }
     }
 
     public void Commit()

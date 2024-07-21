@@ -54,7 +54,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     <Color x:Key="AccentColor">#007acc</Color>
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
 
-    <Color x:Key="SecondaryAccentColor">#CA5100</Color>
+    <Color x:Key="SecondaryAccentColor">#cd572e</Color>
     <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource SecondaryAccentColor}" />
 
     <!--

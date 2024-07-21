@@ -20,8 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
-        <AssemblyName>DustInTheWind.ActiveTime.Tests.Unit</AssemblyName>
-        <RootNamespace>DustInTheWind.ActiveTime.Tests.Unit</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

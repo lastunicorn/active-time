@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using NUnit.Framework;
@@ -24,12 +25,13 @@ namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceT
 public class StatusTextTests
 {
     private StatusInfoService statusInfoService;
+    private EventBus eventBus;
     private const string Text = "same test text";
 
     [SetUp]
     public void SetUp()
     {
-        EventBus eventBus = new();
+        eventBus = new EventBus();
         statusInfoService = new StatusInfoService(eventBus);
     }
 
@@ -53,7 +55,11 @@ public class StatusTextTests
     public void raises_StatusTextChanged_event()
     {
         bool eventRaised = false;
-        statusInfoService.StatusTextChanged += (s, e) => eventRaised = true;
+        eventBus.Subscribe<ApplicationStatusChangedEvent>((s, e) =>
+        {
+            eventRaised = true;
+            return Task.CompletedTask;
+        });
 
         statusInfoService.StatusText = Text;
 

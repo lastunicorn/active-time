@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using ActiveTime.Infrastructure.JobModel.Setup.Autofac;
 using Autofac;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording2;
@@ -48,10 +49,12 @@ using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 using DustInTheWind.ActiveTime.SystemAccess;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
+using Timer = DustInTheWind.ActiveTime.Infrastructure.Timer;
 
 namespace DustInTheWind.ActiveTime.Bootstrapper;
 
-internal static class ServicesConfiguration
+internal static class DependenciesSetup
 {
     public static void Configure(ContainerBuilder containerBuilder)
     {
@@ -108,7 +111,6 @@ internal static class ServicesConfiguration
         containerBuilder.RegisterType<SystemClock>().As<ISystemClock>();
         containerBuilder.RegisterType<Scribe>().AsSelf();
         containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>();
-        containerBuilder.RegisterType<AutofacUnitOfWorkFactory>().As<IUnitOfWorkFactory>();
         containerBuilder.RegisterType<Dwarfs>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<Timer>().As<ITimer>();
 

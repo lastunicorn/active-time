@@ -21,8 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
-        <AssemblyName>DustInTheWind.ActiveTime.Presentation.Tray</AssemblyName>
-        <RootNamespace>DustInTheWind.ActiveTime.Presentation.Tray</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

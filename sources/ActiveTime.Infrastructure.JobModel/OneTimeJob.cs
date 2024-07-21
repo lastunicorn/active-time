@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2024 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,24 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using Autofac;
-using DustInTheWind.ActiveTime.Ports.Persistence;
+using System.Threading.Tasks;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
-
-internal class AutofacUnitOfWorkFactory : IUnitOfWorkFactory
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
 {
-    private readonly ILifetimeScope context;
-
-    public AutofacUnitOfWorkFactory(ILifetimeScope context)
+    public abstract class OneTimeJob : TimerJobBase
     {
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
-    }
+        protected OneTimeJob(ITimer timer)
+            : base(timer)
+        {
+        }
 
-    public IUnitOfWork CreateNew()
-    {
-        ILifetimeScope newContext = context.BeginLifetimeScope();
-        return newContext.Resolve<IUnitOfWork>();
+        protected override async Task OnExecuting()
+        {
+            await base.OnExecuting();
+            await Stop();
+        }
     }
 }

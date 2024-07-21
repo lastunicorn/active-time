@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ActiveTimeApp", "ActiveTimeApp", "{4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App.ActiveTime", "App.ActiveTime", "{4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Domain", "ActiveTime.Domain\ActiveTime.Domain.csproj", "{6C4AB11C-96E4-4E33-B40A-9BC1BE053FA9}"
 EndProject
@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Persistence.Lite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Persistence.SQLite.AdoNet", "ActiveTime.Persistence.SQLite.AdoNet\ActiveTime.Persistence.SQLite.AdoNet.csproj", "{B69EC531-A7FE-47DC-8679-1A12B53C5BF4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationApp", "MigrationApp", "{F86B8721-23AE-4440-9078-004F413F57E6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App.Migration", "App.Migration", "{F86B8721-23AE-4440-9078-004F413F57E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.DataMigration", "ActiveTime.DataMigration\ActiveTime.DataMigration.csproj", "{612076BF-B8BA-4FEF-815C-DAABCE304961}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Watchman", "ActiveTime.Watchman\ActiveTime.Watchman.csproj", "{70452B77-D016-4845-BFBE-DA1E1DA67D6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.Watchman", "ActiveTime.Watchman\ActiveTime.Infrastructure.Watchman.csproj", "{70452B77-D016-4845-BFBE-DA1E1DA67D6A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Presentation.Styles", "ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj", "{F92620A2-33CA-4A3A-831C-F0AAC2A28928}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Presentation", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Exporters", "ActiveTime.Exporters\ActiveTime.Exporters.csproj", "{6A5E34F4-D168-4D5A-A90B-6A778FF8838D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Bootstrapper", "ActiveTime.Bootstrapper\ActiveTime.Bootstrapper.csproj", "{38EF783F-73BE-4A53-86BE-6EAF9C132590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime", "ActiveTime.Bootstrapper\ActiveTime.csproj", "{38EF783F-73BE-4A53-86BE-6EAF9C132590}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Presentation.Tray.Module", "ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj", "{08812A83-BD22-4A3D-B62C-3C648951BFFD}"
 EndProject
@@ -58,6 +58,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.LogAccess", "ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj", "{E86CA667-FF1E-4C72-A745-BD5F32D492D3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.LogAccess", "ActiveTime.LogAccess\ActiveTime.LogAccess.csproj", "{F72F0B29-3F61-4611-85DA-AD45D7F646FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.JobModel", "ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobModel.csproj", "{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Infrastructure.JobModel.Setup.Autofac", "ActiveTime.Infrastructure.JobModel.Setup.Autofac\ActiveTime.Infrastructure.JobModel.Setup.Autofac.csproj", "{076E6865-C5D1-402B-A6EE-67D04B09C9F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{E0DE80DE-B628-4CF6-88E1-75FCA6863F99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{352BC476-D85F-4671-B89F-3E80A709E991}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,15 +172,24 @@ Global
 		{F72F0B29-3F61-4611-85DA-AD45D7F646FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F72F0B29-3F61-4611-85DA-AD45D7F646FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F72F0B29-3F61-4611-85DA-AD45D7F646FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{076E6865-C5D1-402B-A6EE-67D04B09C9F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{076E6865-C5D1-402B-A6EE-67D04B09C9F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{076E6865-C5D1-402B-A6EE-67D04B09C9F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{076E6865-C5D1-402B-A6EE-67D04B09C9F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{810050EC-1B0B-45D2-A130-3EC5FBAA844B} = {E0DE80DE-B628-4CF6-88E1-75FCA6863F99}
 		{CB6E9BAF-0E09-4BE3-81E9-C982AF2FCE1B} = {3BF02524-2055-49CB-9D81-BBE07A10724F}
 		{B69EC531-A7FE-47DC-8679-1A12B53C5BF4} = {3BF02524-2055-49CB-9D81-BBE07A10724F}
 		{612076BF-B8BA-4FEF-815C-DAABCE304961} = {F86B8721-23AE-4440-9078-004F413F57E6}
-		{70452B77-D016-4845-BFBE-DA1E1DA67D6A} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
+		{70452B77-D016-4845-BFBE-DA1E1DA67D6A} = {E0DE80DE-B628-4CF6-88E1-75FCA6863F99}
 		{F92620A2-33CA-4A3A-831C-F0AAC2A28928} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{C3E6D6AE-8269-4FCC-B6A7-95211C5AD1EE} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
 		{ADE70833-CBA7-4317-8F86-133E50DE72EB} = {4B6691E1-6858-49CD-A5AA-BB3E6AE06F85}
@@ -186,6 +206,8 @@ Global
 		{5C8CAF31-C2FC-486C-A3BD-4CFB482BC2EE} = {3BF02524-2055-49CB-9D81-BBE07A10724F}
 		{E86CA667-FF1E-4C72-A745-BD5F32D492D3} = {6C90BF43-6EB0-46ED-A53E-06D59382B0B6}
 		{F72F0B29-3F61-4611-85DA-AD45D7F646FE} = {3BF02524-2055-49CB-9D81-BBE07A10724F}
+		{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C} = {E0DE80DE-B628-4CF6-88E1-75FCA6863F99}
+		{076E6865-C5D1-402B-A6EE-67D04B09C9F4} = {E0DE80DE-B628-4CF6-88E1-75FCA6863F99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5D4502D-510A-459A-B75B-AD6DBED249E6}

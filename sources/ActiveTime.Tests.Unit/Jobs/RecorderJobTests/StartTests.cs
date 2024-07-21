@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Threading;
+using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.Stamp;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
@@ -42,17 +43,18 @@ public class StartTests
     }
 
     [Test]
-    public void HavingRecorderJob_WhenStarted_ThenSendsAStampRequest()
+    public async Task HavingRecorderJobConfiguredToRunAtStart_WhenStarted_ThenSendsAStampRequest()
     {
-        recorderJob.Start();
+        recorderJob.RunOnStart = true;
+        await recorderJob.Start();
 
         requestBus.Verify(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Test]
-    public void HavingRecorderJob_WhenStarted_ThenStatusIsRunning()
+    public async Task HavingRecorderJob_WhenStarted_ThenStatusIsRunning()
     {
-        recorderJob.Start();
+        await recorderJob.Start();
 
         Assert.That(recorderJob.State, Is.EqualTo(JobState.Running));
     }

@@ -1,5 +1,5 @@
-// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+﻿// ActiveTime
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,22 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Domain;
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
-namespace DustInTheWind.ActiveTime.Ports.Persistence
+public enum JobState
 {
-    public interface ITimeRecordRepository
-    {
-        void Add(TimeRecord timeRecord);
-        
-        void Update(TimeRecord timeRecord);
-        
-        void Delete(TimeRecord timeRecord);
-        
-        TimeRecord GetById(int id);
-        
-        IEnumerable<TimeRecord> GetByDate(DateTime date);
-        
-        IEnumerable<TimeRecord> GetAll();
-    }
+    Stopped,
+    Running
 }

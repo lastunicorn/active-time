@@ -14,10 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Ports.Persistence
+using System;
+using System.Threading.Tasks;
+
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
 {
-    public interface IUnitOfWorkFactory
+    public abstract class PeriodicalJob : TimerJobBase
     {
-        IUnitOfWork CreateNew();
+        public bool RunOnStart { get; set; }
+
+        public TimeSpan RunInterval
+        {
+            get => Timer.Interval;
+            set
+            {
+                lock (StateSynchronizer)
+                {
+                    Timer.Interval = value;
+                }
+            }
+        }
+
+        protected PeriodicalJob(ITimer timer)
+            : base(timer)
+        {
+        }
+
+        protected override async Task OnStarted()
+        {
+            await base.OnStarted();
+
+            if (RunOnStart)
+                await Execute();
+        }
     }
 }

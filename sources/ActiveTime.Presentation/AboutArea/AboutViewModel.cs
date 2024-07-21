@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Timers;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Presentation.Commands;
+using Timer = System.Timers.Timer;
 
 namespace DustInTheWind.ActiveTime.Presentation.AboutArea
 {

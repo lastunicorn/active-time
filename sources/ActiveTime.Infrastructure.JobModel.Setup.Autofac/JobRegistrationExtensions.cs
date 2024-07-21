@@ -14,16 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Autofac;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
+namespace ActiveTime.Infrastructure.JobModel.Setup.Autofac;
 
-internal static class JobRegistrationExtensions
+public static class JobRegistrationExtensions
 {
     public static void RegisterJobs(this ContainerBuilder containerBuilder, params Assembly[] assemblies)
     {

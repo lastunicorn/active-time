@@ -55,7 +55,7 @@ internal sealed class BootstrapperWithAutofac : IDisposable
     private void ConfigureServices()
     {
         ContainerBuilder containerBuilder = new();
-        ServicesConfiguration.Configure(containerBuilder);
+        DependenciesSetup.Configure(containerBuilder);
         container = containerBuilder.Build();
     }
 

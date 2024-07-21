@@ -10,5 +10,9 @@
 
         <PackageProjectUrl>https://github.com/lastunicorn/ActiveTime</PackageProjectUrl>
         <RepositoryUrl>https://github.com/lastunicorn/ActiveTime</RepositoryUrl>
+
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>DustInTheWind.$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>DustInTheWind.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     </PropertyGroup>
 </Project>

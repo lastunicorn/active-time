@@ -14,11 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.ResetStatus;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
 
 namespace DustInTheWind.ActiveTime.Jobs;
 
@@ -36,7 +34,7 @@ public class ResetStatusJob : OneTimeJob
 
     protected override async Task DoExecute()
     {
-        ResetStatusRequest stampRequest = new();
-        await requestBus.Send(stampRequest);
+        //ResetStatusRequest stampRequest = new();
+        //await requestBus.Send(stampRequest);
     }
 }

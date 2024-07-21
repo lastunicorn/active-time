@@ -20,8 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <AssemblyName>DustInTheWind.ActiveTime.Application</AssemblyName>
-        <RootNamespace>DustInTheWind.ActiveTime.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -42,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ItemGroup>
         <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobModel.csproj" />
         <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj" PrivateAssets="All" />

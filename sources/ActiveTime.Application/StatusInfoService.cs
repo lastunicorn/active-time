@@ -42,12 +42,8 @@ public class StatusInfoService : IDisposable
         }
     }
 
-    public event EventHandler StatusTextChanged;
-
     protected virtual void OnStatusTextChanged(EventArgs e)
     {
-        StatusTextChanged?.Invoke(this, e);
-
         ApplicationStatusChangedEvent applicationStatusChangedEvent = new()
         {
             StatusText = StatusText

@@ -16,6 +16,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.Stamp;
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Jobs;
@@ -41,7 +42,7 @@ public class InternalTimerTests
         requestBus = new Mock<IRequestBus>();
         requestBus
             .Setup(x => x.Send(It.IsAny<StampRequest>(), It.IsAny<CancellationToken>()))
-            .Callback<IRequest<MediatR.Unit>, CancellationToken>((request, cancellationToken) => timeAssertion.Signal());
+            .Callback<IRequest, CancellationToken>((request, cancellationToken) => timeAssertion.Signal());
 
         timer = new Mock<ITimer>();
     }
@@ -53,10 +54,10 @@ public class InternalTimerTests
     }
 
     [Test]
-    public void HavingRecorderJobRunning_WhenTimerIsTriggered_ThenStampRequestIsSentToMediator()
+    public async Task HavingRecorderJobRunning_WhenTimerIsTriggered_ThenStampRequestIsSentToMediator()
     {
         RecorderJob recorderJob = new(requestBus.Object, timer.Object);
-        recorderJob.Start();
+        await recorderJob.Start();
 
         requestBus.Invocations.Clear();
 

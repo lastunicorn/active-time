@@ -14,23 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows;
-using DustInTheWind.ActiveTime.Presentation.Services;
+using System.Threading.Tasks;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
-internal class MicrosoftDiWindowFactory : IWindowFactory
+public interface IJob
 {
-    private readonly IServiceProvider context;
+    string Id { get; }
 
-    public MicrosoftDiWindowFactory(IServiceProvider context)
-    {
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
-    }
+    JobState State { get; }
 
-    public Window Create(Type type)
-    {
-        return (Window)context.GetService(type);
-    }
+    Task Start();
+
+    Task Stop();
 }

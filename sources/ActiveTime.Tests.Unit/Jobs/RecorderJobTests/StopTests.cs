@@ -19,6 +19,7 @@ using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Jobs;
 using Moq;
 using NUnit.Framework;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
 
 namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests;
 

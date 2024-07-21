@@ -61,10 +61,12 @@ namespace DustInTheWind.ActiveTime.Application.Recording2
                 if (isSameDay)
                 {
                     currentTimeRecord.EndTime = now.TimeOfDay;
+                    unitOfWork.TimeRecordRepository.Update(currentTimeRecord);
                 }
                 else
                 {
                     currentTimeRecord.EndAtMidnight();
+                    unitOfWork.TimeRecordRepository.Update(currentTimeRecord);
 
                     TimeRecord newTimeRecord = TimeRecord.NewFromMidnight(now);
                     unitOfWork.TimeRecordRepository.Add(newTimeRecord);
