@@ -15,26 +15,24 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using System.Windows;
 using Autofac;
+using DustInTheWind.ActiveTime.Presentation.Services;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
+namespace DustInTheWind.ActiveTime;
 
-public static class JobRegistrationExtensions
+internal class AutofacWindowFactory : IWindowFactory
 {
-    public static void RegisterJobs(this ContainerBuilder containerBuilder, params Assembly[] assemblies)
+    private readonly IComponentContext context;
+
+    public AutofacWindowFactory(IComponentContext context)
     {
-        containerBuilder.RegisterType<JobCollection>().AsSelf().SingleInstance();
-
-        IEnumerable<Type> jobTypes = assemblies
-            .SelectMany(FindJobs);
-
-        foreach (Type jobType in jobTypes)
-            containerBuilder.RegisterType(jobType).As<IJob>();
+        this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    private static IEnumerable<Type> FindJobs(Assembly assembly)
+    public Window Create(Type type)
     {
-        return assembly.GetTypes()
-            .Where(x => x.IsClass && !x.IsAbstract && typeof(IJob).IsAssignableFrom(x));
+        ILifetimeScope parentLifetimeScope = context.Resolve<ILifetimeScope>();
+        return (Window)parentLifetimeScope.Resolve(type);
     }
 }

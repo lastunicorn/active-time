@@ -72,9 +72,9 @@ internal sealed class BootstrapperWithAutofac : IDisposable
         IShellNavigator shellNavigator = container.Resolve<IShellNavigator>();
 
         // Register shells in the shell navigator. (Needed for shell navigation.)
-        shellNavigator.RegisterShell(new ShellInfo(ShellNames.MainShell, typeof(MainWindow)));
-        shellNavigator.RegisterShell(new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow), ShellNames.MainShell));
-        shellNavigator.RegisterShell(new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow), ShellNames.MainShell));
+        shellNavigator.RegisterShell(ShellNames.MainShell, typeof(MainWindow));
+        shellNavigator.RegisterShell(ShellNames.MessageShell, typeof(MessageWindow), ShellNames.MainShell);
+        shellNavigator.RegisterShell(ShellNames.AboutShell, typeof(AboutWindow), ShellNames.MainShell);
     }
 
     private void StartJobs()

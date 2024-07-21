@@ -24,11 +24,10 @@ using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording2;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Domain.Services;
-using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.Autofac;
 using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.Ports.ConfigurationAccess;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
@@ -41,7 +40,6 @@ using DustInTheWind.ActiveTime.Presentation.MainArea;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
 using DustInTheWind.ActiveTime.Presentation.RecorderArea;
-using DustInTheWind.ActiveTime.Presentation.Services;
 using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
@@ -89,17 +87,12 @@ internal static class DependenciesSetup
         containerBuilder.RegisterType<StopRecorderCommand>().AsSelf();
 
         // GUI - Services
-        containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();
-        containerBuilder.RegisterType<ApplicationService>().As<IApplicationService>().SingleInstance();
-        containerBuilder.RegisterType<ShellNavigator>().As<IShellNavigator>().SingleInstance();
-        containerBuilder.RegisterType<DispatcherService>().AsSelf().SingleInstance();
+        containerBuilder.RegisterWpfServices();
 
-        // Register singleton services.
+        // Register services.
         containerBuilder.RegisterType<Log>().As<ILog>().SingleInstance();
         containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<StatusInfoService>().AsSelf().SingleInstance();
-
-        // Register services.
         containerBuilder.RegisterType<SystemClock>().As<ISystemClock>();
         containerBuilder.RegisterType<Scribe>().AsSelf();
         containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>();
@@ -107,8 +100,9 @@ internal static class DependenciesSetup
         containerBuilder.RegisterType<Timer>().As<ITimer>();
 
         // Jobs
-        containerBuilder.RegisterType<JobCollection>().AsSelf().SingleInstance();
-        containerBuilder.RegisterJobs(typeof(RecorderJob).Assembly, typeof(TrayIconJob).Assembly);
+        Assembly jobAssembly1 = typeof(RecorderJob).Assembly;
+        Assembly jobAssembly2 = typeof(TrayIconJob).Assembly;
+        containerBuilder.RegisterJobs(jobAssembly1, jobAssembly2);
 
         // UseCases
         Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;

@@ -19,6 +19,8 @@ namespace DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 public interface IShellNavigator
 {
     void RegisterShell(ShellInfo shellInfo);
+    
+    void RegisterShell(string shellName, Type shellType, string ownerName = null);
 
     void Navigate(string shellName, Dictionary<string, object> parameters = null);
 }

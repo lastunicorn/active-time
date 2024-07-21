@@ -39,14 +39,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Adapters.ConfigurationAccess\ActiveTime.Adapters.ConfigurationAccess.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
-      <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel.Setup.Autofac\ActiveTime.Infrastructure.JobModel.Setup.Autofac.csproj" />
-      <ProjectReference Include="..\ActiveTime.Infrastructure.UseCaseModel.Setup.Autofac\ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac.csproj" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel.Setup.Autofac\ActiveTime.Infrastructure.JobModel.Setup.Autofac.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure.UseCaseModel.Setup.Autofac\ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure.Wpf.Autofac\ActiveTime.Infrastructure.Wpf.Autofac.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseModel.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Adapters.LogAccess\ActiveTime.Adapters.LogAccess.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Adapters.DataAccess.LiteDB\ActiveTime.Adapters.DataAccess.LiteDB.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Ports.ConfigurationAccess\ActiveTime.Ports.ConfigurationAccess.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Ports.DataAccess\ActiveTime.Ports.DataAccess.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" PrivateAssets="All" />

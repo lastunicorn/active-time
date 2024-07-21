@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2024 Dust in the Wind
+// Copyright (C) 2011-2020 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,11 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Domain.Presentation;
+using System;
 
-public static class ViewNames
+namespace DustInTheWind.ActiveTime.Presentation.Services
 {
-    public const string FrontView = "MainView";
-    public const string CommentsView = "CommentsView";
-    public const string DayRecordsView = "DayRecordsView";
+    public class DispatcherService
+    {
+        public void Dispatch(Action action)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(action);
+        }
+    }
 }

@@ -14,10 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Domain.Presentation;
+using DustInTheWind.ActiveTime.Domain.Services;
 
-public static class RegionNames
+namespace DustInTheWind.ActiveTime.Presentation.Services;
+
+public class ApplicationService : ApplicationServiceBase
 {
-    public const string MainContentRegion = "MainContentRegion";
-    public const string RecordsRegion = "RecordsRegion";
+    protected override void PerformExit()
+    {
+        System.Windows.Application.Current.Shutdown();
+    }
 }
