@@ -14,12 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Watchman;
+using DustInTheWind.ActiveTime.Infrastructure.Watchman;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
+namespace DustInTheWind.ActiveTime;
 
 internal sealed class StartupGuard : IDisposable
 {

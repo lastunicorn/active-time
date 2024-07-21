@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
 using Autofac;
 using DustInTheWind.ActiveTime.Domain.Presentation;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
@@ -24,7 +22,7 @@ using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Presentation.AboutArea;
 using DustInTheWind.ActiveTime.Presentation.MainArea;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
+namespace DustInTheWind.ActiveTime;
 
 internal sealed class BootstrapperWithAutofac : IDisposable
 {

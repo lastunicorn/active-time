@@ -22,8 +22,9 @@ using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using DustInTheWind.ActiveTime.Ports.Persistence;
 using MediatR;
 

@@ -14,14 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Autofac;
-using DustInTheWind.ActiveTime.Infrastructure;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
+namespace DustInTheWind.ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac;
 
 internal class MediatrRequestBus : IRequestBus
 {

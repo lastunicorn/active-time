@@ -40,12 +40,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <ProjectReference Include="..\ActiveTime.ConfigurationAccess\ActiveTime.ConfigurationAccess.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel.Setup.Autofac\ActiveTime.Infrastructure.JobModel.Setup.Autofac.csproj" />
-      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure.UseCaseModel.Setup.Autofac\ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac.csproj" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseModel.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.LogAccess\ActiveTime.LogAccess.csproj" PrivateAssets="All" />
-      <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.DataAccess.LiteDB.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Ports.ConfigurationAccess\ActiveTime.Ports.ConfigurationAccess.csproj" PrivateAssets="All" />
-      <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.DataAccess.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" PrivateAssets="All" />

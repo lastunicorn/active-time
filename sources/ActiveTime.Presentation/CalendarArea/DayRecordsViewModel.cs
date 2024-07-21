@@ -24,7 +24,7 @@ using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.PresentTimeRecor
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 
 namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;
 

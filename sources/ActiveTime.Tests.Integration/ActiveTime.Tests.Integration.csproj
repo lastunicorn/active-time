@@ -37,9 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ItemGroup>
         <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Persistence.SQLite.AdoNet\ActiveTime.Persistence.SQLite.AdoNet.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Persistence.LiteDB\ActiveTime.DataAccess.LiteDB.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Persistence.SQLite.AdoNet\ActiveTime.DataAccess.SQLite.AdoNet.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.DataAccess.csproj" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

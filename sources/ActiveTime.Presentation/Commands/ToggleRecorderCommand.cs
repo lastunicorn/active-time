@@ -17,6 +17,7 @@
 using System;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.ToggleRecorder;
 using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands;
 

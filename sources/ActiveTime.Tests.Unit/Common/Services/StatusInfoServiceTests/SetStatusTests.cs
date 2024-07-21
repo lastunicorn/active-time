@@ -18,7 +18,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using Moq;
 using NUnit.Framework;
 

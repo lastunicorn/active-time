@@ -14,25 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Reflection;
-using Autofac;
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
-
-public static class JobRegistrationExtensions
+public interface ITimer : IDisposable
 {
-    public static void RegisterJobs(this ContainerBuilder containerBuilder, params Assembly[] assemblies)
-    {
-        IEnumerable<Type> jobTypes = assemblies
-            .SelectMany(FindJobs);
+    TimeSpan Interval { get; set; }
 
-        foreach (Type jobType in jobTypes) 
-            containerBuilder.RegisterType(jobType).As<IJob>();
-    }
+    event EventHandler Tick;
 
-    private static IEnumerable<Type> FindJobs(Assembly assembly)
-    {
-        return assembly.GetTypes()
-            .Where(x => x.IsClass && !x.IsAbstract && typeof(IJob).IsAssignableFrom(x));
-    }
+    void Start();
+
+    void Stop();
 }

@@ -19,11 +19,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.Stamp;
 using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using DustInTheWind.ActiveTime.Jobs;
 using MediatR;
 using Moq;
 using NUnit.Framework;
-using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobModel.ITimer;
 
 namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests;
 

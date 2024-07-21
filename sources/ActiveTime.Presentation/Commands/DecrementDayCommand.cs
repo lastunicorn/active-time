@@ -18,6 +18,7 @@ using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands;
 

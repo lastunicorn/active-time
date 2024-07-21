@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Watchman
+namespace DustInTheWind.ActiveTime.Infrastructure.Watchman
 {
     /// <summary>
     /// This class ensures that an instance of itself with the same name

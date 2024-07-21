@@ -17,7 +17,9 @@
 using System;
 using System.Threading;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using Timer = System.Threading.Timer;
 
 namespace DustInTheWind.ActiveTime.Application;
 

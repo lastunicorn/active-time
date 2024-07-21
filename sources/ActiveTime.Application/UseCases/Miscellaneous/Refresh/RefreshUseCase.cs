@@ -21,7 +21,8 @@ using DustInTheWind.ActiveTime.Application.UseCases.Comments;
 using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Domain.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.Refresh;

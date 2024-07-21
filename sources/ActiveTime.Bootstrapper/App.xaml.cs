@@ -16,7 +16,7 @@
 
 using System.Windows;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
+namespace DustInTheWind.ActiveTime;
 
 /// <summary>
 /// Interaction logic for App.xaml

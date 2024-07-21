@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App.ActiveTime", "App.Activ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Domain", "ActiveTime.Domain\ActiveTime.Domain.csproj", "{6C4AB11C-96E4-4E33-B40A-9BC1BE053FA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure", "ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj", "{810050EC-1B0B-45D2-A130-3EC5FBAA844B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.UseCaseModel", "ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseModel.csproj", "{810050EC-1B0B-45D2-A130-3EC5FBAA844B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Persistence.LiteDB", "ActiveTime.Persistence.LiteDB\ActiveTime.Persistence.LiteDB.csproj", "{CB6E9BAF-0E09-4BE3-81E9-C982AF2FCE1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.DataAccess.LiteDB", "ActiveTime.Persistence.LiteDB\ActiveTime.DataAccess.LiteDB.csproj", "{CB6E9BAF-0E09-4BE3-81E9-C982AF2FCE1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Persistence.SQLite.AdoNet", "ActiveTime.Persistence.SQLite.AdoNet\ActiveTime.Persistence.SQLite.AdoNet.csproj", "{B69EC531-A7FE-47DC-8679-1A12B53C5BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.DataAccess.SQLite.AdoNet", "ActiveTime.Persistence.SQLite.AdoNet\ActiveTime.DataAccess.SQLite.AdoNet.csproj", "{B69EC531-A7FE-47DC-8679-1A12B53C5BF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App.Migration", "App.Migration", "{F86B8721-23AE-4440-9078-004F413F57E6}"
 EndProject
@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Tests.Integratio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{6C90BF43-6EB0-46ED-A53E-06D59382B0B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.Persistence", "ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj", "{209196E1-D0D6-49EC-8EE8-63EE5965188E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.DataAccess", "ActiveTime.Ports.Persistence\ActiveTime.Ports.DataAccess.csproj", "{209196E1-D0D6-49EC-8EE8-63EE5965188E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{3BF02524-2055-49CB-9D81-BBE07A10724F}"
 EndProject
@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.LogAccess", "Act
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.JobModel", "ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobModel.csproj", "{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Infrastructure.JobModel.Setup.Autofac", "ActiveTime.Infrastructure.JobModel.Setup.Autofac\ActiveTime.Infrastructure.JobModel.Setup.Autofac.csproj", "{076E6865-C5D1-402B-A6EE-67D04B09C9F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.JobModel.Setup.Autofac", "ActiveTime.Infrastructure.JobModel.Setup.Autofac\ActiveTime.Infrastructure.JobModel.Setup.Autofac.csproj", "{076E6865-C5D1-402B-A6EE-67D04B09C9F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{E0DE80DE-B628-4CF6-88E1-75FCA6863F99}"
 EndProject
@@ -69,6 +69,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac", "ActiveTime.Infrastructure.UseCaseModel.Setup.Autofac\ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac.csproj", "{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +182,10 @@ Global
 		{076E6865-C5D1-402B-A6EE-67D04B09C9F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{076E6865-C5D1-402B-A6EE-67D04B09C9F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{076E6865-C5D1-402B-A6EE-67D04B09C9F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,6 +214,7 @@ Global
 		{F72F0B29-3F61-4611-85DA-AD45D7F646FE} = {3BF02524-2055-49CB-9D81-BBE07A10724F}
 		{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C} = {E0DE80DE-B628-4CF6-88E1-75FCA6863F99}
 		{076E6865-C5D1-402B-A6EE-67D04B09C9F4} = {E0DE80DE-B628-4CF6-88E1-75FCA6863F99}
+		{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF} = {E0DE80DE-B628-4CF6-88E1-75FCA6863F99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5D4502D-510A-459A-B75B-AD6DBED249E6}

@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
-using ActiveTime.Infrastructure.JobModel.Setup.Autofac;
 using Autofac;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording2;
@@ -24,9 +23,8 @@ using DustInTheWind.ActiveTime.ConfigurationAccess;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Domain.Services;
-using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
 using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.LogAccess;
 using DustInTheWind.ActiveTime.Persistence.LiteDB;
@@ -47,12 +45,10 @@ using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 using DustInTheWind.ActiveTime.SystemAccess;
-using MediatR.Extensions.Autofac.DependencyInjection;
-using MediatR.Extensions.Autofac.DependencyInjection.Builder;
-using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
-using Timer = DustInTheWind.ActiveTime.Infrastructure.Timer;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobModel.ITimer;
+using Timer = DustInTheWind.ActiveTime.Infrastructure.JobModel.Timer;
 
-namespace DustInTheWind.ActiveTime.Bootstrapper;
+namespace DustInTheWind.ActiveTime;
 
 internal static class DependenciesSetup
 {
@@ -102,8 +98,6 @@ internal static class DependenciesSetup
 
         // Register singleton services.
         containerBuilder.RegisterType<Logger>().As<ILogger>().SingleInstance();
-        containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
-        containerBuilder.RegisterType<MediatrRequestBus>().As<IRequestBus>().SingleInstance();
         containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<StatusInfoService>().AsSelf().SingleInstance();
 
@@ -116,16 +110,10 @@ internal static class DependenciesSetup
 
         // Jobs
         containerBuilder.RegisterType<JobCollection>().AsSelf().SingleInstance();
-        containerBuilder.RegisterJobs(new[] {
-            typeof(RecorderJob).Assembly,
-            typeof(TrayIconJob).Assembly
-        });
+        containerBuilder.RegisterJobs(typeof(RecorderJob).Assembly, typeof(TrayIconJob).Assembly);
 
-        // MediatR
+        // UseCases
         Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
-        MediatRConfiguration mediatRConfiguration = MediatRConfigurationBuilder.Create(useCasesAssembly)
-            .WithAllOpenGenericHandlerTypesRegistered()
-            .Build();
-        containerBuilder.RegisterMediatR(mediatRConfiguration);
+        containerBuilder.RegisterUseCases(useCasesAssembly);
     }
 }

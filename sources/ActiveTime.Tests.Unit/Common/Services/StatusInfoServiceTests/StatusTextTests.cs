@@ -16,7 +16,8 @@
 
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using NUnit.Framework;
 
 namespace DustInTheWind.ActiveTime.Tests.Unit.Common.Services.StatusInfoServiceTests;

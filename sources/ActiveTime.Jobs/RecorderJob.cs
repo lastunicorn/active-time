@@ -16,7 +16,8 @@
 
 using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using ITimer = DustInTheWind.ActiveTime.Infrastructure.ITimer;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobModel.ITimer;
 
 namespace DustInTheWind.ActiveTime.Jobs;
 

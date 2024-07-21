@@ -19,7 +19,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Comments;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.Comments.ChangeComments;

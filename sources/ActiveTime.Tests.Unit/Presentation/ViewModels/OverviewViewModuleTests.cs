@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentOverview;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
 using FluentAssertions;

@@ -49,9 +49,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <ItemGroup>
         <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseModel.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Jobs\ActiveTime.Jobs.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.Persistence.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.DataAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" PrivateAssets="All" />
     </ItemGroup>
