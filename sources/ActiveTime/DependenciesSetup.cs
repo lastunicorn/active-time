@@ -25,6 +25,7 @@ using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac;
 using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.LogAccess;
 using DustInTheWind.ActiveTime.Persistence.LiteDB;

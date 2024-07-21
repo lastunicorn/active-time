@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DustInTheWind.ActiveTime.ConfigurationAccess.Properties {
+namespace DustInTheWind.ActiveTime.Adapters.ConfigurationAccess.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

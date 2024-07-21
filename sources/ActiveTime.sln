@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Domain", "Active
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.UseCaseModel", "ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseModel.csproj", "{810050EC-1B0B-45D2-A130-3EC5FBAA844B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.DataAccess.LiteDB", "ActiveTime.Persistence.LiteDB\ActiveTime.DataAccess.LiteDB.csproj", "{CB6E9BAF-0E09-4BE3-81E9-C982AF2FCE1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Adapters.DataAccess.LiteDB", "ActiveTime.Adapters.DataAccess.LiteDB\ActiveTime.Adapters.DataAccess.LiteDB.csproj", "{CB6E9BAF-0E09-4BE3-81E9-C982AF2FCE1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.DataAccess.SQLite.AdoNet", "ActiveTime.Persistence.SQLite.AdoNet\ActiveTime.DataAccess.SQLite.AdoNet.csproj", "{B69EC531-A7FE-47DC-8679-1A12B53C5BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Adapters.DataAccess.SQLite.AdoNet", "ActiveTime.Adapters.DataAccess.SQLite.AdoNet\ActiveTime.Adapters.DataAccess.SQLite.AdoNet.csproj", "{B69EC531-A7FE-47DC-8679-1A12B53C5BF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App.Migration", "App.Migration", "{F86B8721-23AE-4440-9078-004F413F57E6}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Presentation", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Exporters", "ActiveTime.Exporters\ActiveTime.Exporters.csproj", "{6A5E34F4-D168-4D5A-A90B-6A778FF8838D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime", "ActiveTime.Bootstrapper\ActiveTime.csproj", "{38EF783F-73BE-4A53-86BE-6EAF9C132590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime", "ActiveTime\ActiveTime.csproj", "{38EF783F-73BE-4A53-86BE-6EAF9C132590}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Presentation.Tray.Module", "ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj", "{08812A83-BD22-4A3D-B62C-3C648951BFFD}"
 EndProject
@@ -43,21 +43,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Tests.Integratio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{6C90BF43-6EB0-46ED-A53E-06D59382B0B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.DataAccess", "ActiveTime.Ports.Persistence\ActiveTime.Ports.DataAccess.csproj", "{209196E1-D0D6-49EC-8EE8-63EE5965188E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.DataAccess", "ActiveTime.Ports.DataAccess\ActiveTime.Ports.DataAccess.csproj", "{209196E1-D0D6-49EC-8EE8-63EE5965188E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{3BF02524-2055-49CB-9D81-BBE07A10724F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.SystemAccess", "ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj", "{C743924A-E13A-4AD0-B4DB-903E7CEEEFA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.SystemAccess", "ActiveTime.SystemAccess\ActiveTime.SystemAccess.csproj", "{4971D01B-866E-4AFF-AEDC-3E39E406D15F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Adapters.SystemAccess", "ActiveTime.Adapters.SystemAccess\ActiveTime.Adapters.SystemAccess.csproj", "{4971D01B-866E-4AFF-AEDC-3E39E406D15F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.ConfigurationAccess", "ActiveTime.Ports.ConfigurationAccess\ActiveTime.Ports.ConfigurationAccess.csproj", "{08928C39-89A8-4963-BF46-75A3231B71E1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.ConfigurationAccess", "ActiveTime.ConfigurationAccess\ActiveTime.ConfigurationAccess.csproj", "{5C8CAF31-C2FC-486C-A3BD-4CFB482BC2EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Adapters.ConfigurationAccess", "ActiveTime.Adapters.ConfigurationAccess\ActiveTime.Adapters.ConfigurationAccess.csproj", "{5C8CAF31-C2FC-486C-A3BD-4CFB482BC2EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Ports.LogAccess", "ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj", "{E86CA667-FF1E-4C72-A745-BD5F32D492D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.LogAccess", "ActiveTime.LogAccess\ActiveTime.LogAccess.csproj", "{F72F0B29-3F61-4611-85DA-AD45D7F646FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Adapters.LogAccess", "ActiveTime.Adapters.LogAccess\ActiveTime.Adapters.LogAccess.csproj", "{F72F0B29-3F61-4611-85DA-AD45D7F646FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.JobModel", "ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobModel.csproj", "{8A573564-F7BB-49F2-AEB1-B9C4A1B7EB4C}"
 EndProject
@@ -70,7 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac", "ActiveTime.Infrastructure.UseCaseModel.Setup.Autofac\ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac.csproj", "{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac", "ActiveTime.Infrastructure.UseCaseModel.Setup.Autofac\ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac.csproj", "{28B47DFF-F2C8-4922-A48A-8E2FB951B6AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

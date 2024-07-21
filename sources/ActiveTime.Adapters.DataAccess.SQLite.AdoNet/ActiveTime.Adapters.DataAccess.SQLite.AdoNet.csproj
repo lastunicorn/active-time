@@ -30,12 +30,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="LiteDB" Version="5.0.20" />
+        <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.6" />
+        <PackageReference Include="SQLite" Version="3.13.0" />
+        <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Ports.Persistence\ActiveTime.Ports.DataAccess.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Ports.DataAccess\ActiveTime.Ports.DataAccess.csproj" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
