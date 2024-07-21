@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,20 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Infrastructure.Watchman
-{
-    public class IncompetentGuard : IGuard
-    {
-        /// <summary>
-        /// Gets the name of the current instance.
-        /// </summary>
-        public string Name { get; } = "Incompetent Guard";
+namespace DustInTheWind.ActiveTime.Infrastructure.Watchman;
 
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        public void Dispose()
-        {
-        }
+public class IncompetentGuard : IGuard
+{
+    /// <summary>
+    /// Gets the name of the current instance.
+    /// </summary>
+    public string Name { get; } = "Incompetent Guard";
+
+    /// <summary>
+    /// Releases all resources used by the current instance.
+    /// </summary>
+    public void Dispose()
+    {
     }
 }

@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,101 +17,100 @@
 using System.Collections;
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.Watchman
+namespace DustInTheWind.ActiveTime.Infrastructure.Watchman;
+
+public class ApplicationLevelGuard : IGuard
 {
-    public class ApplicationLevelGuard : IGuard
+    /// <summary>
+    /// Contains the names of the <see cref="Guard"/> instances running at the application level
+    /// in the current application.
+    /// </summary>
+    private static readonly Hashtable LocalInstanceNames = new();
+
+    /// <summary>
+    /// Gets the name of the current instance.
+    /// </summary>
+    public string Name { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApplicationLevelGuard"/> class with
+    /// the name that identifies it.
+    /// </summary>
+    /// <param name="name">The name that identifies the instance that will be created.</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ActiveTimeException"></exception>
+    public ApplicationLevelGuard(string name)
     {
-        /// <summary>
-        /// Contains the names of the <see cref="Guard"/> instances running at the application level
-        /// in the current application.
-        /// </summary>
-        private static readonly Hashtable LocalInstanceNames = new Hashtable();
+        Name = name ?? throw new ArgumentNullException(nameof(name));
 
-        /// <summary>
-        /// Gets the name of the current instance.
-        /// </summary>
-        public string Name { get; }
+        CreateGuard();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationLevelGuard"/> class with
-        /// the name that identifies it.
-        /// </summary>
-        /// <param name="name">The name that identifies the instance that will be created.</param>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ActiveTimeException"></exception>
-        public ApplicationLevelGuard(string name)
+    private void CreateGuard()
+    {
+        lock (LocalInstanceNames)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-
-            CreateGuard();
-        }
-
-        private void CreateGuard()
-        {
-            lock (LocalInstanceNames)
+            if (LocalInstanceNames.ContainsKey(Name))
             {
-                if (LocalInstanceNames.ContainsKey(Name))
-                {
-                    string errorMessage = string.Format("Another instance with the name '{0}' already exists.", Name);
-                    throw new ActiveTimeException(errorMessage);
-                }
-
-                LocalInstanceNames.Add(Name, Name);
-            }
-        }
-
-        #region IDisposable Members
-
-        private bool disposed;
-
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        /// <remarks>
-        /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
-        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be disposed.</para>
-        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be disposed.</para>
-        /// </remarks>
-        /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
-        private void Dispose(bool disposing)
-        {
-            // Check to see if Dispose has already been called.
-            if (disposed)
-                return;
-
-            // If disposing equals true, dispose all managed resources.
-            if (disposing)
-            {
-                // Dispose managed resources.
-                // ...
-
-                lock (LocalInstanceNames)
-                {
-                    LocalInstanceNames.Remove(Name);
-                }
+                string errorMessage = string.Format("Another instance with the name '{0}' already exists.", Name);
+                throw new ActiveTimeException(errorMessage);
             }
 
-            // Call the appropriate methods to clean up unmanaged resources here.
+            LocalInstanceNames.Add(Name, Name);
+        }
+    }
+
+    #region IDisposable Members
+
+    private bool disposed;
+
+    /// <summary>
+    /// Releases all resources used by the current instance.
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Releases all resources used by the current instance.
+    /// </summary>
+    /// <remarks>
+    /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
+    /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be disposed.</para>
+    /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be disposed.</para>
+    /// </remarks>
+    /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
+    private void Dispose(bool disposing)
+    {
+        // Check to see if Dispose has already been called.
+        if (disposed)
+            return;
+
+        // If disposing equals true, dispose all managed resources.
+        if (disposing)
+        {
+            // Dispose managed resources.
             // ...
 
-            disposed = true;
+            lock (LocalInstanceNames)
+            {
+                LocalInstanceNames.Remove(Name);
+            }
         }
 
-        ~ApplicationLevelGuard()
-        {
-            Dispose(false);
-        }
+        // Call the appropriate methods to clean up unmanaged resources here.
+        // ...
 
-        #endregion
+        disposed = true;
     }
+
+    ~ApplicationLevelGuard()
+    {
+        Dispose(false);
+    }
+
+    #endregion
 }

@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,16 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Ports.DataAccess
+namespace DustInTheWind.ActiveTime.Ports.DataAccess;
+
+public interface IUnitOfWork : IDisposable
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        ITimeRecordRepository TimeRecordRepository { get; }
+    ITimeRecordRepository TimeRecordRepository { get; }
 
-        IDateRecordRepository DateRecordRepository { get; }
+    IDateRecordRepository DateRecordRepository { get; }
 
-        void Commit();
+    void Commit();
 
-        void Rollback();
-    }
+    void Rollback();
 }

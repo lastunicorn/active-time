@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,87 +16,86 @@
 
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.Watchman
+namespace DustInTheWind.ActiveTime.Infrastructure.Watchman;
+
+public class MachineLevelGuard : IGuard
 {
-    public class MachineLevelGuard : IGuard
+    private bool isDisposed;
+
+    /// <summary>
+    /// Gets the name of the current instance.
+    /// </summary>
+    public string Name { get; }
+
+    /// <summary>
+    /// The <see cref="Mutex"/> object used to ensure that only one instance
+    /// of the class is created on the current machine. (Machine level)
+    /// </summary>
+    private Mutex mutex;
+
+    public MachineLevelGuard(string name)
     {
-        private bool isDisposed;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
 
-        /// <summary>
-        /// Gets the name of the current instance.
-        /// </summary>
-        public string Name { get; }
+        CreateGuard();
+    }
 
-        /// <summary>
-        /// The <see cref="Mutex"/> object used to ensure that only one instance
-        /// of the class is created on the current machine. (Machine level)
-        /// </summary>
-        private Mutex mutex;
+    private void CreateGuard()
+    {
+        // Create the mutex.
+        mutex = new Mutex(false, Name);
 
-        public MachineLevelGuard(string name)
+        // Gain exclusive access to the mutex.
+        bool access = mutex.WaitOne(0, true);
+
+        if (!access)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-
-            CreateGuard();
+            string errorMessage = $"Another instance with the name '{Name}' already exists.";
+            throw new ActiveTimeException(errorMessage);
         }
+    }
 
-        private void CreateGuard()
+    /// <summary>
+    /// Releases all resources used by the current instance.
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Releases all resources used by the current instance.
+    /// </summary>
+    /// <remarks>
+    /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
+    /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be isDisposed.</para>
+    /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be isDisposed.</para>
+    /// </remarks>
+    /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
+    private void Dispose(bool disposing)
+    {
+        // Check to see if Dispose has already been called.
+        if (isDisposed)
+            return;
+
+        // If disposing equals true, dispose all managed resources.
+        if (disposing)
         {
-            // Create the mutex.
-            mutex = new Mutex(false, Name);
-
-            // Gain exclusive access to the mutex.
-            bool access = mutex.WaitOne(0, true);
-
-            if (!access)
-            {
-                string errorMessage = $"Another instance with the name '{Name}' already exists.";
-                throw new ActiveTimeException(errorMessage);
-            }
-        }
-
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Releases all resources used by the current instance.
-        /// </summary>
-        /// <remarks>
-        /// <para>Dispose(bool disposing) executes in two distinct scenarios.</para>
-        /// <para>If the method has been called directly or indirectly by a user's code managed and unmanaged resources can be isDisposed.</para>
-        /// <para>If the method has been called by the runtime from inside the finalizer you should not reference other objects. Only unmanaged resources can be isDisposed.</para>
-        /// </remarks>
-        /// <param name="disposing">Specifies if the method has been called by a user's code (true) or by the runtime from inside the finalizer (false).</param>
-        private void Dispose(bool disposing)
-        {
-            // Check to see if Dispose has already been called.
-            if (isDisposed)
-                return;
-
-            // If disposing equals true, dispose all managed resources.
-            if (disposing)
-            {
-                // Dispose managed resources.
-                // ...
-
-                mutex?.Close();
-            }
-
-            // Call the appropriate methods to clean up unmanaged resources here.
+            // Dispose managed resources.
             // ...
 
-            isDisposed = true;
+            mutex?.Close();
         }
 
-        ~MachineLevelGuard()
-        {
-            Dispose(false);
-        }
+        // Call the appropriate methods to clean up unmanaged resources here.
+        // ...
+
+        isDisposed = true;
+    }
+
+    ~MachineLevelGuard()
+    {
+        Dispose(false);
     }
 }

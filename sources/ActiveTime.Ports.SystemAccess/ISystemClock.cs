@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,12 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Ports.SystemAccess
-{
-    public interface ISystemClock
-    {
-        DateTime GetCurrentTime();
+namespace DustInTheWind.ActiveTime.Ports.SystemAccess;
 
-        DateTime GetCurrentDate();
-    }
+public interface ISystemClock
+{
+    DateTime GetCurrentTime();
+
+    DateTime GetCurrentDate();
 }

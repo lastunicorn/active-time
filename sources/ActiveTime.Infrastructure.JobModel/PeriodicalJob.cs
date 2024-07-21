@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,38 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading.Tasks;
+namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.JobModel
+public abstract class PeriodicalJob : TimerJobBase
 {
-    public abstract class PeriodicalJob : TimerJobBase
-    {
-        public bool RunOnStart { get; set; }
+    public bool RunOnStart { get; set; }
 
-        public TimeSpan RunInterval
+    public TimeSpan RunInterval
+    {
+        get => Timer.Interval;
+        set
         {
-            get => Timer.Interval;
-            set
+            lock (StateSynchronizer)
             {
-                lock (StateSynchronizer)
-                {
-                    Timer.Interval = value;
-                }
+                Timer.Interval = value;
             }
         }
+    }
 
-        protected PeriodicalJob(ITimer timer)
-            : base(timer)
-        {
-        }
+    protected PeriodicalJob(ITimer timer)
+        : base(timer)
+    {
+    }
 
-        protected override async Task OnStarted()
-        {
-            await base.OnStarted();
+    protected override async Task OnStarted()
+    {
+        await base.OnStarted();
 
-            if (RunOnStart)
-                await Execute();
-        }
+        if (RunOnStart)
+            await Execute();
     }
 }

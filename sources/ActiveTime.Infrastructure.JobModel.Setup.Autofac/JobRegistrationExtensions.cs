@@ -26,7 +26,7 @@ public static class JobRegistrationExtensions
         IEnumerable<Type> jobTypes = assemblies
             .SelectMany(FindJobs);
 
-        foreach (Type jobType in jobTypes) 
+        foreach (Type jobType in jobTypes)
             containerBuilder.RegisterType(jobType).As<IJob>();
     }
 

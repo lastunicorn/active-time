@@ -34,6 +34,5 @@ public static class UseCaseRegistrationExtensions
         // Services
         containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<MediatrRequestBus>().As<IRequestBus>().SingleInstance();
-
     }
 }
