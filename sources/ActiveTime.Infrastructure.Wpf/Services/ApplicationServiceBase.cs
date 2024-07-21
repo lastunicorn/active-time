@@ -25,8 +25,6 @@ namespace DustInTheWind.ActiveTime.Domain.Services;
 /// </summary>
 public abstract class ApplicationServiceBase : IApplicationService
 {
-    private readonly Dwarfs dwarfs;
-
     public DateTime? StartTime { get; private set; }
 
     public TimeSpan RunTime => StartTime == null
@@ -39,15 +37,9 @@ public abstract class ApplicationServiceBase : IApplicationService
     /// </summary>
     public event EventHandler Exiting;
 
-    protected ApplicationServiceBase()
-    {
-        dwarfs = new Dwarfs();
-    }
-
     public void Start()
     {
         StartTime = DateTime.Now;
-        dwarfs.StartAll();
     }
 
     public void Exit()
@@ -63,7 +55,6 @@ public abstract class ApplicationServiceBase : IApplicationService
         try
         {
             PerformExit();
-            dwarfs.StopAll();
         }
         finally
         {

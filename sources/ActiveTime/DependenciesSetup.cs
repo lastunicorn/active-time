@@ -24,7 +24,6 @@ using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording2;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf.Autofac;
@@ -96,7 +95,6 @@ internal static class DependenciesSetup
         containerBuilder.RegisterType<SystemClock>().As<ISystemClock>();
         containerBuilder.RegisterType<Scribe>().AsSelf();
         containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>();
-        containerBuilder.RegisterType<Dwarfs>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<Timer>().As<ITimer>();
 
         // Jobs
