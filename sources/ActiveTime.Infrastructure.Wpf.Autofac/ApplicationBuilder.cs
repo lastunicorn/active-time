@@ -18,7 +18,6 @@ using System.Reflection;
 using Autofac;
 using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
-using DustInTheWind.ActiveTime.Infrastructure.Watchman;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
@@ -27,14 +26,13 @@ namespace DustInTheWind.ActiveTime.Infrastructure.Wpf.Setup.Autofac;
 
 public class ApplicationBuilder
 {
-    private readonly CustomApplication application;
     private readonly ContainerBuilder containerBuilder;
+    private GuardConfiguration guardConfiguration;
     private IEnumerable<ShellInfo> shellInfos;
     private Type trayIconType;
 
     private ApplicationBuilder()
     {
-        application = new CustomApplication();
         containerBuilder = new ContainerBuilder();
 
         ConfigureDefaultServices();
@@ -47,8 +45,7 @@ public class ApplicationBuilder
 
     private void ConfigureDefaultServices()
     {
-        containerBuilder.RegisterInstance(application).As<IApplication>().SingleInstance();
-        containerBuilder.RegisterInstance(application.Jobs).AsSelf().SingleInstance();
+        containerBuilder.RegisterType<JobCollection>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<ShellNavigator>().As<IShellNavigator>().SingleInstance();
 
         containerBuilder.RegisterType<WindowFactory>().As<IWindowFactory>();
@@ -56,11 +53,14 @@ public class ApplicationBuilder
 
     public ApplicationBuilder UseStartUpGuard(Action<GuardConfiguration> action)
     {
-        application.GuardConfiguration.IsEnabled = true;
+        guardConfiguration = new GuardConfiguration
+        {
+            IsEnabled = true
+        };
 
-        action?.Invoke(application.GuardConfiguration);
+        action?.Invoke(guardConfiguration);
 
-        if (application.GuardConfiguration.IsEnabled && string.IsNullOrEmpty(application.GuardConfiguration.Name))
+        if (guardConfiguration.IsEnabled && string.IsNullOrEmpty(guardConfiguration.Name))
             throw new Exception("The guard must have a name.");
 
         return this;
@@ -128,36 +128,60 @@ public class ApplicationBuilder
 
     public CustomApplication Build()
     {
+        CustomApplication application = new()
+        {
+            StartupGuard = CreateStartupGuard()
+        };
+
+        containerBuilder.RegisterInstance(application).As<IApplication>().SingleInstance();
+
         IContainer container = containerBuilder.Build();
 
-        InstantiateJobs(container);
-        InstantiateShellNavigator(container);
-        InstantiateTrayIcon(container);
+        application.TrayIcon = InstantiateTrayIcon(container);
+        application.Jobs = InstantiateJobs(container);
+        application.ShellNavigator = InstantiateShellNavigator(container);
 
         return application;
     }
 
-    private void InstantiateShellNavigator(IContainer container)
+    private StartupGuard CreateStartupGuard()
+    {
+        if (guardConfiguration.IsEnabled)
+        {
+            return new StartupGuard
+            {
+                Name = guardConfiguration.Name,
+                IsActiveInDebugMode = guardConfiguration.IsActiveInDebugMode
+            };
+        }
+
+        return null;
+    }
+
+    private static JobCollection InstantiateJobs(IContainer container)
+    {
+        JobCollection jobCollection = container.Resolve<JobCollection>();
+
+        IEnumerable<IJob> jobs = container.Resolve<IEnumerable<IJob>>();
+        jobCollection.AddRange(jobs);
+
+        return jobCollection;
+    }
+
+    private IShellNavigator InstantiateShellNavigator(IContainer container)
     {
         IShellNavigator shellNavigator = container.Resolve<IShellNavigator>();
 
         foreach (ShellInfo shellInfo in shellInfos)
             shellNavigator.RegisterShell(shellInfo);
 
-        application.ShellNavigator = shellNavigator;
+        return shellNavigator;
     }
 
-    private void InstantiateJobs(IContainer container)
+    private ITrayIcon InstantiateTrayIcon(IContainer container)
     {
-        IEnumerable<IJob> jobs = container.Resolve<IEnumerable<IJob>>();
-        application.Jobs.AddRange(jobs);
-    }
-
-    private void InstantiateTrayIcon(IContainer container)
-    {
-        if(trayIconType == null)
-            return;
-
-        application.TrayIcon = container.Resolve<ITrayIcon>();
+        return trayIconType == null
+            ? null
+            : container.Resolve<ITrayIcon>();
     }
 }

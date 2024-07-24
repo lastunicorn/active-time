@@ -16,7 +16,6 @@
 
 using System.Reflection;
 using System.Windows;
-using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 using DustInTheWind.ActiveTime.Infrastructure.Watchman;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
@@ -25,21 +24,19 @@ namespace DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
 public class CustomApplication : IApplication, IDisposable
 {
-    private StartupGuard startupGuard;
+    public StartupGuard StartupGuard { get; set; }
 
-    public GuardConfiguration GuardConfiguration { get; } = new();
-
-    public JobCollection Jobs { get; } = new();
+    public JobCollection Jobs { get; set; }
 
     public IShellNavigator ShellNavigator { get; set; }
+
+    public ITrayIcon TrayIcon { get; set; }
 
     public DateTime? StartTime { get; private set; }
 
     public TimeSpan RunTime => StartTime == null
         ? TimeSpan.Zero
         : DateTime.Now - StartTime.Value;
-
-    public ITrayIcon TrayIcon { get; set; }
 
     public event EventHandler Started;
 
@@ -55,11 +52,9 @@ public class CustomApplication : IApplication, IDisposable
 
         try
         {
-            StartGuard();
-
+            StartupGuard?.Start();
             TrayIcon?.Show();
-
-            Jobs.StartAll();
+            Jobs?.StartAll();
 
             OnStarted();
         }
@@ -67,29 +62,15 @@ public class CustomApplication : IApplication, IDisposable
         {
             const string message = "The application is already started. Current instance will not start.";
             MessageBox.Show(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            
+
             Application.Current.Shutdown();
         }
         catch (Exception ex)
         {
             string message = $"Unexpected error encountered when starting the application: {ex.Message}";
             MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            
+
             Application.Current.Shutdown();
-        }
-    }
-
-    private void StartGuard()
-    {
-        if (GuardConfiguration.IsEnabled)
-        {
-            startupGuard = new StartupGuard
-            {
-                Name = GuardConfiguration.Name,
-                IsActiveInDebugMode = GuardConfiguration.IsActiveInDebugMode
-            };
-
-            startupGuard.Start();
         }
     }
 
@@ -134,6 +115,6 @@ public class CustomApplication : IApplication, IDisposable
 
     public void Dispose()
     {
-        startupGuard?.Dispose();
+        StartupGuard?.Dispose();
     }
 }

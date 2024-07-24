@@ -1,5 +1,5 @@
 ﻿// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,77 +14,74 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+namespace DustInTheWind.ActiveTime.Application.Recording2;
 
-namespace DustInTheWind.ActiveTime.Application.Recording2
+/// <summary>
+/// Represents an interval of time inside a day.
+/// </summary>
+public class DayTimeInterval
 {
     /// <summary>
-    /// Represents an interval of time inside a day.
+    /// The lower bound of the time interval.
     /// </summary>
-    public class DayTimeInterval
+    private TimeSpan startTime;
+
+    /// <summary>
+    /// Gets or sets the lower bound of the time interval.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">The value is less then zero or greater or equal to 24 hours.</exception>
+    public TimeSpan StartTime
     {
-        /// <summary>
-        /// The lower bound of the time interval.
-        /// </summary>
-        private TimeSpan startTime;
-
-        /// <summary>
-        /// Gets or sets the lower bound of the time interval.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">The value is less then zero or greater or equal to 24 hours.</exception>
-        public TimeSpan StartTime
+        get => startTime;
+        set
         {
-            get => startTime;
-            set
-            {
-                if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
-                    throw new ArgumentOutOfRangeException(nameof(value), "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+            if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
+                throw new ArgumentOutOfRangeException(nameof(value), "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
-                startTime = value;
-            }
+            startTime = value;
         }
+    }
 
-        /// <summary>
-        /// The upper bound of the time interval.
-        /// </summary>
-        private TimeSpan endTime;
+    /// <summary>
+    /// The upper bound of the time interval.
+    /// </summary>
+    private TimeSpan endTime;
 
-        /// <summary>
-        /// Gets or sets the upper bound of the time interval.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">The value is less then zero or greater or equal to 24 hours.</exception>
-        public TimeSpan EndTime
+    /// <summary>
+    /// Gets or sets the upper bound of the time interval.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">The value is less then zero or greater or equal to 24 hours.</exception>
+    public TimeSpan EndTime
+    {
+        get => endTime;
+        set
         {
-            get => endTime;
-            set
-            {
-                if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
-                    throw new ArgumentOutOfRangeException(nameof(value), "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+            if (value < TimeSpan.Zero || value >= TimeSpan.FromHours(24))
+                throw new ArgumentOutOfRangeException(nameof(value), "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
-                endTime = value;
-            }
+            endTime = value;
         }
+    }
 
-        public TimeSpan Interval => endTime - startTime;
+    public TimeSpan Interval => endTime - startTime;
 
-        public double IntervalInMinutes => (endTime - startTime).TotalMinutes;
+    public double IntervalInMinutes => (endTime - startTime).TotalMinutes;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DayTimeInterval"/> class.
-        /// </summary>
-        /// <param name="startTime">The lower bound of the time interval.</param>
-        /// <param name="endTime">The upper bound of the time interval.</param>
-        /// <exception cref="ArgumentOutOfRangeException">One of the limits of the interval is less then zero or greater or equal to 24 hours.</exception>
-        public DayTimeInterval(TimeSpan startTime, TimeSpan endTime)
-        {
-            if (startTime < TimeSpan.Zero || startTime >= TimeSpan.FromHours(24))
-                throw new ArgumentOutOfRangeException(nameof(startTime), "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DayTimeInterval"/> class.
+    /// </summary>
+    /// <param name="startTime">The lower bound of the time interval.</param>
+    /// <param name="endTime">The upper bound of the time interval.</param>
+    /// <exception cref="ArgumentOutOfRangeException">One of the limits of the interval is less then zero or greater or equal to 24 hours.</exception>
+    public DayTimeInterval(TimeSpan startTime, TimeSpan endTime)
+    {
+        if (startTime < TimeSpan.Zero || startTime >= TimeSpan.FromHours(24))
+            throw new ArgumentOutOfRangeException(nameof(startTime), "The start time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
-            if (endTime < TimeSpan.Zero || endTime >= TimeSpan.FromHours(24))
-                throw new ArgumentOutOfRangeException(nameof(endTime), "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
+        if (endTime < TimeSpan.Zero || endTime >= TimeSpan.FromHours(24))
+            throw new ArgumentOutOfRangeException(nameof(endTime), "The end time of the day time interval should be a value greater or equal to 0 and less then 24 hours.");
 
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 }
