@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Infrastructure;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.Stamp;
 using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobEngine.ITimer;
@@ -37,7 +37,7 @@ public class RecorderJob : PeriodicalJob
 
     protected override async Task DoExecute()
     {
-        //StampRequest stampRequest = new();
-        //await requestBus.Send(stampRequest);
+        StampRequest stampRequest = new();
+        await requestBus.Send(stampRequest);
     }
 }
