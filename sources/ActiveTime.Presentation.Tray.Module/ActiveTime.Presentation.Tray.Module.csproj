@@ -35,8 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ItemGroup>
         <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
-        <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobModel.csproj" />
-        <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseModel.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobEngine.csproj" />
+        <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseEngine.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" PrivateAssets="All" />
     </ItemGroup>
 

@@ -22,12 +22,7 @@ using DustInTheWind.ActiveTime.Adapters.LogAccess;
 using DustInTheWind.ActiveTime.Adapters.SystemAccess;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording2;
-using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Infrastructure.JobModel.Setup.Autofac;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac;
-using DustInTheWind.ActiveTime.Infrastructure.Wpf.Autofac;
-using DustInTheWind.ActiveTime.Jobs;
 using DustInTheWind.ActiveTime.Ports.ConfigurationAccess;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
@@ -39,11 +34,10 @@ using DustInTheWind.ActiveTime.Presentation.MainArea;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
 using DustInTheWind.ActiveTime.Presentation.RecorderArea;
-using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
-using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobModel.ITimer;
-using Timer = DustInTheWind.ActiveTime.Infrastructure.JobModel.Timer;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobEngine.ITimer;
+using Timer = DustInTheWind.ActiveTime.Infrastructure.JobEngine.Timer;
 
 namespace DustInTheWind.ActiveTime;
 
@@ -85,9 +79,6 @@ internal static class DependenciesSetup
         containerBuilder.RegisterType<StartRecorderCommand>().AsSelf();
         containerBuilder.RegisterType<StopRecorderCommand>().AsSelf();
 
-        // GUI - Services
-        containerBuilder.RegisterWpfServices();
-
         // Register services.
         containerBuilder.RegisterType<Log>().As<ILog>().SingleInstance();
         containerBuilder.RegisterType<CurrentDay>().AsSelf().SingleInstance();
@@ -96,14 +87,5 @@ internal static class DependenciesSetup
         containerBuilder.RegisterType<Scribe>().AsSelf();
         containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>();
         containerBuilder.RegisterType<Timer>().As<ITimer>();
-
-        // Jobs
-        Assembly jobAssembly1 = typeof(RecorderJob).Assembly;
-        Assembly jobAssembly2 = typeof(TrayIconJob).Assembly;
-        containerBuilder.RegisterJobs(jobAssembly1, jobAssembly2);
-
-        // UseCases
-        Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
-        containerBuilder.RegisterUseCases(useCasesAssembly);
     }
 }

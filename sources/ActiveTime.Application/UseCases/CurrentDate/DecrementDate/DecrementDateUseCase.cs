@@ -19,7 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;

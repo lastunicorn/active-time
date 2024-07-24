@@ -15,15 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using Autofac;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using MediatR;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine.MediatR.Setup.Autofac;
+namespace DustInTheWind.ActiveTime.Infrastructure.Wpf.Setup.Autofac;
 
-internal class MediatrRequestBus : IRequestBus
+internal class RequestBus : IRequestBus
 {
     private readonly ILifetimeScope lifetimeScope;
 
-    public MediatrRequestBus(ILifetimeScope lifetimeScope)
+    public RequestBus(ILifetimeScope lifetimeScope)
     {
         this.lifetimeScope = lifetimeScope ?? throw new ArgumentNullException(nameof(lifetimeScope));
     }

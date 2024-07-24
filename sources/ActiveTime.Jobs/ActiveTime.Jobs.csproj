@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ItemGroup>
         <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseModel.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseEngine.csproj" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

@@ -43,7 +43,7 @@ public class Guard : IGuard
     /// the level at which will have effect.
     /// </summary>
     /// <param name="name">The name that identifies the instance that will be created.</param>
-    /// <param name="guardLevel">The level at which the new instance will have efect.</param>
+    /// <param name="guardLevel">The level at which the new instance will have effect.</param>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ActiveTimeException"></exception>

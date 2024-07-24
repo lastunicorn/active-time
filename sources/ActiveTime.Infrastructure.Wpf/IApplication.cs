@@ -14,20 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
+namespace DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
-public class ShellInfo
+public interface IApplication
 {
-    public Type ShellType { get; }
+    event EventHandler Exiting;
 
-    public string ShellName { get; }
+    DateTime? StartTime { get; }
 
-    public string OwnerName { get; }
+    TimeSpan RunTime { get; }
 
-    public ShellInfo(string shellName, Type shellType, string ownerName = null)
-    {
-        ShellName = shellName ?? throw new ArgumentNullException(nameof(shellName));
-        ShellType = shellType ?? throw new ArgumentNullException(nameof(shellType));
-        OwnerName = ownerName;
-    }
+    void Start();
+
+    void Exit();
+
+    Version GetVersion();
 }

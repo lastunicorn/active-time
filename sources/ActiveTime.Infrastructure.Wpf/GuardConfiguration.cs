@@ -14,19 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Domain.Services;
+namespace DustInTheWind.ActiveTime.Infrastructure.Watchman;
 
-public interface IApplicationService
+public class GuardConfiguration
 {
-    event EventHandler Exiting;
+    public bool IsEnabled { get; set; }
 
-    DateTime? StartTime { get; }
+    public string Name { get; set; }
 
-    TimeSpan RunTime { get; }
-
-    void Start();
-
-    void Exit();
-
-    Version GetVersion();
+    public bool IsActiveInDebugMode { get; set; }
 }

@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Application.UseCases.Comments.PresentComments;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using DustInTheWind.ActiveTime.Presentation.CalendarArea;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using Moq;

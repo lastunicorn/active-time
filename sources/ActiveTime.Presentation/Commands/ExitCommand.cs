@@ -15,22 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Domain.Services;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {
     public class ExitCommand : CommandBase
     {
-        private readonly IApplicationService applicationService;
+        private readonly IApplication application;
 
-        public ExitCommand(IApplicationService applicationService)
+        public ExitCommand(IApplication application)
         {
-            this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
+            this.application = application ?? throw new ArgumentNullException(nameof(application));
         }
 
         public override void Execute(object parameter)
         {
-            applicationService.Exit();
+            application.Exit();
         }
     }
 }

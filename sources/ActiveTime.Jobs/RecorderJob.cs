@@ -15,9 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
-using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobModel.ITimer;
+using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobEngine.ITimer;
 
 namespace DustInTheWind.ActiveTime.Jobs;
 

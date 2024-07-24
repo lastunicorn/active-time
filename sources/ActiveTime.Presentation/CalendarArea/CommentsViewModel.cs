@@ -22,7 +22,7 @@ using DustInTheWind.ActiveTime.Application.UseCases.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Application.UseCases.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
 namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;

@@ -19,7 +19,7 @@ using Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.UseCaseModel.MediatR.Setup.Autofac;
+namespace DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine.MediatR.Setup.Autofac;
 
 public static class UseCaseRegistrationExtensions
 {

@@ -16,8 +16,8 @@
 
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentApplicationStatus;
-using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;

@@ -15,12 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.Stamp;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using DustInTheWind.ActiveTime.Jobs;
 using MediatR;
 using Moq;
 using NUnit.Framework;
-using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobModel.ITimer;
+using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobEngine.ITimer;
 
 namespace DustInTheWind.ActiveTime.Tests.Unit.Jobs.RecorderJobTests;
 

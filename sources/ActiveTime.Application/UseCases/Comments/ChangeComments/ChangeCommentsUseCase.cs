@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Comments;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.Comments.ChangeComments;

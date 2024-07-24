@@ -15,9 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Windows;
-using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
 
-namespace DustInTheWind.ActiveTime.Presentation.Services;
+namespace DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 
 /// <summary>
 /// 
@@ -79,9 +78,9 @@ public class ShellNavigator : IShellNavigator
         {
             NavigateInternal(shellName, parameters);
         }
-        else if (shellInfos.ContainsKey(shellName))
+        else if (shellInfos.TryGetValue(shellName, out ShellInfo shellInfo))
         {
-            CreateNewShell(shellInfos[shellName]);
+            CreateNewShell(shellInfo);
             NavigateInternal(shellName, parameters);
         }
         else

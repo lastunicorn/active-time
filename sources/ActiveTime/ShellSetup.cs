@@ -14,14 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Domain.Services;
+using DustInTheWind.ActiveTime.Domain.Presentation;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
+using DustInTheWind.ActiveTime.Presentation.AboutArea;
+using DustInTheWind.ActiveTime.Presentation.MainArea;
 
-namespace DustInTheWind.ActiveTime.Presentation.Services;
+namespace DustInTheWind.ActiveTime;
 
-public class ApplicationService : ApplicationServiceBase
+internal static class ShellSetup
 {
-    protected override void PerformExit()
+    public static IEnumerable<ShellInfo> EnumerateShellInfo()
     {
-        System.Windows.Application.Current.Shutdown();
+        return new[]
+        {
+            new ShellInfo(ShellNames.MainShell, typeof(MainWindow)),
+            new ShellInfo(ShellNames.MessageShell, typeof(MessageWindow), ShellNames.MainShell),
+            new ShellInfo(ShellNames.AboutShell, typeof(AboutWindow), ShellNames.MainShell)
+        };
     }
 }

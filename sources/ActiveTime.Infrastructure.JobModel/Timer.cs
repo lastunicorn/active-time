@@ -16,7 +16,7 @@
 
 using System.Timers;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
+namespace DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 
 public class Timer : ITimer
 {

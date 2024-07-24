@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.ActiveTime.Domain.Presentation;
-using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 
 namespace DustInTheWind.ActiveTime.Presentation.Commands
 {

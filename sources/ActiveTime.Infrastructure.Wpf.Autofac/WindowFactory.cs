@@ -14,20 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Windows;
 using Autofac;
-using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Domain.Services;
-using DustInTheWind.ActiveTime.Presentation.Services;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 
-namespace DustInTheWind.ActiveTime.Infrastructure.Wpf.Autofac;
+namespace DustInTheWind.ActiveTime.Infrastructure.Wpf.Setup.Autofac;
 
-public static class WpfExtensions
+internal class WindowFactory : IWindowFactory
 {
-    public static void RegisterWpfServices(this ContainerBuilder containerBuilder)
+    private readonly IComponentContext context;
+
+    public WindowFactory(IComponentContext context)
     {
-        containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();
-        containerBuilder.RegisterType<ApplicationService>().As<IApplicationService>().SingleInstance();
-        containerBuilder.RegisterType<ShellNavigator>().As<IShellNavigator>().SingleInstance();
-        containerBuilder.RegisterType<DispatcherService>().AsSelf().SingleInstance();
+        this.context = context ?? throw new ArgumentNullException(nameof(context));
+    }
+
+    public Window Create(Type type)
+    {
+        ILifetimeScope parentLifetimeScope = context.Resolve<ILifetimeScope>();
+        return (Window)parentLifetimeScope.Resolve(type);
     }
 }

@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Infrastructure.JobModel;
+namespace DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 
 public class JobCollection
 {
-    private readonly HashSet<IJob> jobs = new();
+    private readonly HashSet<IJob> items = new();
 
     public IJob this[string jobId]
     {
@@ -34,7 +34,18 @@ public class JobCollection
     {
         if (job == null) throw new ArgumentNullException(nameof(job));
 
-        jobs.Add(job);
+        items.Add(job);
+    }
+
+    public void AddRange(IEnumerable<IJob> jobs)
+    {
+        if (jobs == null) throw new ArgumentNullException(nameof(jobs));
+
+        IEnumerable<IJob> jobsToAdd = jobs
+            .Where(x => x != null);
+
+        foreach (IJob job in jobsToAdd)
+            items.Add(job);
     }
 
     public IJob Get(string jobId)
@@ -72,7 +83,7 @@ public class JobCollection
     {
         try
         {
-            return jobs.First(x => x.Id == jobId);
+            return items.First(x => x.Id == jobId);
         }
         catch (Exception ex)
         {
@@ -82,7 +93,7 @@ public class JobCollection
 
     public void StartAll()
     {
-        foreach (IJob job in jobs)
+        foreach (IJob job in items)
             job.Start();
     }
 }

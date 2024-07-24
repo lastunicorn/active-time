@@ -16,7 +16,7 @@
 
 using System.Timers;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Domain.Services;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using Timer = System.Timers.Timer;
 
@@ -24,7 +24,7 @@ namespace DustInTheWind.ActiveTime.Presentation.AboutArea
 {
     public class AboutViewModel : ViewModelBase, IDisposable
     {
-        private readonly IApplicationService applicationService;
+        private readonly IApplication application;
         private readonly Timer timer;
 
         private TimeSpan runTime;
@@ -45,18 +45,18 @@ namespace DustInTheWind.ActiveTime.Presentation.AboutArea
 
         public ICommand WindowClosed { get; }
 
-        public AboutViewModel(IApplicationService applicationService)
+        public AboutViewModel(IApplication application)
         {
-            this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
+            this.application = application ?? throw new ArgumentNullException(nameof(application));
 
             WindowClosed = new RelayCommand(HandleWindowClosed);
 
-            Version version = applicationService.GetVersion();
+            Version version = application.GetVersion();
             Version = version.ToString();
 
-            StartTime = applicationService.StartTime;
+            StartTime = application.StartTime;
 
-            RunTime = applicationService.RunTime;
+            RunTime = application.RunTime;
 
             timer = new Timer(200);
             timer.Elapsed += HandleTimerElapsed;
@@ -65,7 +65,7 @@ namespace DustInTheWind.ActiveTime.Presentation.AboutArea
 
         private void HandleTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            RunTime = applicationService.RunTime;
+            RunTime = application.RunTime;
         }
 
         private void HandleWindowClosed(object e)

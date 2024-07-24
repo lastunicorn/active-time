@@ -42,8 +42,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
             <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid
@@ -53,7 +53,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Visibility="{Binding IsStarted, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <Border
-                Background="LightGreen"
+                BorderBrush="LightGreen"
+                BorderThickness="12"
                 Opacity="0.4"
                 CornerRadius="5"
                 Margin="20" />
@@ -62,7 +63,10 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Text="Running"
-                FontSize="50" />
+                FontSize="50"
+                FontWeight="DemiBold"
+                Foreground="LightGreen"
+                Opacity="0.4" />
         </Grid>
 
         <Grid
@@ -72,7 +76,8 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
             Visibility="{Binding IsStopped, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <Border
-                Background="OrangeRed"
+                BorderBrush="OrangeRed"
+                BorderThickness="12"
                 Opacity="0.4"
                 CornerRadius="5"
                 Margin="20" />
@@ -81,7 +86,9 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Text="Stopped"
-                FontSize="50" />
+                FontSize="50"
+                Foreground="OrangeRed"
+                Opacity="0.4" />
         </Grid>
 
         <Button

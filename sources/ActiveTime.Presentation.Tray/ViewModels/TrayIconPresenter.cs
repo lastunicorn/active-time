@@ -20,11 +20,11 @@ using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentTray;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
-using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Domain.Services;
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 using DustInTheWind.ActiveTime.Presentation.Tray.Commands;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
@@ -33,7 +33,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 
 public class TrayIconPresenter
 {
-    private readonly IApplicationService applicationService;
+    private readonly IApplication application;
     private readonly IRequestBus requestBus;
     private readonly EventBus eventBus;
 
@@ -49,13 +49,13 @@ public class TrayIconPresenter
 
     public ExitCommand ExitCommand { get; }
 
-    public TrayIconPresenter(IApplicationService applicationService, IShellNavigator shellNavigator,
+    public TrayIconPresenter(IApplication application, IShellNavigator shellNavigator,
         IRequestBus requestBus, ILog log, EventBus eventBus)
     {
         if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
         if (log == null) throw new ArgumentNullException(nameof(log));
 
-        this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
+        this.application = application ?? throw new ArgumentNullException(nameof(application));
         this.requestBus = requestBus ?? throw new ArgumentNullException(nameof(requestBus));
         this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
@@ -63,10 +63,10 @@ public class TrayIconPresenter
         StartRecorderCommand = new StartRecorderCommand(requestBus, log, eventBus);
         StopRecorderCommand = new StopRecorderCommand(requestBus, log, eventBus);
         AboutCommand = new AboutCommand(shellNavigator);
-        ExitCommand = new ExitCommand(applicationService);
+        ExitCommand = new ExitCommand(application);
     }
 
-    private void HandleApplicationServiceExiting(object sender, EventArgs e)
+    private void HandleApplicationExiting(object sender, EventArgs e)
     {
         Hide();
     }
@@ -120,7 +120,7 @@ public class TrayIconPresenter
     {
         if (View != null)
         {
-            applicationService.Exiting += HandleApplicationServiceExiting;
+            application.Exiting += HandleApplicationExiting;
 
             eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
             eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
@@ -135,7 +135,7 @@ public class TrayIconPresenter
     {
         if (View != null)
         {
-            applicationService.Exiting -= HandleApplicationServiceExiting;
+            application.Exiting -= HandleApplicationExiting;
 
             eventBus.Unsubscribe<RecorderStartedEvent>(HandleRecorderStarted);
             eventBus.Unsubscribe<RecorderStoppedEvent>(HandleRecorderStopped);

@@ -16,18 +16,18 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Domain.Services;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
 namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 {
     public class ExitCommand : ICommand
     {
-        private readonly IApplicationService applicationService;
+        private readonly IApplication application;
         public event EventHandler CanExecuteChanged;
 
-        public ExitCommand(IApplicationService applicationService)
+        public ExitCommand(IApplication application)
         {
-            this.applicationService = applicationService ?? throw new ArgumentNullException(nameof(applicationService));
+            this.application = application ?? throw new ArgumentNullException(nameof(application));
         }
 
         public bool CanExecute(object parameter)
@@ -37,7 +37,7 @@ namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
 
         public void Execute(object parameter)
         {
-            applicationService.Exit();
+            application.Exit();
         }
     }
 }

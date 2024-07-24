@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 using DustInTheWind.ActiveTime.Presentation.Properties;
 
 namespace DustInTheWind.ActiveTime.Presentation.MainArea

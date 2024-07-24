@@ -15,6 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Windows;
+using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.Setup.Autofac;
+using DustInTheWind.ActiveTime.Jobs;
+using DustInTheWind.ActiveTime.Presentation.Tray.Module;
 
 namespace DustInTheWind.ActiveTime;
 
@@ -23,13 +28,21 @@ namespace DustInTheWind.ActiveTime;
 /// </summary>
 public partial class App
 {
-    private BootstrapperWithAutofac bootstrapper;
-
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        bootstrapper = new BootstrapperWithAutofac();
-        bootstrapper.Run();
+        CustomApplication customApplication = ApplicationBuilder.Create()
+            .UseStartUpGuard(config =>
+            {
+                config.Name = "DustInTheWind.ActiveTime";
+            })
+            .ConfigureServices(DependenciesSetup.Configure)
+            .RegisterJobs(typeof(RecorderJob).Assembly, typeof(TrayIconJob).Assembly)
+            .RegisterGuiShells(ShellSetup.EnumerateShellInfo)
+            .RegisterUseCases(typeof(StartRecordingRequest).Assembly)
+            .Build();
+
+        customApplication.Start();
     }
 }

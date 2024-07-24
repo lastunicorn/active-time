@@ -14,25 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Reflection;
-using System.Windows;
-using Autofac;
-using DustInTheWind.ActiveTime.Presentation.Services;
+namespace DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 
-namespace DustInTheWind.ActiveTime;
-
-internal class AutofacWindowFactory : IWindowFactory
+public interface IShellNavigator
 {
-    private readonly IComponentContext context;
+    void RegisterShell(ShellInfo shellInfo);
 
-    public AutofacWindowFactory(IComponentContext context)
-    {
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
-    }
+    void RegisterShell(string shellName, Type shellType, string ownerName = null);
 
-    public Window Create(Type type)
-    {
-        ILifetimeScope parentLifetimeScope = context.Resolve<ILifetimeScope>();
-        return (Window)parentLifetimeScope.Resolve(type);
-    }
+    void Navigate(string shellName, Dictionary<string, object> parameters = null);
 }

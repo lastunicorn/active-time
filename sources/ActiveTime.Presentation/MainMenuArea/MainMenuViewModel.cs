@@ -16,8 +16,8 @@
 
 using System;
 using System.Windows.Input;
-using DustInTheWind.ActiveTime.Domain.Presentation.ShellNavigation;
-using DustInTheWind.ActiveTime.Domain.Services;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 
 namespace DustInTheWind.ActiveTime.Presentation.MainMenuArea
@@ -28,12 +28,12 @@ namespace DustInTheWind.ActiveTime.Presentation.MainMenuArea
 
         public ICommand AboutCommand { get; }
 
-        public MainMenuViewModel(IApplicationService applicationService, IShellNavigator shellNavigator)
+        public MainMenuViewModel(IApplication application, IShellNavigator shellNavigator)
         {
-            if (applicationService == null) throw new ArgumentNullException(nameof(applicationService));
+            if (application == null) throw new ArgumentNullException(nameof(application));
             if (shellNavigator == null) throw new ArgumentNullException(nameof(shellNavigator));
 
-            ExitCommand = new ExitCommand(applicationService);
+            ExitCommand = new ExitCommand(application);
             AboutCommand = new AboutCommand(shellNavigator);
         }
     }

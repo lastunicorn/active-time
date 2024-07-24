@@ -18,7 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Domain;
-using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentApplicationStatus

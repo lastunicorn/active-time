@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentTray
 {

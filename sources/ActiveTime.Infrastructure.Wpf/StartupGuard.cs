@@ -18,11 +18,15 @@ using System.Windows;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure.Watchman;
 
-namespace DustInTheWind.ActiveTime;
+namespace DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
-internal sealed class StartupGuard : IDisposable
+public sealed class StartupGuard : IDisposable
 {
     private Guard guard;
+
+    public string Name { get; set; }
+
+    public bool IsActiveInDebugMode { get; set; }
 
     public bool Start()
     {
@@ -30,7 +34,7 @@ internal sealed class StartupGuard : IDisposable
 
         try
         {
-            guard = new Guard("DustInTheWind.ActiveTime", guardLevel);
+            guard = new Guard(Name, guardLevel);
         }
         catch (ActiveTimeException)
         {
@@ -54,14 +58,16 @@ internal sealed class StartupGuard : IDisposable
 
     private static void DisplayGenericErrorMessage(Exception ex)
     {
-        string message = $"Error creating the unique instance.\nInternal error: {ex.Message}";
+        string message = $"Error creating the Guard.\nInternal error: {ex.Message}";
         MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
-    private static GuardLevel CalculateGuardLevel()
+    private GuardLevel CalculateGuardLevel()
     {
 #if DEBUG
-        return GuardLevel.None;
+        return IsActiveInDebugMode
+            ? GuardLevel.Machine
+            : GuardLevel.None;
 #else
             return GuardLevel.Machine;
 #endif

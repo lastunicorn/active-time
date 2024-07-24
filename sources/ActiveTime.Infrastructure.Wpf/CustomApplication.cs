@@ -15,16 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
+using DustInTheWind.ActiveTime.Infrastructure.Watchman;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 
-namespace DustInTheWind.ActiveTime.Domain.Services;
+namespace DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
-/// <summary>
-/// This service has only one method that closes the application.
-/// Before the application is closed, an event is published to announce
-/// all the modules of this action.
-/// </summary>
-public abstract class ApplicationServiceBase : IApplicationService
+public class CustomApplication : IApplication, IDisposable
 {
+    private StartupGuard startupGuard;
+
+    public GuardConfiguration GuardConfiguration { get; } = new();
+    
+    public JobCollection Jobs { get; } = new();
+
+    public IShellNavigator ShellNavigator { get; set; }
+
     public DateTime? StartTime { get; private set; }
 
     public TimeSpan RunTime => StartTime == null
@@ -40,6 +46,25 @@ public abstract class ApplicationServiceBase : IApplicationService
     public void Start()
     {
         StartTime = DateTime.Now;
+
+        if (GuardConfiguration.IsEnabled)
+        {
+            startupGuard = new StartupGuard
+            {
+                Name = GuardConfiguration.Name,
+                IsActiveInDebugMode = GuardConfiguration.IsActiveInDebugMode
+            };
+
+            bool guardStartedSuccessfully = startupGuard.Start();
+
+            if (!guardStartedSuccessfully)
+            {
+                System.Windows.Application.Current.Shutdown();
+                return;
+            }
+        }
+
+        Jobs.StartAll();
     }
 
     public void Exit()
@@ -54,15 +79,13 @@ public abstract class ApplicationServiceBase : IApplicationService
 
         try
         {
-            PerformExit();
+            System.Windows.Application.Current.Shutdown();
         }
         finally
         {
             StartTime = null;
         }
     }
-
-    protected abstract void PerformExit();
 
     public Version GetVersion()
     {
@@ -78,5 +101,10 @@ public abstract class ApplicationServiceBase : IApplicationService
     protected virtual void OnExiting(EventArgs e)
     {
         Exiting?.Invoke(this, e);
+    }
+
+    public void Dispose()
+    {
+        startupGuard?.Dispose();
     }
 }

@@ -31,9 +31,7 @@ namespace DustInTheWind.ActiveTime.Presentation.MainArea
         /// </summary>
         public MessageWindow(MessageViewModel viewModel)
         {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            this.viewModel = viewModel;
+            this.viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
             InitializeComponent();
         }

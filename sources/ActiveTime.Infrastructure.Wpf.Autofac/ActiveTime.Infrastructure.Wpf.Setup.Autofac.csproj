@@ -20,13 +20,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
-        <useWPF>true</useWPF>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobEngine.csproj" />
-        <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Infrastructure.Watchman.csproj" />
+      <PackageReference Include="Autofac" Version="8.0.0" />
+      <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobEngine.csproj" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure.Wpf\ActiveTime.Infrastructure.Wpf.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseEngine.csproj" />
+      <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Infrastructure.Watchman.csproj" />
     </ItemGroup>
 
 </Project>

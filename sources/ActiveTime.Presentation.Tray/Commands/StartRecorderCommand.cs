@@ -21,8 +21,8 @@ using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Infrastructure;
-using DustInTheWind.ActiveTime.Infrastructure.JobModel;
-using DustInTheWind.ActiveTime.Infrastructure.UseCaseModel;
+using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
+using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using DustInTheWind.ActiveTime.Ports.LogAccess;
 
 namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands;
