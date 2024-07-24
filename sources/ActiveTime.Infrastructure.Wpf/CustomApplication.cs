@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using System.Windows;
+using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 using DustInTheWind.ActiveTime.Infrastructure.Watchman;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
@@ -26,7 +28,7 @@ public class CustomApplication : IApplication, IDisposable
     private StartupGuard startupGuard;
 
     public GuardConfiguration GuardConfiguration { get; } = new();
-    
+
     public JobCollection Jobs { get; } = new();
 
     public IShellNavigator ShellNavigator { get; set; }
@@ -36,6 +38,10 @@ public class CustomApplication : IApplication, IDisposable
     public TimeSpan RunTime => StartTime == null
         ? TimeSpan.Zero
         : DateTime.Now - StartTime.Value;
+
+    public ITrayIcon TrayIcon { get; set; }
+
+    public event EventHandler Started;
 
     /// <summary>
     /// Event raised just before existing the application.
@@ -47,6 +53,34 @@ public class CustomApplication : IApplication, IDisposable
     {
         StartTime = DateTime.Now;
 
+        try
+        {
+            StartGuard();
+
+            TrayIcon?.Show();
+
+            Jobs.StartAll();
+
+            OnStarted();
+        }
+        catch (GuardException)
+        {
+            const string message = "The application is already started. Current instance will not start.";
+            MessageBox.Show(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            
+            Application.Current.Shutdown();
+        }
+        catch (Exception ex)
+        {
+            string message = $"Unexpected error encountered when starting the application: {ex.Message}";
+            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            
+            Application.Current.Shutdown();
+        }
+    }
+
+    private void StartGuard()
+    {
         if (GuardConfiguration.IsEnabled)
         {
             startupGuard = new StartupGuard
@@ -55,16 +89,8 @@ public class CustomApplication : IApplication, IDisposable
                 IsActiveInDebugMode = GuardConfiguration.IsActiveInDebugMode
             };
 
-            bool guardStartedSuccessfully = startupGuard.Start();
-
-            if (!guardStartedSuccessfully)
-            {
-                System.Windows.Application.Current.Shutdown();
-                return;
-            }
+            startupGuard.Start();
         }
-
-        Jobs.StartAll();
     }
 
     public void Exit()
@@ -72,6 +98,8 @@ public class CustomApplication : IApplication, IDisposable
         try
         {
             OnExiting(EventArgs.Empty);
+
+            TrayIcon?.Hide();
         }
         catch
         {
@@ -79,7 +107,7 @@ public class CustomApplication : IApplication, IDisposable
 
         try
         {
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
         finally
         {
@@ -94,10 +122,11 @@ public class CustomApplication : IApplication, IDisposable
         return assemblyName.Version;
     }
 
-    /// <summary>
-    /// Raises the Exiting event.
-    /// </summary>
-    /// <param name="e">An EventArgs that contains the event data.</param>
+    protected virtual void OnStarted()
+    {
+        Started?.Invoke(this, EventArgs.Empty);
+    }
+
     protected virtual void OnExiting(EventArgs e)
     {
         Exiting?.Invoke(this, e);

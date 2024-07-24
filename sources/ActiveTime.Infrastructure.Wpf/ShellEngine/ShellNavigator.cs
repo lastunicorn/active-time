@@ -27,7 +27,6 @@ namespace DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 public class ShellNavigator : IShellNavigator
 {
     private readonly IWindowFactory windowFactory;
-    private readonly DispatcherService dispatcherService;
 
     private readonly Dictionary<string, ShellInfo> shellInfos = new();
     private readonly Dictionary<string, Window> windows = new();
@@ -35,10 +34,9 @@ public class ShellNavigator : IShellNavigator
     /// <summary>
     /// Initialize a new instance of the <see cref="ShellNavigator"/> class.
     /// </summary>
-    public ShellNavigator(IWindowFactory windowFactory, DispatcherService dispatcherService)
+    public ShellNavigator(IWindowFactory windowFactory)
     {
         this.windowFactory = windowFactory ?? throw new ArgumentNullException(nameof(windowFactory));
-        this.dispatcherService = dispatcherService ?? throw new ArgumentNullException(nameof(dispatcherService));
     }
 
     /// <summary>
@@ -93,7 +91,7 @@ public class ShellNavigator : IShellNavigator
     {
         Window window = null;
 
-        dispatcherService.Dispatch(() =>
+        Application.Current.Dispatcher.Invoke(() =>
         {
             window = windowFactory.Create(shellInfo.ShellType);
 
@@ -120,7 +118,7 @@ public class ShellNavigator : IShellNavigator
 
         Window window = windows[shellName];
 
-        dispatcherService.Dispatch(() =>
+        Application.Current.Dispatcher.Invoke(() =>
         {
             window.Show();
             window.Activate();

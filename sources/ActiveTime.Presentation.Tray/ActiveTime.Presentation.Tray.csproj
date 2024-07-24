@@ -24,6 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Commands\**" />
+      <EmbeddedResource Remove="Commands\**" />
+      <None Remove="Commands\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="..\license.txt">
             <Pack>True</Pack>
             <PackagePath></PackagePath>
@@ -34,6 +40,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <None Remove="Resources\icon.ico" />
         <None Remove="Resources\icon_off.ico" />
         <None Remove="Resources\Leopard-Optical-Illusion.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="Commands\AboutCommand.cs" />
+      <Compile Include="Commands\ExitCommand.cs" />
+      <Compile Include="Commands\ShowCommand.cs" />
+      <Compile Include="Commands\StartRecorderCommand.cs" />
+      <Compile Include="Commands\StopRecorderCommand.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -52,6 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ProjectReference Include="..\ActiveTime.Infrastructure.Wpf\ActiveTime.Infrastructure.Wpf.csproj" />
         <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseEngine.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -14,26 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Globalization;
-using System.Windows.Data;
+using DustInTheWind.ActiveTime.Infrastructure.Wpf;
+using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 
-namespace DustInTheWind.ActiveTime.Presentation.Styles.Converters;
+namespace DustInTheWind.ActiveTime.Presentation.Tray;
 
-/// <summary>
-/// Decreases the font size with 50%.
-/// </summary>
-internal class FontSmallestConverter : IValueConverter
+public class TrayIcon : ITrayIcon
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is double doubleValue)
-            return doubleValue * 0.5;
+    private readonly TrayIconView trayIconView;
 
-        return value;
+    public TrayIcon(TrayIconView trayIconView)
+    {
+        this.trayIconView = trayIconView ?? throw new ArgumentNullException(nameof(trayIconView));
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public void Show()
     {
-        return null;
+        trayIconView.Presenter.Show();
+    }
+
+    public void Hide()
+    {
+        trayIconView.Presenter.Hide();
     }
 }

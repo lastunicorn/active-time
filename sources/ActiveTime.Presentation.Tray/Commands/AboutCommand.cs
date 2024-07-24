@@ -1,5 +1,5 @@
 // ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,31 +14,30 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Domain.Presentation;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 
-namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands
+namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands;
+
+public class AboutCommand : ICommand
 {
-    public class AboutCommand : ICommand
+    private readonly IShellNavigator shellNavigator;
+
+    public event EventHandler CanExecuteChanged;
+
+    public AboutCommand(IShellNavigator shellNavigator)
     {
-        private readonly IShellNavigator shellNavigator;
-        public event EventHandler CanExecuteChanged;
+        this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
+    }
 
-        public AboutCommand(IShellNavigator shellNavigator)
-        {
-            this.shellNavigator = shellNavigator ?? throw new ArgumentNullException(nameof(shellNavigator));
-        }
+    public bool CanExecute(object parameter)
+    {
+        return true;
+    }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            shellNavigator.Navigate(ShellNames.AboutShell);
-        }
+    public void Execute(object parameter)
+    {
+        shellNavigator.Navigate(ShellNames.AboutShell);
     }
 }

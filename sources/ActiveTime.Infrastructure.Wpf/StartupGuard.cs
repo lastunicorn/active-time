@@ -14,62 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows;
-using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure.Watchman;
 
 namespace DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
 public sealed class StartupGuard : IDisposable
 {
-    private Guard guard;
+    private IGuard guard;
 
     public string Name { get; set; }
 
     public bool IsActiveInDebugMode { get; set; }
 
-    public bool Start()
+    public void Start()
     {
-        GuardLevel guardLevel = CalculateGuardLevel();
+        bool isActive = DecideIsActive();
 
-        try
-        {
-            guard = new Guard(Name, guardLevel);
-        }
-        catch (ActiveTimeException)
-        {
-            DisplayApplicationStartedErrorMessage();
-            return false;
-        }
-        catch (Exception ex)
-        {
-            DisplayGenericErrorMessage(ex);
-            return false;
-        }
-
-        return true;
+        if(isActive)
+            guard = new MachineLevelGuard(Name);
     }
 
-    private static void DisplayApplicationStartedErrorMessage()
-    {
-        const string message = "The application is already started. Current instance will not start.";
-        MessageBox.Show(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-    }
-
-    private static void DisplayGenericErrorMessage(Exception ex)
-    {
-        string message = $"Error creating the Guard.\nInternal error: {ex.Message}";
-        MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-    }
-
-    private GuardLevel CalculateGuardLevel()
+    private bool DecideIsActive()
     {
 #if DEBUG
-        return IsActiveInDebugMode
-            ? GuardLevel.Machine
-            : GuardLevel.None;
+        return IsActiveInDebugMode;
 #else
-            return GuardLevel.Machine;
+            return true;
 #endif
     }
 

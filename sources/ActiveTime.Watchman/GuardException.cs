@@ -14,26 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Globalization;
-using System.Windows.Data;
+using System.Runtime.Serialization;
 
-namespace DustInTheWind.ActiveTime.Presentation.Styles.Converters;
+namespace DustInTheWind.ActiveTime.Infrastructure.Watchman;
 
 /// <summary>
-/// Decreases the font size with 50%.
+/// Exception raised by AutomaticOrderSystemException.
 /// </summary>
-internal class FontSmallestConverter : IValueConverter
+[Serializable]
+public class GuardException : ApplicationException
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is double doubleValue)
-            return doubleValue * 0.5;
+    private const string DefaultMessage = "Another instance with the name '{0}' already exists.";
 
-        return value;
+    public GuardException(string instanceName)
+        : base(string.Format(DefaultMessage, instanceName))
+    {
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public GuardException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
     {
-        return null;
     }
 }

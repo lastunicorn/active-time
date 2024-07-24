@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Reflection;
 using Autofac;
 using DustInTheWind.ActiveTime.Adapters.ConfigurationAccess;
 using DustInTheWind.ActiveTime.Adapters.DataAccess.LiteDB;
@@ -34,9 +33,13 @@ using DustInTheWind.ActiveTime.Presentation.MainArea;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
 using DustInTheWind.ActiveTime.Presentation.RecorderArea;
+using DustInTheWind.ActiveTime.Presentation.Tray.Commands;
 using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
+using ExitCommand = DustInTheWind.ActiveTime.Presentation.Commands.ExitCommand;
 using ITimer = DustInTheWind.ActiveTime.Infrastructure.JobEngine.ITimer;
+using StartRecorderCommand = DustInTheWind.ActiveTime.Presentation.Commands.StartRecorderCommand;
+using StopRecorderCommand = DustInTheWind.ActiveTime.Presentation.Commands.StopRecorderCommand;
 using Timer = DustInTheWind.ActiveTime.Infrastructure.JobEngine.Timer;
 
 namespace DustInTheWind.ActiveTime;
@@ -69,15 +72,18 @@ internal static class DependenciesSetup
         containerBuilder.RegisterType<AboutViewModel>().AsSelf();
 
         // GUI - Commands
-        containerBuilder.RegisterType<RefreshCommand>().AsSelf();
-        containerBuilder.RegisterType<DeleteCommand>().AsSelf();
-        containerBuilder.RegisterType<DecrementDayCommand>().AsSelf();
-        containerBuilder.RegisterType<IncrementDateCommand>().AsSelf();
-        containerBuilder.RegisterType<ResetCommentsCommand>().AsSelf();
-        containerBuilder.RegisterType<SaveCommentsCommand>().AsSelf();
-        containerBuilder.RegisterType<ExitCommand>().AsSelf();
-        containerBuilder.RegisterType<StartRecorderCommand>().AsSelf();
-        containerBuilder.RegisterType<StopRecorderCommand>().AsSelf();
+        containerBuilder.RegisterType<RefreshCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<DeleteCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<DecrementDayCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<IncrementDateCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<ResetCommentsCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<SaveCommentsCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<ExitCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<StartRecorderCommand>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<StopRecorderCommand>().AsSelf().SingleInstance();
+
+        // Tray - Commands
+        containerBuilder.RegisterType<ShowCommand>().AsSelf().SingleInstance();
 
         // Register services.
         containerBuilder.RegisterType<Log>().As<ILog>().SingleInstance();

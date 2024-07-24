@@ -14,26 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Globalization;
-using System.Windows.Data;
-
-namespace DustInTheWind.ActiveTime.Presentation.Styles.Converters;
+namespace DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 
 /// <summary>
-/// Decreases the font size with 50%.
+/// A collection of subscriber objects grouped by event type.
 /// </summary>
-internal class FontSmallestConverter : IValueConverter
+internal class SubscribersCollection
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is double doubleValue)
-            return doubleValue * 0.5;
+    private readonly Dictionary<Type, List<object>> subscribersByEvent = new();
 
-        return value;
+    public List<object> GetOrCreateBucket<TEvent>()
+    {
+        return GetBucket<TEvent>() ?? CreateBucket<TEvent>();
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public List<object> GetBucket<TEvent>()
     {
-        return null;
+        return subscribersByEvent.ContainsKey(typeof(TEvent))
+            ? subscribersByEvent[typeof(TEvent)]
+            : null;
+    }
+
+    public List<object> CreateBucket<TEvent>()
+    {
+        List<object> actions = new();
+        subscribersByEvent.Add(typeof(TEvent), actions);
+        return actions;
     }
 }

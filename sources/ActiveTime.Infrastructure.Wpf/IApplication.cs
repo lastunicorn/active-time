@@ -18,6 +18,8 @@ namespace DustInTheWind.ActiveTime.Infrastructure.Wpf;
 
 public interface IApplication
 {
+    event EventHandler Started;
+
     event EventHandler Exiting;
 
     DateTime? StartTime { get; }

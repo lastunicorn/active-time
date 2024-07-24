@@ -30,6 +30,7 @@ public class ApplicationBuilder
     private readonly CustomApplication application;
     private readonly ContainerBuilder containerBuilder;
     private IEnumerable<ShellInfo> shellInfos;
+    private Type trayIconType;
 
     private ApplicationBuilder()
     {
@@ -51,7 +52,6 @@ public class ApplicationBuilder
         containerBuilder.RegisterType<ShellNavigator>().As<IShellNavigator>().SingleInstance();
 
         containerBuilder.RegisterType<WindowFactory>().As<IWindowFactory>();
-        containerBuilder.RegisterType<DispatcherService>().AsSelf().SingleInstance();
     }
 
     public ApplicationBuilder UseStartUpGuard(Action<GuardConfiguration> action)
@@ -116,12 +116,23 @@ public class ApplicationBuilder
         return this;
     }
 
+    public ApplicationBuilder UseTrayIcon<TTrayIcon>()
+        where TTrayIcon : ITrayIcon
+    {
+        trayIconType = typeof(TTrayIcon);
+
+        containerBuilder.RegisterType<TTrayIcon>().As<ITrayIcon>();
+
+        return this;
+    }
+
     public CustomApplication Build()
     {
         IContainer container = containerBuilder.Build();
 
         InstantiateJobs(container);
         InstantiateShellNavigator(container);
+        InstantiateTrayIcon(container);
 
         return application;
     }
@@ -140,5 +151,13 @@ public class ApplicationBuilder
     {
         IEnumerable<IJob> jobs = container.Resolve<IEnumerable<IJob>>();
         application.Jobs.AddRange(jobs);
+    }
+
+    private void InstantiateTrayIcon(IContainer container)
+    {
+        if(trayIconType == null)
+            return;
+
+        application.TrayIcon = container.Resolve<ITrayIcon>();
     }
 }

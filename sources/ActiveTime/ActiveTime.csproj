@@ -49,7 +49,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <ProjectReference Include="..\ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" PrivateAssets="All" />
-      <ProjectReference Include="..\ActiveTime.Presentation.Tray.Module\ActiveTime.Presentation.Tray.Module.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation.Tray\ActiveTime.Presentation.Tray.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" PrivateAssets="All" />
       <ProjectReference Include="..\ActiveTime.Adapters.SystemAccess\ActiveTime.Adapters.SystemAccess.csproj" PrivateAssets="All" />

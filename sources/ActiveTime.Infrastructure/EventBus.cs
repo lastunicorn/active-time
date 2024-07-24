@@ -18,23 +18,23 @@ namespace DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 
 public class EventBus
 {
-    private readonly Dictionary<Type, List<object>> subscribersByEvent = new();
+    private readonly SubscribersCollection subscribersByEvent = new();
 
     public void Subscribe<TEvent>(Func<TEvent, CancellationToken, Task> action)
     {
-        List<object> actions = GetBucket<TEvent>() ?? CreateBucket<TEvent>();
+        List<object> actions = subscribersByEvent.GetOrCreateBucket<TEvent>();
         actions.Add(action);
     }
 
     public void Unsubscribe<TEvent>(Func<TEvent, CancellationToken, Task> action)
     {
-        List<object> actions = GetBucket<TEvent>();
+        List<object> actions = subscribersByEvent.GetBucket<TEvent>();
         actions?.Remove(action);
     }
 
     public async Task Publish<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
     {
-        List<object> bucket = GetBucket<TEvent>();
+        List<object> bucket = subscribersByEvent.GetBucket<TEvent>();
 
         if (bucket == null)
             return;
@@ -43,19 +43,5 @@ public class EventBus
 
         foreach (Func<TEvent, CancellationToken, Task> action in actions)
             await action(@event, cancellationToken);
-    }
-
-    private List<object> GetBucket<TEvent>()
-    {
-        return subscribersByEvent.ContainsKey(typeof(TEvent))
-            ? subscribersByEvent[typeof(TEvent)]
-            : null;
-    }
-
-    private List<object> CreateBucket<TEvent>()
-    {
-        List<object> actions = new();
-        subscribersByEvent.Add(typeof(TEvent), actions);
-        return actions;
     }
 }

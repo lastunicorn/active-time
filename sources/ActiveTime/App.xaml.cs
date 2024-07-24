@@ -19,7 +19,7 @@ using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf.Setup.Autofac;
 using DustInTheWind.ActiveTime.Jobs;
-using DustInTheWind.ActiveTime.Presentation.Tray.Module;
+using DustInTheWind.ActiveTime.Presentation.Tray;
 
 namespace DustInTheWind.ActiveTime;
 
@@ -38,9 +38,10 @@ public partial class App
                 config.Name = "DustInTheWind.ActiveTime";
             })
             .ConfigureServices(DependenciesSetup.Configure)
-            .RegisterJobs(typeof(RecorderJob).Assembly, typeof(TrayIconJob).Assembly)
+            .RegisterJobs(typeof(RecorderJob).Assembly)
             .RegisterGuiShells(ShellSetup.EnumerateShellInfo)
             .RegisterUseCases(typeof(StartRecordingRequest).Assembly)
+            .UseTrayIcon<TrayIcon>()
             .Build();
 
         customApplication.Start();

@@ -42,17 +42,12 @@ public class MachineLevelGuard : IGuard
 
     private void CreateGuard()
     {
-        // Create the mutex.
         mutex = new Mutex(false, Name);
 
-        // Gain exclusive access to the mutex.
         bool access = mutex.WaitOne(0, true);
 
         if (!access)
-        {
-            string errorMessage = $"Another instance with the name '{Name}' already exists.";
-            throw new ActiveTimeException(errorMessage);
-        }
+            throw new GuardException(Name);
     }
 
     /// <summary>

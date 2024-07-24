@@ -14,13 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentTray;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
-using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf;
@@ -64,11 +60,13 @@ public class TrayIconPresenter
         StopRecorderCommand = new StopRecorderCommand(requestBus, log, eventBus);
         AboutCommand = new AboutCommand(shellNavigator);
         ExitCommand = new ExitCommand(application);
+
+        application.Started += HandleApplicationStarted;
     }
 
-    private void HandleApplicationExiting(object sender, EventArgs e)
+    private void HandleApplicationStarted(object sender, EventArgs e)
     {
-        Hide();
+        _ = Initialize();
     }
 
     private Task HandleRecorderStarted(RecorderStartedEvent ev, CancellationToken cancellationToken)
@@ -85,12 +83,7 @@ public class TrayIconPresenter
         return Task.CompletedTask;
     }
 
-    private void Initialize()
-    {
-        _ = RefreshView();
-    }
-
-    private async Task RefreshView()
+    private async Task Initialize()
     {
         PresentTrayRequest request = new();
         PresentTrayResponse response = await requestBus.Send<PresentTrayRequest, PresentTrayResponse>(request);
@@ -120,23 +113,19 @@ public class TrayIconPresenter
     {
         if (View != null)
         {
-            application.Exiting += HandleApplicationExiting;
-
             eventBus.Subscribe<RecorderStartedEvent>(HandleRecorderStarted);
             eventBus.Subscribe<RecorderStoppedEvent>(HandleRecorderStopped);
 
-            Initialize();
+            _ = Initialize();
 
             View.Visible = true;
         }
     }
 
-    private void Hide()
+    public void Hide()
     {
         if (View != null)
         {
-            application.Exiting -= HandleApplicationExiting;
-
             eventBus.Unsubscribe<RecorderStartedEvent>(HandleRecorderStarted);
             eventBus.Unsubscribe<RecorderStoppedEvent>(HandleRecorderStopped);
 

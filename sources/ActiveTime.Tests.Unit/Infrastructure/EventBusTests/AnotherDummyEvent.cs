@@ -14,26 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Globalization;
-using System.Windows.Data;
+namespace DustInTheWind.ActiveTime.Tests.Unit.Infrastructure.EventBusTests;
 
-namespace DustInTheWind.ActiveTime.Presentation.Styles.Converters;
-
-/// <summary>
-/// Decreases the font size with 50%.
-/// </summary>
-internal class FontSmallestConverter : IValueConverter
+internal class AnotherDummyEvent
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is double doubleValue)
-            return doubleValue * 0.5;
-
-        return value;
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return null;
-    }
 }
