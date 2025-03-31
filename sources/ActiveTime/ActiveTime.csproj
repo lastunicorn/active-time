@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\ActiveTime.Adapters.SystemAccess\ActiveTime.Adapters.SystemAccess.csproj" />
         <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj" PrivateAssets="All" />

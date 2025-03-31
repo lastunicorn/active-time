@@ -74,8 +74,6 @@
     <Compile Include="Services\IApplicationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="System\ISystemClock.cs" />
-    <Compile Include="System\SystemClock.cs" />
     <Compile Include="TimeRecord.cs" />
     <Compile Include="TimeRecordType.cs" />
     <Compile Include="Presentation\ShellNavigation\IShell.cs" />
@@ -89,6 +87,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reporting\" />
+    <Folder Include="System\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj">
+      <Project>{7D1839E8-9315-4B5F-BD39-48F3D24B0AE8}</Project>
+      <Name>ActiveTime.Ports.SystemAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

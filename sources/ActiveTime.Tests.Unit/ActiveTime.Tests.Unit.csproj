@@ -98,6 +98,10 @@
       <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
       <Name>ActiveTime.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj">
+      <Project>{7D1839E8-9315-4B5F-BD39-48F3D24B0AE8}</Project>
+      <Name>ActiveTime.Ports.SystemAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj">
       <Project>{9D813167-EE59-4936-812C-1A8238B69510}</Project>
       <Name>ActiveTime.Presentation</Name>
