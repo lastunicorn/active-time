@@ -103,6 +103,10 @@
       <Project>{7D1839E8-9315-4B5F-BD39-48F3D24B0AE8}</Project>
       <Name>ActiveTime.Ports.SystemAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
+      <Project>{28398453-43f7-426b-9d3f-badad259b558}</Project>
+      <Name>ActiveTime.Recording</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR">

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+        <Platforms>AnyCPU</Platforms>
+        <LangVersion>latest</LangVersion>
+        <AssemblyName>DustInTheWind.ActiveTime.Recording</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Recording</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>ActiveTime.Tests.Unit</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+</Project>

@@ -61,11 +61,6 @@
     <Compile Include="Persistence\IUnitOfWork.cs" />
     <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
     <Compile Include="Persistence\PersistenceException.cs" />
-    <Compile Include="Recording\Break.cs" />
-    <Compile Include="Recording\DayTimeInterval.cs" />
-    <Compile Include="Recording\Record.cs" />
-    <Compile Include="Recording\DayRecord.cs" />
-    <Compile Include="Recording\Scribe.cs" />
     <Compile Include="Services\Dwarfs.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IDwarf.cs" />
@@ -84,7 +79,9 @@
     <Compile Include="Presentation\ShellNames.cs" />
     <Compile Include="Presentation\ViewNames.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Recording\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj">
       <Project>{7D1839E8-9315-4B5F-BD39-48F3D24B0AE8}</Project>

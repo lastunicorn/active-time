@@ -114,6 +114,10 @@
       <Project>{CC12E02C-99C8-4DDA-9F68-3CF670D13958}</Project>
       <Name>ActiveTime.Jobs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Recording\ActiveTime.Recording.csproj">
+      <Project>{28398453-43f7-426b-9d3f-badad259b558}</Project>
+      <Name>ActiveTime.Recording</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
