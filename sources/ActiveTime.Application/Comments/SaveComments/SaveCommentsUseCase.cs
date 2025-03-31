@@ -34,7 +34,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.SaveComments
             this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
         }
 
-        public Task<Unit> Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
+        public Task Handle(SaveCommentsRequest request, CancellationToken cancellationToken)
         {
             DateTime? currentDate = inMemoryState.CurrentDate;
 

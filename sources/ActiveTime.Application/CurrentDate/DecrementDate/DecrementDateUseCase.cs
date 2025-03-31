@@ -35,7 +35,7 @@ namespace DustInTheWind.ActiveTime.Application.CurrentDate.DecrementDate
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
-        public Task<Unit> Handle(IncrementDateRequest request, CancellationToken cancellationToken)
+        public Task Handle(IncrementDateRequest request, CancellationToken cancellationToken)
         {
             DateTime currentDate = inMemoryState.CurrentDate;
 

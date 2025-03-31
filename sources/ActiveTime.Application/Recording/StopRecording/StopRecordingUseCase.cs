@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording.StopRecording
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
         }
 
-        public Task<Unit> Handle(StopRecordingRequest request, CancellationToken cancellationToken)
+        public Task Handle(StopRecordingRequest request, CancellationToken cancellationToken)
         {
             if (request.DeleteLastRecord)
                 scribe.DeleteCurrentTimeRecord();

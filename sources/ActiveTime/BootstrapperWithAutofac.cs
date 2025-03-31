@@ -28,6 +28,8 @@ using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Views;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using MediatR.Extensions.Autofac.DependencyInjection.Builder;
+using Timer = DustInTheWind.ActiveTime.Infrastructure.Timer;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -77,6 +79,9 @@ namespace DustInTheWind.ActiveTime
             containerBuilder.RegisterType<DeleteCommand>().AsSelf();
             containerBuilder.RegisterType<DecrementDayCommand>().AsSelf();
             containerBuilder.RegisterType<IncrementDateCommand>().AsSelf();
+            containerBuilder.RegisterType<CalendarCommand>().AsSelf();
+            containerBuilder.RegisterType<ResetCommentsCommand>().AsSelf();
+            containerBuilder.RegisterType<SaveCommentsCommand>().AsSelf();
 
             // GUI - Services
             containerBuilder.RegisterType<AutofacWindowFactory>().As<IWindowFactory>();
@@ -106,7 +111,11 @@ namespace DustInTheWind.ActiveTime
 
             // MediatR
             Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
-            containerBuilder.RegisterMediatR(useCasesAssembly);
+            MediatRConfiguration mediatRConfiguration = MediatRConfigurationBuilder.Create(useCasesAssembly)
+                .WithAllOpenGenericHandlerTypesRegistered()
+                .Build();
+            containerBuilder.RegisterMediatR(mediatRConfiguration);
+
 
             //containerBuilder.Register<ServiceFactory>(outerContext =>
             //{

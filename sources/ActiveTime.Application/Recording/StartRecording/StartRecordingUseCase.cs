@@ -46,7 +46,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording.StartRecording
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
         }
 
-        public Task<Unit> Handle(StartRecordingRequest request, CancellationToken cancellationToken)
+        public Task Handle(StartRecordingRequest request, CancellationToken cancellationToken)
         {
             scribe.StampNew();
             scheduledJobs.Start(JobNames.Recorder);

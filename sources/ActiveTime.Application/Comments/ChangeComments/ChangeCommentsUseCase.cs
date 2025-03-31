@@ -31,7 +31,7 @@ namespace DustInTheWind.ActiveTime.Application.Comments.ChangeComments
             this.inMemoryState = inMemoryState ?? throw new ArgumentNullException(nameof(inMemoryState));
         }
 
-        public Task<Unit> Handle(ChangeCommentsRequest request, CancellationToken cancellationToken)
+        public Task Handle(ChangeCommentsRequest request, CancellationToken cancellationToken)
         {
             inMemoryState.Comments = request.Comments;
 

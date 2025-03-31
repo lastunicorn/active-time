@@ -18,7 +18,7 @@ namespace DustInTheWind.ActiveTime.Application.CurrentDate.ChangeDate
             this.systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
         }
 
-        public Task<Unit> Handle(ChangeDateRequest request, CancellationToken cancellationToken)
+        public Task Handle(ChangeDateRequest request, CancellationToken cancellationToken)
         {
             inMemoryState.CurrentDate = request.Date ?? systemClock.GetCurrentDate();
 

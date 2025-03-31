@@ -38,7 +38,7 @@ namespace DustInTheWind.ActiveTime.Application.Recording.Stamp
             this.statusInfoService = statusInfoService ?? throw new ArgumentNullException(nameof(statusInfoService));
         }
 
-        public Task<Unit> Handle(StampRequest request, CancellationToken cancellationToken)
+        public Task Handle(StampRequest request, CancellationToken cancellationToken)
         {
             statusInfoService.SetStatus(ApplicationStatus.Create<StampingStatus>());
             scribe.Stamp();

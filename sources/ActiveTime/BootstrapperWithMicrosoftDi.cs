@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using DustInTheWind.ActiveTime.Application;
+﻿using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Common;
 using DustInTheWind.ActiveTime.Common.Logging;
@@ -21,7 +19,11 @@ using DustInTheWind.ActiveTime.Presentation.Tray.ViewModels;
 using DustInTheWind.ActiveTime.Presentation.Tray.Views;
 using DustInTheWind.ActiveTime.Presentation.Views;
 using MediatR;
+using MediatR.Extensions.Autofac.DependencyInjection;
+using MediatR.Extensions.Autofac.DependencyInjection.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Reflection;
 
 namespace DustInTheWind.ActiveTime
 {
@@ -29,13 +31,15 @@ namespace DustInTheWind.ActiveTime
     {
         private readonly IServiceProvider serviceProvider;
 
+        // ...
+
         public BootstrapperWithMicrosoftDi()
         {
             ServiceCollection serviceCollection = new ServiceCollection();
 
             ConfigureServices(serviceCollection);
 
-            serviceProvider = serviceCollection.BuildServiceProvider();
+            serviceProvider = serviceCollection.BuildServiceProvider(); // Ensure this line is correct
         }
 
         private static void ConfigureServices(ServiceCollection serviceCollection)
@@ -73,7 +77,7 @@ namespace DustInTheWind.ActiveTime
 
             // MediatR
             Assembly useCasesAssembly = typeof(StartRecordingRequest).Assembly;
-            serviceCollection.AddMediatR(useCasesAssembly);
+            serviceCollection.AddMediatR(x => x.RegisterServicesFromAssembly(useCasesAssembly));
         }
 
         public void Run()

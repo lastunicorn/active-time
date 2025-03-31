@@ -1,230 +1,42 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9D813167-EE59-4936-812C-1A8238B69510}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.ActiveTime.Presentation</RootNamespace>
-    <AssemblyName>DustInTheWind.ActiveTime.Presentation</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>false</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="MediatR, Version=9.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\MediatR.9.0.0\lib\net461\MediatR.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\AssemblyInfo.Shared.cs">
-      <Link>Properties\AssemblyInfo.Shared.cs</Link>
-    </Compile>
-    <Compile Include="ICommandFactory.cs" />
-    <Compile Include="Commands\AboutCommand.cs" />
-    <Compile Include="Commands\CalendarCommand.cs" />
-    <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="Commands\DecrementDayCommand.cs" />
-    <Compile Include="Commands\DeleteCommand.cs" />
-    <Compile Include="Commands\ExitCommand.cs" />
-    <Compile Include="Commands\IncrementDateCommand.cs" />
-    <Compile Include="Commands\OverviewCommand.cs" />
-    <Compile Include="Commands\RefreshCommand.cs" />
-    <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Commands\ResetCommentsCommand.cs" />
-    <Compile Include="Commands\SaveCommentsCommand.cs" />
-    <Compile Include="Commands\StartRecorderCommand.cs" />
-    <Compile Include="Commands\StopRecorderCommand.cs" />
-    <Compile Include="Commands\ToggleRecorderCommand.cs" />
-    <Compile Include="Converters\BooleanConverter.cs" />
-    <Compile Include="Converters\RecordConverter.cs" />
-    <Compile Include="Converters\TimeSpanToStringConverter.cs" />
-    <Compile Include="DateTimeExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="ReportBuilder.cs" />
-    <Compile Include="Services\ApplicationService.cs" />
-    <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\DispatcherService.cs" />
-    <Compile Include="Services\IWindowFactory.cs" />
-    <Compile Include="Services\ShellNavigator.cs" />
-    <Compile Include="TimeSpanExtensions.cs" />
-    <Compile Include="ViewModelBase.cs" />
-    <Compile Include="IViewModelFactory.cs" />
-    <Compile Include="ViewModels\AboutViewModel.cs" />
-    <Compile Include="ViewModels\CalendarViewModel.cs" />
-    <Compile Include="ViewModels\CommentsViewModel.cs" />
-    <Compile Include="ViewModels\CurrentDateViewModel.cs" />
-    <Compile Include="ViewModels\DayRecordsViewModel.cs" />
-    <Compile Include="ViewModels\FrontViewModel.cs" />
-    <Compile Include="ViewModels\MainMenuViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MainWindowTitle.cs" />
-    <Compile Include="ViewModels\MessageViewModel.cs" />
-    <Compile Include="ViewModels\OverviewViewModel.cs" />
-    <Compile Include="ViewModels\StatusInfoViewModel.cs" />
-    <Compile Include="ViewModels\TimeReportViewModel.cs" />
-    <Compile Include="Views\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CalendarWindow.xaml.cs">
-      <DependentUpon>CalendarWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CommentsView.xaml.cs">
-      <DependentUpon>CommentsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CurrentDateView.xaml.cs">
-      <DependentUpon>CurrentDateView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DayRecordsView.xaml.cs">
-      <DependentUpon>DayRecordsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FrontView.xaml.cs">
-      <DependentUpon>FrontView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainMenuView.xaml.cs">
-      <DependentUpon>MainMenuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MessageWindow.xaml.cs">
-      <DependentUpon>MessageWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OverviewWindow.xaml.cs">
-      <DependentUpon>OverviewWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StatusInfoView.xaml.cs">
-      <DependentUpon>StatusInfoView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TimeReportView.xaml.cs">
-      <DependentUpon>TimeReportView.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\AboutWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\CalendarWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\CommentsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\CurrentDateView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DayRecordsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FrontView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\MainMenuView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\MessageWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\OverviewWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\StatusInfoView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TimeReportView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj">
-      <Project>{1786A70F-7015-47DA-98A4-C99F7016CACE}</Project>
-      <Name>ActiveTime.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
-      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
-      <Name>ActiveTime.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
-      <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
-      <Name>ActiveTime.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj">
-      <Project>{E6CDCAE9-01F6-445B-B322-4A6B2167FBC7}</Project>
-      <Name>ActiveTime.Presentation.CustomControls</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+        <Platforms>AnyCPU</Platforms>
+        <LangVersion>latest</LangVersion>
+        <AssemblyName>DustInTheWind.ActiveTime.Presentation</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Commands\MenuItemClick.cs" />
+      <Compile Remove="Commands\MenuItemClickCommandBehavior.cs" />
+      <Compile Remove="Views\ExportWindow.xaml.cs" />
+      <Compile Remove="Views\StatisticsWindow.xaml.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Remove="Views\ExportWindow.xaml" />
+      <Page Remove="Views\StatisticsWindow.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.4.1" />
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Application\ActiveTime.Application.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\ActiveTime.Presentation.CustomControls\ActiveTime.Presentation.CustomControls.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>ActiveTime.Tests.Unit</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
 </Project>
