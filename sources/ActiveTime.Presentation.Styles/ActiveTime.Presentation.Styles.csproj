@@ -7,6 +7,7 @@
         <Platforms>AnyCPU</Platforms>
         <LangVersion>latest</LangVersion>
         <AssemblyName>DustInTheWind.ActiveTime.Presentation.Styles</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Presentation.Styles</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

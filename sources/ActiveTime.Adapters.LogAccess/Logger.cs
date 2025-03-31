@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 using System;
 using System.IO;
 
-namespace DustInTheWind.ActiveTime.Logging
+namespace DustInTheWind.ActiveTime.Adapters.LogAccess
 {
     public class Logger : ILogger
     {

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.ActiveTime.Common.System;
+namespace DustInTheWind.ActiveTime.Ports.SystemAccess;
 
 public interface ISystemClock
 {

@@ -7,6 +7,7 @@
         <Platforms>AnyCPU</Platforms>
         <LangVersion>latest</LangVersion>
         <AssemblyName>DustInTheWind.ActiveTime.Presentation</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Presentation</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -39,6 +40,21 @@
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>ActiveTime.Tests.Unit</_Parameter1>
         </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Properties\Settings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Settings.settings</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Properties\Settings.settings">
+        <Generator>SettingsSingleFileGenerator</Generator>
+        <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -19,9 +19,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DustInTheWind.ActiveTime.Application.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
 using DustInTheWind.ActiveTime.Infrastructure.JobModel;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.Tray.Commands

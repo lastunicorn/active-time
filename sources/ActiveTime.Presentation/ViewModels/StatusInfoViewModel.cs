@@ -17,8 +17,8 @@
 using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentApplicationStatus;
-using DustInTheWind.ActiveTime.Common.Logging;
 using DustInTheWind.ActiveTime.Infrastructure.EventModel;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using MediatR;
 

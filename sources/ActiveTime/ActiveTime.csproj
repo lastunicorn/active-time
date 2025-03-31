@@ -7,6 +7,8 @@
         <UseWPF>true</UseWPF>
         <Platforms>AnyCPU</Platforms>
         <LangVersion>latest</LangVersion>
+        <AssemblyName>DustInTheWind.ActiveTime</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

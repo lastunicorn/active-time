@@ -17,7 +17,7 @@
 using System;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
-using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 using MediatR;
 
 namespace DustInTheWind.ActiveTime.Presentation.ViewModels

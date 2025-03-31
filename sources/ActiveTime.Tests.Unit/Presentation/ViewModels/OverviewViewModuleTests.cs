@@ -20,7 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.Miscellaneous.PresentOverview;
 using DustInTheWind.ActiveTime.Common;
-using DustInTheWind.ActiveTime.Common.Logging;
+using DustInTheWind.ActiveTime.Ports.LogAccess;
 using DustInTheWind.ActiveTime.Presentation.ViewModels;
 using MediatR;
 using Moq;

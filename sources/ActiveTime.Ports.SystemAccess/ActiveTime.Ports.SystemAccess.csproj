@@ -6,6 +6,7 @@
         <Platforms>AnyCPU</Platforms>
         <LangVersion>latest</LangVersion>
         <AssemblyName>DustInTheWind.ActiveTime.Ports.SystemAccess</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Ports.SystemAccess</RootNamespace>
     </PropertyGroup>
 
 </Project>
