@@ -21,11 +21,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ActiveTime.Adapters.SystemAccess\ActiveTime.Adapters.SystemAccess.csproj" />
+        <ProjectReference Include="..\ActiveTime.Adapters.LogAccess\ActiveTime.Adapters.LogAccess.csproj" />
+        <ProjectReference Include="..\ActiveTime.Adapters.SystemAccess\ActiveTime.Adapters.SystemAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Logging.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Logging\ActiveTime.Adapters.LogAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" />
+        <ProjectReference Include="..\ActiveTime.Presentation.Styles\ActiveTime.Presentation.Styles.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Presentation\ActiveTime.Presentation.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Recording.Module\ActiveTime.Jobs.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.TrayGui.Module\ActiveTime.Presentation.Tray.Module.csproj" PrivateAssets="All" />

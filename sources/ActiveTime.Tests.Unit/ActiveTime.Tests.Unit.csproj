@@ -90,13 +90,17 @@
       <Project>{1786A70F-7015-47DA-98A4-C99F7016CACE}</Project>
       <Name>ActiveTime.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
-      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
+    <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj">
+      <Project>{c1f39aba-06c0-4e71-a30d-00eb10d4c9e5}</Project>
       <Name>ActiveTime.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">
       <Project>{AD1501FE-D309-47D4-A774-F82B8E7CFBCB}</Project>
       <Name>ActiveTime.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Ports.LogAccess\ActiveTime.Ports.LogAccess.csproj">
+      <Project>{C0757EB7-4274-4D87-8073-E49716A6C250}</Project>
+      <Name>ActiveTime.Ports.LogAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj">
       <Project>{7D1839E8-9315-4B5F-BD39-48F3D24B0AE8}</Project>

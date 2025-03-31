@@ -91,8 +91,8 @@
     <Compile Include="Recording\ToggleRecorder\ToggleRecorderUseCase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
-      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
+    <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj">
+      <Project>{c1f39aba-06c0-4e71-a30d-00eb10d4c9e5}</Project>
       <Name>ActiveTime.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">

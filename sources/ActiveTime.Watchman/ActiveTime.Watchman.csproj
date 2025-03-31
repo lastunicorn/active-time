@@ -47,7 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
+    <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj">
       <Project>{c1f39aba-06c0-4e71-a30d-00eb10d4c9e5}</Project>
       <Name>ActiveTime.Domain</Name>
     </ProjectReference>

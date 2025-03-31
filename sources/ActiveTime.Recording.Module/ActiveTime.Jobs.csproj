@@ -53,8 +53,8 @@
       <Project>{1786A70F-7015-47DA-98A4-C99F7016CACE}</Project>
       <Name>ActiveTime.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Common\ActiveTime.Domain.csproj">
-      <Project>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</Project>
+    <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj">
+      <Project>{c1f39aba-06c0-4e71-a30d-00eb10d4c9e5}</Project>
       <Name>ActiveTime.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.csproj">

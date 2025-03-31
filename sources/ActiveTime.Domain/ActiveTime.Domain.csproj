@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C1F39ABA-06C0-4E71-A30D-00EB10D4C9E5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DustInTheWind.ActiveTime.Common</RootNamespace>
+    <AssemblyName>ActiveTime.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Shared.cs">
+      <Link>Properties\AssemblyInfo.Shared.cs</Link>
+    </Compile>
+    <Compile Include="ActiveTimeException.cs" />
+    <Compile Include="ApplicationStatuses\ApplicationStatus.cs" />
+    <Compile Include="ApplicationStatuses\ReadyStatus.cs" />
+    <Compile Include="ApplicationStatuses\RecorderStartedStatus.cs" />
+    <Compile Include="ApplicationStatuses\RecorderStoppedStatus.cs" />
+    <Compile Include="ApplicationStatuses\RefreshedStatus.cs" />
+    <Compile Include="ApplicationStatuses\StampedStatus.cs" />
+    <Compile Include="ApplicationStatuses\StampingStatus.cs" />
+    <Compile Include="DateRecord.cs" />
+    <Compile Include="EventNames.cs" />
+    <Compile Include="InMemoryState.cs" />
+    <Compile Include="JobNames.cs" />
+    <Compile Include="Persistence\IDateRecordRepository.cs" />
+    <Compile Include="Persistence\ITimeRecordRepository.cs" />
+    <Compile Include="Persistence\IUnitOfWork.cs" />
+    <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
+    <Compile Include="Persistence\PersistenceException.cs" />
+    <Compile Include="Recording\Break.cs" />
+    <Compile Include="Recording\DayTimeInterval.cs" />
+    <Compile Include="Recording\Record.cs" />
+    <Compile Include="Recording\DayRecord.cs" />
+    <Compile Include="Recording\Scribe.cs" />
+    <Compile Include="Services\Dwarfs.cs" />
+    <Compile Include="Services\ApplicationServiceBase.cs" />
+    <Compile Include="Services\IDwarf.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IApplicationService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TimeRecord.cs" />
+    <Compile Include="TimeRecordType.cs" />
+    <Compile Include="Presentation\ShellNavigation\IShell.cs" />
+    <Compile Include="Presentation\ShellNavigation\IShellNavigator.cs" />
+    <Compile Include="Services\IStatusInfoService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Presentation\RegionNames.cs" />
+    <Compile Include="Presentation\ShellNavigation\ShellInfo.cs" />
+    <Compile Include="Presentation\ShellNames.cs" />
+    <Compile Include="Presentation\ViewNames.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj">
+      <Project>{7D1839E8-9315-4B5F-BD39-48F3D24B0AE8}</Project>
+      <Name>ActiveTime.Ports.SystemAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
