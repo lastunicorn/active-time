@@ -80,17 +80,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ActiveTime.Adapters.DataAccess.LiteDB\ActiveTime.Adapters.DataAccess.LiteDB.csproj">
+      <Project>{39651309-9fb3-4cc3-98ac-9a701c0ed800}</Project>
+      <Name>ActiveTime.Adapters.DataAccess.LiteDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveTime.Adapters.DataAccess.SQLite.AdoNet\ActiveTime.Adapters.DataAccess.SQLite.AdoNet.csproj">
+      <Project>{9b8762b3-cbac-48e1-8602-ce7456d6b18f}</Project>
+      <Name>ActiveTime.Adapters.DataAccess.SQLite.AdoNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj">
       <Project>{c1f39aba-06c0-4e71-a30d-00eb10d4c9e5}</Project>
       <Name>ActiveTime.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence.SQLite.AdoNet.Module\ActiveTime.Persistence.SQLite.AdoNet.Module.csproj">
-      <Project>{78a4111d-38dd-439f-abc1-cd569c70de9c}</Project>
-      <Name>ActiveTime.Persistence.SQLite.AdoNet.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj">
-      <Project>{bfc9b5e5-e55e-4f98-88e5-49f31609eb4c}</Project>
-      <Name>ActiveTime.Persistence.LiteDB.Module</Name>
+    <ProjectReference Include="..\ActiveTime.Ports.DataAccess\ActiveTime.Ports.DataAccess.csproj">
+      <Project>{1af19f5e-9dc6-41d2-b179-7f26a2b4e78a}</Project>
+      <Name>ActiveTime.Ports.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

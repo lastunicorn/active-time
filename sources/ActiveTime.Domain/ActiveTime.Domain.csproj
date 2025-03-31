@@ -56,11 +56,6 @@
     <Compile Include="EventNames.cs" />
     <Compile Include="InMemoryState.cs" />
     <Compile Include="JobNames.cs" />
-    <Compile Include="Persistence\IDateRecordRepository.cs" />
-    <Compile Include="Persistence\ITimeRecordRepository.cs" />
-    <Compile Include="Persistence\IUnitOfWork.cs" />
-    <Compile Include="Persistence\IUnitOfWorkFactory.cs" />
-    <Compile Include="Persistence\PersistenceException.cs" />
     <Compile Include="Services\Dwarfs.cs" />
     <Compile Include="Services\ApplicationServiceBase.cs" />
     <Compile Include="Services\IDwarf.cs" />
@@ -80,6 +75,7 @@
     <Compile Include="Presentation\ViewNames.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Persistence\" />
     <Folder Include="Recording\" />
   </ItemGroup>
   <ItemGroup>

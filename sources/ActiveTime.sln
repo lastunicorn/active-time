@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime", "ActiveTime\ActiveTime.csproj", "{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D993640F-730C-472F-8625-80365A397D19} = {D993640F-730C-472F-8625-80365A397D19}
-		{78A4111D-38DD-439F-ABC1-CD569C70DE9C} = {78A4111D-38DD-439F-ABC1-CD569C70DE9C}
 		{CC12E02C-99C8-4DDA-9F68-3CF670D13958} = {CC12E02C-99C8-4DDA-9F68-3CF670D13958}
 	EndProjectSection
 EndProject
@@ -14,14 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Domain", "Active
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Presentation.Tray", "ActiveTime.TrayIconModule\ActiveTime.Presentation.Tray.csproj", "{D993640F-730C-472F-8625-80365A397D19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Persistence.SQLite.AdoNet.Module", "ActiveTime.Persistence.SQLite.AdoNet.Module\ActiveTime.Persistence.SQLite.AdoNet.Module.csproj", "{78A4111D-38DD-439F-ABC1-CD569C70DE9C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7679C591-8D74-4077-8E00-811810432C0F}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfo.Shared.cs = AssemblyInfo.Shared.cs
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Persistence.LiteDB.Module", "ActiveTime.Persistence.LiteDB.Module\ActiveTime.Persistence.LiteDB.Module.csproj", "{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.DataMigration", "ActiveTime.DataMigration\ActiveTime.DataMigration.csproj", "{6343D3EC-D787-43D7-B590-918EB97464C2}"
 EndProject
@@ -67,6 +62,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Ports.LogAccess"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Recording", "ActiveTime.Recording\ActiveTime.Recording.csproj", "{28398453-43F7-426B-9D3F-BADAD259B558}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Ports.DataAccess", "ActiveTime.Ports.DataAccess\ActiveTime.Ports.DataAccess.csproj", "{1AF19F5E-9DC6-41D2-B179-7F26A2B4E78A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Adapters.DataAccess.LiteDB", "ActiveTime.Adapters.DataAccess.LiteDB\ActiveTime.Adapters.DataAccess.LiteDB.csproj", "{39651309-9FB3-4CC3-98AC-9A701C0ED800}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Adapters.DataAccess.SQLite.AdoNet", "ActiveTime.Adapters.DataAccess.SQLite.AdoNet\ActiveTime.Adapters.DataAccess.SQLite.AdoNet.csproj", "{9B8762B3-CBAC-48E1-8602-CE7456D6B18F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,14 +86,6 @@ Global
 		{D993640F-730C-472F-8625-80365A397D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D993640F-730C-472F-8625-80365A397D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D993640F-730C-472F-8625-80365A397D19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78A4111D-38DD-439F-ABC1-CD569C70DE9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78A4111D-38DD-439F-ABC1-CD569C70DE9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78A4111D-38DD-439F-ABC1-CD569C70DE9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78A4111D-38DD-439F-ABC1-CD569C70DE9C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFC9B5E5-E55E-4F98-88E5-49F31609EB4C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6343D3EC-D787-43D7-B590-918EB97464C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6343D3EC-D787-43D7-B590-918EB97464C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6343D3EC-D787-43D7-B590-918EB97464C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -165,6 +158,18 @@ Global
 		{28398453-43F7-426B-9D3F-BADAD259B558}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28398453-43F7-426B-9D3F-BADAD259B558}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28398453-43F7-426B-9D3F-BADAD259B558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AF19F5E-9DC6-41D2-B179-7F26A2B4E78A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AF19F5E-9DC6-41D2-B179-7F26A2B4E78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AF19F5E-9DC6-41D2-B179-7F26A2B4E78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AF19F5E-9DC6-41D2-B179-7F26A2B4E78A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39651309-9FB3-4CC3-98AC-9A701C0ED800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39651309-9FB3-4CC3-98AC-9A701C0ED800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39651309-9FB3-4CC3-98AC-9A701C0ED800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39651309-9FB3-4CC3-98AC-9A701C0ED800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B8762B3-CBAC-48E1-8602-CE7456D6B18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B8762B3-CBAC-48E1-8602-CE7456D6B18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B8762B3-CBAC-48E1-8602-CE7456D6B18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B8762B3-CBAC-48E1-8602-CE7456D6B18F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +189,9 @@ Global
 		{7D1839E8-9315-4B5F-BD39-48F3D24B0AE8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{63C6C996-905B-4806-BE7C-9CA31A3D47A5} = {FEF48606-7059-4389-9393-B0EAD0B9CAF7}
 		{C0757EB7-4274-4D87-8073-E49716A6C250} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{1AF19F5E-9DC6-41D2-B179-7F26A2B4E78A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{39651309-9FB3-4CC3-98AC-9A701C0ED800} = {FEF48606-7059-4389-9393-B0EAD0B9CAF7}
+		{9B8762B3-CBAC-48E1-8602-CE7456D6B18F} = {FEF48606-7059-4389-9393-B0EAD0B9CAF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF0F3084-E2E8-456E-A22A-C5F72F47A9E7}

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+        <Platforms>AnyCPU</Platforms>
+        <LangVersion>latest</LangVersion>
+        <AssemblyName>DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Adapters.DataAccess.SQLite.AdoNet</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="sql scripts\comments.sql" />
+      <Content Include="sql scripts\records.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Stub.System.Data.SQLite.Core.NetFramework" Version="1.0.119" />
+      <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ActiveTime.Ports.DataAccess\ActiveTime.Ports.DataAccess.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>ActiveTime.Tests.Integration</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+</Project>
