@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29926.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.35906.104 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime.Bootstrapper", "ActiveTime\ActiveTime.Bootstrapper.csproj", "{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveTime", "ActiveTime\ActiveTime.csproj", "{16BAEDC7-838B-4B8D-9BF4-07EB8515D999}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D993640F-730C-472F-8625-80365A397D19} = {D993640F-730C-472F-8625-80365A397D19}
 		{78A4111D-38DD-439F-ABC1-CD569C70DE9C} = {78A4111D-38DD-439F-ABC1-CD569C70DE9C}
