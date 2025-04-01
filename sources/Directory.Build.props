@@ -30,7 +30,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <RepositoryUrl>https://github.com/lastunicorn/ActiveTime</RepositoryUrl>
 
         <ImplicitUsings>enable</ImplicitUsings>
-        <AssemblyName>DustInTheWind.$(MSBuildProjectName)</AssemblyName>
-        <RootNamespace>DustInTheWind.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     </PropertyGroup>
 </Project>

@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>DustInTheWind.ActiveTime.Ports.DataAccess</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Ports.DataAccess</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

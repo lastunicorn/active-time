@@ -23,6 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <TargetFramework>net8.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>icon.ico</ApplicationIcon>
+        <AssemblyName>DustInTheWind.ActiveTime</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

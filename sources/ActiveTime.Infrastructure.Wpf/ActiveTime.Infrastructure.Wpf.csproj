@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <useWPF>true</useWPF>
+        <AssemblyName>DustInTheWind.ActiveTime.Infrastructure.Wpf</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Infrastructure.Wpf</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

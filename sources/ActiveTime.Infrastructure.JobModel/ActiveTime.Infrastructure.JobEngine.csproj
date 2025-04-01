@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+      <AssemblyName>DustInTheWind.ActiveTime.Infrastructure.JobEngine</AssemblyName>
+      <RootNamespace>DustInTheWind.ActiveTime.Infrastructure.JobEngine</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

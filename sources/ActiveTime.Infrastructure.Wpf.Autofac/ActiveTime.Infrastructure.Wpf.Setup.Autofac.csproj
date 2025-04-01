@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
+        <AssemblyName>DustInTheWind.ActiveTime.Infrastructure.Wpf.Setup.Autofac</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Infrastructure.Wpf.Setup.Autofac</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

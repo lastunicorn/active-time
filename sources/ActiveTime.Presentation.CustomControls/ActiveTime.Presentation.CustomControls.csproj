@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
+        <AssemblyName>DustInTheWind.ActiveTime.Presentation.CustomControls</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Presentation.CustomControls</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
