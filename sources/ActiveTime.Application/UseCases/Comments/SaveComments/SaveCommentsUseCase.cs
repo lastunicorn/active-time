@@ -17,7 +17,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.ApplicationStatuses;
+using DustInTheWind.ActiveTime.Application.StatusManagement;
+using DustInTheWind.ActiveTime.Application.StatusManagement.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Application.UseCases.Comments;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Infrastructure;

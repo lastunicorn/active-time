@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>DustInTheWind.ActiveTime.Application.Recording</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Application.Recording</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" />
+      <ProjectReference Include="..\ActiveTime.Ports.DataAccess\ActiveTime.Ports.DataAccess.csproj" />
+      <ProjectReference Include="..\ActiveTime.Ports.SystemAccess\ActiveTime.Ports.SystemAccess.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="DustInTheWind.ActiveTime.Tests.Unit" />
+    </ItemGroup>
+
+</Project>

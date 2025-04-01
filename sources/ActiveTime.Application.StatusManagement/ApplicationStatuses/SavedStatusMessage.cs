@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Application;
+namespace DustInTheWind.ActiveTime.Application.StatusManagement.ApplicationStatuses;
 
-public class ApplicationStatusChangedEvent
+public class SavedStatusMessage : StatusMessage
 {
-    public string StatusText { get; set; }
+    public override string Text { get; } = "Comments were saved.";
 }

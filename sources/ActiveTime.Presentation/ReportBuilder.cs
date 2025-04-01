@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Application.Recording;
 using DustInTheWind.ActiveTime.Domain;
 
 namespace DustInTheWind.ActiveTime.Presentation

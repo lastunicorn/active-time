@@ -17,8 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.ApplicationStatuses;
-using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Application.Recording;
+using DustInTheWind.ActiveTime.Application.StatusManagement;
+using DustInTheWind.ActiveTime.Application.StatusManagement.ApplicationStatuses;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
 using DustInTheWind.ActiveTime.Domain;

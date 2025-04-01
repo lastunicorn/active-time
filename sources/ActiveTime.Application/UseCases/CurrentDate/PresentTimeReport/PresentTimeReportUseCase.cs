@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Application.Recording;
 using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 using MediatR;

@@ -18,7 +18,7 @@ using DustInTheWind.ActiveTime.Domain;
 using DustInTheWind.ActiveTime.Ports.DataAccess;
 using DustInTheWind.ActiveTime.Ports.SystemAccess;
 
-namespace DustInTheWind.ActiveTime.Application.Recording2;
+namespace DustInTheWind.ActiveTime.Application.Recording;
 
 /// <summary>
 /// Keeps track of a current record and updates it in the database when requested.

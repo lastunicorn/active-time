@@ -16,7 +16,7 @@
 
 using DustInTheWind.ActiveTime.Domain;
 
-namespace DustInTheWind.ActiveTime.Application.Recording2;
+namespace DustInTheWind.ActiveTime.Application.Recording;
 
 /// <summary>
 /// Contains activity information for a single day.

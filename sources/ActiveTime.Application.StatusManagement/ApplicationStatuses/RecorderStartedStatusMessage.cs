@@ -14,14 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Application.ApplicationStatuses;
+namespace DustInTheWind.ActiveTime.Application.StatusManagement.ApplicationStatuses;
 
-public abstract class StatusMessage
+public class RecorderStartedStatusMessage : StatusMessage
 {
-    public abstract string Text { get; }
-
-    public override string ToString()
-    {
-        return Text;
-    }
+    public override string Text { get; } = "Recorder started.";
 }

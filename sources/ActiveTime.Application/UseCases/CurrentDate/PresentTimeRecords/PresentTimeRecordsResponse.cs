@@ -1,4 +1,4 @@
-﻿using DustInTheWind.ActiveTime.Application.Recording2;
+﻿using DustInTheWind.ActiveTime.Application.Recording;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.PresentTimeRecords
 {

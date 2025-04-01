@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.ActiveTime.Application;
+using DustInTheWind.ActiveTime.Application.StatusManagement;
 using DustInTheWind.ActiveTime.Application.UseCases.Miscellaneous.PresentApplicationStatus;
 using DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;

@@ -24,7 +24,7 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Converters"
-    xmlns:recording1="clr-namespace:DustInTheWind.ActiveTime.Application.Recording2;assembly=DustInTheWind.ActiveTime.Application"
+    xmlns:recording="clr-namespace:DustInTheWind.ActiveTime.Application.Recording;assembly=DustInTheWind.ActiveTime.Application.Recording"
     xmlns:calendarArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.CalendarArea"
 
     mc:Ignorable="d" 
@@ -54,14 +54,14 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type recording1:DayTimeInterval}">
+                    <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
                         <Rectangle
                             Height="15"
                             Fill="{StaticResource RecordBarActive}"
                             Width="{Binding IntervalInMinutes}"/>
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type recording1:Break}">
+                    <DataTemplate DataType="{x:Type recording:Break}">
                         <Rectangle
                             Height="15"
                             Fill="{StaticResource RecordBarInactive}"
@@ -82,13 +82,13 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#3f3f46"/>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#e6e6e6"/>
 
-                <DataTemplate DataType="{x:Type recording1:DayTimeInterval}">
+                <DataTemplate DataType="{x:Type recording:DayTimeInterval}">
                     <TextBlock
                         Padding="10,2,0,2"
                         Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}" />
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type recording1:Break}">
+                <DataTemplate DataType="{x:Type recording:Break}">
                     <TextBlock
                         Padding="10,2,0,2"
                         Text="{Binding Converter={StaticResource ResourceKey=RecordConverter}}"

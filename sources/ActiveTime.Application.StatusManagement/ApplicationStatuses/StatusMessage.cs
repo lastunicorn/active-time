@@ -14,9 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Application.ApplicationStatuses;
+namespace DustInTheWind.ActiveTime.Application.StatusManagement.ApplicationStatuses;
 
-public class RefreshedStatusMessage : StatusMessage
+public abstract class StatusMessage
 {
-    public override string Text { get; } = "Displayed data was refreshed.";
+    public abstract string Text { get; }
+
+    public override string ToString()
+    {
+        return Text;
+    }
 }

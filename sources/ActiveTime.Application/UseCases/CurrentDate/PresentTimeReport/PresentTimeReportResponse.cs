@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.ActiveTime.Application.Recording2;
+using DustInTheWind.ActiveTime.Application.Recording;
 
 namespace DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.PresentTimeReport
 {

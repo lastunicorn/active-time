@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Application.Recording2;
+namespace DustInTheWind.ActiveTime.Application.Recording;
 
 /// <summary>
 /// Represents an interval of time within a day.

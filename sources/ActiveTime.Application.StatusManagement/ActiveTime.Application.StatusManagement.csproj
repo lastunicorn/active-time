@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>DustInTheWind.ActiveTime.Application.StatusManagement</AssemblyName>
+        <RootNamespace>DustInTheWind.ActiveTime.Application.StatusManagement</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseEngine.csproj" />
+    </ItemGroup>
+
+</Project>

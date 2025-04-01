@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.ActiveTime.Application.ApplicationStatuses;
+namespace DustInTheWind.ActiveTime.Application.StatusManagement.ApplicationStatuses;
 
-public class StampedStatusMessage : StatusMessage
+public class RecorderStoppedStatusMessage : StatusMessage
 {
-    public override string Text { get; } = "Current record's time has been updated.";
+    public override string Text { get; } = "Recorder stopped.";
 }

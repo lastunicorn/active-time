@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 ActiveTime
 Copyright (C) 2011-2024 Dust in the Wind
 
@@ -41,6 +41,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\ActiveTime.Application.Recording\ActiveTime.Application.Recording.csproj" />
+        <ProjectReference Include="..\ActiveTime.Application.StatusManagement\ActiveTime.Application.StatusManagement.csproj" />
         <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobEngine.csproj" />
         <ProjectReference Include="..\ActiveTime.Infrastructure\ActiveTime.Infrastructure.UseCaseEngine.csproj" PrivateAssets="All" />
