@@ -20,66 +20,65 @@ using DustInTheWind.ActiveTime.Infrastructure.Wpf;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using Timer = System.Timers.Timer;
 
-namespace DustInTheWind.ActiveTime.Presentation.AboutArea
+namespace DustInTheWind.ActiveTime.Presentation.AboutArea;
+
+public sealed class AboutViewModel : ViewModelBase, IDisposable
 {
-    public class AboutViewModel : ViewModelBase, IDisposable
+    private readonly IApplication application;
+    private readonly Timer timer;
+
+    private TimeSpan runTime;
+
+    public string Version { get; }
+
+    public DateTime? StartTime { get; }
+
+    public TimeSpan RunTime
     {
-        private readonly IApplication application;
-        private readonly Timer timer;
-
-        private TimeSpan runTime;
-
-        public string Version { get; }
-
-        public DateTime? StartTime { get; }
-
-        public TimeSpan RunTime
+        get => runTime;
+        private set
         {
-            get => runTime;
-            private set
-            {
-                runTime = value;
-                OnPropertyChanged();
-            }
+            runTime = value;
+            OnPropertyChanged();
         }
+    }
 
-        public ICommand WindowClosed { get; }
+    public ICommand WindowClosed { get; }
 
-        public AboutViewModel(IApplication application)
-        {
-            this.application = application ?? throw new ArgumentNullException(nameof(application));
+    public AboutViewModel(IApplication application)
+    {
+        this.application = application ?? throw new ArgumentNullException(nameof(application));
 
-            WindowClosed = new RelayCommand(HandleWindowClosed);
+        WindowClosed = new RelayCommand(HandleWindowClosed);
 
-            Version version = application.GetVersion();
-            Version = version.ToString();
+        Version version = application.GetVersion();
+        Version = version.ToString();
 
-            StartTime = application.StartTime;
+        StartTime = application.StartTime;
 
-            RunTime = application.RunTime;
+        RunTime = application.RunTime;
 
-            timer = new Timer(200);
-            timer.Elapsed += HandleTimerElapsed;
-            timer.Start();
-        }
+        timer = new Timer(200);
+        timer.Elapsed += HandleTimerElapsed;
+        timer.Start();
+    }
 
-        private void HandleTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            RunTime = application.RunTime;
-        }
+    private void HandleTimerElapsed(object sender, ElapsedEventArgs e)
+    {
+        RunTime = application.RunTime;
+    }
 
-        private void HandleWindowClosed(object e)
-        {
-            if (timer == null)
-                return;
+    private void HandleWindowClosed(object e)
+    {
+        if (timer == null)
+            return;
 
-            timer.Stop();
-            timer.Dispose();
-        }
+        timer.Stop();
+        timer.Dispose();
+    }
 
-        public void Dispose()
-        {
-            timer?.Dispose();
-        }
+    public void Dispose()
+    {
+        timer?.Dispose();
     }
 }

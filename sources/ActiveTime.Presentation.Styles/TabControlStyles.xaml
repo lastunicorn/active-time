@@ -18,14 +18,11 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Styles.Converters">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Pack://application:,,,/DustInTheWind.ActiveTime.Presentation.Styles;component/Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
-    <converters:FontBigConverter x:Key="FontBigConverter" />
 
     <!-- TabControl -->
 

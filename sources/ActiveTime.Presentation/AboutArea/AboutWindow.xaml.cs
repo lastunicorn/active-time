@@ -17,20 +17,19 @@
 using System;
 using System.Windows;
 
-namespace DustInTheWind.ActiveTime.Presentation.AboutArea
+namespace DustInTheWind.ActiveTime.Presentation.AboutArea;
+
+/// <summary>
+/// Interaction logic for AboutWindow.xaml
+/// </summary>
+public partial class AboutWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for AboutWindow.xaml
-    /// </summary>
-    public partial class AboutWindow : Window
+    public AboutWindow(AboutViewModel viewModel)
     {
-        public AboutWindow(AboutViewModel viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            InitializeComponent();
+        InitializeComponent();
 
-            DataContext = viewModel;
-        }
+        DataContext = viewModel;
     }
 }

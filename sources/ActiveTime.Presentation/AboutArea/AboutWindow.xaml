@@ -20,12 +20,12 @@ along with this program.  If not, see<http://www.gnu.org/licenses/> .
     x:Class="DustInTheWind.ActiveTime.Presentation.AboutArea.AboutWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:aboutArea="clr-namespace:DustInTheWind.ActiveTime.Presentation.AboutArea"
     xmlns:converters="clr-namespace:DustInTheWind.ActiveTime.Presentation.Converters"
-
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    
     Title="About"
     Height="200"
     Width="353"
