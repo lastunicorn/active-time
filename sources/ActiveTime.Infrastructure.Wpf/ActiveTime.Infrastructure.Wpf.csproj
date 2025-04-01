@@ -27,8 +27,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ItemGroup>
         <ProjectReference Include="..\ActiveTime.Domain\ActiveTime.Domain.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobEngine.csproj" />
-        <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Infrastructure.Watchman.csproj" />
+        <ProjectReference Include="..\ActiveTime.Infrastructure.JobModel\ActiveTime.Infrastructure.JobEngine.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\ActiveTime.Watchman\ActiveTime.Infrastructure.Watchman.csproj" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

@@ -47,7 +47,7 @@ public class ShellNavigator : IShellNavigator
     public void RegisterShell(ShellInfo shellInfo)
     {
         if (shellInfos.ContainsKey(shellInfo.ShellName))
-            throw new Exception("Another shell with the same name already exists.");
+            throw new ShellExistsException();
 
         shellInfos.Add(shellInfo.ShellName, shellInfo);
     }
@@ -55,7 +55,7 @@ public class ShellNavigator : IShellNavigator
     public void RegisterShell(string shellName, Type shellType, string ownerName = null)
     {
         if (shellInfos.ContainsKey(shellName))
-            throw new Exception("Another shell with the same name already exists.");
+            throw new ShellExistsException();
 
         ShellInfo shellInfo = new(shellName, shellType, ownerName);
         shellInfos.Add(shellInfo.ShellName, shellInfo);
