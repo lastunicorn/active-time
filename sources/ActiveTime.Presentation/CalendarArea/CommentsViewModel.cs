@@ -14,14 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application.UseCases.Comments;
 using DustInTheWind.ActiveTime.Application.UseCases.Comments.ChangeComments;
 using DustInTheWind.ActiveTime.Application.UseCases.Comments.PresentComments;
 using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;
-using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 

@@ -14,16 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using DustInTheWind.ActiveTime.Application;
 using DustInTheWind.ActiveTime.Application.Recording;
 using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.DecrementDate;
 using DustInTheWind.ActiveTime.Application.UseCases.CurrentDate.PresentTimeRecords;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StartRecording;
 using DustInTheWind.ActiveTime.Application.UseCases.Recording.StopRecording;
-using DustInTheWind.ActiveTime.Infrastructure;
 using DustInTheWind.ActiveTime.Infrastructure.UseCaseEngine;
 
 namespace DustInTheWind.ActiveTime.Presentation.CalendarArea;
