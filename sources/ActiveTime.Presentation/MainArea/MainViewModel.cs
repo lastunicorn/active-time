@@ -14,41 +14,39 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using DustInTheWind.ActiveTime.Presentation.CalendarArea;
 using DustInTheWind.ActiveTime.Presentation.Commands;
 using DustInTheWind.ActiveTime.Presentation.MainMenuArea;
 using DustInTheWind.ActiveTime.Presentation.OverviewArea;
 using DustInTheWind.ActiveTime.Presentation.RecorderArea;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea
+namespace DustInTheWind.ActiveTime.Presentation.MainArea;
+
+public class MainViewModel : ViewModelBase
 {
-    public class MainViewModel : ViewModelBase
+    public MainMenuViewModel MainMenuViewModel { get; }
+
+    public StatusInfoViewModel StatusInfoViewModel { get; }
+
+    public FrontViewModel FrontViewModel { get; }
+
+    public MainWindowTitle WindowTitle { get; } = new();
+
+    public RefreshCommand RefreshCommand { get; }
+
+    public OverviewViewModel OverviewViewModel { get; }
+
+    public RecorderViewModel RecorderViewModel { get; }
+
+    public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel,
+        OverviewViewModel overviewViewModel, RefreshCommand refreshCommand, RecorderViewModel recorderViewModel)
     {
-        public MainMenuViewModel MainMenuViewModel { get; }
+        MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
+        StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
+        FrontViewModel = frontViewModel ?? throw new ArgumentNullException(nameof(frontViewModel));
 
-        public StatusInfoViewModel StatusInfoViewModel { get; }
-
-        public FrontViewModel FrontViewModel { get; }
-
-        public MainWindowTitle WindowTitle { get; } = new();
-
-        public RefreshCommand RefreshCommand { get; }
-
-        public OverviewViewModel OverviewViewModel { get; }
-
-        public RecorderViewModel RecorderViewModel { get; }
-
-        public MainViewModel(MainMenuViewModel mainMenuViewModel, StatusInfoViewModel statusInfoViewModel, FrontViewModel frontViewModel,
-            OverviewViewModel overviewViewModel, RefreshCommand refreshCommand, RecorderViewModel recorderViewModel)
-        {
-            MainMenuViewModel = mainMenuViewModel ?? throw new ArgumentNullException(nameof(mainMenuViewModel));
-            StatusInfoViewModel = statusInfoViewModel ?? throw new ArgumentNullException(nameof(statusInfoViewModel));
-            FrontViewModel = frontViewModel ?? throw new ArgumentNullException(nameof(frontViewModel));
-
-            OverviewViewModel = overviewViewModel ?? throw new ArgumentNullException(nameof(overviewViewModel));
-            RefreshCommand = refreshCommand ?? throw new ArgumentNullException(nameof(refreshCommand));
-            RecorderViewModel = recorderViewModel ?? throw new ArgumentNullException(nameof(recorderViewModel));
-        }
+        OverviewViewModel = overviewViewModel ?? throw new ArgumentNullException(nameof(overviewViewModel));
+        RefreshCommand = refreshCommand ?? throw new ArgumentNullException(nameof(refreshCommand));
+        RecorderViewModel = recorderViewModel ?? throw new ArgumentNullException(nameof(recorderViewModel));
     }
 }

@@ -1,5 +1,5 @@
-// ActiveTime
-// Copyright (C) 2011-2020 Dust in the Wind
+﻿// ActiveTime
+// Copyright (C) 2011-2024 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,17 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows.Controls;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea;
+namespace DustInTheWind.ActiveTime.Infrastructure.JobEngine;
 
-/// <summary>
-/// Interaction logic for StatusView.xaml
-/// </summary>
-internal partial class StatusInfoView : UserControl
+[Serializable]
+internal class JobNotFoundException : Exception
 {
-    public StatusInfoView()
+    private const string DefaultMessage = "There is no job with the id {0}.";
+
+    public JobNotFoundException(string jobId)
+        : base(string.Format(DefaultMessage, jobId))
     {
-        InitializeComponent();
+    }
+
+    public JobNotFoundException(string jobId, Exception innerException)
+        : base(string.Format(DefaultMessage, jobId), innerException)
+    {
     }
 }

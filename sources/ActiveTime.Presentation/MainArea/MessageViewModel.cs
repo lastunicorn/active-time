@@ -14,51 +14,49 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using DustInTheWind.ActiveTime.Infrastructure.Wpf.ShellEngine;
 using DustInTheWind.ActiveTime.Presentation.Properties;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea
+namespace DustInTheWind.ActiveTime.Presentation.MainArea;
+
+public class MessageViewModel : ViewModelBase, IShell
 {
-    public class MessageViewModel : ViewModelBase, IShell
+    private string message;
+    private Dictionary<string, object> navigationParameters;
+
+    public string Message
     {
-        private string message;
-        private Dictionary<string, object> navigationParameters;
-
-        public string Message
+        get => message;
+        private set
         {
-            get => message;
-            private set
-            {
-                message = value;
-                OnPropertyChanged();
-            }
+            message = value;
+            OnPropertyChanged();
         }
+    }
 
-        public Dictionary<string, object> NavigationParameters
+    public Dictionary<string, object> NavigationParameters
+    {
+        get => navigationParameters;
+        set
         {
-            get => navigationParameters;
-            set
-            {
-                navigationParameters = value;
-                UpdateTextFromNavigationParameters();
-            }
+            navigationParameters = value;
+            UpdateTextFromNavigationParameters();
         }
+    }
 
-        public MessageViewModel()
-        {
-            message = Resources.MessageWindow_DefaultText;
-        }
+    public MessageViewModel()
+    {
+        message = Resources.MessageWindow_DefaultText;
+    }
 
-        private void UpdateTextFromNavigationParameters()
-        {
-            if (navigationParameters == null)
-                return;
+    private void UpdateTextFromNavigationParameters()
+    {
+        if (navigationParameters == null)
+            return;
 
-            bool containsTextKey = navigationParameters.ContainsKey("Text") && navigationParameters["Text"] is string;
+        bool containsTextKey = navigationParameters.ContainsKey("Text") && navigationParameters["Text"] is string;
 
-            if (containsTextKey)
-                Message = (string)navigationParameters["Text"];
-        }
+        if (containsTextKey)
+            Message = (string)navigationParameters["Text"];
     }
 }

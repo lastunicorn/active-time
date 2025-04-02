@@ -33,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ItemGroup>
         <PackageReference Include="MediatR" Version="12.3.0" />
+        <PackageReference Include="Microsoft.Win32.SystemEvents" Version="9.0.3" />
     </ItemGroup>
 
     <ItemGroup>

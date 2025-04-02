@@ -87,7 +87,7 @@ public class JobCollection
         }
         catch (Exception ex)
         {
-            throw new Exception($"There is no job with the id {jobId}.", ex);
+            throw new JobNotFoundException(jobId, ex);
         }
     }
 

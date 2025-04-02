@@ -14,23 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows;
 
-namespace DustInTheWind.ActiveTime.Presentation.MainArea
+namespace DustInTheWind.ActiveTime.Presentation.MainArea;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public MainWindow(MainViewModel viewModel)
     {
-        public MainWindow(MainViewModel viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+        if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            InitializeComponent();
+        InitializeComponent();
 
-            DataContext = viewModel;
-        }
+        DataContext = viewModel;
     }
 }
